@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<!-- 任务管理sql文件 sequence:SEQ_GZGL_GZRW, SEQ_GZGL_GZRWMJ -->
+	<property name="insertRenwu">
+		<![CDATA[
+		insert into t_gzgl_rwpfxx(bh,yqclwcrq,rwms,djrxm,djsj,djdwdm,djdwmc,rwbt,rwwcqk,sjwcsj,sjclmjxm,cljgms,rwfkzt,djrjh,gxsj,sfqs,czbz,rwfjid)
+		values(#[bh],to_date(#[yqclwcrq],'yyyy-mm-dd'),#[rwms],#[djrxm],to_date(#[djsj],'yyyy-mm-dd'),#[djdwdm],
+				#[djdwmc],#[rwbt],#[rwwcqk],#[sjwcsj],#[sjclmjxm],#[cljgms],#[rwfkzt],#[djrjh],to_date(#[gxsj],'yyyy-mm-dd HH24:mi:ss'),#[sfqs],#[czbz],#[rwfjid]
+		)
+		]]>
+	</property>
+	
+	<property name="insertRenwumj">
+		<![CDATA[
+		INSERT INTO T_GZGL_RWPFCLMJXX 
+		(
+			ID,
+			RWBH,
+			CLMJXM,
+			CLMJJH,
+			CLMJSFZH,
+			CLMJDWDM,
+			CLMJDWMC
+		)
+		VALUES
+		(
+			#[id],
+			#[rwbh],
+			#[clmjxm],
+			#[clmjjh],
+			#[clmjsfzh],
+			#[clmjdwdm],
+			#[clmjdwmc]
+		)
+		]]>
+	</property>
+	
+	<!-- 任务列表 -->
+	<property name="queryRenwu">
+		<![CDATA[
+			 select * 
+			 from (select bh, yqclwcrq,
+			        rwms,
+			        djrxm,
+			        djsj,
+			        djdwdm,
+			        djdwmc,
+			        rwbt,
+			        rwwcqk,
+			        sjwcsj,
+			        sjclmjxm,
+			        cljgms,
+			        rwfkzt,
+			        djrjh,
+			        gxsj,
+			        sfqs,
+			        czbz,
+			        qsrxm,
+			        qsrsfzh,
+			        qsdwdm,
+			        qsdwmc,
+			        qssj,
+			        clmj.clmjxm clmjxm,
+			        clmj.clmjjh clmjjh,
+			        clmj.clmjsfzh clmjsfzh,
+			        clmj.clmjdwdm clmjdwdm,
+			        clmj.clmjdwmc clmjdwmc
+        		from  t_gzgl_rwpfxx rw 
+        			left join  (select wmsys.wm_concat(mj.clmjxm) as clmjxm,
+				       wmsys.wm_concat(mj.clmjjh) as clmjjh,
+			           wmsys.wm_concat(mj.clmjsfzh) as clmjsfzh,
+			           wmsys.wm_concat(mj.clmjdwdm) as clmjdwdm,
+			           wmsys.wm_concat(mj.clmjdwmc) as clmjdwmc,
+			           mj.rwbh rwbh  
+	           from t_gzgl_rwpfclmjxx mj  group by rwbh) clmj
+	           on rw.bh = clmj.rwbh) t
+	           where t.czbz!='0'
+          
+           #if($rwbt && !$rwbt.equals(""))
+				   and t.rwbt like '%'||#[rwbt]||'%'
+		     	#end
+			   #if($jcsj_start && !$jcsj_start.equals(""))
+				   and t.yqclwcrq >= to_date(#[jcsj_start],'yyyy-mm-dd')
+		    	#end
+			   #if($jcsj_end && !$jcsj_end.equals(""))
+			   	and t.yqclwcrq <= to_date(#[jcsj_end],'yyyy-mm-dd')
+			   #end
+         	#if($jwsqdm && !$jwsqdm.equals(""))
+	    		and t.djdwdm = #[jwsqdm]
+    		#elseif ($pcsdm && !$pcsdm.equals(""))
+			 	and t.djdwdm like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and t.djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and t.djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+		   	#end
+         order by t.sfqs,t.rwwcqk,t.djsj desc
+			]]>
+	</property>
+	
+	<!-- 任务详情 -->
+	<property name="queryRenwuDetail">
+		<![CDATA[
+			select bh, to_char(yqclwcrq,'yyyy-mm-dd') yqclwcrq,djrjh, rwms, djrxm, to_char(djsj,'yyyy-mm-dd') djsj, djdwdm, djdwmc, rwbt, rwwcqk, to_char(sjwcsj,'yyyy-mm-dd') sjwcsj, sjclmjxm, cljgms, rwfkzt,djrjh,sfqs,rwfjid
+			from t_gzgl_rwpfxx
+			where bh = #[rwbh]
+			]]>
+	</property>
+	
+	<property name="queryRenwumj">
+		<![CDATA[
+			SELECT 
+				ID,
+				RWBH,
+				CLMJXM,
+				CLMJJH,
+				CLMJSFZH,
+				CLMJDWDM,
+				CLMJDWMC
+			FROM T_GZGL_RWPFCLMJXX t
+			WHERE 
+				t.RWBH=?
+		]]>
+	</property>
+	
+	<!-- 民警处理任务结果信息表 sequence：SEQ_GZGL_RWPFMJCL -->
+	<property name="insertMjChuljin">
+		<![CDATA[
+			INSERT INTO T_GZGL_RWCLJGFKXX
+			(
+				ID,
+				RWBH,
+				CLJG,
+				WCSJ,
+				CLMJID,
+				WCQKMS,
+				DJRXM,
+				DJSJ,
+				DJDWDM,
+				DJDWMC,
+				DJRJH
+			)
+			VALUES
+			(
+				#[id],
+				#[rwbh],
+				#[cljg],
+				#if ($wcsj && !$wcsj.equals(""))
+					to_date(#[wcsj],'yyyy-MM-dd'),
+				#else
+					null,				
+				#end
+				#[clmjid],
+				#[wcqkms],
+				#[cldjrxm],
+				#[cldjsj],
+				#[cldjdwdm],
+				#[cldjdwmc],
+				#[cldjrjh]
+			)
+		]]>
+	</property>
+	
+	<property name="queryRenwufk">
+		<![CDATA[
+			SELECT 
+				rw.RWBT as rwbt,
+				rw.YQCLWCRQ AS yqclwcrq,
+				rw.RWMS AS rwms,
+				rw.RWCLZT as rwclzt,
+				rw.DJRXM as djrxm,
+				rw.DJSJ as djsj,
+				rw.DJDWDM as djdwdm,
+				rw.DJDWMC as djdwmc,
+				
+				--mj.ID as minjBean.id,
+				--mj.RWBH as minjBean.rwbh,
+				mj.CLMJXM as clmjxm,
+				mj.CLMJJH as clmjjh,
+				mj.CLMJSFZH as clmjsfzh,
+				mj.CLMJDWDM as clmjdwdm,
+				mj.CLMJDWMC as clmjdwmc,
+				
+				fk.id as id,
+				fk.RWBH as rwbh,
+				fk.CLJG as cljg,
+				fk.WCSJ as wcsj,
+				fk.CLMJID as clmjid,
+				fk.WCQKMS as wcqkms,
+				fk.DJRXM as cldjrxm,
+				fk.DJSJ as cldjsj,
+				fk.DJRJH AS cldjrjh,
+				fk.DJDWDM as cldjdwdm,
+				fk.DJDWMC as cldjdwmc
+			FROM T_GZGL_RWPFXX rw, T_GZGL_RWPFCLMJXX mj, T_GZGL_RWCLJGFKXX	fk	
+			WHERE 
+				rw.bh=mj.rwbh and rw.bh=fk.rwbh and mj.id=fk.clmjid
+				#if ($username && !$username.equals(""))
+					and mj.CLMJJH=#[username]
+				#end
+				#if ($rwbh && !$rwbh.equals(""))
+					and rw.bh=#[rwbh]
+				#end
+				#if ($clmjid && !$clmjid.equals(""))
+					and fk.clmjid=#[clmjid]
+				#end
+		]]>
+	</property>
+	
+	<property name="updateMinjchuli">
+		<![CDATA[
+			UPDATE 
+				T_GZGL_RWCLJGFKXX t
+			SET 
+				t.CLJG=#[cljg],
+				t.WCSJ=to_date(#[wcsj], 'yyyy-MM-dd'),
+				t.WCQKMS=#[wcqkms],
+				t.DJRXM=#[cldjrxm],
+				t.DJSJ=to_date(#[cldjsj], 'yyyy-MM-dd'),
+				t.DJDWDM=#[cldjdwdm],
+				t.DJDWMC=#[cldjdwmc],
+				t.DJRJH=#[cldjrjh]
+			WHERE t.id=#[id]
+		]]>
+	</property>
+	
+	<property name="updateRenwu">
+		<![CDATA[
+			UPDATE T_GZGL_RWPFXX t
+			SET 
+				t.RWCLZT=?
+			WHERE 
+				t.BH=?
+		]]>
+	</property>
+	
+	<property name="delRenwu">
+		<![CDATA[
+			update t_gzgl_rwpfxx set czbz = #[czbz],gxsj = to_date(#[gxsj],'yyyy-mm-dd HH24:mi:ss') where bh = #[bh]
+		]]>
+	</property>
+	
+	<property name="batchDelmj">
+		<![CDATA[
+			delete t_gzgl_rwpfclmjxx where id = #[id]
+		]]>
+	</property>
+	
+	<property name="updateRenwu">
+		<![CDATA[
+			update t_gzgl_rwpfxx set yqclwcrq = to_date(#[yqclwcrq],'yyyy-mm-dd') , rwms = #[rwms] ,
+					gxsj = to_date(#[gxsj],'yyyy-mm-dd HH24:mi:ss') , czbz = #[czbz]
+			where bh = #[bh]		
+		]]>
+	</property>
+	
+	<property name="qsRenwu">
+		<![CDATA[
+			update t_gzgl_rwpfxx 
+			set sfqs = #[sfqs],
+				gxsj = to_date(#[gxsj],'yyyy-mm-dd HH24:mi:ss'),
+				qsrxm = #[qsrxm],
+				qsrsfzh =#[qsrsfzh],
+				qsdwdm = #[qsdwdm],
+				qsdwmc = #[qsdwmc],
+				qssj = sysdate
+			where bh = #[bh]
+		]]>
+	</property>
+	
+	<property name="fkRenwu">
+		<![CDATA[
+			update t_gzgl_rwpfxx set rwfkzt = #[rwfkzt],rwwcqk = #[rwwcqk],sjwcsj = to_date(#[sjwcsj],'yyyy-mm-dd'),cljgms = #[cljgms],sjclmjxm=#[sjclmjxm] where bh = #[bh]
+		]]>
+	</property>
+	
+	<property name="addRenwuCljg">
+		<![CDATA[
+			insert into t_gzgl_rwcljgfkxx(id,rwbh,cljg,wcsj,clmjid,wcqkms,djrxm,djsj,djdwdm,djdwmc,djrjh,fjid)
+			values(#[id],#[rwbh],#[cljg],to_date(#[wcsj],'yyyy-mm-dd'),#[clmjid],#[wcqkms],
+				#[djrxm],sysdate,#[djdwdm],#[djdwmc],#[djrjh],#[fjid]
+			)
+		]]>
+	</property>
+	
+	<property name="queryRenwuFkxx">
+		<![CDATA[
+			select id,
+		       rwbh,
+		       cljg,
+		       to_char(wcsj,'yyyy-mm-dd') wcsj,
+		       clmjid,
+		       wcqkms,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd') djsj,
+		       djdwdm,
+		       djdwmc,
+		       djrjh,
+		       fjid
+  			from t_gzgl_rwcljgfkxx where rwbh = #[rwbh]
+
+		]]>
+	</property>
+	<property name="getRwfjBeanById">
+	<![CDATA[
+		 select id, title, fj, fjlx from t_gzgl_rwfjxx where id =?
+	]]>
+	</property>
+	<property name="updateRwfj">
+		<![CDATA[
+		 update t_gzgl_rwfjxx
+            set title = #[title],
+                fj = #[fj]
+          where id =#[id]
+          ]]>
+	</property>
+	<property name="getRenwuclListPage">
+			<![CDATA[
+		select rw.bh bh, rw.yqclwcrq yqclwcrq,
+        rw.rwms rwms,
+        rw.djrxm djrxm,
+        rw.djsj djsj,
+        rw.djdwdm djdwdm,
+        rw.djdwmc djdwmc,
+        rw.rwbt rwbt,
+        rw.rwwcqk  rwwcqk,
+        rw.sjwcsj sjwcsj,
+        rw.sjclmjxm sjclmjxm,
+        rw.cljgms cljgms,
+        rw.rwfkzt rwfkzt,
+        rw.djrjh djrjh,
+        rw.gxsj gxsj,
+        rw.sfqs sfqs,
+        rw.czbz czbz,
+        clmj.clmjxm clmjxm,
+        clmj.clmjjh clmjjh,
+        clmj.clmjsfzh clmjsfzh,
+        clmj.clmjdwdm clmjdwdm,
+        clmj.clmjdwmc clmjdwmc
+        from  t_gzgl_rwpfxx rw  join  (select wmsys.wm_concat(mj.clmjxm) as clmjxm,
+		       wmsys.wm_concat(mj.clmjjh) as clmjjh,
+           wmsys.wm_concat(mj.clmjsfzh) as clmjsfzh,
+           wmsys.wm_concat(mj.clmjdwdm) as clmjdwdm,
+           wmsys.wm_concat(mj.clmjdwmc) as clmjdwmc,
+           mj.rwbh rwbh  
+           from t_gzgl_rwpfclmjxx mj where rwbh in(select rwbh from t_gzgl_rwpfclmjxx pfmj where 1=1
+           and pfmj.clmjjh = #[clmjjh]
+				) group by rwbh) clmj
+           on rw.bh = clmj.rwbh
+           and czbz !='0'
+           #if($rwbt && !$rwbt.equals(""))
+				   and rwbt like '%'||#[rwbt]||'%'
+		     	#end
+			   #if($jcsj_start && !$jcsj_start.equals(""))
+				   and yqclwcrq >= to_date(#[jcsj_start],'yyyy-mm-dd')
+		    	#end
+			   #if($jcsj_end && !$jcsj_end.equals(""))
+			   	and yqclwcrq <= to_date(#[jcsj_end],'yyyy-mm-dd')
+			   #end
+           
+			 ]]>
+	</property>
+	<property name="queryRenwuBean">
+	<![CDATA[
+		           select bh, yqclwcrq, rwms, djrxm, djsj, djdwdm, djdwmc, rwbt, rwwcqk, sjwcsj, sjclmjxm, cljgms, rwfkzt, djrjh, gxsj, sfqs, czbz, rwfjid from t_gzgl_rwpfxx
+		           where bh =?
+	]]>
+	</property>
+	
+</properties>

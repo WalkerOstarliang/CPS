@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	 <package name="hbgzgl" namespace="/qzgl/hbgzgl" extends="default">
+	  		<action name="*" class="com.chinacreator.qzgl.action.HbgzAction" method="{1}">
+		  		<result name="tohbgzList">/jsp/qzgl/pages/hbgz/hbgzList.jsp</result>
+		  		<result name="tohbgzIn">/jsp/qzgl/pages/hbgz/hbgzInfo.jsp</result>
+		  		<result name="tohbgzCyr">/jsp/qzgl/pages/hbgz/hbgzcyrInfo.jsp</result>
+		  		<result type="stream" name="success">
+		  			<param name="contentType">application/octet-stream</param>  
+	                <param name="inputName">downloadFile</param>  
+	                <param name="contentDisposition">attachment;filename="${filename}"</param>  
+	                <param name="bufferSize">4096</param>  
+		  		</result>
+		  	</action>
+	  </package>
+	  <package name="gyhd" namespace="/qzgl/gyhdgl" extends="default">
+	  		<action name="*" class="com.chinacreator.qzgl.action.GyhdAction" method="{1}">
+		  		<result name="toGyhdList">/jsp/qzgl/pages/gyhd/gyhdlist.jsp</result>
+		  		<result name="togyhdInfo">/jsp/qzgl/pages/gyhd/gyhdInfo.jsp</result>
+	  			
+	  		</action>
+	  </package>
+	  
+	  <package name="jftj" namespace="/qzgl/jftjgl" extends="default">
+	       <action name="*" class="com.chinacreator.qzgl.action.JftjAction" method="{1}">
+	       	    <result name="toJftyList">/jsp/qzgl/pages/jftj/jftjlist.jsp</result>
+	       	    <result name="addJftjInfo">/jsp/qzgl/pages/jftj/addjftjInfo.jsp</result>
+	       	    <result name="toAddDsrxx">/jsp/qzgl/pages/jftj/adddsrxx.jsp</result>
+	       </action>
+	  </package>
+	   <package name="zyz" namespace="/qzgl/zyzgl" extends="default">
+	       <action name="*" class="com.chinacreator.qzgl.action.ZyzAction" method="{1}">
+	       	    <result name="toZyzList">/jsp/qzgl/pages/zyzgl/zyzlist.jsp</result>
+	       	    <result name="toAddZyz">/jsp/qzgl/pages/zyzgl/addzyzInfo.jsp</result>
+	       	    <result name="toAddZcxx">/jsp/qzgl/pages/zyzgl/addzcxx.jsp</result>
+	       	    <result name="toUpdateZyz">/jsp/qzgl/pages/zyzgl/updateZyzInfo.jsp</result>
+	       </action>
+	  </package>
+	   <package name="bmfw" namespace="/qzgl/bmfwgl" extends="default">
+	       <action name="*" class="com.chinacreator.qzgl.action.BmfwAction" method="{1}">
+	       	    <result name="toBmfwList">/jsp/qzgl/pages/bmfw/bmfwlist.jsp</result>
+	       	    <result name="toAddBmfw">/jsp/qzgl/pages/bmfw/addbmfwInfo.jsp</result>
+	       </action>
+	  </package>
+</struts>

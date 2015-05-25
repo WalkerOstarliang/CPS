@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+ 	<property name="queryStxxBeansPageResult">
+ 		<![CDATA[
+ 			select t.*,substr(xzqh,1,4)||'00' as sjxzqh
+  			from t_common_stxx t
+ 			where 1=1 
+ 			--and (zxbs is null or zxbs = '1')
+ 			#if($stid && !$stid.equals(""))
+ 				and id = trim(#[stid])
+ 			#end
+		    #if($sqdm && !$sqdm.equals(""))
+				and sqdm = #[sqdm]
+			#elseif ($jwsqdm && !$jwsqdm.equals(""))
+				and DJDWDM = #[jwsqdm]	
+			#elseif ($pcsdm && !$pcsdm.equals(""))
+		 		and DJDWDM like substr(#[pcsdm],1,8)||'%'
+ 			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+ 				and DJDWDM like substr(#[countrygajgjgdm],1,6)||'%'
+ 			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+ 				and DJDWDM like substr(#[citygajgjgdm],1,4)||'%'
+		   	#end
+				
+			#if ($jlxdm && !$jlxdm.equals(""))
+				and jlxdm=#[jlxdm]
+			#end
+			
+			#if ($sfbz && !$sfbz.equals(""))
+				#if($sfbz.equals("1"))
+					and (x is not null and y is not null)
+				#end
+				#if($sfbz.equals("0"))
+					and (x is null or y is null)
+				#end
+			#end
+			
+			#if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+		 	 	and (zxbs = #[zxbs] or zxbs is null)
+		    #end
+		    #if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+		 	 	and (zxbs = #[zxbs])
+		    #end 
+		    
+		    #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+		 	 	and (isvalid = #[zxbs] or isvalid is null)
+		    #end
+		    #if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+		 	 	and (isvalid = #[zxbs])
+		    #end 
+		    
+		    #if ($djsj_start && !$djsj_start.equals(""))
+					and djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if($djsj_end && !$djsj_end.equals(""))
+					and djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			#end
+			
+			#if ($stmc && !$stmc.equals(""))
+				and stmc like '%'||#[stmc]||'%'
+			#end
+			#if($mph && !$mph.equals(""))
+				and mph like '%'||#[mph]||'%'
+			#end
+			#if ($xqz && !$xqz.equals(""))
+				and xqz like '%'||#[xqz]||'%'
+			#end
+			#if ($ldxz && !$ldxz.equals(""))
+				and ldxz like '%'||#[ldxz]||'%'
+			#end
+			
+			
+			
+ 		]]>
+ 	</property>	
+ 			<!-- 
+			#if($leve==5)
+				and DJDWDM=#[orgcode]
+			#end
+			#if ($sqdm && !$sqdm.equals(""))
+				and sqdm=#[sqdm]
+			#elseif ($jdxzdm && !$jdxzdm.equals(""))
+				 and jdxzdm = #[jdxzdm]
+			#elseif ($countrydm && !$countrydm.equals(""))
+				and xzqh=#[countrydm]
+			#elseif($citydm && $!citydm.equals())
+				and xzqh like substr(#[citydm],1,4)||'%'
+			#end
+			-->
+ 	<property name="queryDzxxBeansPageResultInfo">
+ 		<![CDATA[
+ 			select * 
+ 			from v_common_dzxx
+ 			where 1=1
+ 			and (zxbs is null or zxbs = '1')
+ 			#if ($sqdm && !$sqdm.equals(""))
+				and sqdm=#[sqdm]
+			#elseif ($jdxzdm && !$jdxzdm.equals(""))
+				and jdxzdm = #[jdxzdm]
+			#elseif ($countrydm && !$countrydm.equals(""))
+				and xzqh=#[countrydm]
+			#elseif($citydm && $!citydm.equals())
+				and xzqh like substr(#[citydm],1,4)||'%'
+			#end
+			#if ($jlxdm && !$jlxdm.equals(""))
+				and jlxdm=#[jlxdm]
+			#end
+			#if ($stmc && !$stmc.equals(""))
+				and stmc like '%'||#[stmc]||'%'
+			#end
+			#if($mph && !$mph.equals(""))
+				and mph like '%'||#[mph]||'%'
+			#end
+			#if ($xqz && !$xqz.equals(""))
+				and xqz like '%'||#[xqz]||'%'
+			#end
+			#if ($ldxz && !$ldxz.equals(""))
+				and ldxz like '%'||#[ldxz]||'%'
+			#end
+			#if ($dyh && !$dyh.equals(""))
+				and dyh=#[dyh]
+			#end
+			#if ($lch && !$lch.equals(""))
+				and lch like '%'||#[lch]||'%'
+			#end
+			#if ($fjh && !$fjh.equals(""))
+				and fjh like '%'||#[fjh]||'%'
+			#end
+			
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryStxxBeanByStId">
+ 		<![CDATA[
+			select t.*,substr(t.xzqh,1,4)||'00' as sjxzqh
+  			from t_common_stxx t
+ 			where id=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryDzxxBeanByDzid">
+ 		<![CDATA[
+			select *
+  			from t_COMMON_DZXX
+ 			where DZID=?		
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="insertStxxBean">
+ 		<![CDATA[
+			insert into t_common_stxx
+			  (id,
+			   stbm,
+			   stmc,
+			   xzqh,
+			   xzqhmc,
+			   jdxzdm,
+			   jdxzmc,
+			   jlxdm,
+			   jlxmc,
+			   sqdm,
+			   sqmc,
+			   mph,
+			   xqz,
+			   ldxz,
+			   stfl,
+			   dmcs,
+			   dxcs,
+			   jzjg,
+			   kfs,
+			   wygldw,
+			   zbdw,
+			   xfdj,
+			   pcsmc,
+			   x,
+			   y,
+			   pcsdm,
+			   isvalid,
+			   gxsj,
+			   ystbm,
+			   djdwdm,
+			   djdwmc,
+			   djrjh,
+			   djrxm,
+			   djsj,
+			   djrsfzh,
+			   czdwdm,
+			   czdwmc,
+			   czrjh,
+			   czrxm,
+			   czsj,
+			   czrsfzh,
+			   sfjwtdj,
+			   zxbs)
+			values
+			  (#[id],
+			   #[stbm],
+			   #[stmc],
+			   #[xzqh],
+			   (select mc from t_common_dictionary where zdlb='GB_XZQH' and dm=#[xzqh]),
+			   #[jdxzdm],
+			   (select jc from t_common_hnxzqh where dm=#[jdxzdm]),
+			   #[jlxdm],
+			   (select nvl(jc,mc) from t_common_dzjlx where dm=#[jlxdm]),
+			   #[sqdm],
+			   (select jc from t_common_hnxzqh where dm=#[sqdm]),
+			   #[mph],
+			   #[xqz],
+			   #[ldxz],
+			   #[stfl],
+			   #[dmcs],
+			   #[dxcs],
+			   #[jzjg],
+			   #[kfs],
+			   #[wygldw],
+			   #[zbdw],
+			   #[xfdj],
+			   #[pcsmc],
+			   #[x],
+			   #[y],
+			   #[pcsdm],
+			   '1',
+			   sysdate,
+			   #[ystbm],
+			   #[djdwdm],
+			   #[djdwmc],
+			   #[djrjh],
+			   #[djrxm],
+			   sysdate,
+			   #[djrsfzh],
+			   #[djdwdm],
+			   #[djdwmc],
+			   #[djrjh],
+			   #[djrxm],
+			   sysdate,
+			   #[djrsfzh],
+			   '0',
+			   1)
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateStxxBean">
+ 		<![CDATA[
+			 update t_common_stxx
+			   set  
+			       stmc = #[stmc],
+			       xzqh = #[xzqh],
+			       xzqhmc = (select mc from t_common_dictionary where zdlb='GB_XZQH' and dm=#[xzqh]),
+			       jdxzdm = #[jdxzdm],
+			       jdxzmc = (select jc from t_common_hnxzqh where dm=#[jdxzdm]),
+			       jlxdm = #[jlxdm],
+			       jlxmc = (select nvl(jc,mc) from t_common_dzjlx where dm=#[jlxdm]),
+			       sqdm = #[sqdm],
+			       sqmc = (select jc from t_common_hnxzqh where dm=#[sqdm]),
+			       mph = #[mph],
+			       xqz = #[xqz],
+			       ldxz = #[ldxz],
+			       stfl = #[stfl],
+			       dmcs = #[dmcs],
+			       dxcs = #[dxcs],
+			       jzjg = #[jzjg],
+			       kfs = #[kfs],
+			       wygldw = #[wygldw],
+			       zbdw = #[zbdw],
+			       xfdj = #[xfdj],
+			       pcsmc = #[pcsmc],
+			       x = #[x],
+			       y = #[y],
+			       pcsdm = #[pcsdm],
+			       isvalid = '1',
+			       gxsj = sysdate,
+			       ystbm = #[ystbm],
+			       czrjh = #[czrjh],
+			       czrxm = #[czrxm],
+			       czrsfzh = #[czrsfzh],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czsj = sysdate
+			 where id = #[id]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="insertDzxxBean">
+ 		<![CDATA[
+			insert into t_common_dzxx
+			  (dzid,
+			   dzbm,
+			   dyh,
+			   lch,
+			   fjh,
+			   dzxzb,
+			   dzyzb,
+			   djrxm,
+			   djrdwdm,
+			   djrdwmc,
+			   djsj,
+			   djrsfzh,
+			   djrjh,
+			   fsdz,
+			   ydzbh,
+			   stid,
+			   gxsj,
+			   lchz,
+			   shhz,
+			   sqdm)
+			values
+			  (#[dzid],
+			   #[dzbm],
+			   #[dyh],
+			   #[lch],
+			   #[fjh],
+			   #[x],
+			   #[y],
+			   #[djrxm],
+			   #[djrdwdm],
+			   #[djrdwmc],
+			   sysdate,
+			   #[djrsfzh],
+			   #[djrjh],
+			   #[fsdz],
+			   #[ydzbh],
+			   #[stid],
+			   sysdate,
+			   #[lchz],
+			   #[shhz],
+			   #[sqdm])
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateDzxxBean">
+ 		<![CDATA[
+		 update t_common_dzxx
+		   set 
+		       dyh = #[dyh],
+		       lch = #[lch],
+		       fjh = #[fjh],
+		       dzxzb = #[x],
+		       dzyzb = #[y],
+		       dzid = #[dzid],
+		       fsdz = #[fsdz],
+		       ydzbh = #[ydzbh],
+		       gxsj = sysdate,
+		       lchz = #[lchz],
+		       shhz = #[shhz],
+		       stid = #[stid],
+		       sqdm = #[sqdm]
+		 where dzid = #[dzid]
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	<property name="deleteStxx">
+ 		<![CDATA[
+		  update t_common_stxx
+			   set  
+			       czrjh = #[czrjh],
+			       czrxm = #[czrxm],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czsj = sysdate,
+			       gxsj=sysdate,
+			       zxbs = '0',
+			       isvalid = '0'
+			 where id = #[id]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="deleteStxxBeanByStid">
+ 		<![CDATA[
+ 			delete from t_common_stxx where id=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryStxxIsIncludeFwxx">
+ 		<![CDATA[
+		select * from t_lsgl_fw_jbxx where  dzid in (
+		    select dzid from t_common_dzxx where stid =  ?
+		)
+		 and (zxbs = '0' or zxbs is null)
+ 		]]>
+ 	</property>
+ 	<property name="recoveryStxx">
+ 		<![CDATA[
+		  update t_common_stxx
+			   set  
+			       czrjh = #[czrjh],
+			       czrxm = #[czrxm],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czsj = sysdate,
+			       gxsj=sysdate,
+			       zxbs = #[zxbs],
+			       isvalid = '1'
+			 where id = #[id]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryStxxDyhxxList">
+ 		<![CDATA[
+ 			select dm,f_get_dicmc('ZDY_DYH',dm) as mc
+			from (
+				select distinct lpad(trim(dyh),2,'0') as dm
+				from t_lsgl_fw_jbxx fw inner join t_common_dzxx dz on fw.dzid=dz.dzid
+				where (fw.zxbs = '0' or fw.zxbs is null) 
+					and dz.stid=#[stid] 
+					and dyh is not null
+			)
+			order by dm
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryFwjgList">
+ 		<![CDATA[
+ 			select fwid,
+			       dzid,
+			       f_get_dzmc(t.dzid) as dzmc,
+			       hzxm,
+			       hzsfzh,
+			       hzlxdh,
+			       sfczw,
+			       (select jc from t_common_hnxzqh where dm = t.sssq) as sssqmc,  
+			       (select dyh from t_common_dzxx where dzid=t.dzid) as dyh,
+			       (select nvl(lch,1) from t_common_dzxx where dzid=t.dzid) as lch,
+			       (select lchz from t_common_dzxx where dzid=t.dzid) as lchz,
+			       (select fjh from t_common_dzxx where dzid=t.dzid) as fjh,
+			       (select shhz from t_common_dzxx where dzid=t.dzid) as shhz,
+			       (select fsdz from t_common_dzxx where dzid=t.dzid) as fsdz,
+			       f_get_fwjzrkcount(FWID) AS fwrks
+			from t_lsgl_fw_jbxx t
+			where 1=1
+			and (zxbs = '0' or zxbs is null)
+			    and dzid in (
+			        select dzid 
+			        from v_common_dzxx dz
+			        where dz.stid=#[stid] 
+			        	#if($dyh && !$dyh.equals(""))
+			        		and dz.dyh=#[dyh]
+			        	#end
+			    )
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryFwRkxxBeansByFwid">
+ 		<![CDATA[
+ 			 --常住人口数
+	        SELECT czrk.czrkbh as rkid,
+	               CZRK.RYBH,
+	               CZRK.SFZH,
+	               (select xm from t_lsgl_rk_jbxx where rybh=czrk.rybh) as xm,
+	               '1' as rylb
+	        FROM T_LSGL_RK_CZRK CZRK INNER JOIN T_LSGL_RKFW_GL GL ON CZRK.RKFWGLID=GL.RKFWGLID
+	        WHERE (CZRK.ZXBS IS NULL OR CZRK.ZXBS='0') 
+	               AND GL.FWID=#[fwid]
+	         UNION ALL
+	        --流动人口数
+	        SELECT lk.ZZBH as rkid,
+	               lk.rybh,
+	               LK.SFZH,
+				   (select xm from t_lsgl_rk_jbxx where rybh=lk.rybh) as xm,
+				   '2' as rylb
+	        FROM T_LSGL_RK_LDRKZZXX LK INNER JOIN T_LSGL_RKFW_GL GL ON LK.RKFWGLID=GL.RKFWGLID
+	        WHERE (LK.ZXBS IS NULL OR LK.ZXBS='0') 
+	               AND GL.FWID=#[fwid]
+	        
+	        UNION ALL
+	        --境外人口数
+	        SELECT jw.JWBH as rkid,
+	               jw.rybh,
+	               JW.RJZJHM as sfzh,
+				   JW.ywm||' ' || JW.ywx as xm,
+				   '4' as rylb
+	        FROM T_LSGL_RK_JWRKXX JW INNER JOIN T_LSGL_RKFW_GL GL ON JW.RKFWGLID=GL.RKFWGLID
+	        WHERE (JW.ZXBS IS NULL OR JW.ZXBS='0') 
+	               AND GL.FWID=#[fwid]
+	         UNION ALL
+	        --寄住人口数
+	        SELECT jz.JZBH as rkid,
+	               jz.rybh,
+	               JZ.SFZH,
+				   (select xm from t_lsgl_rk_jbxx where rybh=jz.rybh) as xm,
+				   '5' as rylb
+	        FROM T_LSGL_RK_JZRKXX JZ  INNER JOIN T_LSGL_RKFW_GL GL ON JZ.RKFWGLID=GL.RKFWGLID
+	        WHERE (JZ.ZXBS IS NULL OR JZ.ZXBS='0') 
+	               AND GL.FWID=#[fwid]
+	        UNION ALL
+	        --未落户人口数
+	        SELECT wlh.wlhrkbh as rkid,wlh.rybh,
+	               WLH.SFZH,
+				   (select xm from t_lsgl_rk_jbxx where rybh=wlh.rybh) as xm,
+				   '3' as rylb
+	        FROM T_LSGL_RK_WLHCZHK WLH  INNER JOIN T_LSGL_RKFW_GL GL ON WLH.RKFWGLID=GL.RKFWGLID
+	        WHERE (WLH.ZXBS IS NULL OR WLH.ZXBS='0') 
+               AND GL.FWID=#[fwid]
+ 		]]>
+ 	</property>
+ 	
+</properties>

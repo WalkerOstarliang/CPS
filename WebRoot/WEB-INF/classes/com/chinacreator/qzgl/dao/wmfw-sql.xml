@@ -1,0 +1,2113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 根据queryBean查询提供证明列表 -->
+	<property name="queryPageTgzmListSQL">
+		<![CDATA[
+			select id,
+			       sqrxm,
+			       sqrxb,
+			       sqrzjzl,
+			       sqrzjhm,
+			       sqrlxfs,
+			       to_char(sqsj,'yyyy-mm-dd') sqsj,
+			       tgzmlx,
+			       tgzmnr,
+			       to_char(cbsj,'yyyy-mm-dd') cbsj,
+			       cbdwdm,
+			       cbdwmc,
+			       cbrxm,
+			       qfrxm,
+			       cljg,
+			       bz,
+			       sssqdm,
+			       sssqmc,
+			       ssjwqdm,
+			       ssjwqmc,
+			       czrxm,
+			       czrjh,
+			       czrsfzh,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') czsj,
+			       czdwdm,
+			       czdwmc,
+			       djrxm,
+			       djrsfzh,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') djsj,
+			       djdwdm,
+			       djdwmc,
+			       zxbs,
+			       decode(zxbs,'0','正常','1','注销','2','删除',zxbs) zxbsms,
+			       to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') zxsj,
+			       to_char(scsj,'yyyy-mm-dd hh24:mi:ss') scsj
+			  from t_gzgl_tgzm 
+			  where 1 = 1
+			  and (zxbs <> '2' and zxbs <> '1')
+			  #if($jwsqdm and !$jwsqdm.equals(""))
+	      		and (ssjwqdm=#[jwsqdm])
+	      	  #else
+		      	#if($pcsdm and !$pcsdm.equals(""))
+					and substr(ssjwqdm,1,8)=substr(#[pcsdm],1,8)
+				#else
+					--精确到县区
+					#if($countrydm and !$countrydm.equals(""))
+						and substr(ssjwqdm,1,6)=substr(#[countrydm],1,6)
+					#else
+					   --精确到市州
+						 #if($citydm and !$citydm.equals(""))
+							and substr(ssjwqdm,1,4)=substr(#[citydm],1,4)
+						 #end
+					#end
+				#end
+			 #end
+			 #if($startDate && !$startDate.equals(""))
+				and sqsj >= to_date(#[startDate]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			 #end
+			 #if($endDate && !$endDate.equals(""))
+				and sqsj <= to_date(#[endDate]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			 #end
+			 #if($sqrxm && !$sqrxm.equals(""))
+			 	and sqrxm like '%'||#[sqrxm]||'%' 
+			 #end
+			 #if($tgzmlx && !$tgzmlx.equals(""))
+			    and	tgzmlx like '%'||#[tgzmlx]||'%' 
+			 #end
+			 #if($cbrxm && !$cbrxm.equals(""))
+			 	and	cbrxm like '%'||#[cbrxm]||'%' 
+			 #end
+			 #if($cbdwmc && !$cbdwmc.equals(""))
+			 	and cbdwmc like '%'||#[cbdwmc]||'%' 
+			 #end
+			 #if($startTime && !$startTime.equals(""))
+			 	and cbsj >= to_date(#[startTime]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			 #end
+			 #if($endTime && !$endTime.equals(""))
+				and cbsj <= to_date(#[endTime]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			 #end
+		]]>
+	</property>
+	
+	<!-- 根据id查询提供证明bean -->
+	<property name="queryTgzmBeanBYIdSQL">
+		<![CDATA[
+			select id,
+			       sqrxm,
+			       sqrxb,
+			       sqrzjzl,
+			       sqrzjhm,
+			       sqrlxfs,
+			       to_char(sqsj,'yyyy-mm-dd') sqsj,
+			       tgzmlx,
+			       tgzmnr,
+			       to_char(cbsj,'yyyy-mm-dd') cbsj,
+			       cbdwdm,
+			       cbdwmc,
+			       cbrxm,
+			       qfrxm,
+			       cljg,
+			       bz,
+			       sssqdm,
+			       sssqmc,
+			       ssjwqdm,
+			       ssjwqmc,
+			       czrxm,
+			       czrjh,
+			       czrsfzh,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') czsj,
+			       czdwdm,
+			       czdwmc,
+			       djrxm,
+			       djrsfzh,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') djsj,
+			       djdwdm,
+			       djdwmc,
+			       zxbs,
+			       decode(zxbs,'0','正常','1','注销','2','删除',zxbs) zxbsms,
+			       to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') zxsj,
+			       to_char(scsj,'yyyy-mm-dd hh24:mi:ss') scsj
+			  from t_gzgl_tgzm 
+			  where id = ?
+		]]>
+	</property>
+	<!-- 新增提供证明bean -->
+	<property name="insertTgzmSQL">
+		<![CDATA[
+			insert into t_gzgl_tgzm
+					  (id,
+					   sqrxm,
+					   sqrxb,
+					   sqrzjzl,
+					   sqrzjhm,
+					   sqrlxfs,
+					   sqsj,
+					   tgzmlx,
+					   tgzmnr,
+					   cbsj,
+					   cbdwdm,
+					   cbdwmc,
+					   cbrxm,
+					   qfrxm,
+					   cljg,
+					   bz,
+					   sssqdm,
+					   sssqmc,
+					   ssjwqdm,
+					   ssjwqmc,
+					   czrxm,
+					   czrjh,
+					   czrsfzh,
+					   czsj,
+					   czdwdm,
+					   czdwmc,
+					   djrxm,
+					   djrsfzh,
+					   djsj,
+					   djdwdm,
+					   djdwmc,
+					   zxbs)
+					values
+					  (#[id],
+					   #[sqrxm],
+					   #[sqrxb],
+					   #[sqrzjzl],
+					   #[sqrzjhm],
+					   #[sqrlxfs],
+					   to_date(#[sqsj],'yyyy-mm-dd'),
+					   #[tgzmlx],
+					   #[tgzmnr],
+					   to_date(#[cbsj],'yyyy-mm-dd'),
+					   #[cbdwdm],
+					   #[cbdwmc],
+					   #[cbrxm],
+					   #[qfrxm],
+					   #[cljg],
+					   #[bz],
+					   #[sssqdm],
+					   #[sssqmc],
+					   #[ssjwqdm],
+					   #[ssjwqmc],
+					   #[czrxm],
+					   #[czrjh],
+					   #[czrsfzh],
+					   to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+					   #[czdwdm],
+					   #[czdwmc],
+					   #[djrxm],
+					   #[djrsfzh],
+					   to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+					   #[djdwdm],
+					   #[djdwmc],
+					   #[zxbs])
+		]]>
+	</property>
+	<!-- 根据id更新提供证明bean -->
+	<property name="updateTgzmSQL">
+		<![CDATA[
+			update t_gzgl_tgzm
+			   set 
+			       sqrxm = #[sqrxm],
+			       sqrxb = #[sqrxb],
+			       sqrzjzl = #[sqrzjzl],
+			       sqrzjhm = #[sqrzjhm],
+			       sqrlxfs = #[sqrlxfs],
+			       sqsj = to_date(#[sqsj],'yyyy-mm-dd'),
+			       tgzmlx = #[tgzmlx],
+			       tgzmnr = #[tgzmnr],
+			       cbsj = to_date(#[cbsj],'yyyy-mm-dd'),
+			       cbdwdm = #[cbdwdm],
+			       cbdwmc = #[cbdwmc],
+			       cbrxm = #[cbrxm],
+			       qfrxm = #[qfrxm],
+			       cljg = #[cljg],
+			       bz = #[bz],
+			       ssjwqdm = #[ssjwqdm],
+			       ssjwqmc = #[ssjwqmc],
+			       czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc] 
+			 	where id = #[id]
+		]]>
+	</property>
+	<!-- 根据id删除（逻辑删除）提供证明bean -->
+	<property name="deleteTgzmSQL">
+		<![CDATA[
+			update t_gzgl_tgzm
+			   set 
+			       czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       scsj = to_date(#[scsj],'yyyy-mm-dd hh24:mi:ss'),
+			       zxbs = #[zxbs] 
+			 	where id = #[id]
+		]]>
+	</property>
+	<!-- 新增迷途人员信息bean -->
+	<property name="insertMtrySQL">
+		<![CDATA[
+			insert into t_gzgl_mtry
+					  (id,
+					   mtryxm,
+					   mtryxmbm,
+					   mtryxb,
+					   mtrynl,
+					   mtrycsrq,
+					   mtryzjlb,
+					   mtryzjhm,
+					   mtryjg,
+					   mtrytmtz,
+					   mtryky,
+					   mtrytbbj,
+					   mtrystzk,
+					   mtryly,
+					   mtryzwcj,
+					   mtrydnacj,
+					   mtryxx,
+					   mtryyztz,
+					   mtrysswp,
+					   mtrybfxsj,
+					   mtrybfxdd,
+					   mtrymtjg,
+					   mtrydssj,
+					   mtryjbrxm,
+					   mtrysjrxm,
+					   mtrysjrzjlb,
+					   mtrysjrzjhm,
+					   mtrysjrlxfs,
+					   mtrysjrzz,
+					   mtrybz,
+					   ssjwqdm,
+					   ssjwqmc,
+					   djsj,
+					   djrxm,
+					   djrjh,
+					   djdwdm,
+					   djdwmc,
+					   czrxm,
+					   czrjh,
+					   czsj,
+					   czdwdm,
+					   czdwmc,
+					   zxbs,
+					   scsj,
+					   mtrysg)
+					values
+					  (#[id],
+					   #[mtryxm],
+					   #[mtryxmbm],
+					   #[mtryxb],
+					   #[mtrynl],
+					   to_date(#[mtrycsrq],'yyyy-mm-dd'),
+					   #[mtryzjlb],
+					   #[mtryzjhm],
+					   #[mtryjg],
+					   #[mtrytmtz],
+					   #[mtryky],
+					   #[mtrytbbj],
+					   #[mtrystzk],
+					   #[mtryly],
+					   #[mtryzwcj],
+					   #[mtrydnacj],
+					   #[mtryxx],
+					   #[mtryyztz],
+					   #[mtrysswp],
+					   to_date(#[mtrybfxsj],'yyyy-mm-dd'),
+					   #[mtrybfxdd],
+					   #[mtrymtjg],
+					   to_date(#[mtrydssj],'yyyy-mm-dd'),
+					   #[mtryjbrxm],
+					   #[mtrysjrxm],
+					   #[mtrysjrzjlb],
+					   #[mtrysjrzjhm],
+					   #[mtrysjrlxfs],
+					   #[mtrysjrzz],
+					   #[mtrybz],
+					   #[ssjwqdm],
+					   #[ssjwqmc],
+					   to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+					   #[djrxm],
+					   #[djrjh],
+					   #[djdwdm],
+					   #[djdwmc],
+					   #[czrxm],
+					   #[czrjh],
+					   to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+					   #[czdwdm],
+					   #[czdwmc],
+					   #[zxbs],
+					   to_date(#[scsj],'yyyy-mm-dd hh24:mi:ss'),
+					   #[mtrysg])
+		]]>
+	</property>
+	<!-- 根据mtryquery查询迷途人员列表 -->
+	<property name="queryPageMtryListSQL">
+		<![CDATA[
+			select id,
+			       mtryxm,
+			       mtryxmbm,
+			       mtryxb,
+			       mtrynl,
+			       to_char(mtrycsrq,'yyyy-mm-dd') mtrycsrq,
+			       mtryzjlb,
+			       mtryzjhm,
+			       mtryjg,
+			       mtrytmtz,
+			       mtryky,
+			       mtrytbbj,
+			       mtrystzk,
+			       mtryly,
+			       mtryzwcj,
+			       mtrydnacj,
+			       mtryxx,
+			       mtryzmzp,
+			       mtryyztz,
+			       mtrysswp,
+			       to_char(mtrybfxsj,'yyyy-mm-dd') mtrybfxsj,
+			       mtrybfxdd,
+			       mtrymtjg,
+			       to_char(mtrydssj,'yyyy-mm-dd') mtrydssj,
+			       mtryjbrxm,
+			       mtrysjrxm,
+			       mtrysjrzjlb,
+			       mtrysjrzjhm,
+			       mtrysjrlxfs,
+			       mtrysjrzz,
+			       mtrybz,
+			       ssjwqdm,
+			       ssjwqmc,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') djsj,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czrjh,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') czsj,
+			       czdwdm,
+			       czdwmc,
+			       zxbs,
+			       to_char(scsj,'yyyy-mm-dd hh24:mi:ss') scsj,
+			       mtrysg
+			  from t_gzgl_mtry
+			  where 1 = 1
+			  and (zxbs <> '2' and zxbs <> '1')
+			  #if($jwsqdm and !$jwsqdm.equals(""))
+	      		and (djdwdm =#[jwsqdm])
+	      	  #else
+		      	#if($pcsdm and !$pcsdm.equals(""))
+					and substr(djdwdm,1,8)=substr(#[pcsdm],1,8)
+				#else
+					--精确到县区
+					#if($countrydm and !$countrydm.equals(""))
+						and substr(djdwdm,1,6)=substr(#[countrydm],1,6)
+					#else
+					   --精确到市州
+						 #if($citydm and !$citydm.equals(""))
+							and substr(djdwdm,1,4)=substr(#[citydm],1,4)
+						 #end
+					#end
+				#end
+			 #end
+			 #if($fxstartDate && !$fxstartDate.equals(""))
+				and mtrybfxsj >= to_date(#[fxstartDate]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			 #end
+			 #if($fxendDate && !$fxendDate.equals(""))
+				and mtrybfxsj <= to_date(#[fxendDate]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			 #end
+			 #if($mtryxm && !$mtryxm.equals(""))
+			 	and mtryxm like '%'||#[mtryxm]||'%' 
+			 #end
+			 #if($mtryly && !$mtryly.equals(""))
+			 	and	mtryly like '%'||#[mtryly]||'%' 
+			 #end
+			 #if($mtrysjrxm && !$mtrysjrxm.equals(""))
+			 	and mtrysjrxm like '%'||#[mtrysjrxm]||'%' 
+			 #end
+			 #if($dsstartDate && !$dsstartDate.equals(""))
+			 	and mtrydssj >= to_date(#[dsstartDate]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			 #end
+			 #if($dsendDate && !$dsendDate.equals(""))
+				and mtrydssj <= to_date(#[dsendDate]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			 #end
+		]]>
+	</property>
+		<!-- 根据id查询迷途人员bean -->
+	<property name="queryMtryBeanBYIdSQL">
+		<![CDATA[
+			select id,
+			       mtryxm,
+			       mtryxmbm,
+			       mtryxb,
+			       mtrynl,
+			       to_char(mtrycsrq,'yyyy-mm-dd') mtrycsrq,
+			       mtryzjlb,
+			       mtryzjhm,
+			       mtryjg,
+			       mtrytmtz,
+			       mtryky,
+			       mtrytbbj,
+			       mtrystzk,
+			       mtryly,
+			       mtryzwcj,
+			       mtrydnacj,
+			       mtryxx,
+			       mtryzmzp,
+			       mtryyztz,
+			       mtrysswp,
+			       to_char(mtrybfxsj,'yyyy-mm-dd') mtrybfxsj,
+			       mtrybfxdd,
+			       mtrymtjg,
+			       to_char(mtrydssj,'yyyy-mm-dd') mtrydssj,
+			       mtryjbrxm,
+			       mtrysjrxm,
+			       mtrysjrzjlb,
+			       mtrysjrzjhm,
+			       mtrysjrlxfs,
+			       mtrysjrzz,
+			       mtrybz,
+			       ssjwqdm,
+			       ssjwqmc,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') djsj,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czrjh,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') czsj,
+			       czdwdm,
+			       czdwmc,
+			       zxbs,
+			       to_char(scsj,'yyyy-mm-dd hh24:mi:ss') scsj,
+			       mtrysg,
+			       to_char(mtrylssj,'yyyy-mm-dd') mtrylssj,
+				   mtrylsqx,
+				   mtryjsdwmc,
+				   mtryjsdwdh,
+				   mtryjsdwdz,
+				   mtryrlrxm,
+				   mtryrlrzjlb,
+				   mtryrlrzjhm,
+				   mtryrlrlxfs,
+				   mtryrlrgx,
+				   mtryrlrzz,
+				   mtryysbz,
+				   to_char(mtryysdjsj,'yyyy-mm-dd hh24:mi:ss') mtryysdjsj,
+				   mtryysdjdwdm,
+				   mtryysdjdwmc,
+				   mtryysdjrxm,
+				   mtryysdjrjh,
+				   mtryysjbrxm,
+				   mtryysssjwqdm,
+				   mtryysssjwqmc
+			  from t_gzgl_mtry
+			  where id = ?
+		]]>
+	</property>
+	<!-- 根据id更新迷途人员信息 -->
+	<property name="updateMtrySQL">
+		<![CDATA[
+			update t_gzgl_mtry
+			   set mtryxm = #[mtryxm],
+			       mtryxmbm = #[mtryxmbm],
+			       mtryxb = #[mtryxb],
+			       mtrynl = #[mtrynl],
+			       mtrycsrq = #[mtrycsrq],
+			       mtryzjlb = #[mtryzjlb],
+			       mtryzjhm = #[mtryzjhm],
+			       mtryjg = #[mtryjg],
+			       mtrytmtz = #[mtrytmtz],
+			       mtryky = #[mtryky],
+			       mtrytbbj = #[mtrytbbj],
+			       mtrystzk = #[mtrystzk],
+			       mtryly = #[mtryly],
+			       mtryzwcj = #[mtryzwcj],
+			       mtrydnacj = #[mtrydnacj],
+			       mtryxx = #[mtryxx],
+			       mtryyztz = #[mtryyztz],
+			       mtrysswp = #[mtrysswp],
+			       mtrybfxsj = to_date(#[mtrybfxsj],'yyyy-mm-dd'),
+			       mtrybfxdd = #[mtrybfxdd],
+			       mtrymtjg = #[mtrymtjg],
+			       mtrydssj = to_date(#[mtrydssj],'yyyy-mm-dd'),
+			       mtryjbrxm = #[mtryjbrxm],
+			       mtrysjrxm = #[mtrysjrxm],
+			       mtrysjrzjlb = #[mtrysjrzjlb],
+			       mtrysjrzjhm = #[mtrysjrzjhm],
+			       mtrysjrlxfs = #[mtrysjrlxfs],
+			       mtrysjrzz = #[mtrysjrzz],
+			       mtrybz = #[mtrybz],
+			       ssjwqdm = #[ssjwqdm],
+			       ssjwqmc = #[ssjwqmc],
+			       czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       mtrysg = #[mtrysg]
+			 where id = #[id]
+		]]>
+	</property>
+	<!-- 根据id更新迷途人员移送信息 -->
+	<property name="updateMtryYsxxSQL">
+		<![CDATA[
+			update t_gzgl_mtry
+			   set mtrylssj = to_date(#[mtrylssj],'yyyy-mm-dd'),
+				   mtrylsqx = #[mtrylsqx],
+				   mtryjsdwmc = #[mtryjsdwmc],
+				   mtryjsdwdh = #[mtryjsdwdh],
+				   mtryjsdwdz = #[mtryjsdwdz],
+				   mtryrlrxm = #[mtryrlrxm],
+				   mtryrlrzjlb = #[mtryrlrzjlb],
+				   mtryrlrzjhm = #[mtryrlrzjhm],
+				   mtryrlrlxfs = #[mtryrlrlxfs],
+				   mtryrlrgx = #[mtryrlrgx],
+				   mtryrlrzz = #[mtryrlrzz],
+				   mtryysbz = #[mtryysbz],
+				   mtryysdjsj = to_date(#[mtryysdjsj],'yyyy-mm-dd hh24:mi:ss') ,
+				   mtryysdjdwdm = #[mtryysdjdwdm],
+				   mtryysdjdwmc = #[mtryysdjdwmc],
+				   mtryysdjrxm = #[mtryysdjrxm],
+				   mtryysdjrjh = #[mtryysdjrjh],
+				   mtryysjbrxm = #[mtryysjbrxm],
+				   mtryysssjwqdm = #[mtryysssjwqdm],
+				   mtryysssjwqmc = #[mtryysssjwqmc]
+			 where id = #[id]
+		]]>
+	</property>
+	<!-- 根据id注销（删除）迷途人员 -->
+	<property name="deleteMtrySQL">
+		<![CDATA[
+			update t_gzgl_mtry
+			   set czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+			   	   czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       scsj = to_date(#[scsj],'yyyy-mm-dd hh24:mi:ss'),
+			       zxbs =#[zxbs]
+			 where id = #[id]
+		]]>
+	</property>
+	<!-- 根据id更新迷途人员照片 -->
+	<property name="updateMtryzpSQL">
+		<![CDATA[
+			update t_gzgl_mtry set mtryzmzp=? where id=?
+		]]>
+	</property>
+	<!-- 根据id删除迷途人员照片 -->
+	<property name="deleteMtryzpSQL">
+		<![CDATA[
+			update t_gzgl_mtry set mtryzmzp='' where id=?
+		]]>
+	</property>
+	<!-- 查询弃婴信息列表 -->
+	<property name="queryPageQyryListSQL">
+		<![CDATA[
+			select id,
+			       qyryxm,
+			       qyryxmbm,
+			       qyryxb,
+			       qyrynl,
+			       to_char(qyrycsrq,'yyyy-mm-dd') qyrycsrq,
+			       qyryzjlb,
+			       qyryzjhm,
+			       qyryjg,
+			       qyrytqyz,
+			       qyrytbbj,
+			       qyrystzk,
+			       qyryly,
+			       qyryzwcj,
+			       qyrydnacj,
+			       qyryxx,
+			       qyryyztz,
+			       qyrysswp,
+			       to_char(qyrybfxsj,'yyyy-mm-dd') qyrybfxsj,
+			       qyrybfxdd,
+			       qyryqyjg,
+			       to_char(qyrydssj,'yyyy-mm-dd') qyrydssj,
+			       qyryjbrxm,
+			       qyrysjrxm,
+			       qyrysjrzjlb,
+			       qyrysjrzjhm,
+			       qyrysjrlxfs,
+			       qyrysjrzz,
+			       qyrybz,
+			       ssjwqdm,
+			       ssjwqmc,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') djsj,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czrjh,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') czsj,
+			       czdwdm,
+			       czdwmc,
+			       zxbs,
+			       to_char(scsj,'yyyy-mm-dd hh24:mi:ss') scsj,
+			       qyryfxrxm,
+			       qyryfxrsfzh,
+			       qyryfxrzjlb,
+			       qyryfxrzjhm,
+			       qyryfxrzz,
+			       qyryfxrlxfs
+			  from t_gzgl_qyry
+			  where 1 = 1
+			  and (zxbs <> '2' and zxbs <> '1')
+			  #if($jwsqdm and !$jwsqdm.equals(""))
+	      		and (djdwdm =#[jwsqdm])
+	      	  #else
+		      	#if($pcsdm and !$pcsdm.equals(""))
+					and substr(djdwdm,1,8)=substr(#[pcsdm],1,8)
+				#else
+					--精确到县区
+					#if($countrydm and !$countrydm.equals(""))
+						and substr(djdwdm,1,6)=substr(#[countrydm],1,6)
+					#else
+					   --精确到市州
+						 #if($citydm and !$citydm.equals(""))
+							and substr(djdwdm,1,4)=substr(#[citydm],1,4)
+						 #end
+					#end
+				#end
+			 #end
+			 #if($fxstartDate && !$fxstartDate.equals(""))
+				and qyrybfxsj >= to_date(#[fxstartDate]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			 #end
+			 #if($fxendDate && !$fxendDate.equals(""))
+				and qyrybfxsj <= to_date(#[fxendDate]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			 #end
+			 #if($qyryxm && !$qyryxm.equals(""))
+			 	and qyryxm like '%'||#[qyryxm]||'%' 
+			 #end
+			 #if($qyryly && !$qyryly.equals(""))
+			 	and	qyryly like '%'||#[qyryly]||'%' 
+			 #end
+			 #if($qyryfxrxm && !$qyryfxrxm.equals(""))
+			 	and qyryfxrxm like '%'||#[qyryfxrxm]||'%' 
+			 #end
+			 #if($dsstartDate && !$dsstartDate.equals(""))
+			 	and qyrydssj >= to_date(#[dsstartDate]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			 #end
+			 #if($dsendDate && !$dsendDate.equals(""))
+				and qyrydssj <= to_date(#[dsendDate]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			 #end	
+		]]>
+	</property>
+	<!-- 根据id查询弃婴信息bean -->
+	<property name="queryQyryBeanBYIdSQL">
+		<![CDATA[
+			select id,
+			       qyryxm,
+			       qyryxmbm,
+			       qyryxb,
+			       qyrynl,
+			       to_char(qyrycsrq,'yyyy-mm-dd') qyrycsrq,
+			       qyryzjlb,
+			       qyryzjhm,
+			       qyryjg,
+			       qyrytqyz,
+			       qyrytbbj,
+			       qyrystzk,
+			       qyryly,
+			       qyryzwcj,
+			       qyrydnacj,
+			       qyryxx,
+			       qyryyztz,
+			       qyrysswp,
+			       to_char(qyrybfxsj,'yyyy-mm-dd') qyrybfxsj,
+			       qyrybfxdd,
+			       qyryqyjg,
+			       to_char(qyrydssj,'yyyy-mm-dd') qyrydssj,
+			       qyryjbrxm,
+			       qyrysjrxm,
+			       qyrysjrzjlb,
+			       qyrysjrzjhm,
+			       qyrysjrlxfs,
+			       qyrysjrzz,
+			       qyrybz,
+			       ssjwqdm,
+			       ssjwqmc,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') djsj,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czrjh,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') czsj,
+			       czdwdm,
+			       czdwmc,
+			       zxbs,
+			       to_char(scsj,'yyyy-mm-dd hh24:mi:ss') scsj,
+			       qyryfxrxm,
+			       qyryfxrsfzh,
+			       qyryfxrzjlb,
+			       qyryfxrzjhm,
+			       qyryfxrzz,
+			       qyryfxrlxfs,
+			       to_char(qyrylssj,'yyyy-mm-dd') qyrylssj,
+				   qyrylsqx,
+				   qyryjsdwmc,
+				   qyryjsdwdh,
+				   qyryjsdwdz,
+				   qyryrlrxm,
+				   qyryrlrsfzh,
+				   qyryrlrzjlb,
+				   qyryrlrzjhm,
+				   qyryrlrlxfs,
+				   qyryyrlrgx,
+				   qyryrlrzz,
+				   qyryysjbrxm,
+				   qyryyssprxm,
+				   qyryysbz,
+				   qyysssjwqdm,
+				   qyysssjwqmc,
+				   qyysdjrxm,
+				   to_char(qyysdjsj,'yyyy-mm-dd hh24:mi:ss') qyysdjsj,
+				   qyysdjdwdm,
+				   qyysdjdwmc
+			  from t_gzgl_qyry
+			  where id = ?
+		]]>
+	</property>
+	<!-- 根据id删除弃婴照片 -->
+	<property name="deleteQyryzpSQL">
+		<![CDATA[
+			update t_gzgl_qyry set qyryzmzp='' where id=?
+		]]>
+	</property>
+	<!-- 新增弃婴信息 -->
+	<property name="insertQyrySQL">
+		<![CDATA[
+			insert into t_gzgl_qyry
+					  (id,
+					   qyryxm,
+					   qyryxmbm,
+					   qyryxb,
+					   qyrynl,
+					   qyrycsrq,
+					   qyryzjlb,
+					   qyryzjhm,
+					   qyryjg,
+					   qyrytqyz,
+					   qyrytbbj,
+					   qyrystzk,
+					   qyryly,
+					   qyryzwcj,
+					   qyrydnacj,
+					   qyryxx,
+					   qyryyztz,
+					   qyrysswp,
+					   qyrybfxsj,
+					   qyrybfxdd,
+					   qyryqyjg,
+					   qyrydssj,
+					   qyryjbrxm,
+					   qyrysjrxm,
+					   qyrysjrzjlb,
+					   qyrysjrzjhm,
+					   qyrysjrlxfs,
+					   qyrysjrzz,
+					   qyrybz,
+					   ssjwqdm,
+					   ssjwqmc,
+					   djsj,
+					   djrxm,
+					   djrjh,
+					   djdwdm,
+					   djdwmc,
+					   czrxm,
+					   czrjh,
+					   czsj,
+					   czdwdm,
+					   czdwmc,
+					   zxbs,
+					   scsj,
+					   qyryfxrxm,
+					   qyryfxrsfzh,
+					   qyryfxrzjlb,
+					   qyryfxrzjhm,
+					   qyryfxrzz,
+					   qyryfxrlxfs)
+					values
+					  (#[id],
+					   #[qyryxm],
+					   #[qyryxmbm],
+					   #[qyryxb],
+					   #[qyrynl],
+					   to_date(#[qyrycsrq],'yyyy-mm-dd'),
+					   #[qyryzjlb],
+					   #[qyryzjhm],
+					   #[qyryjg],
+					   #[qyrytqyz],
+					   #[qyrytbbj],
+					   #[qyrystzk],
+					   #[qyryly],
+					   #[qyryzwcj],
+					   #[qyrydnacj],
+					   #[qyryxx],
+					   #[qyryyztz],
+					   #[qyrysswp],
+					   to_date(#[qyrybfxsj],'yyyy-mm-dd'),
+					   #[qyrybfxdd],
+					   #[qyryqyjg],
+					   to_date(#[qyrydssj],'yyyy-mm-dd'),
+					   #[qyryjbrxm],
+					   #[qyrysjrxm],
+					   #[qyrysjrzjlb],
+					   #[qyrysjrzjhm],
+					   #[qyrysjrlxfs],
+					   #[qyrysjrzz],
+					   #[qyrybz],
+					   #[ssjwqdm],
+					   #[ssjwqmc],
+					   to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+					   #[djrxm],
+					   #[djrjh],
+					   #[djdwdm],
+					   #[djdwmc],
+					   #[czrxm],
+					   #[czrjh],
+					   to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+					   #[czdwdm],
+					   #[czdwmc],
+					   #[zxbs],
+					   to_date(#[scsj],'yyyy-mm-dd hh24:mi:ss'),
+					   #[qyryfxrxm],
+					   #[qyryfxrsfzh],
+					   #[qyryfxrzjlb],
+					   #[qyryfxrzjhm],
+					   #[qyryfxrzz],
+					   #[qyryfxrlxfs])
+		]]>
+	</property>
+	<!-- 根据id修改弃婴信息 -->
+	<property name="updateQyrySQL">
+		<![CDATA[
+			update t_gzgl_qyry
+				   set qyryxm = #[qyryxm],
+				       qyryxmbm = #[qyryxmbm],
+				       qyryxb = #[qyryxb],
+				       qyrynl = #[qyrynl],
+				       qyrycsrq = to_date(#[qyrycsrq],'yyyy-mm-dd'),
+				       qyryzjlb = #[qyryzjlb],
+				       qyryzjhm = #[qyryzjhm],
+				       qyryjg = #[qyryjg],
+				       qyrytqyz = #[qyrytqyz],
+				       qyrytbbj = #[qyrytbbj],
+				       qyrystzk = #[qyrystzk],
+				       qyryly = #[qyryly],
+				       qyryzwcj = #[qyryzwcj],
+				       qyrydnacj = #[qyrydnacj],
+				       qyryxx = #[qyryxx],
+				       qyryyztz = #[qyryyztz],
+				       qyrysswp = #[qyrysswp],
+				       qyrybfxsj = to_date(#[qyrybfxsj],'yyyy-mm-dd'),
+				       qyrybfxdd = #[qyrybfxdd],
+				       qyryqyjg = #[qyryqyjg],
+				       qyrydssj = to_date(#[qyrydssj],'yyyy-mm-dd'),
+				       qyryjbrxm = #[qyryjbrxm],
+				       qyrysjrxm = #[qyrysjrxm],
+				       qyrysjrzjlb = #[qyrysjrzjlb],
+				       qyrysjrzjhm = #[qyrysjrzjhm],
+				       qyrysjrlxfs = #[qyrysjrlxfs],
+				       qyrysjrzz = #[qyrysjrzz],
+				       qyrybz = #[qyrybz],
+				       ssjwqdm = #[ssjwqdm],
+				       ssjwqmc = #[ssjwqmc],     
+				       czrxm = #[czrxm],
+				       czrjh = #[czrjh],
+				       czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+				       czdwdm = #[czdwdm],
+				       czdwmc = #[czdwmc],
+				       qyryfxrxm = #[qyryfxrxm],
+				       qyryfxrsfzh = #[qyryfxrsfzh],
+				       qyryfxrzjlb = #[qyryfxrzjlb],
+				       qyryfxrzjhm = #[qyryfxrzjhm],
+				       qyryfxrzz = #[qyryfxrzz],
+				       qyryfxrlxfs = #[qyryfxrlxfs]
+				 where id =#[id]
+		]]>
+	</property>
+	<!-- 根据id注销（删除）弃婴信息 -->
+	<property name="deleteQyrySQL">
+		<![CDATA[
+			update t_gzgl_qyry
+			   set czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+			   	   czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       scsj = to_date(#[scsj],'yyyy-mm-dd hh24:mi:ss'),
+			       zxbs =#[zxbs]
+			 where id = #[id]
+		]]>
+	</property>
+	<!-- 根据id更新弃婴移送信息 -->
+	<property name="updateQyryYsxxSQL">
+		<![CDATA[
+			update t_gzgl_qyry
+			   set  qyrylssj  =  to_date(#[qyrylssj],'yyyy-mm-dd'),
+					qyrylsqx  =  #[qyrylsqx],
+					qyryjsdwmc  =  #[qyryjsdwmc],
+					qyryjsdwdh  =  #[qyryjsdwdh],
+					qyryjsdwdz  =  #[qyryjsdwdz],
+					qyryrlrxm  =  #[qyryrlrxm],
+					qyryrlrsfzh  =  #[qyryrlrsfzh],
+					qyryrlrzjlb  =  #[qyryrlrzjlb],
+					qyryrlrzjhm  =  #[qyryrlrzjhm],
+					qyryrlrlxfs  =  #[qyryrlrlxfs],
+					qyryyrlrgx  =  #[qyryyrlrgx],
+					qyryrlrzz  =  #[qyryrlrzz],
+					qyryysjbrxm  =  #[qyryysjbrxm],
+					qyryyssprxm  =  #[qyryyssprxm],
+					qyryysbz  =  #[qyryysbz],
+					qyysssjwqdm  =  #[qyysssjwqdm],
+					qyysssjwqmc  =  #[qyysssjwqmc],
+					qyysdjrxm  =  #[qyysdjrxm],
+					qyysdjsj  =  to_date(#[qyysdjsj],'yyyy-mm-dd hh24:mi:ss'),
+					qyysdjdwdm  =  #[qyysdjdwdm],
+					qyysdjdwmc  =  #[qyysdjdwmc]
+			 where id = #[id]
+		]]>
+	</property>
+	<!-- 查询乞讨人员信息列表 -->
+	<property name="queryPageQtryListSQL">
+		<![CDATA[
+			select id,
+			       qtrylb,
+			       qtryxm,
+			       qtrycym,
+			       qtryxb,
+			       qtrynl,
+			       qtryjg,
+			       qtrymz,
+			       qtrywhcd,
+			       qtryjkzk,
+			       to_char(qtrybfxsj,'yyyy-mm-dd') qtrybfxsj,
+			       qtrybfxdd,
+			       qtryhjxz,
+			       qtrycw,
+			       qtryzp,
+			       qtryjsrxm,
+			       qtryjssj,
+			       qtryjsdwmc,
+			       qtryjsdwld,
+			       qtrybz,
+			       ssjwqdm,
+			       ssjwqmc,
+			       djrxm,
+			       djrjh,
+			       djsj,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czrjh,
+			       czsj,
+			       czdwdm,
+			       czdwmc,
+			       zxbs,
+			       scsj,
+			       sydwyj,
+			       sysj,
+			       szyy,
+			       zyh,
+			       ryqk,
+			       syryxm,
+			       jsysxm,
+			       rysj,
+			       jzzshyj,
+			       jzzshrxm,
+			       jzzshsj,
+			       cyqkclyj,
+			       ylfy,
+			       zzysxm,
+			       yssj,
+			       yscbrxm,
+			       jsrxm,
+			       jssj,
+			       jsdwmc,
+			       jsdwld,
+			       ysxxbz,
+			       ysdjsj,
+			       ysdjrxm,
+			       ysdjdwdm,
+			       ysdjdwmc
+			  from t_gzgl_qtry
+			  where 1 = 1
+			  and (zxbs <> '2' and zxbs <> '1')
+			  #if($jwsqdm and !$jwsqdm.equals(""))
+	      		and (djdwdm =#[jwsqdm])
+	      	  #else
+		      	#if($pcsdm and !$pcsdm.equals(""))
+					and substr(djdwdm,1,8)=substr(#[pcsdm],1,8)
+				#else
+					--精确到县区
+					#if($countrydm and !$countrydm.equals(""))
+						and substr(djdwdm,1,6)=substr(#[countrydm],1,6)
+					#else
+					   --精确到市州
+						 #if($citydm and !$citydm.equals(""))
+							and substr(djdwdm,1,4)=substr(#[citydm],1,4)
+						 #end
+					#end
+				#end
+			 #end
+			 #if($startbfxsj && !$startbfxsj.equals(""))
+				and qtrybfxsj >= to_date(#[startbfxsj]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			 #end
+			 #if($endbfxsj && !$endbfxsj.equals(""))
+				and qtrybfxsj <= to_date(#[endbfxsj]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			 #end
+			 #if($qtryxm && !$qtryxm.equals(""))
+			 	and qtryxm like '%'||#[qtryxm]||'%' 
+			 #end
+			 #if($qtrylb && !$qtrylb.equals(""))
+			 	and	qtrylb = #[qtrylb]
+			 #end
+			 #if($qtryxb && !$qtryxb.equals(""))
+			 	and qtryxb = #[qtryxb]
+			 #end
+			 #if($qtryjg && !$qtryjg.equals(""))
+			 	and qtryjg like #[qtryjg]||'%'
+			 #end
+			 #if($qtrybfxdd && !$qtrybfxdd.equals(""))
+				and qtrybfxdd like '%'||#[qtrybfxdd]||'%' 
+			 #end	
+		]]>
+	</property>
+	<!-- 根据id查询乞讨人员信息bean -->
+	<property name="queryQtryBeanBYIdSQL">
+		<![CDATA[
+			select id,
+			       qtrylb,
+			       qtryxm,
+			       qtrycym,
+			       qtryxb,
+			       qtrynl,
+			       qtryjg,
+			       qtrymz,
+			       qtrywhcd,
+			       qtryjkzk,
+			       to_char(qtrybfxsj,'yyyy-mm-dd') qtrybfxsj,
+			       qtrybfxdd,
+			       qtryhjxz,
+			       qtrycw,
+			       qtryzp,
+			       qtryjsrxm,
+			       to_char(qtryjssj,'yyyy-mm-dd') qtryjssj,
+			       qtryjsdwmc,
+			       qtryjsdwld,
+			       qtrybz,
+			       ssjwqdm,
+			       ssjwqmc,
+			       djrxm,
+			       djrjh,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') djsj,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czrjh,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') czsj,
+			       czdwdm,
+			       czdwmc,
+			       zxbs,
+			       scsj,
+			       sydwyj,
+			       to_char(sysj,'yyyy-mm-dd') sysj,
+			       szyy,
+			       zyh,
+			       ryqk,
+			       syryxm,
+			       jsysxm,
+			       to_char(rysj,'yyyy-mm-dd') rysj,
+			       jzzshyj,
+			       jzzshrxm,
+			       to_char(jzzshsj,'yyyy-mm-dd') jzzshsj,
+			       cyqkclyj,
+			       ylfy,
+			       zzysxm,
+			       to_char(yssj,'yyyy-mm-dd') yssj,
+			       yscbrxm,
+			       jsrxm,
+			       to_char(jssj,'yyyy-mm-dd') jssj,
+			       jsdwmc,
+			       jsdwld,
+			       ysxxbz,
+			       to_char(ysdjsj,'yyyy-mm-dd hh24:mi:ss') ysdjsj,
+			       ysdjrxm,
+			       ysdjdwdm,
+			       ysdjdwmc
+			  from t_gzgl_qtry
+			  where id = ?
+		]]>
+	</property>
+	<!-- 查询乞讨人员亲戚朋友信息列表 -->
+	<property name="queryPageQyryqphyListSQL">
+		<![CDATA[
+			select id,
+			       jtpyxm,
+			       jtpylxdh,
+			       jtpygx,
+			       djsj,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czrjh,
+			       czsj,
+			       czdwdm,
+			       czdwmc,
+			       zxbs,
+			       scsj,
+			       qtryid
+			  from t_gzgl_qtrypy
+			  where qtryid = #[qtryid]
+		]]>
+	</property>
+	<!-- 新增乞讨人员信息bean-->
+	<property name="insertQtrySQL">
+		<![CDATA[
+			insert into t_gzgl_qtry
+						  (id,
+						   qtrylb,
+						   qtryxm,
+						   qtrycym,
+						   qtryxb,
+						   qtrynl,
+						   qtryjg,
+						   qtrymz,
+						   qtrywhcd,
+						   qtryjkzk,
+						   qtrybfxsj,
+						   qtrybfxdd,
+						   qtryhjxz,
+						   qtrycw,
+						   qtryjsrxm,
+						   qtryjssj,
+						   qtryjsdwmc,
+						   qtryjsdwld,
+						   qtrybz,
+						   ssjwqdm,
+						   ssjwqmc,
+						   djrxm,
+						   djrjh,
+						   djsj,
+						   djdwdm,
+						   djdwmc,
+						   czrxm,
+						   czrjh,
+						   czsj,
+						   czdwdm,
+						   czdwmc,
+						   zxbs)
+						values
+						  (#[id],
+						   #[qtrylb],
+						   #[qtryxm],
+						   #[qtrycym],
+						   #[qtryxb],
+						   #[qtrynl],
+						   #[qtryjg],
+						   #[qtrymz],
+						   #[qtrywhcd],
+						   #[qtryjkzk],
+						   to_date(#[qtrybfxsj],'yyyy-mm-dd'),
+						   #[qtrybfxdd],
+						   #[qtryhjxz],
+						   #[qtrycw],
+						   #[qtryjsrxm],
+						   to_date(#[qtryjssj],'yyyy-mm-dd'),
+						   #[qtryjsdwmc],
+						   #[qtryjsdwld],
+						   #[qtrybz],
+						   #[ssjwqdm],
+						   #[ssjwqmc],
+						   #[djrxm],
+						   #[djrjh],
+						   to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+						   #[djdwdm],
+						   #[djdwmc],
+						   #[czrxm],
+						   #[czrjh],
+						   to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+						   #[czdwdm],
+						   #[czdwmc],
+						   #[zxbs])
+		]]>
+	</property>
+	<!-- 修改乞讨人员信息bean-->
+	<property name="updateQtrySQL">
+		<![CDATA[
+			update t_gzgl_qtry
+			   set qtrylb = #[qtrylb],
+			       qtryxm = #[qtryxm],
+			       qtrycym = #[qtrycym],
+			       qtryxb = #[qtryxb],
+			       qtrynl = #[qtrynl],
+			       qtryjg = #[qtryjg],
+			       qtrymz = #[qtrymz],
+			       qtrywhcd = #[qtrywhcd],
+			       qtryjkzk = #[qtryjkzk],
+			       qtrybfxsj = to_date(#[qtrybfxsj],'yyyy-mm-dd'),
+			       qtrybfxdd = #[qtrybfxdd],
+			       qtryhjxz = #[qtryhjxz],
+			       qtrycw = #[qtrycw],
+			       qtryjsrxm = #[qtryjsrxm],
+			       qtryjssj = to_date(#[qtryjssj],'yyyy-mm-dd'),
+			       qtryjsdwmc = #[qtryjsdwmc],
+			       qtryjsdwld = #[qtryjsdwld],
+			       qtrybz = #[qtrybz],
+			       ssjwqdm = #[ssjwqdm],
+			       ssjwqmc = #[ssjwqmc],
+			       czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc]
+			 where id= #[id]
+		]]>
+	</property>
+	<!-- 删除（或注销）乞讨人员信息bean-->
+	<property name="deleteQtrySQL">
+		<![CDATA[
+			update t_gzgl_qtry
+			   set czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       zxbs = #[zxbs],
+			       scsj = to_date(#[scsj],'yyyy-mm-dd hh24:mi:ss')
+			 where id =#[id]
+		]]>
+	</property>
+	<!-- 根据id删除乞讨人员照片 -->
+	<property name="deleteQtryzpSQL">
+		<![CDATA[
+			update t_gzgl_qtry set qtryzp='' where id=?
+		]]>
+	</property>
+	<!-- 新增乞讨人员家庭成员和亲友信息 -->
+	<property name="insertQtryqyxxSQL">
+		<![CDATA[
+			insert into t_gzgl_qtrypy
+					  (id,
+					   jtpyxm,
+					   jtpylxdh,
+					   jtpygx,
+					   djsj,
+					   djrxm,
+					   djrjh,
+					   djdwdm,
+					   djdwmc,
+					   czrxm,
+					   czrjh,
+					   czsj,
+					   czdwdm,
+					   czdwmc,
+					   zxbs,
+					   qtryid)
+					values
+					  (#[id],
+					   #[jtpyxm],
+					   #[jtpylxdh],
+					   #[jtpygx],
+					   to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+					   #[djrxm],
+					   #[djrjh],
+					   #[djdwdm],
+					   #[djdwmc],
+					   #[czrxm],
+					   #[czrjh],
+					   to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+					   #[czdwdm],
+					   #[czdwmc],
+					   #[zxbs],
+					   #[qtryid])
+		]]>
+	</property>
+	<!-- 根据id更新乞讨人员移送信息 -->
+	<property name="updateQtryYsxxSQL">
+		<![CDATA[
+			update t_gzgl_qtry
+				   set sydwyj = #[sydwyj],
+				       sysj = to_date(#[sysj],'yyyy-mm-dd'),
+				       szyy = #[szyy],
+				       zyh = #[zyh],
+				       ryqk = #[ryqk],
+				       syryxm = #[syryxm],
+				       jsysxm = #[jsysxm],
+				       rysj = to_date(#[rysj],'yyyy-mm-dd'),
+				       jzzshyj = #[jzzshyj],
+				       jzzshrxm = #[jzzshrxm],
+				       jzzshsj = to_date(#[jzzshsj],'yyyy-mm-dd'),
+				       cyqkclyj = #[cyqkclyj],
+				       ylfy = #[ylfy],
+				       zzysxm = #[zzysxm],
+				       yssj = to_date(#[yssj],'yyyy-mm-dd'),
+				       yscbrxm = #[yscbrxm],
+				       jsrxm = #[jsrxm],
+				       jssj = to_date(#[jssj],'yyyy-mm-dd'),
+				       jsdwmc = #[jsdwmc],
+				       jsdwld = #[jsdwld],
+				       ysxxbz = #[ysxxbz],
+				       ysdjsj = to_date(#[ysdjsj],'yyyy-mm-dd hh24:mi:ss'),
+				       ysdjrxm = #[ysdjrxm],
+				       ysdjdwdm = #[ysdjdwdm],
+				       ysdjdwmc = #[ysdjdwmc]
+				 where id =#[id]
+		]]>
+	</property>
+	<!-- 查询其他服务信息列表 -->
+	<property name="queryPageQtfwListSQL">
+		<![CDATA[
+			select id,
+			       to_char(fwsj,'yyyy-mm-dd') fwsj,
+			       fwnr,
+			       bz,
+			       ssjwqdm,
+			       ssjwqmc,
+			       jbrxm,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') djsj,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') czsj,
+			       czdwdm,
+			       czdwmc,
+			       czrjh,
+			       zxbs,
+			       to_char(scsj,'yyyy-mm-dd hh24:mi:ss') scsj
+			  from t_gzgl_qtfw
+			  where 1 = 1
+			  and (zxbs <> '2' and zxbs <> '1')
+			  #if($jwsqdm and !$jwsqdm.equals(""))
+	      		and (djdwdm =#[jwsqdm])
+	      	  #else
+		      	#if($pcsdm and !$pcsdm.equals(""))
+					and substr(djdwdm,1,8)=substr(#[pcsdm],1,8)
+				#else
+					--精确到县区
+					#if($countrydm and !$countrydm.equals(""))
+						and substr(djdwdm,1,6)=substr(#[countrydm],1,6)
+					#else
+					   --精确到市州
+						 #if($citydm and !$citydm.equals(""))
+							and substr(djdwdm,1,4)=substr(#[citydm],1,4)
+						 #end
+					#end
+				#end
+			 #end
+			 #if($startfwsj && !$startfwsj.equals(""))
+				and fwsj >= to_date(#[startfwsj]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			 #end
+			 #if($endfwsj && !$endfwsj.equals(""))
+				and fwsj <= to_date(#[endfwsj]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			 #end
+			 #if($jbrxm && !$jbrxm.equals(""))
+			 	and jbrxm like '%'||#[jbrxm]||'%' 
+			 #end
+			 #if($fwnr && !$fwnr.equals(""))
+			 	and fwnr like '%'||#[fwnr]||'%' 
+			 #end
+		]]>
+	</property>
+	<!-- 根据id查询其他服务信息bean -->
+	<property name="queryQtfwBeanBYIdSQL">
+		<![CDATA[
+			select id,
+			       to_char(fwsj,'yyyy-mm-dd') fwsj,
+			       fwnr,
+			       bz,
+			       ssjwqdm,
+			       ssjwqmc,
+			       jbrxm,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') djsj,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') czsj,
+			       czdwdm,
+			       czdwmc,
+			       czrjh,
+			       zxbs,
+			       to_char(scsj,'yyyy-mm-dd hh24:mi:ss') scsj
+			  from t_gzgl_qtfw
+			  where id = ?
+		]]>
+	</property>
+	<!-- 新增其他服务信息bean -->
+	<property name="insertQtfwSQL">
+		<![CDATA[
+			insert into t_gzgl_qtfw
+					  (id,
+					   fwsj,
+					   fwnr,
+					   bz,
+					   ssjwqdm,
+					   ssjwqmc,
+					   jbrxm,
+					   djsj,
+					   djrxm,
+					   djrjh,
+					   djdwdm,
+					   djdwmc,
+					   czrxm,
+					   czsj,
+					   czdwdm,
+					   czdwmc,
+					   czrjh,
+					   zxbs)
+					values
+					  (#[id],
+					   to_date(#[fwsj],'yyyy-mm-dd'),
+					   #[fwnr],
+					   #[bz],
+					   #[ssjwqdm],
+					   #[ssjwqmc],
+					   #[jbrxm],
+					   to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+					   #[djrxm],
+					   #[djrjh],
+					   #[djdwdm],
+					   #[djdwmc],
+					   #[czrxm],
+					   to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+					   #[czdwdm],
+					   #[czdwmc],
+					   #[czrjh],
+					   #[zxbs])
+		]]>
+	</property>
+	<!-- 修改其他服务信息bean -->
+	<property name="updateQtfwSQL">
+		<![CDATA[
+			update t_gzgl_qtfw
+				   set fwsj = to_date(#[fwsj],'yyyy-mm-dd'),
+				       fwnr = #[fwnr],
+				       bz = #[bz],
+				       ssjwqdm = #[ssjwqdm],
+				       ssjwqmc = #[ssjwqmc],
+				       jbrxm = #[jbrxm],
+				       czrxm = #[czrxm],
+				       czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+				       czdwdm = #[czdwdm],
+				       czdwmc = #[czdwmc],
+				       czrjh = #[czrjh]
+				 where id = #[id]
+		]]>
+	</property>
+	<!-- 删除（注销）其他服务信息bean -->
+	<property name="deleteQtfwSQL">
+		<![CDATA[
+			update t_gzgl_qtfw
+			   set czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czrjh = #[czrjh],
+			       zxbs = #[zxbs],
+			       scsj = to_date(#[scsj],'yyyy-mm-dd hh24:mi:ss')
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<!--新增省厅治安系统开展排查填报 -->
+	<property name="insertStZapcbeanSQL">
+		<![CDATA[
+			insert into t_tjfx_zapctb
+				  (id,
+				   hja,
+				   lljf,
+				   zdcq,
+				   tqgz,
+				   fzcsw,
+				   sfss,
+				   qtyy,
+				   mjpcfx,
+				   hlwjh,
+				   dhjb,
+				   qzjb,
+				   hjb,
+				   qsydw,
+				   dzjg,
+				   xx,
+				   jccz,
+				   gc,
+				   jj,
+				   qtbw,
+				   bzwp,
+				   qz,
+				   qy,
+				   jd,
+				   dj,
+				   qtgj,
+				   yjqtjz,
+				   hjc,
+				   esyx,
+				   eszss,
+				   syzws,
+				   ssyys,
+				   wyry,
+				   wlwgry,
+				   sfry,
+				   jsbr,
+				   qtrq,
+				   zacf,
+				   xscf,
+				   rcwk,
+				   sjzy,
+				   lg,
+				   jdhxp,
+				   qzb,
+				   zdb,
+				   qyb,
+				   djdwdm,
+				   djdwmc,
+				   parentcode,
+				   parentname,
+				   leve,
+				   tjyf,
+				   tjqsrq,
+				   tjjzrq,
+				   tbsj,
+				   djrjh,
+				   djrxm,
+				   djrsfzh,
+				   ip)
+				values
+				  (#[id],
+				   #[hja],
+				   #[lljf],
+				   #[zdcq],
+				   #[tqgz],
+				   #[fzcsw],
+				   #[sfss],
+				   #[qtyy],
+				   #[mjpcfx],
+				   #[hlwjh],
+				   #[dhjb],
+				   #[qzjb],
+				   #[hjb],
+				   #[qsydw],
+				   #[dzjg],
+				   #[xx],
+				   #[jccz],
+				   #[gc],
+				   #[jj],
+				   #[qtbw],
+				   #[bzwp],
+				   #[qz],
+				   #[qy],
+				   #[jd],
+				   #[dj],
+				   #[qtgj],
+				   #[yjqtjz],
+				   #[hjc],
+				   #[esyx],
+				   #[eszss],
+				   #[syzws],
+				   #[ssyys],
+				   #[wyry],
+				   #[wlwgry],
+				   #[sfry],
+				   #[jsbr],
+				   #[qtrq],
+				   #[zacf],
+				   #[xscf],
+				   #[rcwk],
+				   #[sjzy],
+				   #[lg],
+				   #[jdhxp],
+				   #[qzb],
+				   #[zdb],
+				   #[qyb],
+				   #[djdwdm],
+				   #[djdwmc],
+				   #[parentcode],
+				   #[parentname],
+				   #[leve],
+				   #[tjyf],
+				   #[tjqsrq],
+				   #[tjjzrq],
+				   to_date(#[tbsj],'yyyy-mm-dd hh24:mi:ss'),
+				   #[djrjh],
+				   #[djrxm],
+				   #[djrsfzh],
+				   #[ip])
+		]]>
+	</property>
+	<!-- 更新省厅治安系统开展排查填报-->
+	<property name="updateStZapctbSQL">
+		<![CDATA[
+			update t_tjfx_zapctb
+			   set 
+			       hja = #[hja],
+			       lljf = #[lljf],
+			       zdcq = #[zdcq],
+			       tqgz = #[tqgz],
+			       fzcsw = #[fzcsw],
+			       sfss = #[sfss],
+			       qtyy = #[qtyy],
+			       mjpcfx = #[mjpcfx],
+			       hlwjh = #[hlwjh],
+			       dhjb = #[dhjb],
+			       qzjb = #[qzjb],
+			       hjb = #[hjb],
+			       qsydw = #[qsydw],
+			       dzjg = #[dzjg],
+			       xx = #[xx],
+			       jccz = #[jccz],
+			       gc = #[gc],
+			       jj = #[jj],
+			       qtbw = #[qtbw],
+			       bzwp = #[bzwp],
+			       qz = #[qz],
+			       qy = #[qy],
+			       jd = #[jd],
+			       dj = #[dj],
+			       qtgj = #[qtgj],
+			       yjqtjz = #[yjqtjz],
+			       hjc = #[hjc],
+			       esyx = #[esyx],
+			       eszss = #[eszss],
+			       syzws = #[syzws],
+			       ssyys = #[ssyys],
+			       wyry = #[wyry],
+			       wlwgry = #[wlwgry],
+			       sfry = #[sfry],
+			       jsbr = #[jsbr],
+			       qtrq = #[qtrq],
+			       zacf = #[zacf],
+			       xscf = #[xscf],
+			       rcwk = #[rcwk],
+			       sjzy = #[sjzy],
+			       lg = #[lg],
+			       jdhxp = #[jdhxp],
+			       qzb = #[qzb],
+			       zdb = #[zdb],
+			       qyb = #[qyb],
+			       ip = #[ip]
+			 where id = #[id]
+		]]>
+	</property>
+	<!-- 根据登记单位、填报年月查询省厅治安系统开展排查 -->
+	<property name="queryStZapctbByDjdwdmAndTjnySQL">
+		<![CDATA[
+			select id,
+			       hja,
+			       lljf,
+			       zdcq,
+			       tqgz,
+			       fzcsw,
+			       sfss,
+			       qtyy,
+			       mjpcfx,
+			       hlwjh,
+			       dhjb,
+			       qzjb,
+			       hjb,
+			       qsydw,
+			       dzjg,
+			       xx,
+			       jccz,
+			       gc,
+			       jj,
+			       qtbw,
+			       bzwp,
+			       qz,
+			       qy,
+			       jd,
+			       dj,
+			       qtgj,
+			       yjqtjz,
+			       hjc,
+			       esyx,
+			       eszss,
+			       syzws,
+			       ssyys,
+			       wyry,
+			       wlwgry,
+			       sfry,
+			       jsbr,
+			       qtrq,
+			       zacf,
+			       xscf,
+			       rcwk,
+			       nvl(sjzy,'0') sjzy,
+			       nvl(lg,'0') lg,
+			       nvl(jdhxp,'0') jdhxp,
+			       nvl(qzb,'0') qzb,
+			       nvl(zdb,'0') zdb,
+			       nvl(qyb,'0') qyb,
+			       djdwdm,
+			       djdwmc,
+			       parentcode,
+			       parentname,
+			       leve,
+			       tjyf,
+			       tjqsrq,
+			       tjjzrq,
+			       tbsj,
+			       djrjh,
+			       djrxm,
+			       djrsfzh,
+			       ip
+			  from t_tjfx_zapctb
+				where djdwdm =#[djdwdm]
+				  and tjyf = #[tjyf]
+		]]>
+	</property>
+	<!-- 填报年月查询省厅治安系统开展排查 治安统计-->
+	<property name="queryStZapctbTjBBByDjdwdmAndTjny1SQL">
+		<![CDATA[
+			select sum(hja) hja,
+			       sum(lljf) lljf,
+			       sum(zdcq) zdcq,
+			       sum(tqgz) tqgz,
+			       sum(fzcsw) fzcsw,
+			       sum(sfss) sfss,
+			       sum(qtyy) qtyy,
+			       sum(mjpcfx) mjpcfx,
+			       sum(hlwjh) hlwjh,
+			       sum(dhjb) dhjb,
+			       sum(qzjb) qzjb,
+			       sum(hjb) hjb,
+			       sum(qsydw) qsydw,
+			       sum(dzjg) dzjg,
+			       sum(xx) xx,
+			       sum(jccz) jccz,
+			       sum(gc) gc,
+			       sum(jj) jj,
+			       sum(qtbw) qtbw,
+			       sum(bzwp) bzwp,
+			       sum(qz) qz,
+			       sum(qy) qy,
+			       sum(jd) jd,
+			       sum(dj) dj,
+			       sum(qtgj) qtgj,
+			       sum(yjqtjz) yjqtjz,
+			       sum(hjc) hjc,
+			       sum(esyx) esyx,
+			       sum(eszss) eszss,
+			       sum(syzws) syzws,
+			       sum(ssyys) ssyys,
+			       sum(wyry) wyry,
+			       sum(wlwgry) wlwgry,
+			       sum(sfry) sfry,
+			       sum(jsbr) jsbr,
+			       sum(qtrq) qtrq,
+			       sum(zacf) zacf,
+			       sum(xscf) xscf,
+			       sum(rcwk) rcwk,
+			       sum(nvl(sjzy, '0')) sjzy,
+			       sum(nvl(lg, '0')) lg,
+			       sum(nvl(jdhxp, '0')) jdhxp,
+			       sum(nvl(qzb, '0')) qzb,
+			       sum(nvl(zdb, '0')) zdb,
+			       sum(nvl(qyb, '0')) qyb
+			  from t_tjfx_zapctb t
+				where  1=1
+			  and t.tjyf = #[tjyf]
+			and t.djdwdm like 
+			   case
+			    when F_GET_DWLEVE(#[djdwdm]) = '1' then 
+			          substr(#[djdwdm], 1, 2) || '%' 
+	            when F_GET_DWLEVE(#[djdwdm]) = '2' then
+	                  substr(#[djdwdm], 1, 4) || '%' 
+	             when F_GET_DWLEVE(#[djdwdm]) = '3' then 
+	                  substr(#[djdwdm], 1, 6) || '%' 
+	             when F_GET_DWLEVE(#[djdwdm]) = '4' then 
+	                  substr(#[djdwdm], 1, 8) || '%' 
+	             when F_GET_DWLEVE(#[djdwdm]) = '5' then 
+	                   substr(#[djdwdm], 1, 12) || '%'
+			     else
+			            substr(#[djdwdm], 1, 12) || '%' 
+			     end
+		]]>
+	</property>
+	<!-- 填报年月查询省厅治安系统开展排查 派出所统计-->
+	<property name="queryStZapctbTjBBByDjdwdmAndTjny2SQL">
+		<![CDATA[
+			select sum(hja) hja,
+			       sum(lljf) lljf,
+			       sum(zdcq) zdcq,
+			       sum(tqgz) tqgz,
+			       sum(fzcsw) fzcsw,
+			       sum(sfss) sfss,
+			       sum(qtyy) qtyy,
+			       sum(mjpcfx) mjpcfx,
+			       sum(hlwjh) hlwjh,
+			       sum(dhjb) dhjb,
+			       sum(qzjb) qzjb,
+			       sum(hjb) hjb,
+			       sum(qsydw) qsydw,
+			       sum(dzjg) dzjg,
+			       sum(xx) xx,
+			       sum(jccz) jccz,
+			       sum(gc) gc,
+			       sum(jj) jj,
+			       sum(qtbw) qtbw,
+			       sum(bzwp) bzwp,
+			       sum(qz) qz,
+			       sum(qy) qy,
+			       sum(jd) jd,
+			       sum(dj) dj,
+			       sum(qtgj) qtgj,
+			       sum(yjqtjz) yjqtjz,
+			       sum(hjc) hjc,
+			       sum(esyx) esyx,
+			       sum(eszss) eszss,
+			       sum(syzws) syzws,
+			       sum(ssyys) ssyys,
+			       sum(wyry) wyry,
+			       sum(wlwgry) wlwgry,
+			       sum(sfry) sfry,
+			       sum(jsbr) jsbr,
+			       sum(qtrq) qtrq,
+			       sum(zacf) zacf,
+			       sum(xscf) xscf,
+			       sum(rcwk) rcwk,
+			       sum(nvl(sjzy, '0')) sjzy,
+			       sum(nvl(lg, '0')) lg,
+			       sum(nvl(jdhxp, '0')) jdhxp,
+			       sum(nvl(qzb, '0')) qzb,
+			       sum(nvl(zdb, '0')) zdb,
+			       sum(nvl(qyb, '0')) qyb
+			  from t_tjfx_zapctb t
+				where  1=1
+			  and t.tjyf = #[tjyf]
+			  and t.leve = '4'
+			and t.djdwdm like 
+			   case
+			    when F_GET_DWLEVE(#[djdwdm]) = '1' then 
+			          substr(#[djdwdm], 1, 2) || '%' 
+	            when F_GET_DWLEVE(#[djdwdm]) = '2' then
+	                  substr(#[djdwdm], 1, 4) || '%' 
+	             when F_GET_DWLEVE(#[djdwdm]) = '3' then 
+	                  substr(#[djdwdm], 1, 6) || '%' 
+	             when F_GET_DWLEVE(#[djdwdm]) = '4' then 
+	                  substr(#[djdwdm], 1, 8) || '%' 
+	             when F_GET_DWLEVE(#[djdwdm]) = '5' then 
+	                   substr(#[djdwdm], 1, 12) || '%'
+			     else
+			            substr(#[djdwdm], 1, 12) || '%' 
+			     end
+		]]>
+	</property>
+	<!-- 填报年月查询省厅治安系统开展排查 治安  明细-->
+	<property name="queryStZapctbTjBBByDjdwdmAndTjnyMingxiASQL">
+		<![CDATA[
+			select  hja ,
+			        lljf,
+			        zdcq,
+			        tqgz,
+			        fzcsw,
+			        sfss,
+			        qtyy,
+			        mjpcfx,
+			        hlwjh,
+			        dhjb,
+			        qzjb,
+			        hjb,
+			        qsydw,
+			        dzjg,
+			        xx,
+			        jccz,
+			        gc,
+			        jj,
+			        qtbw,
+			        bzwp,
+			        qz,
+			        qy,
+			        jd,
+			        dj,
+			        qtgj,
+			        yjqtjz,
+			        hjc,
+			        esyx,
+			        eszss,
+			        syzws,
+			        ssyys,
+			        wyry,
+			        wlwgry,
+			        sfry,
+			        jsbr,
+			        qtrq,
+			        zacf,
+			        xscf,
+			        rcwk,
+			        nvl(sjzy, '0') sjzy,
+			        nvl(lg, '0') lg,
+			        nvl(jdhxp, '0') jdhxp,
+			        nvl(qzb, '0') qzb,
+			        nvl(zdb, '0') zdb,
+			        nvl(qyb, '0') qyb,
+			        djdwdm,
+			        djdwmc,
+			        tbsj,
+			        tjyf
+			  from t_tjfx_zapctb t
+				where  1=1
+			  and t.tjyf = #[tjyf]
+			and t.djdwdm like 
+			   case
+			    when F_GET_DWLEVE(#[djdwdm]) = '1' then 
+			          substr(#[djdwdm], 1, 2) || '%' 
+	            when F_GET_DWLEVE(#[djdwdm]) = '2' then
+	                  substr(#[djdwdm], 1, 4) || '%' 
+	             when F_GET_DWLEVE(#[djdwdm]) = '3' then 
+	                  substr(#[djdwdm], 1, 6) || '%' 
+	             when F_GET_DWLEVE(#[djdwdm]) = '4' then 
+	                  substr(#[djdwdm], 1, 8) || '%' 
+	             when F_GET_DWLEVE(#[djdwdm]) = '5' then 
+	                   substr(#[djdwdm], 1, 12) || '%'
+			     else
+			            substr(#[djdwdm], 1, 12) || '%' 
+			     end
+		]]>
+	</property>
+	<!-- 填报年月查询省厅治安系统开展排查 派出所  明细-->
+	<property name="queryStZapctbTjBBByDjdwdmAndTjnyMingxiBSQL">
+		<![CDATA[
+			select  hja ,
+			        lljf,
+			        zdcq,
+			        tqgz,
+			        fzcsw,
+			        sfss,
+			        qtyy,
+			        mjpcfx,
+			        hlwjh,
+			        dhjb,
+			        qzjb,
+			        hjb,
+			        qsydw,
+			        dzjg,
+			        xx,
+			        jccz,
+			        gc,
+			        jj,
+			        qtbw,
+			        bzwp,
+			        qz,
+			        qy,
+			        jd,
+			        dj,
+			        qtgj,
+			        yjqtjz,
+			        hjc,
+			        esyx,
+			        eszss,
+			        syzws,
+			        ssyys,
+			        wyry,
+			        wlwgry,
+			        sfry,
+			        jsbr,
+			        qtrq,
+			        zacf,
+			        xscf,
+			        rcwk,
+			        nvl(sjzy, '0') sjzy,
+			        nvl(lg, '0') lg,
+			        nvl(jdhxp, '0') jdhxp,
+			        nvl(qzb, '0') qzb,
+			        nvl(zdb, '0') zdb,
+			        nvl(qyb, '0') qyb,
+			        djdwdm,
+			        djdwmc,
+			        tbsj,
+			        tjyf
+			  from t_tjfx_zapctb t
+			where  1=1
+			and t.leve = '4'
+			and t.tjyf = #[tjyf]
+			and t.djdwdm like 
+			   case
+			    when F_GET_DWLEVE(#[djdwdm]) = '1' then 
+			          substr(#[djdwdm], 1, 2) || '%' 
+	            when F_GET_DWLEVE(#[djdwdm]) = '2' then
+	                  substr(#[djdwdm], 1, 4) || '%' 
+	             when F_GET_DWLEVE(#[djdwdm]) = '3' then 
+	                  substr(#[djdwdm], 1, 6) || '%' 
+	             when F_GET_DWLEVE(#[djdwdm]) = '4' then 
+	                  substr(#[djdwdm], 1, 8) || '%' 
+	             when F_GET_DWLEVE(#[djdwdm]) = '5' then 
+	                   substr(#[djdwdm], 1, 12) || '%'
+			     else
+			            substr(#[djdwdm], 1, 12) || '%' 
+			     end
+		]]>
+	</property>
+	<!-- 填报年月查询省厅治安系统开展排查 点击单位名称，更新备注内容-->
+	<property name="queryStZapcTbbMingXiLgzy">
+		<![CDATA[
+			select  hja ,
+			        lljf,
+			        zdcq,
+			        tqgz,
+			        fzcsw,
+			        sfss,
+			        qtyy,
+			        mjpcfx,
+			        hlwjh,
+			        dhjb,
+			        qzjb,
+			        hjb,
+			        qsydw,
+			        dzjg,
+			        xx,
+			        jccz,
+			        gc,
+			        jj,
+			        qtbw,
+			        bzwp,
+			        qz,
+			        qy,
+			        jd,
+			        dj,
+			        qtgj,
+			        yjqtjz,
+			        hjc,
+			        esyx,
+			        eszss,
+			        syzws,
+			        ssyys,
+			        wyry,
+			        wlwgry,
+			        sfry,
+			        jsbr,
+			        qtrq,
+			        zacf,
+			        xscf,
+			        rcwk,
+			        nvl(sjzy, '0') sjzy,
+			        nvl(lg, '0') lg,
+			        nvl(jdhxp, '0') jdhxp,
+			        nvl(qzb, '0') qzb,
+			        nvl(zdb, '0') zdb,
+			        nvl(qyb, '0') qyb,
+			        djdwdm,
+			        djdwmc,
+			        tbsj,
+			        tjyf
+			  from t_tjfx_zapctb t
+				where  1=1
+			  and t.tjyf = #[tjyf]
+			  and t.djdwdm = #[djdwdm]
+		]]>
+	</property>
+</properties>	

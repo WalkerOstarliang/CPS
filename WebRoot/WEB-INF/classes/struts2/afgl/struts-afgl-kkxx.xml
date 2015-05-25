@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="kkxx" namespace="/kkxx" extends="default"> 
+	  		<action name="*" class="com.chinacreator.afgl.action.KkxxAction" method="{1}">
+	  			<result name="toKkxxList">/jsp/afgl/pages/kkxx/kkxxList.jsp</result>
+	  			<result name="toAddKkxx">/jsp/afgl/pages/kkxx/addKkxx.jsp</result>
+	  			<result name="toUpdateKkxxByKkxx">/jsp/afgl/pages/kkxx/addKkxx.jsp</result>
+	  			<result name="toDeleteKkxxByKkxx">/jsp/afgl/pages/kkxx/deleteKkxx.jsp</result>
+	  			<result name="viewKkxxByKkbh">/jsp/afgl/pages/kkxx/viewKkxx.jsp</result>
+	  			<result name="toSelectKkxx">/jsp/afgl/pages/kkxx/selectKkxx.jsp</result>
+	  			<result name="toBatchDeleteKkxxByKkbhs">/jsp/afgl/pages/kkxx/batchDeleteKkxx.jsp</result>
+	  			<result name="toGjQueryKkxx">/jsp/afgl/pages/kkxx/kkxxGjQuery.jsp</result>
+	  		</action>
+	  </package>
+</struts>

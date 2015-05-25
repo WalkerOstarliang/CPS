@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 新增电动车 -->
+<properties>
+	<property name="insertDdc">
+		<![CDATA[
+			INSERT INTO t_za_ddccj
+			  (ddcid, ddclx, pp, clsbm, djh, ys, hphm, jxdmc, mddz, xssj, gmzxm, gmzsfzh, gmzdh, djrxm, 
+			  djrjh, djrsfzh, djsj, djdwdm, djdwmc, czbs, czrxm, czrjh, czsj, czdwdm, czdwmc, zxbs, zxsj, zxyy)
+			VALUES
+			  (#[ddcid] ,  #[ddclx] ,  #[pp] ,  #[clsbm] ,  #[djh] ,  #[ys] ,  #[hphm] ,  #[jxdmc] ,  #[mddz] ,  
+			  to_date(#[xssj],'yyyy-mm-dd') ,  #[gmzxm] ,  #[gmzsfzh] ,    #[gmzdh] ,  #[djrxm] ,  #[djrjh] , 
+			  #[djrsfzh] ,  to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss') ,  #[djdwdm] ,  #[djdwmc] ,  #[czbs] , 
+			  #[czrxm] ,  #[czrjh] ,   to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss') ,  #[czdwdm] ,  #[czdwmc] ,  
+			  #[zxbs] ,  to_date(#[zxsj],'yyyy-mm-dd hh24:mi:ss') ,  #[zxyy])
+		]]>
+	</property>
+	
+	<!-- 修改电动车 -->
+	<property name="updateDdc">
+		<![CDATA[
+			UPDATE t_za_ddccj
+			   SET ddcid = #[ddcid],
+			       ddclx = #[ddclx],
+			       pp = #[pp],
+			       clsbm = #[clsbm],
+			       djh = #[djh],
+			       ys = #[ys],
+			       hphm = #[hphm],
+			       jxdmc = #[jxdmc],
+			       mddz = #[mddz],
+			       xssj = to_date(#[xssj],'yyyy-mm-dd'),
+			       gmzxm = #[gmzxm],
+			       gmzsfzh = #[gmzsfzh],
+			       gmzdh = #[gmzdh],
+			       czbs = #[czbs],
+			       czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc]
+			 WHERE ddcid = #[ddcid]
+		]]>
+	</property>
+
+	<!-- 根据id查询电动车 -->
+	<property name="queryDdcById">
+		<![CDATA[
+			SELECT ddcid, ddclx, pp, clsbm, djh, ys, hphm, jxdmc, mddz,to_char(xssj,'yyyy-mm-dd') as xssj, 
+				 gmzxm, gmzsfzh, gmzdh, djrxm, djrjh, djrsfzh, to_char(djsj,'yyyy-mm-dd hh24:mi:ss')  as djsj,
+				 djdwdm, djdwmc, czbs, czrxm, czrjh, to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj, czdwdm,
+				 czdwmc, zxbs, to_char(zxsj,'yyyy-mm-dd hh24:mi:ss'), zxyy 
+			FROM t_za_ddccj
+			where ddcid = ?
+		]]>
+	</property>
+
+	<!-- queryDdccjListByinddcid  选择某几条记录导出-->
+	<property name="queryDdccjListByinddcid">
+		<![CDATA[
+			SELECT ddcid, ddclx, pp, clsbm, djh, ys, hphm, jxdmc, mddz,to_char(xssj,'yyyy-mm-dd') as xssj, 
+				 gmzxm, gmzsfzh, gmzdh, djrxm, djrjh, djrsfzh, to_char(djsj,'yyyy-mm-dd hh24:mi:ss')  as djsj,
+				 djdwdm, djdwmc, czbs, czrxm, czrjh, to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj, czdwdm,
+				 czdwmc, zxbs, to_char(zxsj,'yyyy-mm-dd hh24:mi:ss'), zxyy 
+			FROM t_za_ddccj
+			where 1=1 and ddcid in (#[v_ddcid])
+		]]>
+	</property>
+	
+	<!-- 分页查询电动车 -->
+	<property name="queryDdcList">
+		<![CDATA[
+			SELECT ddcid, ddclx, pp, clsbm, djh, ys, hphm, jxdmc, mddz,to_char(xssj,'yyyy-mm-dd') as xssj, 
+				 gmzxm, gmzsfzh, gmzdh, djrxm, djrjh, djrsfzh, to_char(djsj,'yyyy-mm-dd hh24:mi:ss')  as djsj,
+				 djdwdm, djdwmc, czbs, czrxm, czrjh, to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj, czdwdm,
+				 czdwmc, zxbs, to_char(zxsj,'yyyy-mm-dd hh24:mi:ss'), zxyy 
+			FROM t_za_ddccj
+			WHERE zxbs = '0'
+			#if($xsdw && !$xsdw.equals(""))
+				and jxdmc like '%' || #[xsdw] || '%'
+			#end
+			#if($pp && !$pp.equals(""))
+				and pp like '%' || #[pp] || '%'
+			#end
+			#if($clsbh && !$clsbh.equals(""))
+				and clsbm = #[clsbh]
+			#end
+			#if($djh && !$djh.equals(""))
+				and djh =#[djh]
+			#end
+			#if($xssj_start && !$xssj_start.equals(""))
+				and xssj >= to_date(#[xssj_start],'yyyy-mm-dd')
+			#end
+			#if($xssj_end && !$xssj_end.equals(""))
+				and xssj <= to_date(#[xssj_end],'yyyy-mm-dd')
+			#end
+			#if($jwsqdm && !$jwsqdm.equals(""))
+				and  djdwdm = #[jwsqdm]
+			#elseif($pcsdm && !$pcsdm.equals(""))
+				and djdwdm like substr(#[pcsdm],1,8)||'%' 
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			#end
+		]]>
+	</property>
+</properties>	

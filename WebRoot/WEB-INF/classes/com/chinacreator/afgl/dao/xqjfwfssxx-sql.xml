@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<property name="insertXqjfwfssxx">
+		<![CDATA[
+			insert into t_af_xqjfwfssxx
+			  (ssbh, ssmc, xqbh, sqbh, azwz, sslx, wzlx, azsj, sssl, 
+			  sbyxqk, isfhzy, djrxm, djrjh, djsj, djdwdm, djdwmc, bjsslj, iscc)
+			values
+			  (#[ssbh], #[ssmc], #[xqbh], #[sqbh], #[azwz], #[sslx], #[wzlx], 
+			  to_date(#[azsj],'yyyy-MM-dd'), #[sssl], 
+			  #[sbyxqk], #[isfhzy], #[djrxm], #[djrjh], 
+			  to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss'), #[djdwdm], #[djdwmc], #[bjsslj], #[iscc])
+
+		]]>
+	</property>
+	
+	<property name="updateXqjfwfssxxBySsbh">
+		<![CDATA[
+			update t_af_xqjfwfssxx
+			   set ssbh = #[ssbh],
+			   	   ssmc = #[ssmc],
+			       xqbh = #[xqbh],
+			       sqbh = #[sqbh],
+			       azwz = #[azwz],
+			       sslx = #[sslx],
+			       wzlx = #[wzlx],
+			       azsj = to_date(#[azsj],'yyyy-MM-dd hh24:mi:ss'),
+			       sssl = #[sssl],
+			       sbyxqk = #[sbyxqk],
+			       isfhzy = #[isfhzy],
+			       djrxm = #[djrxm],
+			       djrjh = #[djrjh],
+			       djsj = to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss'),
+			       djdwdm = #[djdwdm],
+			       djdwmc = #[djdwmc],
+			       bjsslj = #[bjsslj]
+			 where ssbh = #[ssbh]
+		]]>
+	</property>
+	
+	<property name="deleteXqjfwfssxxBySsbh">
+		<![CDATA[
+			update t_af_xqjfwfssxx
+			   set 	ccsj = to_date(#[ccsj],'yyyy-MM-dd'),
+       				iscc = #[iscc],
+       				ccyy = #[ccyy]
+			 where ssbh = #[ssbh]
+		]]>
+	</property>
+	
+	<property name="queryXqjfwfssxxList">
+		<![CDATA[
+			select t.ssbh,
+				   t.ssmc,
+			       t.xqbh,
+			       (select a.xqmc from t_af_xqjbxx a where a.xqbh=t.xqbh) as xqmc,
+			       t.sqbh,
+			       (select a.sqmc from t_af_sqjbxx a where a.sqbh=t.sqbh) as sqmc,
+			       t.azwz,
+			       t.sslx,
+			       t.wzlx,
+			       to_char(t.azsj,'yyyy-mm-dd') azsj,
+			       t.ccsj,
+			       t.sssl,
+			       t.sbyxqk,
+			       t.isfhzy,
+			       t.djrxm,
+			       t.djrjh,
+			       t.djsj,
+			       t.djdwdm,
+			       t.djdwmc,
+			       t.bjsslj,
+			       t.iscc,
+			       t.ccyy
+			  from t_af_xqjfwfssxx t
+			  where 1=1
+			  #if ($xqbh && !$xqbh.equals(""))
+			  	 and t.xqbh = #[xqbh]
+			  #else
+			  	 #if ($sqbh && !$sqbh.equals(""))
+			 	 	and	t.sqbh = #[sqbh]
+			 	 #else
+			 	 		#if ($pcsdm && !$pcsdm.equals(""))
+			 	 		and t.sqbh in (select a.sqbh from t_af_sqjbxx a where a.sspcsdm=#[pcsdm])
+			 	 	#else
+			 	 		#if ($countrydm && !$countrydm.equals(""))
+			 	 			and t.sqbh in (select a.sqbh from t_af_sqjbxx a where a.ssxzqh = #[countrygajgjgdm])
+			 	 		#else 
+			 	 			#if ($citydm && !$citydm.equals(""))
+			 	 				and t.sqbh in (select a.sqbh from t_af_sqjbxx a where substr(a.ssxzqh, 1, 4)=substr(#[citygajgjgdm], 1, 4))
+			 	 			#end
+			 	 		#end
+			 	 	#end
+			 	 #end
+			  #end
+			 	
+			  #if ($sslx && !$sslx.equals(""))
+			  	 t.sslx = #[sslx]
+			  #end
+			  order by t.DJSJ desc
+		]]>
+	</property>
+	
+	<property name="queryXqjfwfssxxBySsbh">
+		<![CDATA[
+			select t.ssbh,
+				   t.ssmc,
+			       t.xqbh,
+			       (select a.xqmc from t_af_xqjbxx a where a.xqbh=t.xqbh) as xqmc,
+			       t.sqbh,
+			       (select a.sqmc from t_af_sqjbxx a where a.sqbh=t.sqbh) as sqmc,
+			       t.azwz,
+			       t.sslx,
+			       t.wzlx,
+			       t.azsj,
+			       t.ccsj,
+			       t.sssl,
+			       t.sbyxqk,
+			       t.isfhzy,
+			       t.djrxm,
+			       t.djrjh,
+			       t.djsj,
+			       t.djdwdm,
+			       t.djdwmc,
+			       t.bjsslj,
+			       t.iscc,
+			       t.ccyy
+			  from t_af_xqjfwfssxx t
+			  where ssbh=?
+		]]>
+	</property>
+	
+	<property name="insertSqjfwfsbzpxx">
+		<![CDATA[
+			insert into t_af_sqjfwfsszpxx
+			  (id, sbbh, zpms, zpmc)
+			values
+			  (#[id], #[sbbh], #[zpms], #[zpmc])
+		]]>
+	</property>
+	
+	<property name="querySqwfsbfjxx">
+		<![CDATA[
+			 select id, sbbh, zpms, zpmc 
+			 from  t_af_sqjfwfsszpxx
+			 where sbbh=?
+		]]>
+	</property>
+	
+	<property name="deleteXqWfxxById">
+		<![CDATA[
+			delete from t_af_xqjfwfssxx where ssbh=?
+		]]>
+	</property>
+	
+	<property name="getWfzpFileByid">
+		<![CDATA[
+			  select * from t_af_sqjfwfsszpxx  where id =?
+		]]>
+	</property>
+</properties>

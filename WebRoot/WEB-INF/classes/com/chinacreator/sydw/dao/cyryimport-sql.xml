@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryCyryImportBeans">
+ 		<![CDATA[
+			select c.*
+			from t_import_cyrys c
+			where ERRORBS='0' 
+				and execbs='0'
+				and (LOCKBS is null or LOCKBS='0')
+				and rownum<=50
+			for update nowait
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateCyryLockbs">
+ 		<![CDATA[
+ 			update t_import_cyrys
+  			set LOCKBS='1'
+  			where BH=#[bh]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateCyryImportBean">
+ 		<![CDATA[
+ 			update t_import_cyrys
+ 			set 
+ 				#if($field && $field.equals("errorbs"))
+ 					errorbs = #[value],
+ 				#else
+ 				    errorbs = '2',
+ 					execbs = #[value],
+ 				#end
+ 				errorInfo = #[errorInfo]
+ 			where bh=#[bh]
+ 			
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateCyrybUserInfo">
+ 		<![CDATA[
+ 			update t_za_ry_cyry
+			set wwdjr=#[wwusername],wwdjrsfzh=#[wwusersfzh]
+			where cyrybh = #[cyrybh]
+ 		]]>
+ 	</property>
+ 	
+</properties>

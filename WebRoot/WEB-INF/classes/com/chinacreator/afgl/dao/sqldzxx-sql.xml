@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="querySqldzxxPageResultInfoByQueryBean">
+		<![CDATA[
+			select id,
+			       xm,
+			       sfzh,
+			       xb,
+			       lxdh,
+			       hjdqh,
+			       xzzxz,
+			       djrxm,
+			       djrjh,
+			       djrsfzh,
+			       djdwdm,
+			       djdwmc,
+			       ssjwqdm,
+			       ssjwqmc,
+			       zxbs,
+			       zxsj,
+			       ip,
+			       xgrxm,
+			       xgrjh,
+			       xgsj,
+			       djsj,
+			       to_char(csrq,'yyyy-mm-dd') csrq,
+			       stid,
+			       stmc,
+			       stdz,
+			       zzmm,
+			       sqdm,
+			       sqmc
+			  from t_zfdx_ldz
+				where 1=1
+					#if($zxbs && !$zxbs.equals(""))
+					 	and zxbs = #[zxbs]
+					#end
+				   	#if($sqdm && !$sqdm.equals(""))
+				   		and sqdm = #[sqdm]
+				   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+			    		and djdwdm = #[jwsqdm]
+		    		#elseif ($pcsdm && !$pcsdm.equals(""))
+					 	and djdwdm like substr(#[pcsdm],1,8)||'%'
+					#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+					 	and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+					#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+					 	and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+				   	#end
+					#if($xm && !$xm.equals(""))
+					 	and xm like '%'||#[xm]||'%'
+					#end
+					#if($sfzh && !$sfzh.equals(""))
+					 	and sfzh=#[sfzh]
+					#end
+					 order by djsj desc
+		]]>
+	</property>
+	<property name="querySqldzxxBeanById">
+		<![CDATA[
+			select id,
+			       xm,
+			       sfzh,
+			       xb,
+			       lxdh,
+			       hjdqh,
+			       xzzxz,
+			       djrxm,
+			       djrjh,
+			       djrsfzh,
+			       djdwdm,
+			       djdwmc,
+			       ssjwqdm,
+			       ssjwqmc,
+			       zxbs,
+			       zxsj,
+			       ip,
+			       xgrxm,
+			       xgrjh,
+			       xgsj,
+			       djsj,
+			       to_char(csrq,'yyyy-mm-dd') csrq,
+			       stid,
+			       stmc,
+			       stdz,
+			       zzmm,
+			       sqdm,
+			       sqmc
+			  from t_zfdx_ldz
+				where id =?
+		]]>
+	</property>
+	<property name="queryStxxPageResultInfoByQueryBean">
+		<![CDATA[
+			select id as stid,
+			       stmc,
+			       sqdm,
+			       sqmc,
+			       t.jdxzmc || t.jlxmc|| t.mph  ||t.sqmc || t.xqz || t.ldxz  as stdz
+				  from t_common_stxx t
+				 where (t.zxbs is null or t.zxbs = '1')
+				   	#if($sqdm && !$sqdm.equals(""))
+				   		and sqdm = #[sqdm]
+				   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+			    		and djdwdm = #[jwsqdm]
+		    		#elseif ($pcsdm && !$pcsdm.equals(""))
+					 	and djdwdm like substr(#[pcsdm],1,8)||'%'
+					#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+					 	and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+					#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+					 	and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+				   	#end
+					#if($stmc && !$stmc.equals(""))
+					 	and stmc like '%'||#[stmc]||'%'
+					#end
+		]]>
+	</property>
+	<property name="querySqLdzCountByStidAndSfzh">
+		<![CDATA[
+			select count(1)
+		  	from t_zfdx_ldz
+			where zxbs ='0' and stid =? and sfzh =?
+		]]>
+	</property>
+	<property name="insertSqLdzxxBean">
+		<![CDATA[
+			insert into t_zfdx_ldz
+					  (id,
+					   xm,
+					   sfzh,
+					   xb,
+					   lxdh,
+					   hjdqh,
+					   xzzxz,
+					   djrxm,
+					   djrjh,
+					   djrsfzh,
+					   djdwdm,
+					   djdwmc,
+					   ssjwqdm,
+					   ssjwqmc,
+					   zxbs,
+					   ip,
+					   xgrxm,
+					   xgrjh,
+					   xgsj,
+					   djsj,
+					   csrq,
+					   stid,
+					   stmc,
+					   stdz,
+					   zzmm,
+					   sqdm,
+					   sqmc)
+					values
+					  (#[id],
+					   #[xm],
+					   #[sfzh],
+					   #[xb],
+					   #[lxdh],
+					   #[hjdqh],
+					   #[xzzxz],
+					   #[djrxm],
+					   #[djrjh],
+					   #[djrsfzh],
+					   #[djdwdm],
+					   #[djdwmc],
+					   #[ssjwqdm],
+					   #[ssjwqmc],
+					   '0',
+					   #[ip],
+					   #[xgrxm],
+					   #[xgrjh],
+					   sysdate,
+					   sysdate,
+					   to_date(#[csrq],'yyyy-mm-dd'),
+					   #[stid],
+					   #[stmc],
+					   #[stdz],
+					   #[zzmm],
+					   #[sqdm],
+					   #[sqmc])
+		]]>
+	</property>
+	<property name="updateSqLdzxxBean">
+		<![CDATA[
+			update t_zfdx_ldz
+				   set 
+				       lxdh = #[lxdh],
+				       hjdqh = #[hjdqh],
+				       xzzxz = #[xzzxz],
+				       xgrxm = #[xgrxm],
+				       xgrjh = #[xgrjh],
+				       xgsj = sysdate,
+				       stid = #[stid],
+				       stmc = #[stmc],
+				       stdz = #[stdz],
+				       zzmm = #[zzmm]
+				 where id =#[id]
+		]]>
+	</property>
+	<property name="deleteSqLdzxxBeanById">
+		<![CDATA[
+			update t_zfdx_ldz
+			   set 
+			       zxbs = '1',
+			       zxsj = sysdate
+			 where id = ?
+		]]>
+	</property>
+	<property name="querySqYwhPageResultInfoByQueryBean">
+		<![CDATA[
+			select id,
+			       wyxqmc,
+			       to_char(clrq,'yyyy-mm-dd') clrq,
+			       djrxm,
+			       djrjh,
+			       djrsfzh,
+			       djdwdm,
+			       djdwmc,
+			       ssjwqdm,
+			       ssjwqmc,
+			       zxbs,
+			       zxsj,
+			       ip,
+			       xgrxm,
+			       xgrjh,
+			       xgsj,
+			       djsj,
+			       stid,
+			       stmc,
+			       sqdm,
+			       sqmc
+			  from t_zfdx_yzwyh
+			  where 1=1
+			#if($sqdm && !$sqdm.equals(""))
+		   		and sqdm = #[sqdm]
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+	    		and djdwdm = #[jwsqdm]
+    		#elseif ($pcsdm && !$pcsdm.equals(""))
+			 	and djdwdm like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+		   	#end
+			#if($wyxqmc && !$wyxqmc.equals(""))
+			 	and wyxqmc like '%'||#[wyxqmc]||'%'
+			#end
+			#if($cyxm && !$cyxm.equals(""))
+			 	and id 
+			 	in 
+			 	(select yzwyhid 
+			 	from 
+			 	t_zfdx_yzwyhcy t 
+			 	where t.zxbs ='0' 
+			 	and t.xm like '%'||#[cyxm]||'%')
+			#end
+			#if($cysfzh && !$cysfzh.equals(""))
+			 	and id 
+			 	in 
+			 	(select yzwyhid 
+			 	from 
+			 	t_zfdx_yzwyhcy t 
+			 	where t.zxbs ='0' 
+			 	and t.sfzh = #[cysfzh])
+			#end
+			#if($zxbs && !$zxbs.equals(""))
+			 	and zxbs = #[zxbs]
+			#end
+			#if($clstartdate && !$clstartdate.equals(""))
+			 	and clrq >= to_date(#[clstartdate],'yyyy-mm-dd')
+			#end
+			#if($clenddate && !$clenddate.equals(""))
+			 	and clrq <= to_date(#[clenddate],'yyyy-mm-dd')
+			#end
+		]]>
+	</property>
+	<property name="querySqywhxxBeanById">
+		<![CDATA[
+			select id,
+			       wyxqmc,
+			       to_char(clrq,'yyyy-mm-dd') clrq,
+			       djrxm,
+			       djrjh,
+			       djrsfzh,
+			       djdwdm,
+			       djdwmc,
+			       ssjwqdm,
+			       ssjwqmc,
+			       zxbs,
+			       zxsj,
+			       ip,
+			       xgrxm,
+			       xgrjh,
+			       xgsj,
+			       djsj,
+			       stid,
+			       stmc,
+			       sqdm,
+			       sqmc
+			  from t_zfdx_yzwyh
+				where id =?
+		]]>
+	</property>
+	<property name="querySqYzwyhCountByStidAndYzwyhmc">
+		<![CDATA[
+			select count(*)
+			  from t_zfdx_yzwyh
+				where zxbs ='0' and stid =? and wyxqmc =?
+		]]>
+	</property>
+	<property name="deleteSqYwhBeanById">
+		<![CDATA[
+			update t_zfdx_yzwyh
+				set zxbs ='1' ,zxsj = sysdate
+				where id =?
+		]]>
+	</property>
+	<property name="insertSqYzwyhxxBean">
+		<![CDATA[
+			insert into t_zfdx_yzwyh
+				  (id,
+				   wyxqmc,
+				   clrq,
+				   djrxm,
+				   djrjh,
+				   djrsfzh,
+				   djdwdm,
+				   djdwmc,
+				   ssjwqdm,
+				   ssjwqmc,
+				   zxbs,
+				   ip,
+				   xgrxm,
+				   xgrjh,
+				   xgsj,
+				   djsj,
+				   stid,
+				   stmc,
+				   sqdm,
+				   sqmc)
+				values
+				  (#[id],
+				   #[wyxqmc],
+				   to_date(#[clrq],'yyyy-mm-dd'),
+				   #[djrxm],
+				   #[djrjh],
+				   #[djrsfzh],
+				   #[djdwdm],
+				   #[djdwmc],
+				   #[ssjwqdm],
+				   #[ssjwqmc],
+				   '0',
+				   #[ip],
+				   #[xgrxm],
+				   #[xgrjh],
+				   sysdate,
+				   sysdate,
+				   #[stid],
+				   #[stmc],
+				   #[sqdm],
+				   #[sqmc])
+		]]>
+	</property>
+	<property name="updateSqYzwyhxxBean">
+		<![CDATA[
+			update t_zfdx_yzwyh
+			   set 
+			       wyxqmc = #[wyxqmc],
+			       clrq = to_date(#[clrq],'yyyy-mm-dd'),
+			       xgrxm = #[xgrxm],
+			       xgrjh = #[xgrjh],
+			       xgsj = #[xgsj],
+			       stid = #[stid],
+			       stmc = #[stmc],
+			       sqdm = #[sqdm],
+			       sqmc = #[sqmc]
+			 where id=#[id]
+		]]>
+	</property>
+	<property name="querySqYwhcyPageResultInfoByQueryBean">
+		<![CDATA[
+			select id,
+			       wyxqmc,
+			       xm,
+			       sfzh,
+			       xb,
+			       lxdh,
+			       djrxm,
+			       djrjh,
+			       djrsfzh,
+			       djdwdm,
+			       djdwmc,
+			       ssjwqdm,
+			       ssjwqmc,
+			       zxbs,
+			       zxsj,
+			       ip,
+			       xgrxm,
+			       xgrjh,
+			       xgsj,
+			       djsj,
+			       to_char(csrq,'yyyy-mm-dd') csrq,
+			       zzmm,
+			       sqdm,
+			       sqmc,
+			       yzwyhid,
+			       jrrq,
+			       zw
+			  from t_zfdx_yzwyhcy t
+			  where 1=1
+			  #if($id && !$id.equals(""))
+			 	and yzwyhid = #[id]
+			  #end
+			   #if(!$id || $id.equals(""))
+			 	and 1=2
+			  #end
+		]]>
+	</property>
+	<property name="querySqYwhcyxxBeanById">
+		<![CDATA[
+			select id,
+			       wyxqmc,
+			       xm,
+			       sfzh,
+			       xb,
+			       lxdh,
+			       djrxm,
+			       djrjh,
+			       djrsfzh,
+			       djdwdm,
+			       djdwmc,
+			       ssjwqdm,
+			       ssjwqmc,
+			       zxbs,
+			       zxsj,
+			       ip,
+			       xgrxm,
+			       xgrjh,
+			       xgsj,
+			       djsj,
+			       to_char(csrq,'yyyy-mm-dd') csrq,
+			       zzmm,
+			       sqdm,
+			       sqmc,
+			       yzwyhid,
+			       jrrq,
+			       zw
+			  from t_zfdx_yzwyhcy t
+			  where id =?
+		]]>
+	</property>
+	<property name="deleteSqYzwyhcyBeanById">
+		<![CDATA[
+			update t_zfdx_yzwyhcy t
+			set zxbs ='1' ,zxsj = sysdate
+			  where id =?
+		]]>
+	</property>
+	<property name="queryWyxqxxPageResultInfoByQueryBean">
+		<![CDATA[
+			select id ,
+			       sssqmc as sqmc,
+			       sssqdm as sqdm,
+			       dzmc,
+			       xqmc 
+				  from t_za_wyxq t
+				 where (t.zxbs is null or t.zxbs = '0')
+				   	#if($sqdm && !$sqdm.equals(""))
+				   		and sssqdm = #[sqdm]
+				   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+			    		and ssjwqdm = #[jwsqdm]
+		    		#elseif ($pcsdm && !$pcsdm.equals(""))
+					 	and ssjwqdm like substr(#[pcsdm],1,8)||'%'
+					#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+					 	and ssjwqdm like substr(#[countrygajgjgdm],1,6)||'%'
+					#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+					 	and ssjwqdm like substr(#[citygajgjgdm],1,4)||'%'
+				   	#end
+					#if($stmc && !$stmc.equals(""))
+					 	and xqmc like '%'||#[stmc]||'%'
+					#end
+		]]>
+	</property>
+	<property name="querySqYzwyhcyCountByYwhidAndSfzh">
+		<![CDATA[
+			select count(*)
+				  from t_zfdx_yzwyhcy t
+				 where (t.zxbs is null or t.zxbs = '0')
+				   	and yzwyhid =?
+				   	and sfzh =?
+		]]>
+	</property>
+	<property name="insertSqYzwyhcyxxBean">
+		<![CDATA[
+			insert into t_zfdx_yzwyhcy
+				  (id,
+				   wyxqmc,
+				   xm,
+				   sfzh,
+				   xb,
+				   lxdh,
+				   djrxm,
+				   djrjh,
+				   djrsfzh,
+				   djdwdm,
+				   djdwmc,
+				   ssjwqdm,
+				   ssjwqmc,
+				   zxbs,
+				   ip,
+				   xgrxm,
+				   xgrjh,
+				   xgsj,
+				   djsj,
+				   csrq,
+				   zzmm,
+				   sqdm,
+				   sqmc,
+				   yzwyhid,
+				   zw)
+				values
+				  (#[id],
+				   #[wyxqmc],
+				   #[xm],
+				   #[sfzh],
+				   #[xb],
+				   #[lxdh],
+				   #[djrxm],
+				   #[djrjh],
+				   #[djrsfzh],
+				   #[djdwdm],
+				   #[djdwmc],
+				   #[ssjwqdm],
+				   #[ssjwqmc],
+				   '0',
+				   #[ip],
+				   #[xgrxm],
+				   #[xgrjh],
+				   sysdate,
+				   sysdate,
+				   to_date(#[csrq],'yyyy-mm-dd'),
+				   #[zzmm],
+				   #[sqdm],
+				   #[sqmc],
+				   #[yzwyhid],
+   				   #[zw])
+		]]>
+	</property>
+	<property name="updateSqYzwyhcyxxBean">
+		<![CDATA[
+			update t_zfdx_yzwyhcy
+			   set 
+			       lxdh = #[lxdh],
+			       xgrxm = #[xgrxm],
+			       xgrjh = #[xgrjh],
+			       xgsj = sysdate,
+			       zzmm = #[zzmm],
+			       zw = #[zw]
+			 where id = #[id]
+		]]>
+	</property>
+</properties>

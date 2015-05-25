@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="xqgk" namespace="/xqgk" extends="default">
+		<action name="*" class="com.chinacreator.xqgk.action.XqgkAction" method="{1}">
+			<result name="xqgk_xqgk">/jsp/xqgk/xqgk.jsp</result>
+			<result name="xqgk_syrk">/jsp/xqgk/xqgk_syrk.jsp</result>
+			<result name="xqgk_syjz">/jsp/xqgk/xqgk_syjz.jsp</result>
+			<result name="xqgk_cyry">/jsp/xqgk/xqgk_cyry.jsp</result>
+			<result name="xqgk_syfw">/jsp/xqgk/xqgk_syfw.jsp</result>
+			<result name="xqgk_sydw">/jsp/xqgk/xqgk_sydw.jsp</result>
+			<result name="xqgk_zdry">/jsp/xqgk/xqgk_zdry.jsp</result>
+			<result name="xqgk_xqza">/jsp/xqgk/xqgk_xqza.jsp</result>
+			<result name="xqgk_xqfa">/jsp/xqgk/xqgk_xqfa.jsp</result>
+			<result name="xqgk_jsjz">/jsp/xqgk/xqgk_jsjz.jsp</result>
+			<result name="xqgk_qbhs">/jsp/xqgk/xqgk_qbhs.jsp</result>
+			<result name="xqgk_sqjd">/jsp/xqgk/xqgk_sqjd.jsp</result>
+			<result name="xqgk_sqkf">/jsp/xqgk/xqgk_sqkf.jsp</result>
+			<result name="xqgk_dcl_jsjz">/jsp/xqgk/xqgk_dcl_jsjz.jsp</result>
+			<result name="xqgk_dcl_qbhs">/jsp/xqgk/xqgk_dcl_qbhs.jsp</result>
+			<result name="xqgk_sqdetail">/jsp/xqgk/xqgk_sqdetail.jsp</result>
+			<result name="xqgk_xqgj">/jsp/xqgk/xqgk_xqgj.jsp</result>
+		</action>
+	</package>
+</struts>

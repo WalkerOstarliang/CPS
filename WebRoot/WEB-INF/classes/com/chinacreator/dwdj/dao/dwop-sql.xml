@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 查询单位列表 -->
+	<property name="queryDwOpList">
+		<![CDATA[
+			SELECT ywzjid,
+			   dwmc,
+			   frdbsfzh,
+			   frdbxm,
+			   frdblxdh,
+			   dwdh,
+			   dwdz,
+			   hylb,
+			   dwlb,
+			   zzjgdm,
+			   yyzzhm,
+			   to_char(kyrq,'yyyy-mm-dd') as kyrq,
+			   sszrdwdm,
+			   sssqdm,
+			   zxbs,
+			   to_char(zxsj,'yyyy-mm-dd') as zxsj,
+			   to_char(djsj,'yyyy-mm-dd') as djsj,
+			   to_char(xgsj,'yyyy-mm-dd') as xgsj,
+			   to_char(jlrksj,'yyyy-mm-dd hh24:mi:ss') as jlrksj,
+			   to_char(jlbgsj,'yyyy-mm-dd hh24:mi:ss') as jlbgsj,
+			   qsbs,
+			   glbm,
+			   glzt,
+			   ywxtdwlx,
+			   log.pfdwdm,
+			   pfhdwdm
+		  FROM t_za_dwtb dw 
+		  left join 
+		  (select ywxtzj,ywxtlx,pfdwdm,
+		  		row_number() over(partition by ywxtzj,ywxtlx order by czsj desc) as sn  
+		  	from t_za_dwtb_oplog where czzt = '1' ) log
+		  on dw.ywzjid = log.ywxtzj and dw.ywxtdwlx = log.ywxtlx and log.sn = 1	
+		  where 1 = 1
+		   #if($orgcode && !$orgcode.equals(""))
+			   	#if($leve == 5)
+			   		and (sszrdwdm = #[orgcode] or pfhdwdm = #[orgcode])
+			   	#elseif($leve == 4)
+			   		and (sszrdwdm like substr(#[orgcode],1,8)||'%' or pfhdwdm like substr(#[orgcode],1,8)||'%')
+			   	#elseif($leve == 3)
+			   		and (sszrdwdm like substr(#[orgcode],1,6)||'%' or pfhdwdm like substr(#[orgcode],1,6)||'%')
+			   	#elseif($leve == 2)
+			   		and (sszrdwdm like substr(#[orgcode],1,4)||'%' or pfhdwdm like substr(#[orgcode],1,4)||'%' )
+			   	#elseif($leve == 1)
+			   		and (sszrdwdm like substr(#[orgcode],1,2)||'%' pfhdwdm or like substr(#[orgcode],1,2)||'%' )
+			   	#end	
+		  #end
+		  #if($dwmc && !$dwmc.equals(""))
+		  	and dwmc like '%'||#[dwmc]||'%'
+		  #end
+		  #if($pfzt && !$pfzt.equals(""))
+		  	#if($pfzt.equals("3"))
+		  		and qsbs = '3' and pfhdwdm = #[orgcode]   --退回
+		  	#elseif($pfzt.equals("1"))
+		  		and (f_get_dwleve(sszrdwdm) > #[leve] or f_get_dwleve(pfhdwdm) > #[leve])     --已派发
+		  	#elseif($pfzt.equals("0"))
+		  		and (sszrdwdm = #[orgcode] and pfhdwdm is null)    --未派发
+		  	#end	
+		  #end
+		  #if($sdzt && !$sdzt.equals(""))
+		  	#if($sdzt.equals("0"))
+		  		and (glzt = #[sdzt] or glzt is null)
+		  	#else
+			  	and glzt = #[sdzt]
+		  	#end
+		  #end
+		  #if($qszt && !$qszt.equals(""))
+		  	#if($qszt.equals("1"))
+		  		and qsbs = '2'
+		  	#end
+		  	#if($qszt.equals("0"))
+		  		and (qsbs != '2' or qsbs is null)
+		  	#end	
+		  	
+		  #end
+		  #if($glbm && !$glbm.equals(""))
+		  	#if($hylb && !$hylb.equals(""))
+			  	and hylb = #[hylb]
+			#else
+			  	#if($glbm.equals("1"))
+			  		and hylb in ('02','04','07')
+			  	#end
+			  	#if($glbm.equals("4"))
+			  		and hylb = '05'
+			  	#end
+			#end
+		  #else
+		  	#if($hylb && !$hylb.equals(""))
+			  	and hylb = #[hylb]
+			#end  		
+		  #end
+		  order by sszrdwdm,ywzjid
+		]]>
+	</property>
+	
+	<!-- 根据Id和lx查询 单位信息 -->
+	<property name="queryDwxxByIdAndLx">
+		<![CDATA[
+			SELECT ywzjid,
+			   dwmc,
+			   frdbsfzh,
+			   frdbxm,
+			   frdblxdh,
+			   dwdh,
+			   dwdz,
+			   hylb,
+			   dwlb,
+			   zzjgdm,
+			   yyzzhm,
+			   to_char(kyrq,'yyyy-mm-dd') as kyrq,
+			   sszrdwdm,
+			   sssqdm,
+			   zxbs,
+			   to_char(zxsj,'yyyy-mm-dd') as zxsj,
+			   to_char(djsj,'yyyy-mm-dd') as djsj,
+			   to_char(xgsj,'yyyy-mm-dd') as xgsj,
+			   to_char(jlrksj,'yyyy-mm-dd hh24:mi:ss') as jlrksj,
+			   to_char(jlbgsj,'yyyy-mm-dd hh24:mi:ss') as jlbgsj,
+			   qsbs,
+			   glbm,
+			   glzt,
+			   ywxtdwlx,
+			   pfhdwdm
+		  FROM t_za_dwtb dw 
+		  where ywzjid = ? and ywxtdwlx = ?
+		]]>
+	</property>
+	
+	<!-- 更新单位派发后单位代码 -->
+	<property name="updateDwPfhDwdmByIdAndLx">
+		<![CDATA[
+			update t_za_dwtb set pfhdwdm = ? where ywzjid= ? and ywxtdwlx = ?
+		]]>
+	</property>
+	
+	<!-- 更新单位签收状态 -->
+	<property name="updateDwQsztByIdAndLx">
+		<![CDATA[
+			update t_za_dwtb set QSBS = ? where ywzjid= ? and ywxtdwlx = ?
+		]]>
+	</property>
+	
+	<!-- 新增操作记录 -->
+	<property name="isnertDwOpLog">
+		<![CDATA[
+			INSERT INTO t_za_dwtb_oplog
+				(id,
+				 ywxtzj,
+				 czsj,
+				 czrsfzh,
+				 czrxm,
+				 czdwdm,
+				 czdwmc,
+				 pfdwdm,
+				 pfdwmc,
+				 czzt,
+				 thyy,
+				 mbdwdm,
+				 mbdwmc,
+				 ywxtlx,
+				 qsdz,
+				 qsdw)
+			VALUES
+				(#[id],
+				 #[ywxtzj],
+				 sysdate,
+				 #[czrsfzh],
+				 #[czrxm],
+				 #[czdwdm],
+				 #[czdwmc],
+				 #[pfdwdm],
+				 #[pfdwmc],
+				 #[czzt],
+				 #[thyy],
+				 #[mbdwdm],
+				 #[mbdwmc],
+				 #[ywxtlx],
+				 #[qsdz],
+				 #[qsdw])
+		]]>
+	</property>
+	
+	<!-- 查询单位最新的操作记录 -->
+	<property name="queryNewDwOp">
+		<![CDATA[
+			select * from 
+				(select * from t_za_dwtb_oplog 
+				 where ywxtzj = #[dwid] 
+				 and ywxtlx = #[lx]
+				 #if($czzt && !$czzt.equals(""))
+				 	and czzt = #[czzt]
+				 #end 
+				 order by czsj desc) 
+			where rownum = 1
+		]]>
+	</property>
+	
+	<!-- 新增娱乐场所 -->
+	<property name="inserYlcs">
+		<![CDATA[
+			insert into t_za_dw_ggcs(jlbh,ggcsbh,jgbh)
+		]]>
+	</property>
+	
+	<!-- 新增网吧 -->
+	<property name="insertWb">
+		<![CDATA[
+			insert into t_za_jg_swfwcs (jlbh,jgbh) values(?,?)
+		]]>
+	</property>
+	
+	<!-- 新增特种行业 -->
+	<property name="insertTzhy">
+		<![CDATA[
+			insert into t_za_dw_tzhy (thbh,jgbh) values(?,?)
+		]]>
+	</property>
+	
+	<!-- 新增旅馆 -->
+	<property name="insertLg">
+		<![CDATA[
+			insert into t_za_dw_thlgy (lgbh,jgbh,thbh) values(?,?,?)
+		]]>
+	</property>
+
+	<!-- 新增单位房屋关联 -->
+	<property name="inserDwFwGl">
+		<![CDATA[
+			insert into t_lsgl_dwfw_gl
+			  (dwfwglid, jgbh, fwid, dzid,  zxbs, djsj)
+			values
+			  (#[dwfwglid], #[jgbh], #[fwid], #[dzid],'0', sysdate)
+		]]>
+	</property>
+	
+	<!-- 新增单位 -->
+	<property name="insertDwToJg">
+		<![CDATA[
+			INSERT INTO t_za_jg_jbxx
+				(jgbh,dwmc,hylb,dwdh,dwdm,yyzzbh,frdb,
+				 frsfzhm,frlxdh,kyrq,dwdz,yxtzj,dwlb,
+				 glbm,zxbs,zxrq,djrjh,djrxm,djrsfzh,
+				 djdwdm,djdwmc,djsj,czrjh,czrxm,czrsfzh,
+				 czdwdm,czdwmc,czsj,czbs,
+				 zrdwpcsdm,zrdwpcsmc,zrmjjh,zrmjxm,sssqdm,ywxtlx
+				 )
+			VALUES
+				(#[jgbh],#[dwmc],#[hylb],#[dwdh],#[zzjgdm],#[yyzzhm],#[frdbxm],
+				 #[frdbsfzh],#[frdblxdh],to_date(#[kyrq],'yyyy-mm-dd'),#[dwdz],#[ywzjid],#[dwlb],#[glbm],
+				 #[zxbs],#[zxsj],#[djrjh],#[djrxm],#[djrsfzh],#[djdwdm],#[djdwmc],
+				 sysdate,#[czrjh],#[czrxm],#[czrsfzh],#[czdwdm],#[czdwmc],
+				 sysdate,#[czbs],#[zrdwpcsdm],#[zrdwpcsmc],#[zrmjjh],#[zrmjxm],#[sssqdm],#[ywxtlx]
+				 )
+		]]>
+	</property>
+	
+	<!-- 更新单位管理状态 -->
+	<property name="updateDwGlZt">
+		<![CDATA[
+			update t_za_jg_jbxx 
+			set jgbh = #[jgbh] 
+			#if($glbm && $glbm.equals("1"))
+				, sfzagl = '1'
+			#end
+			#if($glbm && $glbm.equals("4"))
+				, sfwjgl = '1'
+			#end 
+			where jgbh = #[jgbh]
+		]]>
+	</property>
+	
+	<!-- 更新单位信息 -->
+	<property name="updateDwxx">
+		<![CDATA[
+			update t_za_jg_jbxx
+			set dwmc = #[dwmc],
+			dwlb = #[dwlb],
+			hylb = #[hylb],
+			czbs = #[czbs],
+			czrxm = #[czrxm],
+			czrjh = #[czrjh],
+			czrsfzh = #[czrsfzh],
+			czsj = sysdate,
+			czdwdm = #[czdwdm],
+			czdwmc = #[czdwmc],
+			zrmjjh = #[zrmjjh],
+			zrmjxm = #[zrmjxm]
+			#if($dwdh && !$dwdh.equals(""))
+				, dwdh = #[dwdh]
+			#end
+			#if($zzjgdm && !$zzjgdm.equals(""))
+				, dwdm = #[zzjgdm]
+			#end
+			#if($yyzzhm && !$yyzzhm.equals(""))
+				, yyzzbh = #[yyzzhm]
+			#end
+			#if($kyrq && !$kyrq.equals(""))
+				, kyrq = to_date(#[kyrq],'yyyy-mm-dd')
+			#end
+			#if($frdbxm && !$frdbxm.equals(""))
+				, frdb = #[frdbxm]
+			#end
+			#if($frdbsfzh && !$frdbsfzh.equals(""))
+				, frsfzhm = #[frsfzhm]
+			#end
+			#if($frdblxdh && !$frdblxdh.equals(""))
+				, frlxdh = #[frdblxdh]
+			#end
+			#if($glbm && $glbm.equals("1"))
+				, sfzagl = '1'
+			#end
+			#if($glbm && $glbm.equals("4"))
+				, sfwjgl = '1'
+			#end
+			where jgbh = #[jgbh]
+		]]>
+	</property>
+	
+	<!-- 更新单位同步表的管理状态 -->
+	<property name="updateDwtbGlZt">
+		<![CDATA[
+			update t_za_dwtb set glzt = ? where ywzjid = ? and ywxtdwlx = ?
+		]]>
+	</property>
+	
+	<!-- 根据派出所代码查询所属社区代码list -->
+	<property name="querySssqdmByPcsdmSQL">
+		<![CDATA[
+			select dm,jc as mc
+			  from t_common_hnxzqh t
+			 where t.isvalid = '1'
+			 #if($pcsdm && !$pcsdm.equals(""))
+			   and sspcsdm = substr(#[pcsdm],1,8)||'0000'
+			 #end
+			 #if($sssqdm && !$sssqdm.equals(""))
+			   and ssjwsdm = #[sssqdm]
+			 #end    
+		]]>
+	</property>
+	<!-- 新增危爆单位信息 -->
+	<property name="insertWbdwSQL">
+		<![CDATA[
+			insert into t_za_dwtb
+			  (ywzjid,
+			   dwmc,
+			   frdbsfzh,
+			   frdbxm,
+			   frdblxdh,
+			   dwdh,
+			   dwdz,
+			   hylb,
+			   dwlb,
+			   zzjgdm,
+			   yyzzhm,
+			   kyrq,
+			   sszrdwdm,
+			   sssqdm,
+			   zxbs,
+			   djsj,
+			   jlrksj,
+			   qsbs,
+			   glbm,
+			   glzt,
+			   ywxtdwlx,
+			   djrxm,
+			   djrjh,
+			   djdwdm,
+			   djdwmc)
+			values
+			  (#[ywzjid],
+			   #[dwmc],
+			   #[frdbsfzh],
+			   #[frdbxm],
+			   #[frdblxdh],
+			   #[dwdh],
+			   #[dwdz],
+			   #[hylb],
+			   #[dwlb],
+			   #[zzjgdm],
+			   #[yyzzhm],
+			   to_date(#[kyrq],'yyyy-mm-dd'),
+			   #[sszrdwdm],
+			   #[sssqdm],
+			   #[zxbs],
+			   to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+			   sysdate,
+			   #[qsbs],
+			   #[glbm],
+			   #[glzt],
+			   #[ywxtdwlx],
+			   #[djrxm],
+			   #[djrjh],
+			   #[djdwdm],
+			   #[djdwmc])
+		]]>
+	</property>
+	<!-- 更新危爆单位信息 -->
+	<property name="updateWbdwSQL">
+		<![CDATA[
+			update t_za_dwtb
+			   set dwmc = #[dwmc],
+			       frdbsfzh = #[frdbsfzh],
+			       frdbxm = #[frdbxm],
+			       frdblxdh = #[frdblxdh],
+			       dwdh = #[dwdh],
+			       dwdz = #[dwdz],
+			       hylb = #[hylb],
+			       dwlb = #[dwlb],
+			       zzjgdm = #[zzjgdm],
+			       yyzzhm = #[yyzzhm],
+			       kyrq = to_date(#[kyrq],'yyyy-mm-dd'),
+			       sszrdwdm = #[sszrdwdm],
+			       sssqdm = #[sssqdm],			      			      
+			       xgsj = sysdate		       			    			      
+			 where ywzjid = #[ywzjid]
+			 		and ywxtdwlx = '05'
+		]]>
+	</property>
+	<!-- 新增危爆单位业务信息 -->
+	<property name="insertWXWPDWsql">
+		<![CDATA[
+			insert into t_za_dw_wxwpdw
+				  (jlbh, hwlb, dwfl, fbxkfw, scdz, cssb, bz, ywxtzjid)
+				values
+				  (#[jlbh],
+				   #[hwlb],
+				   #[dwfl],
+				   #[fbxkfw],
+				   #[scdz],
+				   #[cssb],
+				   #[bz],
+				   #[ywzjid])
+		]]>
+	</property>
+	<!-- 更新危爆单位业务信息 -->
+	<property name="updateWXWPDWsql">
+		<![CDATA[
+			update t_za_dw_wxwpdw
+			   set 
+			       hwlb = #[hwlb],
+			       dwfl = #[dwfl],
+			       fbxkfw = #[fbxkfw],
+			       scdz = #[scdz],
+			       cssb = #[cssb],
+			       bz = #[bz]
+			 where ywxtzjid = #[ywzjid]
+		]]>
+	</property>
+	
+	<property name="updateJgbhWithWbdwByYwxtZj">
+		<![CDATA[
+			update t_za_dw_wxwpdw set jgbh = ? where ywxtzjid = ?
+		]]>
+	</property>
+</properties>

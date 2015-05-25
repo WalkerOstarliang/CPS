@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="sqjwsxx" namespace="/sqjwsxx" extends="default"> 
+	  		<action name="*" class="com.chinacreator.afgl.action.SqjwsxxAction" method="{1}">
+	  			<result name="toSqjwsxxList">/jsp/afgl/pages/sqjwsxx/sqjwsxxList.jsp</result>
+	  			<result name="toUpdateSqjwsxxByJwsdm">/jsp/afgl/pages/sqjwsxx/addSqjwsxx.jsp</result>
+	  			<result name="viewSqjwsxxByJwsdm">/jsp/afgl/pages/sqjwsxx/viewSqjwsxx.jsp</result>
+	  			<result name="toSelectSqjwsxx">/jsp/afgl/pages/sqjwsxx/selectSqjwsxx.jsp</result>
+	  			<result name="toGjQuerySqjwsxx">/jsp/afgl/pages/sqjwsxx/sqjwsxxGjQuery.jsp</result>
+	  		</action>
+	  </package>
+</struts>

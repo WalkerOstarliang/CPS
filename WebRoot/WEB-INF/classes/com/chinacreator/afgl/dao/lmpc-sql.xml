@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryLmpcList">
+		<![CDATA[
+			select jlbh,
+		       to_char(pcsj,'yyyy-MM-dd HH24:mi:ss') pcsj,
+		       pcdd,
+		       trim(pcdxxm) pcdxxm,
+		       trim(pcdxsfzh) pcdxsfzh,
+		       lxfs,
+		       kywplx,
+		       kywpmc,
+		       xgrxm,
+		       xgrdwdm,
+		       xgrdwmc,
+		       djrxm,
+		       djrdwdm,
+		       djrdwmc,
+		       cllx,
+		       djrjh,
+		       cph,
+		       fdjh,
+		       cjh,
+		       pcyy,
+		       ljd,
+		       bz,
+		       cljg,
+		       to_char(djsj,'yyyy-MM-dd HH24:mi:ss') djsj,
+		       to_char(xgsj,'yyyy-MM-dd HH24:mi:ss') xgsj,
+		       yxx,
+		       zxrxm,
+		       zxrjh,
+		       zxsj
+			  from t_af_lmpcxx
+			  where 1=1
+			  #if($pcdd && !$pcdd.equals(""))
+			 	and pcdd  like '%'||#[pcdd]||'%'
+			 #end 
+			 
+			 #if($pcdxxm && !$pcdxxm.equals(""))
+			 	and pcdxxm  like '%'||#[pcdxxm]||'%'
+			 #end 
+			 
+			 #if($pcdxsfzh && !$pcdxsfzh.equals(""))
+			 	and pcdxsfzh  = #[pcdxsfzh]
+			 #end 
+			 
+			 #if($djrxm && !$djrxm.equals(""))
+			 	and djrxm  like  '%'||#[djrxm]||'%'
+			 #end 
+			 
+			  #if($pcsj_from && !$pcsj_from.equals(""))
+			  	and xgsj >= to_date(#[pcsj_from]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($pcsj_to && !$pcsj_to.equals(""))
+			  	and xgsj <= to_date(#[pcsj_to]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($querydwdm && !$querydwdm.equals(""))
+			  	 and djrdwdm like 
+				   case
+				    when F_GET_DWLEVE(#[querydwdm]) = '1' then 
+				          substr(#[querydwdm], 1, 2) || '%' 
+				    when F_GET_DWLEVE(#[querydwdm]) = '2' then
+				          substr(#[querydwdm], 1, 4) || '%' 
+				     when F_GET_DWLEVE(#[querydwdm]) = '3' then 
+				          substr(#[querydwdm], 1, 6) || '%' 
+				     when F_GET_DWLEVE(#[querydwdm]) = '4' then 
+				          substr(#[querydwdm], 1, 8) || '%' 
+				     when F_GET_DWLEVE(#[querydwdm]) = '5' then 
+				           substr(#[querydwdm], 1, 12) || '%'
+				     else
+				            substr(#[querydwdm], 1, 12) || '%' 
+				     end
+				  and djrdwdm in
+		             (select orgcode
+		                from v_common_organization
+		               where 
+		               -- isyx = '1'
+		                -- and 
+		                 orgcode like '4301%'
+		                 and orgcode = #[querydwdm]
+		              union
+		              select v.orgcode
+		                from v_common_organization v
+		               where
+		               -- v.isyx = '1'
+		               --  and 
+		                 v.orgcode like '4301%'
+		               start with v.parent_code = #[querydwdm]
+		              connect by prior v.orgcode = v.parent_code)   
+			  #end
+			  #if($jlbh && !$jlbh.equals(""))
+			  	and jlbh = #[jlbh]
+			  #end
+			  #if($yxx && !$yxx.equals("") && $yxx.equals("3"))
+			  	and  1 = 1
+			  #end
+			  #if($yxx && !$yxx.equals("")  && !$yxx.equals("3"))
+			  	and yxx = #[yxx]
+			  #end
+			  order by djsj desc
+		]]>
+	</property>
+	<property name="queryLmpcBeanByJlbh">
+		<![CDATA[
+					select jlbh,
+       to_char(pcsj,'yyyy-MM-dd HH24:mi:ss') pcsj,
+       pcdd,
+       pcdxxm,
+       pcdxsfzh,
+       lxfs,
+       kywplx,
+       kywpmc,
+       xgrxm,
+       xgrdwdm,
+       xgrdwmc,
+       djrxm,
+       djrdwdm,
+       djrdwmc,
+       cllx,
+       cph,
+       fdjh,
+       cjh,
+       pcyy,
+       ljd,
+       bz,
+       cljg,
+       to_char(djsj,'yyyy-MM-dd HH24:mi:ss') djsj,
+       to_char(xgsj,'yyyy-MM-dd HH24:mi:ss') xgsj,
+       yxx,
+       zxrxm,
+       zxrjh,
+       zxsj
+  from t_af_lmpcxx
+  where jlbh =?
+		]]>
+	</property>
+	<property name="queryLmpctxrBeanList">
+		<![CDATA[
+			select id, pcbh, txrxm, txrsfzh from t_af_lmpc_txry where pcbh =?
+		]]>
+	</property>
+	<property name="insertLmpcxxBean">
+		<![CDATA[
+				insert into t_af_lmpcxx
+  (jlbh,
+   pcsj,
+   pcdd,
+   pcdxxm,
+   pcdxsfzh,
+   lxfs,
+   kywplx,
+   kywpmc,
+   xgrxm,
+   xgrdwdm,
+   xgrdwmc,
+   djrxm,
+   djrdwdm,
+   djrdwmc,
+   cllx,
+   cph,
+   fdjh,
+   cjh,
+   pcyy,
+   ljd,
+   djsj,
+   xgsj,
+   bz,
+   cljg)
+values
+(#[jlbh],
+to_date(#[pcsj],'yyyy-MM-dd HH24:mi:ss'),
+#[pcdd],
+#[pcdxxm],
+#[pcdxsfzh],
+#[lxfs],
+#[kywplx],
+#[kywpmc],
+#[xgrxm],
+#[xgrdwdm],
+#[xgrdwmc],
+#[djrxm],
+#[djrdwdm],
+#[djrdwmc],
+#[cllx],
+#[cph],
+#[fdjh],
+#[cjh],
+#[pcyy],
+#[ljd],
+to_date(#[djsj],'yyyy-MM-dd HH24:mi:ss'),
+to_date(#[xgsj],'yyyy-MM-dd HH24:mi:ss'),
+#[bz],
+#[cljg])
+			
+		]]>
+	</property>
+	<property name="updateLmpcxxBean">
+	<![CDATA[
+		update t_af_lmpcxx
+   set 
+       pcsj = to_date(#[pcsj],'yyyy-MM-dd HH24:mi:ss'),
+       pcdd = #[pcdd],
+       pcdxxm = #[pcdxxm],
+       pcdxsfzh = #[pcdxsfzh],
+       lxfs = #[lxfs],
+       kywplx = #[kywplx],
+       kywpmc = #[kywpmc],
+       xgrxm = #[xgrxm],
+       xgrdwdm = #[xgrdwdm],
+       xgrdwmc = #[xgrdwmc],
+       djrxm = #[djrxm],
+       djrdwdm = #[djrdwdm],
+       djrdwmc = #[djrdwmc],
+       cllx = #[cllx],
+       cph = #[cph],
+       fdjh = #[fdjh],
+       cjh = #[cjh],
+       pcyy = #[pcyy],
+       ljd = #[ljd],
+       djsj = to_date(#[djsj],'yyyy-MM-dd HH24:mi:ss'),
+       xgsj = to_date(#[xgsj],'yyyy-MM-dd HH24:mi:ss'),
+       bz = #[bz],
+       cljg = #[cljg]
+ where jlbh = #[jlbh]
+ 		]]>
+	</property>
+	<property name="insertTxrxx">
+		<![CDATA[
+			insert into t_af_lmpc_txry
+  (id, pcbh, txrxm, txrsfzh)
+values
+  (#[id], #[pcbh], #[txrxm], #[txrsfzh])
+			
+		]]>
+	</property>
+	<property name="deltxrxxById">
+		<![CDATA[
+			delete t_af_lmpc_txry
+         where id=?
+		]]>
+	</property>
+	<!-- queryLmpcListByjlbh -->
+	<property name="queryLmpcListByjlbh">
+		<![CDATA[
+			select jlbh,
+		       to_char(pcsj,'yyyy-MM-dd HH24:mi:ss') pcsj,
+		       pcdd,
+		       pcdxxm,
+		       pcdxsfzh,
+		       lxfs,
+		       kywplx,
+		       kywpmc,
+		       xgrxm,
+		       xgrdwdm,
+		       xgrdwmc,
+		       djrxm,
+		       djrdwdm,
+		       djrdwmc,
+		       cllx,
+		       cph,
+		       fdjh,
+		       cjh,
+		       pcyy,
+		       ljd,
+		       bz,
+		       cljg,
+		       to_char(djsj,'yyyy-MM-dd HH24:mi:ss') djsj,
+		       to_char(xgsj,'yyyy-MM-dd HH24:mi:ss') xgsj,
+		       yxx,
+		       zxrxm,
+		       zxrjh,
+		       zxsj
+			  from t_af_lmpcxx
+			  where 1=1
+			 	and jlbh in (#[v_jlbh])
+			  order by djsj desc
+			
+		]]>
+	</property>
+	
+	<!-- 注销路面盘查信息 -->
+	<property name="updateZxLmpcxx">
+		<![CDATA[
+			update t_af_lmpcxx set 
+			  ZXSJ = sysdate,
+			  YXX = '1',
+			  ZXRJH=#[zxrjh],
+			  ZXRXM=#[zxrxm]
+			  where JLBH = #[id]
+		]]>
+	</property>
+</properties>

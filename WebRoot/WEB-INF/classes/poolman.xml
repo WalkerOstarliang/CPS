@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="gb2312"?>
+<poolman>
+	<management-mode>local</management-mode>
+	
+	<datasource>
+		<dbname>sqjw</dbname>
+		<loadmetadata>false</loadmetadata>
+		<jndiName>bspf_datasource_jndiname</jndiName>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		<!--
+		<url>jdbc:oracle:thin:@10.142.55.89:1521:orcl</url> 
+		<username>sqjw</username>
+		<password>sqjw_kc</password>
+		
+		<url>jdbc:oracle:thin:@10.142.56.151:1521:sqjw</url> 
+		<username>sqjw</username>
+		<password>sqjw_kc</password>
+		-->
+		<url>jdbc:oracle:thin:@(DESCRIPTION =
+					    (ADDRESS = (PROTOCOL = TCP)(HOST = 10.146.13.52)(PORT = 1521))
+      					(ADDRESS = (PROTOCOL = TCP)(HOST = 10.146.13.53)(PORT = 1521))
+					    (LOAD_BALANCE = yes)
+					    (CONNECT_DATA =
+					      (SERVER = DEDICATED)
+					      (SERVICE_NAME = HHGA)
+					      (FAILOVER_MODE =
+					        (TYPE = SELECT)
+					        (METHOD = BASIC)
+					        (RETRIES = 180)
+					        (DELAY = 5)
+					      )
+					    )
+					  )</url> 
+		<username>sqjw</username>
+		<password>CS_JZ_sqjw_20140128</password>
+		
+		<!-- 	
+		<url>jdbc:oracle:thin:@10.142.56.151:1521:sqjw</url> 
+		<username>sqjw_px</username>
+		<password>sqjw_px_kc</password>
+		-->
+		
+		<!-- 
+		<url>jdbc:oracle:thin:@10.144.81.96:1521:cdjz</url> 
+		<username>sqjw</username>
+		<password>SQJW</password>
+		-->
+		<!-- 
+		 <url>jdbc:oracle:thin:@10.142.56.151:1521:sqjw</url> 
+		<username>sqjw_px</username>
+		<password>sqjw_px_kc</password>
+		-->
+		
+		<!-- 
+		<url>jdbc:oracle:thin:@(DESCRIPTION =
+					    (ADDRESS = (PROTOCOL = TCP)(HOST = 10.143.1.205)(PORT = 1521))
+					    (ADDRESS = (PROTOCOL = TCP)(HOST = 10.143.1.206)(PORT = 1521))
+					    (LOAD_BALANCE = yes)
+					    (CONNECT_DATA =
+					      (SERVER = DEDICATED)
+					      (SERVICE_NAME = CSJZ)
+					      (FAILOVER_MODE =
+					        (TYPE = SELECT)
+					        (METHOD = BASIC)
+					        (RETRIES = 180)
+					        (DELAY = 5)
+					      )
+					    )
+					  )</url> 
+		<username>sqjw</username>
+		<password>CS_JZ_sqjw_20140128</password>
+	   
+	   	<url>jdbc:oracle:thin:@(DESCRIPTION =
+	   				(ADDRESS = (PROTOCOL = TCP)(HOST = 10.146.13.53)(PORT = 1521))
+	   				(LOAD_BALANCE = yes)
+	   				(CONNECT_DATA =
+	   					(SERVICE_NAME = HHGA)
+	   					(FAILOVER_MODE = (TYPE = SELECT)(METHOD = BASIC)(RETRIES = 180)(DELAY = 5))))</url> 
+		<username>sqjw</username>
+		<password>CS_JZ_sqjw_20140128</password>
+	   -->
+		<txIsolationLevel>READ_COMMITTED</txIsolationLevel>
+		<nativeResults>true</nativeResults>
+		<poolPreparedStatements>false</poolPreparedStatements>
+		<initialConnections>10</initialConnections>
+		<minimumSize>10</minimumSize>
+		<maximumSize>10</maximumSize>
+		<maximumSoft>false</maximumSoft>
+		<removeAbandoned>true</removeAbandoned>
+		<userTimeout>3</userTimeout>
+		<logAbandoned>true</logAbandoned>
+		<readOnly>true</readOnly>
+		<skimmerFrequency>10</skimmerFrequency>
+		<connectionTimeout>3</connectionTimeout>
+		<shrinkBy>5</shrinkBy>
+		<testWhileidle>true</testWhileidle>
+		<keygenerate>auto</keygenerate>
+		<maxWait>60</maxWait>
+		<validationQuery>select 1 from dual</validationQuery>
+		<autoprimarykey>true</autoprimarykey>
+		<showsql>true</showsql>
+	</datasource>
+		
+	
+	<datasource>
+		<dbname>ptgl</dbname>
+		<loadmetadata>false</loadmetadata>
+		<jndiName>bspf_datasource_jndiname</jndiName>
+		<driver>oracle.jdbc.driver.OracleDriver</driver>
+		
+		<url>jdbc:oracle:thin:@10.142.56.151:1521:sqjw</url> 
+		<username>ptgl</username>
+		<password>ptgl_kc</password>
+		
+		<txIsolationLevel>READ_COMMITTED</txIsolationLevel>
+		<nativeResults>true</nativeResults>
+		<poolPreparedStatements>false</poolPreparedStatements>
+		<initialConnections>10</initialConnections>
+		<minimumSize>10</minimumSize>
+		<maximumSize>10</maximumSize>
+		<maximumSoft>false</maximumSoft>
+		<removeAbandoned>true</removeAbandoned>
+		<userTimeout>3</userTimeout>
+		<logAbandoned>true</logAbandoned>
+		<readOnly>true</readOnly>
+		<skimmerFrequency>10</skimmerFrequency>
+		<connectionTimeout>3</connectionTimeout>
+		<shrinkBy>5</shrinkBy>
+		<testWhileidle>true</testWhileidle>
+		<keygenerate>auto</keygenerate>
+		<maxWait>60</maxWait>
+		<validationQuery>select 1 from dual</validationQuery>
+		<autoprimarykey>true</autoprimarykey>
+		<showsql>true</showsql>
+	</datasource>
+	
+</poolman>

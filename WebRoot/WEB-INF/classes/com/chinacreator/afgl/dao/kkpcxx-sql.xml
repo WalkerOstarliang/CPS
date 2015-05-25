@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="addKkpcxx">
+		<![CDATA[
+			insert into t_af_zapcxx
+			  (pcbh, kkbh, pcmjxm, pcmjjh, pcdwdm, pcdwmc, pcsj, pcyy, 
+			   bpcrxm, bpcrsfzh, bpcrxb, bpcrcsrq, bpcrhjdqh, bpcrxzdxz, cypcry,
+			   pclb, pcclcjh, pcclcph, pcclfdjh, pcdd, cljg, pccllx, pcclqk, 
+			   djrxm, djrjh, djdwdm, djdwmc, djsj, pcclcpssr)
+			values
+			  (#[pcbh], #[kkbh], #[pcmjxm], #[pcmjjh], #[pcdwdm], #[pcdwmc], 
+			  to_date(#[pcsj],'yyyy-MM-dd hh24:mi:ss'), #[pcyy], #[bpcrxm], #[bpcrsfzh], #[bpcrxb], to_date(#[bpcrcsrq],'yyyy-MM-dd'), 
+			  #[bpcrhjdqh], #[bpcrxzdxz], #[cypcry], #[pclb], #[pcclcjh], #[pcclcph], 
+			  #[pcclfdjh], #[pcdd], #[cljg], #[pccllx], #[pcclqk], #[djrxm], #[djrjh], 
+			  #[djdwdm], #[djdwmc], to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss'), #[pcclcpssr])
+		]]>
+	</property>
+	<property name="updateKkpcxxByPcbh">
+		<![CDATA[
+			update t_af_zapcxx
+			   set kkbh = #[kkbh],
+			       pcmjxm = #[pcmjxm],
+			       pcmjjh = #[pcmjjh],
+			       pcdwdm = #[pcdwdm],
+			       pcdwmc = #[pcdwmc],
+			       pcsj = to_date(#[pcsj],'yyyy-MM-dd hh24:mi:ss'),
+			       pcyy = #[pcyy],
+			       bpcrxm = #[bpcrxm],
+			       bpcrsfzh = #[bpcrsfzh],
+			       bpcrxb = #[bpcrxb],
+			       bpcrcsrq = to_date(#[bpcrcsrq],'yyyy-MM-dd'),
+			       bpcrhjdqh = #[bpcrhjdqh],
+			       bpcrxzdxz = #[bpcrxzdxz],
+			       cypcry = #[cypcry],
+			       pclb = #[pclb],
+			       pcclcjh = #[pcclcjh],
+			       pcclcph = #[pcclcph],
+			       pcclfdjh = #[pcclfdjh],
+			       pcdd = #[pcdd],
+			       cljg = #[cljg],
+			       pccllx = #[pccllx],
+			       pcclqk = #[pcclqk],
+			       djrxm = #[djrxm],
+			       djrjh = #[djrjh],
+			       djdwdm = #[djdwdm],
+			       djdwmc = #[djdwmc],
+			       djsj = to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss'),
+			       pcclcpssr = #[pcclcpssr]
+			 where pcbh = #[pcbh]
+
+		]]>
+	</property>
+	<property name="kkpcxxList">
+		<![CDATA[
+			select pc.pcbh,
+			       kk.kkbh,
+			       kk.kkmc,
+			       kk.kkwz,
+			       kk.kkfw,
+			       pc.pcmjxm,
+			       pc.pcmjjh,
+			       pc.pcdwdm,
+			       pc.pcdwmc,
+			       pc.pcsj,
+			       pc.pcyy,
+			       pc.bpcrxm,
+			       pc.bpcrsfzh,
+			       pc.bpcrxb,
+			       to_char(pc.bpcrcsrq,'yyyy-MM-dd') bpcrcsrq,
+			       pc.bpcrhjdqh,
+			       pc.bpcrxzdxz,
+			       pc.cypcry,
+			       pc.pclb,
+			       pc.pcclcjh,
+			       pc.pcclcph,
+			       pc.pcclfdjh,
+			       pc.pcdd,
+			       pc.cljg,
+			       pc.pccllx,
+			       pc.pcclqk,
+			       pc.djrxm,
+			       pc.djrjh,
+			       pc.djdwdm,
+			       pc.djdwmc,
+			       pc.djsj
+			  from t_af_zapcxx pc, t_af_zakkxx kk
+			  where pc.kkbh = kk.kkbh
+			  --单位选择查询
+			  --精确到派出所
+			  #if($pcsdm and !$pcsdm.equals(""))
+			  	and pc.djdwdm=#[pcsdm]
+			  #else
+			  	  --精确到县区
+				  #if($countrydm and !$countrydm.equals(""))
+				  	and substr(pc.djdwdm,1,6)=#[countrydm]
+				  #else
+				     --精确到市州
+				  	 #if($citydm and !$citydm.equals(""))
+				  		and substr(pc.djdwdm,1,4)=substr(#[citydm],1,4)
+				  	 #end
+				  #end
+			  #end
+			  #if($kkbh && !$kkbh.equals(""))
+			  	and kk.kkbh = #[kkbh]
+			  #end
+			  #if($pcyy && !$pcyy.equals(""))
+			  	and pc.pcyy = #[pcyy]
+			  #end
+			  #if($pclb && $pclb.equals("1"))
+			  	and pc.pclb = '1'
+			  #end
+			  #if($kkmc && !$kkmc.equals(""))
+			  	and kk.kkmc like '%'||#[kkmc]||'%'
+			  #end
+			  #if($pcbh && !$pcbh.equals(""))
+			  	and pc.pcbh = #[pcbh]
+			  #end
+			  #if($pcsj_from && !$pcsj_from.equals(""))
+			  	and pc.pcsj >= to_date(#[pcsj_from],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($pcsj_to && !$pcsj_to.equals(""))
+			  	and pc.pcsj <= to_date(#[pcsj_to],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($pcmjxm && !$pcmjxm.equals(""))
+			  	and pc.pcmjxm like '%'||#[pcmjxm]||'%'
+			  #end
+			  #if($djrxm && !$djrxm.equals(""))
+			  	and pc.djrxm like '%'||#[djrxm]||'%'
+			  #end
+			  #if($djsj_from && !$djsj_from.equals(""))
+			  	and pc.djsj >= to_date(#[djsj_from],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($djsj_to && !$djsj_to.equals(""))
+			  	and pc.djsj <= to_date(#[djsj_to],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  
+			  order by pc.djsj desc
+		]]>
+	</property>
+	
+</properties>

@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryWyxqTb">
+		<![CDATA[
+			SELECT (SELECT orgjc
+	        FROM t_common_organization_sjjs
+	       WHERE orgcode = substr(xq.ssjwqdm, 1, 6) || '000000') AS qxj,
+	       (SELECT orgjc
+	        FROM t_common_organization_sjjs
+	       WHERE orgcode = substr(xq.ssjwqdm, 1, 8) || '0000') AS pcs,
+	       xq.xqmc as wyxq,
+	       xq.wygs,
+	       xq.id,
+	       fa.sl as fas
+	        FROM (SELECT wyxqid, SUM(fas) AS sl
+	            FROM t_nbgl_wyxqfa
+	          WHERE 1 = 1
+	          #if($tjsj_start && !$tjsj_start.equals(""))
+	            AND tjrq >= to_date(#[tjsj_start],'yyyy-mm-dd')
+	          #end
+	          #if($tjsj_end && !$tjsj_end.equals(""))
+	            AND tjrq <= to_date(#[tjsj_end],'yyyy-mm-dd')
+	          #end  
+	           GROUP BY wyxqid
+	           ORDER BY sl DESC) fa, t_za_wyxq xq
+	       WHERE fa.wyxqid = xq.id
+	       ORDER BY sl DESC
+		]]>
+	</property>
+	
+	<property name="queryWyxqFatj">
+		<![CDATA[
+			SELECT *
+			  FROM (SELECT org.orgcode AS orgCode,
+						   org.orgname AS orgName,
+						   org.leve AS orgLeve,
+						   SUM(qjs) AS qjqd,
+						   SUM(rsdq) AS rsdq,
+						   SUM(dqjdc) AS dqjdc,
+						   SUM(dqmtc) AS dqmtc,
+						   SUM(dqddc) AS dqddc,
+						   SUM(dqcncw) AS dqcncw,
+						   SUM(dq) AS qtdq,
+						   SUM(zs) AS byzs,
+						   SUM(syzs) AS syzs,
+						   decode(SUM(syzs),
+								  0,
+								  SUM(zs) * 100 || '.00%',
+								  to_char((SUM(zs) - SUM(syzs)) * 100 / SUM(syzs),
+										  '99990.99') || '%') AS hb
+					  FROM (SELECT 
+								   SUM(a.qjs) AS qjs,
+								   SUM(a.rsdq) AS rsdq,
+								   SUM(a.dqjdc) AS dqjdc,
+								   SUM(a.dqmtc) AS dqmtc,
+								   SUM(a.dqddc) AS dqddc,
+								   SUM(a.dqcncw) AS dqcncw,
+								   SUM(a.dq) AS dq,
+								   SUM(a.zs) AS zs,
+								   #if($orgLeve.equals("2"))
+									   nvl(f_get_wyxqsyfa(substr(orgcode, 1, 6) || '000000',
+													  to_date(#[tjrq]||'-01','yyyy-mm-dd')),0) AS syzs,
+									   substr(orgcode, 1, 6) orgcode
+								   #elseif($orgLeve.equals("3"))
+								       nvl(f_get_wyxqsyfa(substr(orgcode, 1, 8) || '0000',
+													  to_date(#[tjrq]||'-01','yyyy-mm-dd')),0) AS syzs,
+									   substr(orgcode, 1, 8) orgcode
+								   #elseif($orgLeve.equals("4") || $orgLeve.equals("5"))
+								   	   nvl(f_get_wyxqsyfa(orgcode,
+													  to_date(#[tjrq]||'-01','yyyy-mm-dd')),0) AS syzs,
+								   	   orgcode
+								   #end
+							  FROM t_nbgl_wyxqfatj a
+							  WHERE tjrq>=to_date(#[tjrq]||'-01','yyyy-mm-dd')
+							  AND tjrq<=add_months(to_date(#[tjrq]||'-01','yyyy-mm-dd'),1) - 1
+							  #if($orgLeve.equals("2"))
+								    GROUP BY substr(orgcode, 1, 6)
+							   #elseif($orgLeve.equals("3"))
+							        GROUP BY substr(orgcode, 1, 8)
+							   #elseif($orgLeve.equals("4") || $orgLeve.equals("5"))
+							   	   GROUP BY orgcode
+							   #end
+							 ) tj,
+						   t_common_organization_sjjs org
+					 WHERE 1 = 1 
+					 	#if($orgLeve.equals("2"))
+						     AND tj.orgcode = substr(org.orgcode, 1, 6)
+						     AND org.parent_code = #[orgcode]
+					   #elseif($orgLeve.equals("3"))
+					         AND tj.orgcode = substr(org.orgcode, 1, 8)
+					         AND org.parent_code = #[orgcode]
+					   #elseif($orgLeve.equals("4"))
+					   	    AND tj.orgcode = org.orgcode
+					   	    AND org.parent_code = substr(#[orgcode],1,8)||'3100'
+					   #elseif($orgLeve.equals("5"))
+					   	    AND tj.orgcode = org.orgcode
+					   	    AND org.orgcode = #[orgcode]	    
+					   #end
+					   
+					 GROUP BY ROLLUP(org.orgcode, org.orgname, org.leve)) a
+			 WHERE 1 = 1
+			   AND (orgCode IS NOT NULL AND orgName IS NOT NULL AND orgLeve IS NOT NULL)
+				OR (orgCode IS NULL AND orgName IS NULL AND orgLeve IS NULL)
+		]]>
+	</property>
+	
+	<property name="queryNbdwFa">
+		<![CDATA[
+			SELECT *
+			  FROM (SELECT org.orgcode AS orgcode,
+						   org.orgname AS orgname,
+						   org.leve AS orgleve,
+						   (sum(pq) + sum(rsdq) + sum(qtdq) + sum(qj) + sum(qtaj)) as fazs,
+						    sum(pq) as pq,  
+							sum(rsdq) as rsdq,
+							sum(qtdq) as qtdq,
+							sum(qj) as qjqd,  
+							sum(qtaj) as qtaj,
+							sum(dzjg) as dzjg,
+							sum(gx) as gx,  
+							sum(zxxx) as zxx,
+							sum(wsxt) as yy,
+							sum(sc) as sc,  
+							sum(qy) as qy,  
+							sum(yh) as yh,  
+							sum(sdyq) as sdyq,
+							sum(zdgc) as zdgc,
+							sum(qt) as qt
+					  FROM (SELECT 
+				  				sum(pq) as pq,  
+								sum(rsdq) as rsdq,
+								sum(qtdq) as qtdq,
+								sum(qj) as qj,  
+								sum(qtaj) as qtaj,
+								sum(dzjg) as dzjg,
+								sum(gx) as gx,  
+								sum(zxxx) as zxxx,
+								sum(wsxt) as wsxt,
+								sum(sc) as sc,  
+								sum(qy) as qy,  
+								sum(yh) as yh,  
+								sum(sdyq) as sdyq,
+								sum(zdgc) as zdgc,
+								sum(qt) as qt,  
+							   #if($orgLeve.equals("2"))
+								   substr(orgcode, 1, 6) orgcode
+							   #elseif($orgLeve.equals("3"))
+								   substr(orgcode, 1, 8) orgcode
+							   #elseif($orgLeve.equals("4") || $orgLeve.equals("5"))
+							   	   orgcode
+							   #end
+							  FROM t_nbgl_nbdwfa a
+							  WHERE 1 = 1
+							  #if($tjsj_start && !$tjsj_start.equals("")) 
+							  	and tjrq>=to_date(#[tjsj_start],'yyyy-mm-dd')
+							  #end
+							  #if($tjsj_end && !$tjsj_end.equals(""))
+							  	AND tjrq<=to_date(#[tjsj_end],'yyyy-mm-dd')
+							  #end
+							  #if($zddwbz && !$zddwbz.equals(""))
+							  	and a.zddwbz = #[zddwbz]
+							  #end	
+							  #if($orgLeve.equals("2"))
+								    GROUP BY substr(orgcode, 1, 6)
+							   #elseif($orgLeve.equals("3"))
+							        GROUP BY substr(orgcode, 1, 8)
+							   #elseif($orgLeve.equals("4") || $orgLeve.equals("5"))
+							   	   GROUP BY orgcode
+							   #end
+							 ) tj,
+						   t_common_organization_sjjs org
+					 WHERE 1 = 1 
+					 	#if($orgLeve.equals("2"))
+						     AND tj.orgcode = substr(org.orgcode, 1, 6)
+						     AND org.parent_code = #[orgcode]
+					   #elseif($orgLeve.equals("3"))
+					         AND tj.orgcode = substr(org.orgcode, 1, 8)
+					         AND org.parent_code = #[orgcode]
+					   #elseif($orgLeve.equals("4"))
+					   	    AND tj.orgcode = org.orgcode
+					   	    AND org.parent_code = substr(#[orgcode],1,8)||'3100'
+					   #elseif($orgLeve.equals("5"))
+					   	    AND tj.orgcode = org.orgcode
+					   	    AND org.orgcode = #[orgcode]	    
+					   #end
+					   
+					 GROUP BY ROLLUP(org.orgcode, org.orgname, org.leve)) a
+			 WHERE 1 = 1
+			   AND (orgCode IS NOT NULL AND orgName IS NOT NULL AND orgLeve IS NOT NULL)
+				OR (orgCode IS NULL AND orgName IS NULL AND orgLeve IS NULL)
+		]]>
+	</property>
+	
+	<property name="queryZddwFa">
+		<![CDATA[
+			SELECT dwmc,jgbh as id,
+			   SUM(pq) AS pq,
+			   SUM(rsdq) AS rsdq,
+			   SUM(qtdq) AS qtdq,
+			   SUM(qj) AS qjqd,
+			   SUM(qt) AS qtaj,
+			   (sum(pq) + sum(rsdq) + sum(qtdq) + sum(qj) + sum(qt)) as hj
+		  FROM t_nbgl_zddwfa
+		  WHERE 1 = 1
+		  #if($tjsj_start && !$tjsj_start.equals(""))
+		  	AND tjrq >= to_date(#[tjsj_start],'yyyy-mm-dd')
+		  #end
+		  #if($tjsj_end && !$tjsj_end.equals(""))
+		  	AND tjrq <= to_date(#[tjsj_end],'yyyy-mm-dd')
+		  #end
+		  #if($dwmc && !$dwmc.equals(""))
+		  	AND dwmc like '%'||#[dwmc]||'%'
+		  #end
+		 GROUP BY jgbh, dwmc
+		 order by hj desc
+		]]>
+	</property>
+	
+	<property name="queryAjxxByFadddm">
+		<![CDATA[
+			SELECT 
+				jbxx.anjianbianhao as ajbh,
+				jbxx.baoanriqi AS bjrq,
+			   (SELECT orgjc
+				  FROM v_common_organization
+				 WHERE orgcode = jbxx.gonganbianhao ||'000000') AS faqy,
+			   aj.faanxiangzhi AS faxz,
+			   jq.baoanrenlxdh AS lxdh,
+			   jq.jianyaoanqing AS jyaq,
+			   jq.chujingqingkuang AS fknr,
+			   (SELECT zidianmiaoshu
+				  FROM cs_jz_zfba.t_zddmxxb
+				 WHERE zidianbianhao = jbxx.anjianleibie
+				   AND leibiebianhao = '0056') AS xl,
+			   (SELECT zidianmiaoshu
+				  FROM cs_jz_zfba.t_zddmxxb
+				 WHERE zidianbianhao = substr(jbxx.anjianleibie, 1, 4) || '00'
+				   AND leibiebianhao = '0056') AS dl,
+			   aj.suoshuzerenqu AS gxdw,
+			   decode(jbxx.anjianbiaozhi, '1', '刑事案件', '行政案件') AS ajlx
+		  FROM gawlzf.T_XSZAGLFX@to_cs_zfba_sc_vip aj,
+			   gawlzf.T_ajjbxxb@to_cs_zfba_sc_vip  jbxx,
+			   gawlzf.T_JJCJXX@to_cs_zfba_sc_vip   jq
+		 WHERE aj.anjianbianhao = jbxx.anjianbianhao
+		   AND aj.anjianbianhao = jq.anjianbianhao
+		   AND aj.actflag != '4'
+		   AND aj.anjianleixing = '1'
+		   #if($id && !$id.equals(""))
+			   AND aj.fadddm = #[id]
+		   #end
+		   #if($tjsj_start && !$tjsj_start.equals(""))
+		   		AND to_date(jbxx.lianriqi,'yyyymmdd') >= to_date(#[tjsj_start],'yyyy-mm-dd')
+		   #end
+		   #if($tjsj_end && !$tjsj_end.equals(""))
+		   		AND to_date(jbxx.lianriqi,'yyyymmdd') <= to_date(#[tjsj_end],'yyyy-mm-dd')
+		   #end
+		   #if($ajlx && !$ajlx.equals(""))
+		   		#if($ajlx.equals("1"))
+		   			--扒窃
+		   			AND aj.anjianleibie LIKE '050201%'
+		   		#elseif($ajlx.equals("2"))
+		   			--入室盗窃
+		   			AND (aj.anjianleibie = '050280' OR aj.anjianleibie LIKE '050202%' )
+		   		#elseif($ajlx.equals("3"))
+		   			--其他盗窃
+		   			AND ((aj.anjianleibie LIKE '0502%' AND
+						aj.anjianleibie NOT LIKE
+						'050201%' AND aj.anjianleibie NOT LIKE
+						'050202%' AND
+						aj.anjianleibie NOT IN
+						('050280', '050201')) OR
+						aj.anjianleibie = '05100006') 
+		   		#elseif($ajlx.equals("4"))
+		   			--抢劫抢夺
+		   			AND ((aj.anjianleibie LIKE '0501%' AND aj.anjianleibie ! = '05100006') 
+		   				OR
+						aj.anjianleibie LIKE '050400%')
+		   		#elseif($ajlx.equals("5"))
+		   			--	其他案件
+		   			AND (aj.anjianleibie NOT LIKE '0502%' 
+		   				AND aj.anjianleibie NOT LIKE '050400%' 
+		   				AND aj.anjianleibie NOT LIKE '0501%')
+		   		#end
+		   #end
+		]]>
+	</property>
+	
+	<property name="queryAjxxWithNbdw">
+		<![CDATA[
+			SELECT jbxx.baoanriqi AS bjrq,
+				jbxx.anjianbianhao as ajbh,
+			   (SELECT orgjc
+				  FROM v_common_organization
+				 WHERE orgcode = jbxx.gonganbianhao || '000000') AS faqy,
+			   aj.faanxiangzhi AS faxz,
+			   jq.baoanrenlxdh AS lxdh,
+			   jq.jianyaoanqing AS jyaq,
+			   jq.chujingqingkuang AS fknr,
+			   (SELECT zidianmiaoshu
+				  FROM cs_jz_zfba.t_zddmxxb
+				 WHERE zidianbianhao = jbxx.anjianleibie
+				   AND leibiebianhao = '0056') AS xl,
+			   (SELECT zidianmiaoshu
+				  FROM cs_jz_zfba.t_zddmxxb
+				 WHERE zidianbianhao = substr(jbxx.anjianleibie, 1, 4) || '00'
+				   AND leibiebianhao = '0056') AS dl,
+			   aj.suoshuzerenqu AS gxdw,
+			   decode(jbxx.anjianbiaozhi, '1', '刑事案件', '行政案件') AS ajlx， aj.fadddm
+		  FROM gawlzf.T_XSZAGLFX@to_cs_zfba_sc_vip aj,
+			   gawlzf.T_ajjbxxb@to_cs_zfba_sc_vip jbxx,
+			   gawlzf.T_JJCJXX@to_cs_zfba_sc_vip jq,
+			   (SELECT dw.jgbh
+				  FROM t_za_jg_jbxx dw
+				 WHERE EXISTS
+				 (SELECT 1 FROM
+					  (SELECT jgbh,dwfl,row_number() over(PARTITION BY jgbh ORDER BY hcsj DESC) AS sn
+						   FROM t_za_dwhc
+					       WHERE nbhc = '1'
+							#if($dwfl && !$dwfl.equals(""))
+							   AND dwfl = #[dwfl]
+							#end
+					  ) hc
+				   WHERE hc.sn = '1' AND hc.jgbh = dw.jgbh
+				  )
+				   AND dw.sfnbgl = '1'
+				   AND dw.zxbs = '0'
+				   #if($orgLeve.equals("1"))
+				 		AND dw.djdwdm LIKE substr(#[orgcode],1,2)||'%'
+				 	#elseif($orgLeve.equals("2"))
+				 		AND dw.djdwdm LIKE substr(#[orgcode],1,4)||'%'
+				 	#elseif($orgLeve.equals("3"))
+				 		AND dw.djdwdm LIKE substr(#[orgcode],1,6)||'%'
+				 	#elseif($orgLeve.equals("4"))
+				 		AND dw.djdwdm LIKE substr(#[orgcode],1,8)||'%'
+				 	#elseif($orgLeve.equals("5"))
+				 		AND dw.djdwdm = #[orgcode]
+				    #end
+				   ) nbdw
+		 WHERE aj.anjianbianhao = jbxx.anjianbianhao
+		   AND aj.anjianbianhao = jq.anjianbianhao
+		   AND aj.actflag != '4'
+		   AND aj.anjianleixing = '1'
+		   AND nbdw.jgbh = aj.fadddm
+		   #if($ajlx && !$ajlx.equals(""))
+		   		#if($ajlx.equals("1"))
+		   			--扒窃
+		   			AND aj.anjianleibie LIKE '050201%'
+		   		#elseif($ajlx.equals("2"))
+		   			--入室盗窃
+		   			AND (aj.anjianleibie = '050280' OR aj.anjianleibie LIKE '050202%' )
+		   		#elseif($ajlx.equals("3"))
+		   			--其他盗窃
+		   			AND ((aj.anjianleibie LIKE '0502%' AND
+						aj.anjianleibie NOT LIKE
+						'050201%' AND aj.anjianleibie NOT LIKE
+						'050202%' AND
+						aj.anjianleibie NOT IN
+						('050280', '050201')) OR
+						aj.anjianleibie = '05100006') 
+		   		#elseif($ajlx.equals("4"))
+		   			--抢劫抢夺
+		   			AND ((aj.anjianleibie LIKE '0501%' AND aj.anjianleibie ! = '05100006') 
+		   				OR
+						aj.anjianleibie LIKE '050400%')
+		   		#elseif($ajlx.equals("5"))
+		   			--	其他案件
+		   			AND (aj.anjianleibie NOT LIKE '0502%' 
+		   				AND aj.anjianleibie NOT LIKE '050400%' 
+		   				AND aj.anjianleibie NOT LIKE '0501%')
+		   		#end
+		   #end
+		   #if($tjsj_start && !$tjsj_start.equals(""))
+		   		AND to_date(jbxx.lianriqi,'yyyymmdd') >= to_date(#[tjsj_start],'yyyy-mm-dd')
+		   #end
+		   #if($tjsj_end && !$tjsj_end.equals(""))
+		   		AND to_date(jbxx.lianriqi,'yyyymmdd') <= to_date(#[tjsj_end],'yyyy-mm-dd')
+		   #end
+		]]>
+	</property>
+	
+	<property name="queryAjxxWithWyxq">
+		<![CDATA[
+			SELECT jbxx.baoanriqi AS bjrq,
+				jbxx.anjianbianhao as ajbh,
+			   (SELECT orgjc
+				  FROM v_common_organization
+				 WHERE orgcode = jbxx.gonganbianhao || '000000') AS faqy,
+			   aj.faanxiangzhi AS faxz,
+			   jq.baoanrenlxdh AS lxdh,
+			   jq.jianyaoanqing AS jyaq,
+			   jq.chujingqingkuang AS fknr,
+			   (SELECT zidianmiaoshu
+				  FROM cs_jz_zfba.t_zddmxxb
+				 WHERE zidianbianhao = jbxx.anjianleibie
+				   AND leibiebianhao = '0056') AS xl,
+			   (SELECT zidianmiaoshu
+				  FROM cs_jz_zfba.t_zddmxxb
+				 WHERE zidianbianhao = substr(jbxx.anjianleibie, 1, 4) || '00'
+				   AND leibiebianhao = '0056') AS dl,
+			   aj.suoshuzerenqu AS gxdw,
+			   decode(jbxx.anjianbiaozhi, '1', '刑事案件', '行政案件') AS ajlx， aj.fadddm
+		  FROM gawlzf.T_XSZAGLFX@to_cs_zfba_sc_vip aj,
+			   gawlzf.T_ajjbxxb@to_cs_zfba_sc_vip jbxx,
+			   gawlzf.T_JJCJXX@to_cs_zfba_sc_vip jq,
+			   (SELECT id
+				  FROM t_za_wyxq xq
+				 WHERE xq.zxbs = '0'
+				 	#if($orgLeve.equals("1"))
+				 		AND xq.ssjwqdm LIKE substr(#[orgcode],1,2)||'%'
+				 	#elseif($orgLeve.equals("2"))
+				 		AND xq.ssjwqdm LIKE substr(#[orgcode],1,4)||'%'
+				 	#elseif($orgLeve.equals("3"))
+				 		AND xq.ssjwqdm LIKE substr(#[orgcode],1,6)||'%'
+				 	#elseif($orgLeve.equals("4"))
+				 		AND xq.ssjwqdm LIKE substr(#[orgcode],1,8)||'%'
+				 	#elseif($orgLeve.equals("5"))
+				 		AND xq.ssjwqdm = #[orgcode]
+				    #end
+				) xq
+		 WHERE aj.anjianbianhao = jbxx.anjianbianhao
+		   AND aj.anjianbianhao = jq.anjianbianhao
+		   AND aj.actflag != '4'
+		   AND aj.anjianleixing = '1'
+		   AND xq.id = aj.fadddm
+		   #if($ajlx && !$ajlx.equals(""))
+		   		#if($ajlx.equals("2"))
+		   			--入室盗窃
+		   			AND (aj.anjianleibie = '050280' OR aj.anjianleibie LIKE '050202%' )
+		   		#elseif($ajlx.equals("4"))
+		   			--抢劫抢夺
+		   			AND ((aj.anjianleibie LIKE '0501%' AND j.anjianleibie ! = '05100006') 
+		   				OR
+						aj.anjianleibie LIKE '050400%')
+		   		#elseif($ajlx.equals("6"))
+		   			--盗窃机动车
+		   			AND aj.anjianleibie = '050206'
+		   		#elseif($ajlx.equals("7"))
+		   			--盗窃摩托车
+		   			AND aj.anjianleibie = '050207'
+		   		#elseif($ajlx.equals("8"))
+		   			--盗窃电动车
+		   			AND aj.anjianleibie = '050223'
+		   		#elseif($ajlx.equals("9"))
+		   			--盗窃车内财物
+		   			AND aj.anjianleibie = '050210'
+		   		#elseif($ajlx.equals("10"))
+		   			--其他盗窃
+		   			AND (aj.anjianleibie != '050280' 
+		   				AND aj.anjianleibie != '050206' 
+		   				AND aj.anjianleibie != '050207'
+                		AND aj.anjianleibie != '050223'
+                 		AND aj.anjianleibie != '050210'
+                 		AND aj.anjianleibie NOT LIKE '050202%'
+                		)
+		   		#end
+		   #end
+		   #if($tjrq && !$tjrq.equals(""))
+		   		 AND to_date(jbxx.lianriqi,'yyyymmdd')>=to_date(#[tjrq]||'-01','yyyy-mm-dd')
+				 AND to_date(jbxx.lianriqi,'yyyymmdd')<=add_months(to_date(#[tjrq]||'-01','yyyy-mm-dd'),1) - 1
+		   #end
+	   ]]>
+	</property>
+</properties>		

@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<property name="queryQbxsSjxxPageInfo">
+		<![CDATA[
+			select ldxxbh,
+		       bssj,
+		       jjcd,
+		       fszt,
+		       bgcx,
+		       xsxxly,
+		       bt,
+		       gjc,
+		       xxzw,
+		       cjdwjgdm,
+		       cjdw,
+		       cjr,
+		       tbdwjgdm,
+		       tbdw,
+		       tbr,
+		       shr,
+		       sszt,
+		       sslb1,
+		       sjmgsd,
+		       sjzdhd,
+		       sjrsgm,
+		       sjccssgm,
+		       ssyy,
+		       bxxs,
+		       asjfssj,
+		       asjdlb,
+		       sasfsdsxq,
+		       sasfsdxz,
+		       yldxxbh,
+		       rksj,
+		       cqshr,
+		       shsj,
+		       shyj,
+		       cjrdm,
+		       tqbz,
+		       sslb,
+		       jllx,
+		       jlzt,
+		       id,
+		       cjrid,
+		       cjsj
+		  from t_zyqb_sjxx
+		  where 1=1 
+		  #if($bt and !$bt.equals(""))
+	      		and bt  = #[bt] 
+	      #end
+	      #if($gjc and !$gjc.equals(""))
+	      		and gjc  = #[gjc] 
+	      #end
+	      #if($xsxxly and !$xsxxly.equals(""))
+	      		and xsxxly  = #[xsxxly] 
+	      #end
+	      #if($fszt and !$fszt.equals(""))
+	      		and fszt  = #[fszt] 
+	      #end
+	      #if($jjcd and !$jjcd.equals(""))
+	      		and jjcd  = #[jjcd] 
+	      #end
+	      #if($sslb1 and !$sslb1.equals(""))
+	      		and sslb1  = #[sslb1] 
+	      #end
+	      #if($sjmgsd and !$sjmgsd.equals(""))
+	      		and sjmgsd  = #[sjmgsd] 
+	      #end
+	      #if($sjrsgm and !$sjrsgm.equals(""))
+	      		and sjrsgm  = #[sjrsgm] 
+	      #end
+	      
+	      #if($sjccssgm and !$sjccssgm.equals(""))
+	      		and sjccssgm  = #[sjccssgm] 
+	      #end
+	      
+	      #if($ssyy and !$ssyy.equals(""))
+	      		and ssyy  = #[ssyy] 
+	      #end
+	      
+	      #if($bxxs and !$bxxs.equals(""))
+	      		and bxxs  = #[bxxs] 
+	      #end
+	      
+	  
+	   	  #if($jwsqdm && !$jwsqdm.equals(""))
+   			and (cjdwjgdm = #[jwsqdm])
+   		  #elseif ($pcsdm && !$pcsdm.equals(""))
+	 		and cjdwjgdm like substr(#[pcsdm],1,8)||'%'
+		  #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			and cjdwjgdm like substr(#[countrygajgjgdm],1,6)||'%'
+		  #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			and cjdwjgdm like substr(#[citygajgjgdm],1,4)||'%'
+	      #end
+	      
+	      #if ($cjsj_start && !$cjsj_start.equals(""))
+			 and rksj >= to_date(#[cjsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+		  #end
+		  #if($cjsj_end && !$cjsj_end.equals(""))
+			 and rksj <= to_date(#[cjsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+		  #end
+		  
+		  
+		  order by rksj desc 
+ 		]]>
+	</property> 
+	
+	<property name="querySjxxBeanById">
+		<![CDATA[
+			select ldxxbh,
+		       bssj,
+		       jjcd,
+		       fszt,
+		       bgcx,
+		       xsxxly,
+		       bt,
+		       gjc,
+		       xxzw,
+		       cjdwjgdm,
+		       cjdw,
+		       cjr,
+		       tbdwjgdm,
+		       tbdw,
+		       tbr,
+		       shr,
+		       sszt,
+		       sslb1,
+		       sjmgsd,
+		       sjzdhd,
+		       sjrsgm,
+		       sjccssgm,
+		       ssyy,
+		       bxxs,
+		       asjfssj,
+		       asjdlb,
+		       sasfsdsxq,
+		       sasfsdxz,
+		       yldxxbh,
+		       rksj,
+		       cqshr,
+		       shsj,
+		       shyj,
+		       cjrdm,
+		       tqbz,
+		       sslb,
+		       jllx,
+		       jlzt,
+		       id,
+		       cjrid,
+		       cjsj
+		  from t_zyqb_sjxx
+		  where 1=1 
+		  and  id = ?
+ 		]]>
+	</property> 
+	
+	<property name="insertQbxsSjxx">
+		<![CDATA[
+			insert into t_zyqb_sjxx
+			  (ldxxbh, bssj, jjcd, fszt, bgcx, xsxxly, bt, gjc, xxzw, cjdwjgdm, cjdw, cjr, tbdwjgdm, 
+			  	tbdw, tbr, shr, sszt, sslb1, sjmgsd, sjzdhd, sjrsgm, sjccssgm, ssyy, bxxs, asjfssj, asjdlb, 
+			  	sasfsdsxq, sasfsdxz, yldxxbh, cjsj, cqshr, shsj, shyj, cjrdm, tqbz, sslb, jllx, jlzt, id, cjrid, sasfsdsxqmc,cjrsfzh)
+			values
+			  (#[ldxxbh], to_date(#[bssj],'yyyy-mm-dd HH24:mi:ss'), #[jjcd], #[fszt], #[bgcx], #[xsxxly], #[bt], #[gjc], #[xxzw], #[cjdwjgdm], 
+				  #[cjdw], #[cjr], #[tbdwjgdm], #[tbdw], #[tbr], #[shr], #[sszt], #[sslb1], #[sjmgsd], #[sjzdhd], 
+				  #[sjrsgm], #[sjccssgm], #[ssyy], #[bxxs], to_date(#[asjfssj],'yyyy-mm-dd HH24:mi:ss'), #[asjdlb], #[sasfsdsxq], #[sasfsdxz], #[yldxxbh], 
+				  to_date(#[cjsj],'yyyy-mm-dd HH24:mi:ss'), #[cqshr], to_date(#[shsj],'yyyy-mm-dd HH24:mi:ss'), #[shyj], #[cjrdm], 
+				  #[tqbz], #[sslb], #[jllx], #[jlzt], #[id], #[cjrid], #[sasfsdsxqmc],#[cjrsfzh])
+						
+ 		]]>
+	</property>
+	
+	<property name="updateQbxsSjxx">
+		<![CDATA[
+			update t_zyqb_sjxx
+			   set ldxxbh = #[ldxxbh],
+			       bssj = to_date(#[bssj],'yyyy-mm-dd HH24:mi:ss'),
+			       cjsj = to_date(#[cjsj],'yyyy-mm-dd hh24:mi:ss'),
+			       jjcd = #[jjcd],
+			       fszt = #[fszt],
+			       bgcx = #[bgcx],
+			       xsxxly = #[xsxxly],
+			       bt = #[bt],
+			       gjc = #[gjc],
+			       xxzw = #[xxzw],
+			       tbdwjgdm = #[tbdwjgdm],
+			       tbdw = #[tbdw],
+			       tbr = #[tbr],
+			       shr = #[shr],
+			       sszt = #[sszt],
+			       sslb1 = #[sslb1],
+			       sjmgsd = #[sjmgsd],
+			       sjzdhd = #[sjzdhd],
+			       sjrsgm = #[sjrsgm],
+			       sjccssgm = #[sjccssgm],
+			       ssyy = #[ssyy],
+			       bxxs = #[bxxs],
+			       asjfssj = to_date(#[asjfssj],'yyyy-mm-dd HH24:mi:ss'),
+			       asjdlb = #[asjdlb],
+			       sasfsdsxq = #[sasfsdsxq],
+			       sasfsdsxqmc = #[sasfsdsxqmc],
+			       sasfsdxz = #[sasfsdxz],
+			       yldxxbh = #[yldxxbh],
+			       cqshr = #[cqshr],
+			       shsj = #[shsj],
+			       shyj = #[shyj],
+			       tqbz = #[tqbz],
+			       sslb = #[sslb],
+			       jllx = #[jllx],
+			       jlzt = #[jlzt]
+				 where id = #[id]
+ 		]]>
+	</property>
+	
+	<property name="insertQbxsGgxx">
+		<![CDATA[
+			insert into t_zyqb_ggxx
+			  (ldxxbh,
+			   yldxxbh,
+			   ryxh,
+			   xm,
+			   gmsfhm,
+			   hzhm,
+			   xb,
+			   csrq,
+			   wwxm,
+			   bmhch,
+			   gj,
+			   mz,
+			   hjd,
+			   xzd,
+			   xzdxz,
+			   zy,
+			   fwcs,
+			   gddhhm,
+			   sjhm,
+			   zzzhm,
+			   hlwtxgjhm,
+			   bz,
+			   id,
+			   sjid)
+			values
+			  (#[ldxxbh],
+			   #[yldxxbh],
+			   #[ryxh],
+			   #[xm],
+			   #[gmsfhm],
+			   #[hzhm],
+			   #[xb],
+			   to_date(#[csrq],'yyyy-mm-dd'),
+			   #[wwxm],
+			   #[bmhch],
+			   #[gj],
+			   #[mz],
+			   #[hjd],
+			   #[xzd],
+			   #[xzdxz],
+			   #[zy],
+			   #[fwcs],
+			   #[gddhhm],
+			   #[sjhm],
+			   #[zzzhm],
+			   #[hlwtxgjhm],
+			   #[bz],
+			   #[id],
+			   #[sjid])
+ 		]]>
+	</property>
+	
+	<property name="updateQbxsGgxx">
+		<![CDATA[
+		update t_zyqb_ggxx
+		   set ldxxbh = #[ldxxbh],
+		       yldxxbh = #[yldxxbh],
+		       ryxh = #[ryxh],
+		       xm = #[xm],
+		       gmsfhm = #[gmsfhm],
+		       hzhm = #[hzhm],
+		       xb = #[xb],
+		       csrq = to_date(#[csrq],'yyyy-mm-dd'),
+		       wwxm = #[wwxm],
+		       bmhch = #[bmhch],
+		       gj = #[gj],
+		       mz = #[mz],
+		       hjd = #[hjd],
+		       xzd = #[xzd],
+		       xzdxz = #[xzdxz],
+		       zy = #[zy],
+		       fwcs = #[fwcs],
+		       gddhhm = #[gddhhm],
+		       sjhm = #[sjhm],
+		       zzzhm = #[zzzhm],
+		       hlwtxgjhm = #[hlwtxgjhm],
+		       bz = #[bz],
+		       id = #[id],
+		       sjid = #[sjid]
+		 where id = #[id]
+
+
+ 		]]>
+	</property>
+	
+	<property name="queryQbxsGgxxPageInfo">
+		<![CDATA[
+			select ldxxbh,
+			       yldxxbh,
+			       ryxh,
+			       xm,
+			       gmsfhm,
+			       hzhm,
+			       xb,
+			       to_char(csrq,'yyyy-mm-dd'),
+			       wwxm,
+			       bmhch,
+			       gj,
+			       mz,
+			       hjd,
+			       xzd,
+			       xzdxz,
+			       zy,
+			       fwcs,
+			       gddhhm,
+			       sjhm,
+			       zzzhm,
+			       hlwtxgjhm,
+			       bz,
+			       id,
+			       sjid
+			  from t_zyqb_ggxx
+			  where 1=1 
+			  and sjid =#[sjid]
+ 		]]>
+	</property>
+	
+	<property name="deleteQbxsGgxx">
+		<![CDATA[
+			delete t_zyqb_ggxx
+			 where id = ?
+ 		]]>
+	</property>
+	<property name="queryGgxxBeanById">
+		<![CDATA[
+			select ldxxbh,
+			       yldxxbh,
+			       ryxh,
+			       xm,
+			       gmsfhm,
+			       hzhm,
+			       xb,
+			       to_char(csrq,'yyyy-mm-dd'),
+			       wwxm,
+			       bmhch,
+			       gj,
+			       mz,
+			       hjd,
+			       xzd,
+			       xzdxz,
+			       zy,
+			       fwcs,
+			       gddhhm,
+			       sjhm,
+			       zzzhm,
+			       hlwtxgjhm,
+			       bz,
+			       id,
+			       sjid
+			  from t_zyqb_ggxx
+			  where id =?
+ 		]]>
+	</property>
+</properties>

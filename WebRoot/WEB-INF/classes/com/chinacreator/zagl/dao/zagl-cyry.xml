@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="insertCyryBean">
+		<![CDATA[
+		insert into t_za_ry_cyry
+		  (cyrybh,
+		   rybh,
+		   jgbh,
+		   sfzh,
+		   bmmc,
+		   gzly,
+		   pynx,
+		   zw,
+		   sjhm,
+		   qtlxdh,
+		   zsqk,
+		   pxzh,
+		   pxzs,
+		   zdfwdxlb,
+		   bwcs,
+		   kzcs,
+		   zygx,
+		   zywt,
+		   jcqk,
+		   bz,
+		   zxbs,
+		   czrxm,
+		   czdwdm,
+		   czsj,
+		   czbs,
+		   djdwdm,
+		   djdwmc,
+		   djrxm,
+		   djsj,
+		   czdwmc,
+		   lzsj,
+		   cyryygh,
+		   rzsj,
+		   xzdz,
+		   xm,
+		   xb,
+		   csrq,
+		   mz,
+		   bmch,
+		   sfabry,
+		   djrjh,
+		   czrjh,
+		   xzdjwq,
+		   jzdsqdm,
+		   jzdsqmc,
+		   czrsfzh,
+		   djrsfzh,
+		   jzdpcsdm,
+		   jzdpcsmc,
+		   sfjwry,
+		   pfsj,
+		   sfjwtdj,
+		   gj,
+		   zjzl,
+		   zjhm,
+		   ywx,
+		   ywm,
+		   fkrxm,
+		   fkrjh,
+		   fkdwdm,
+		   fkdwmc,
+		   fksj,
+		   fknr,
+		   sfdjsyrk,
+		   syrkdjsj
+		   )
+		values
+		  (#[cyrybh],
+		   #[rybh],
+		   #[jgbh],
+		   #[sfzh],
+		   #[bmmc],
+		   #[gzly],
+		   #[pynx],
+		   #[zw],
+		   #[sjhm],
+		   #[qtlxdh],
+		   #[zsqk],
+		   #[pxzh],
+		   #[pxzs],
+		   #[zdfwdxlb],
+		   #[bwcs],
+		   #[kzcs],
+		   #[zygx],
+		   #[zywt],
+		   #[jcqk],
+		   #[bz],
+		   #[zxbs],
+		   #[czrxm],
+		   #[czdwdm],
+		   sysdate,
+		   '1',
+		   #[djdwdm],
+		   #[djdwmc],
+		   #[djrxm],
+		   sysdate,
+		   #[czdwmc],
+		   to_date(#[lzsj],'yyyy-mm-dd'),
+		   #[cyryygh],
+		   to_date(#[rzsj],'yyyy-mm-dd'),
+		   #[xzdz],
+		   #[xm],
+		   #[xb],
+		   #[csrq],
+		   #[mz],
+		   #[bmch],
+		   #[sfabry],
+		   #[djrjh],
+		   #[czrjh],
+		   #if($jzdsqdm && !$jzdsqdm.equals(""))
+		   	(select ssjwsdm from t_common_hnxzqh where dm=#[jzdsqdm]),
+		   #else
+		    null,
+		   #end
+		   #[jzdsqdm],
+		   #[jzdsqmc],
+		   #[czrsfzh],
+		   #[djrsfzh],
+		   #[jzdpcsdm],
+		   #[jzdpcsmc],
+		   #[sfjwry],
+		   #if($jzdsqdm && !$jzdsqdm.equals(""))
+		   	 sysdate,
+		   #else
+		   	 null,
+		   #end
+		   '0',
+		   #[gj],
+		   #[zjzl],
+		   #[zjhm],
+		   #[ywx],
+		   #[ywm],
+		   #[fkrxm],
+		   #[fkrjh],
+		   #[fkdwdm],
+		   #[fkdwmc],
+		   to_date(#[fksj],'yyyy-mm-dd hh24:mi:ss'),
+		   #[fknr],
+		   #[sfdjsyrk],
+		   to_date(#[syrkdjsj],'yyyy-mm-dd hh24:mi:ss'))
+		]]>
+	</property>
+
+	<property name="updateCyryBean">
+		<![CDATA[
+			update t_za_ry_cyry
+			   set 
+			       rybh = #[rybh],
+			       jgbh = #[jgbh],
+			       sfzh = #[sfzh],
+			       bmmc = #[bmmc],
+			       gzly = #[gzly],
+			       pynx = #[pynx],
+			       zw = #[zw],
+			       sjhm = #[sjhm],
+			       qtlxdh = #[qtlxdh],
+			       zsqk = #[zsqk],
+			       pxzh = #[pxzh],
+			       pxzs = #[pxzs],
+			       zdfwdxlb = #[zdfwdxlb],
+			       bwcs = #[bwcs],
+			       kzcs = #[kzcs],
+			       zygx = #[zygx],
+			       zywt = #[zywt],
+			       jcqk = #[jcqk],
+			       bz = #[bz],
+			       zxbs = #[zxbs],
+			       zxrq = to_date(#[zxrq],'yyyy-mm-dd hh24:mi:ss'),
+			       czrxm = #[czrxm],
+			       czdwdm = #[czdwdm],
+			       czsj = sysdate,
+			       czbs = '2',
+			       czdwmc = #[czdwmc],
+			       lzsj = to_date(#[lzsj],'yyyy-mm-dd'),
+			       cyryygh = #[cyryygh],
+			       rzsj = to_date(#[rzsj],'yyyy-mm-dd'),
+			       xzdz = #[xzdz],
+			       xm = #[xm],
+			       xb = #[xb],
+			       csrq = #[csrq],
+			       mz = #[mz],
+			       bmch = #[bmch],
+			       sfabry = #[sfabry],
+			       djrjh = #[djrjh],
+			       czrjh = #[czrjh],
+			       xzdjwq = #[xzdjwq],
+			       jzdsqdm = #[jzdsqdm],
+			       jzdsqmc = #[jzdsqmc],
+			       czrsfzh = #[czrsfzh],
+			       djrsfzh = #[djrsfzh],
+			       jzdpcsdm = #[jzdpcsdm],
+			       jzdpcsmc = #[jzdpcsmc],
+			       sfjwry = #[sfjwry],
+			       gj = #[gj],
+			       zjzl = #[zjzl],
+			       zjhm = #[zjhm],
+			       ywx = #[ywx],
+			       ywm = #[ywm]
+			 where cyrybh = #[cyrybh]
+		]]>
+	</property>
+	
+	<property name="queryDwCyryBeanByQueryBean">
+		<![CDATA[
+			select cyrybh,
+			       rybh,
+			       jgbh,
+			       sfzh,
+			       bmmc,
+			       gzly,
+			       pynx,
+			       zw,
+			       sjhm,
+			       qtlxdh,
+			       zsqk,
+			       pxzh,
+			       pxzs,
+			       zdfwdxlb,
+			       bwcs,
+			       kzcs,
+			       zygx,
+			       zywt,
+			       jcqk,
+			       bz,
+			       zxyy,
+			       zxbs,
+			       to_char(zxrq,'yyyy-mm-dd hh24:mi:ss') zxrq,
+			       czrxm,
+			       czdwdm,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') czsj,
+			       czbs,
+			       djdwdm,
+			       djdwmc,
+			       djrxm,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') djsj,
+			       czdwmc,
+			       to_char(lzsj,'yyyy-mm-dd') lzsj,
+			       cyryygh,
+			       to_char(rzsj,'yyyy-mm-dd') rzsj,
+			       xzdz,
+			       xm,
+			       xb,
+			       csrq,
+			       mz,
+			       bmch,
+			       sfabry,
+			       djrjh,
+			       czrjh,
+			       xzdjwq,
+			       fkrxm,
+			       fkrjh,
+			       fkdwdm,
+			       fkdwmc,
+			       to_char(fksj,'yyyy-mm-dd hh24:mi:ss') fksj,
+			       fknr,
+			       jzdsqdm,
+			       jzdsqmc,
+			       czrsfzh,
+			       djrsfzh,
+			       jzdpcsdm,
+			       jzdpcsmc,
+			       sfjwry,
+			       sfdjsyrk,
+			       syrkdjsj,
+			       to_char(pfsj,'yyyy-mm-dd hh24:mi:ss') pfsj,
+			       sfjwtdj,
+			       gj,
+			       zjzl,
+			       zjhm,
+			       ywx,
+			       ywm,
+			       (select dwmc from t_za_jg_jbxx where jgbh=c.jgbh) as dwmc
+			  from t_za_ry_cyry c
+			  where 1=1
+			  	#if($cyrybh && !$cyrybh.equals(""))
+			  		and cyrybh = #[cyrybh]
+			  	#end
+			  	#if($jgbh && !$jgbh.equals(""))
+			  		and jgbh = #[jgbh]
+			  	#end
+			  	#if($sfzh && !$sfzh.equals(""))
+			  		and sfzh=#[sfzh]
+			  	#end
+			  	#if($gj && !$gj.equals(""))
+			  		and gj = #[gj]
+			  	#end
+			  	#if($zjzl && !$zjzl.equals(""))
+			  		and zjzl = #[zjzl]
+			  	#end
+			  	#if($rjzlhm && !$rjzjhm.equals(""))
+			  		and zjhm = #[zjhm]
+			  	#end
+			  	#if($ywx && !$ywx.equals(""))
+			  		and ywx = #[ywx]
+			  	#end
+			  	#if($ywm && !$ywm.equals(""))
+			  		and ywm = #[ywm]
+			  	#end
+		]]>
+	</property>
+	
+	<property name="updateCyryDjFkxx">
+		<![CDATA[
+			update t_za_ry_cyry
+			set rybh = #[rybh],
+				rkfwglid = #[rkfwglid],
+				xzdz = f_get_dzmc(#[rkfwglid]),
+				fkrxm = #[fkrxm],
+				fkrjh = #[fkrjh],
+				fkdwdm = #[fkdwdm],
+				fkdwmc = #[fkdwmc],
+				fksj = sysdate,
+				fknr = #[fknr]
+			where cyrybh = #[cyrybh]
+		]]>
+	</property>
+	
+	<property name="insertImportCyryxx">
+		<![CDATA[
+			 insert into t_import_cyrys
+			   (bh, jgbh, xm, sfzh, mz, lxdh, zw, rzsj, lzsj, jzdz, bz, 
+			    drsj, djdwdm, djdwmc, djrxm, djrsfzh, djrjh, 
+			    errorbs, errorinfo, execbs,jzdpcs,batchno)
+			 values
+			   (#[bh], #[jgbh], #[xm], #[sfzh], #[mz], #[lxdh], #[zw], #[rzsj], 
+			   #[lzsj], #[jzdz], #[bz], sysdate, #[djdwdm], #[djdwmc], #[djrxm], 
+			   #[djrsfzh], #[djrjh], #[errorbs], #[errorInfo], '0',#[jzdpcs],#[batchno])
+		]]>
+	</property>
+	
+	<property name="updateImportCyryxx">
+		<![CDATA[
+			update t_import_cyrys
+			   set bh = #[bh],
+			       xm = #[xm],
+			       mz = #[mz],
+			       lxdh = #[lxdh],
+			       zw = #[zw],
+			       rzsj = #[rzsj],
+			       lzsj = #[lzsj],
+			       jzdz = #[jzdz],
+			       bz = #[bz],
+			       drsj = sysdate,
+			       djdwdm = #[djdwdm],
+			       djdwmc = #[djdwmc],
+			       djrxm = #[djrxm],
+			       djrsfzh = #[djrsfzh],
+			       djrjh = #[djrjh],
+			       errorbs = #[errorbs],
+			       errorinfo = #[errorInfo],
+			       execbs = '0',
+			       jzdpcs = #[jzdpcs],
+			       batchno = #[batchno],
+			       lockbs = '0'
+			 where jgbh = #[jgbh] and sfzh = #[sfzh]
+		]]>
+	</property>
+	
+	<property name="getImportCyryxx">
+		<![CDATA[
+			select * 
+			from t_import_cyrys 
+			where jgbh=? and sfzh=?
+		]]>
+	</property>
+	
+	<property name="queryImportCyryZdryPageResult">
+		<![CDATA[
+			select c.*,(select f_get_zdrylbbjmc(t.zdrylbbj) from T_ZDRY_QGQLZDRY t  where sfzh=c.sfzh) as zdrylbms
+			from t_import_cyrys c 
+			where batchno=#[batchno] 
+      			  and exists (select 1 from t_zdry_qgqlzdry q where q.sfzh=c.sfzh and (yxx='1' or yxx is null))
+		]]>
+	</property>
+
+	<property name="queryImportCyryPageResult">
+		<![CDATA[
+			select *
+			from (
+				select c.*,(select f_get_zdrylbbjmc(t.zdrylbbj) from T_ZDRY_QGQLZDRY t  where sfzh=c.sfzh) as zdrylbms
+				from t_import_cyrys c 
+				where batchno=#[batchno]
+			)
+			order by zdrylbms asc
+		]]>
+	</property>
+	
+	<property name="queryHcImportCyryPageResult">
+		<![CDATA[
+			select c.*,(select dwmc from t_za_jg_jbxx where jgbh=c.jgbh and rownum<2) as dwmc
+			from t_import_cyrys c 
+			where 1=1
+			#if ($dwmc && !$dwmc.equals("")) 
+				and jgbh in (select jgbh from t_za_jg_jbxx where dwmc like '%'||#[dwmc]||'%')
+			#end
+			#if($errorbs && !$errorbs.equals(""))
+				and ERRORBS = #[errorbs]
+			#end
+			#if($execbs && !$execbs.equals(""))
+				and EXECBS = #[execbs]
+			#end
+			#if($drsjstart && !$drsjstart.equals(""))
+				and drsj >= to_date(#[drsjstart],'yyyy-MM-dd')
+			#end
+			#if($drsjend && !$drsjend.equals(""))
+				and drsj <= to_date(#[drsjend]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if($djdwdm && !$djdwdm.equals(""))
+				and djdwdm=#[djdwdm]
+			#end
+			order by jgbh,c.bh
+		]]>
+	</property>
+	
+	<!-- 根据身份证查询全国七类重点人员 -->
+	<property name="queryQGQLZdryBySfzh">
+		<![CDATA[
+			select * from t_zdry_qgqlzdry where sfzh = ?
+		]]>
+	</property>
+	
+</properties>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="lmpcxx" namespace="/afgl/lmpcxx" extends="default"> 
+	  		<action name="*" class="com.chinacreator.afgl.action.AfLmpcAction" method="{1}">
+	  			<result name="toLmpcList">/jsp/afgl/pages/lmpcxx/lmpcList.jsp</result>
+	  			<result name="toAddLmcpPage">/jsp/afgl/pages/lmpcxx/addLmpcxx.jsp</result>
+	  			<result name="downloadlmpclistpage">/jsp/afgl/pages/lmpcxx/lmpclistexcelmode.jsp</result>
+	  		</action>
+	  </package>
+</struts>

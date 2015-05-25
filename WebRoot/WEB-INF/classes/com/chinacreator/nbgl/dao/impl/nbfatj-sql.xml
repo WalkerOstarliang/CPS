@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 获得查询条件单位级别 -->
+	<property name="GetDwleveSQL">
+		<![CDATA[
+			select f_get_dwleve(#[djdwdm]) as jb from dual 
+		]]>
+	</property>
+	<!-- 统计内保单位发案情况(按分县局统计) -->
+	<property name="queryNbdwfatjListFxj">
+		<![CDATA[
+			select substr(org.orgcode, 1, 6) || '000000' as djdwdm,
+			       (select t.orgname
+			          from t_common_organization_sjjs t
+			         where t.orgcode = substr(org.orgcode, 1, 6) || '000000') as djdwmc,
+			       count(pq.ajbh) as pqsl,
+			       count(qtdq.ajbh) as qtdqsl,
+			       count(qtrsdq.ajbh) as qtrsdqsl,
+			       count(rhdq.ajbh) as rhdqsl,
+			       count(qj.ajbh) as qjsl,
+			       count(qd.ajbh) as qdsl,
+			       count(dxzp.ajbh) as dxzpsl,
+			       count(hj.ajbh) as hjsl
+			  from t_common_organization_sjjs org
+			  left join v_aj_jg_tj pq on substr(org.orgcode, 1, 6) =
+			                             substr(pq.djdwdm, 1, 6)
+			                         and pq.new_ajlb = '1' -- 扒窃 = 1
+		                         	#if($ksrq && !$ksrq.equals(""))
+										and pq.larq >= #[ksrq]
+									#end
+									#if($jzrq && !$jzrq.equals(""))
+										and pq.larq <= #[jzrq]
+									#end
+			  left join v_aj_jg_tj qtdq on substr(org.orgcode, 1, 6) =
+			                               substr(qtdq.djdwdm, 1, 6)
+			                           and qtdq.new_ajlb = '2' --其他盗窃 = 2 
+			                           #if($ksrq && !$ksrq.equals(""))
+											and qtdq.larq >= #[ksrq]
+										#end
+										#if($jzrq && !$jzrq.equals(""))
+											and qtdq.larq <= #[jzrq]
+										#end 
+			  left join v_aj_jg_tj qtrsdq on substr(org.orgcode, 1, 6) =
+			                                 substr(qtrsdq.djdwdm, 1, 6)
+			                             and qtrsdq.new_ajlb = '3' --其他入室盗窃 = 3  
+			                             #if($ksrq && !$ksrq.equals(""))
+											and qtrsdq.larq >= #[ksrq]
+										#end
+										#if($jzrq && !$jzrq.equals(""))
+											and qtrsdq.larq <= #[jzrq]
+										#end
+			  left join v_aj_jg_tj rhdq on substr(org.orgcode, 1, 6) =
+			                               substr(rhdq.djdwdm, 1, 6)
+			                           and rhdq.new_ajlb = '4' --其他入室盗窃 = 4 
+			                            #if($ksrq && !$ksrq.equals(""))
+											and rhdq.larq >= #[ksrq]
+										#end
+										#if($jzrq && !$jzrq.equals(""))
+											and rhdq.larq <= #[jzrq]
+										#end
+			  left join v_aj_jg_tj qj on substr(org.orgcode, 1, 6) =
+			                             substr(rhdq.djdwdm, 1, 6)
+			                         and qj.new_ajlb = '5' --抢劫 = 5  
+			                         #if($ksrq && !$ksrq.equals(""))
+										and qj.larq >= #[ksrq]
+									#end
+									#if($jzrq && !$jzrq.equals(""))
+										and qj.larq <= #[jzrq]
+									#end    
+			  left join v_aj_jg_tj qd on substr(org.orgcode, 1, 6) =
+			                             substr(qd.djdwdm, 1, 6)
+			                         and qd.new_ajlb = '6' --抢夺 = 6 
+			                         #if($ksrq && !$ksrq.equals(""))
+										and qd.larq >= #[ksrq]
+									#end
+									#if($jzrq && !$jzrq.equals(""))
+										and qd.larq <= #[jzrq]
+									#end         
+			  left join v_aj_jg_tj dxzp on substr(org.orgcode, 1, 6) =
+			                               substr(dxzp.djdwdm, 1, 6)
+			                           and dxzp.new_ajlb = '7' --电信诈骗 = 7 
+			                           #if($ksrq && !$ksrq.equals(""))
+											and dxzp.larq >= #[ksrq]
+										#end
+										#if($jzrq && !$jzrq.equals(""))
+											and dxzp.larq <= #[jzrq]
+										#end 
+			  left join v_aj_jg_tj hj on substr(org.orgcode, 1, 6) =
+			                             substr(hj.djdwdm, 1, 6)
+			                         and hj.new_ajlb in
+			                             ('1', '2', '3', '4', '5', '6', '7') -- 合计 
+			                          #if($ksrq && !$ksrq.equals(""))
+										and hj.larq >= #[ksrq]
+									  #end
+									  #if($jzrq && !$jzrq.equals(""))
+										and hj.larq <= #[jzrq]
+									  #end                                                                                                                                                                                          
+			 where org.leve = 3
+			   and org.parent_code = substr(#[djdwdm], 1, 4) || '00000000' -- 带入的条件
+			 group by substr(org.orgcode, 1, 6)
+			 order by substr(org.orgcode, 1, 6)
+		]]>
+	</property>
+	<!-- 统计内保单位发案情况(按派出所统计) -->
+	<property name="queryNbdwfatjListPcs">
+		<![CDATA[
+			select substr(org.orgcode, 1, 8) || '0000' as djdwdm,
+			       (select t.orgname
+			          from t_common_organization_sjjs t
+			         where t.orgcode = substr(org.orgcode, 1, 8) || '0000') as djdwmc,
+			       count(pq.ajbh) as pqsl,
+			       count(qtdq.ajbh) as qtdqsl,
+			       count(qtrsdq.ajbh) as qtrsdqsl,
+			       count(rhdq.ajbh) as rhdqsl,
+			       count(qj.ajbh) as qjsl,
+			       count(qd.ajbh) as qdsl,
+			       count(dxzp.ajbh) as dxzpsl,
+			       count(hj.ajbh) as hjsl
+			  from t_common_organization_sjjs org
+			  left join v_aj_jg_tj pq on substr(org.orgcode, 1, 8) =
+			                             substr(pq.djdwdm, 1, 8)
+			                         and pq.new_ajlb = '1' -- 扒窃 = 1
+			                          #if($ksrq && !$ksrq.equals(""))
+										and pq.larq >= #[ksrq]
+									  #end
+									  #if($jzrq && !$jzrq.equals(""))
+										and pq.larq <= #[jzrq]
+									  #end
+			  left join v_aj_jg_tj qtdq on substr(org.orgcode, 1, 8) =
+			                               substr(qtdq.djdwdm, 1, 8)
+			                           and qtdq.new_ajlb = '2' --其他盗窃 = 2
+			                          #if($ksrq && !$ksrq.equals(""))
+										and qtdq.larq >= #[ksrq]
+									  #end
+									  #if($jzrq && !$jzrq.equals(""))
+										and qtdq.larq <= #[jzrq]
+									  #end  
+			  left join v_aj_jg_tj qtrsdq on substr(org.orgcode, 1, 8) =
+			                                 substr(qtrsdq.djdwdm, 1, 8)
+			                             and qtrsdq.new_ajlb = '3' --其他入室盗窃 = 3  
+			                           #if($ksrq && !$ksrq.equals(""))
+										and qtrsdq.larq >= #[ksrq]
+									  #end
+									  #if($jzrq && !$jzrq.equals(""))
+										and qtrsdq.larq <= #[jzrq]
+									  #end 
+			  left join v_aj_jg_tj rhdq on substr(org.orgcode, 1, 8) =
+			                               substr(rhdq.djdwdm, 1, 8)
+			                           and rhdq.new_ajlb = '4' --其他入室盗窃 = 4
+			                          #if($ksrq && !$ksrq.equals(""))
+										and rhdq.larq >= #[ksrq]
+									  #end
+									  #if($jzrq && !$jzrq.equals(""))
+										and rhdq.larq <= #[jzrq]
+									  #end  
+			  left join v_aj_jg_tj qj on substr(org.orgcode, 1, 8) =
+			                             substr(rhdq.djdwdm, 1, 8)
+			                         and qj.new_ajlb = '5' --抢劫 = 5  
+			                          #if($ksrq && !$ksrq.equals(""))
+										and qj.larq >= #[ksrq]
+									  #end
+									  #if($jzrq && !$jzrq.equals(""))
+										and qj.larq <= #[jzrq]
+									  #end      
+			  left join v_aj_jg_tj qd on substr(org.orgcode, 1, 8) =
+			                             substr(qd.djdwdm, 1, 8)
+			                         and qd.new_ajlb = '6' --抢夺 = 6
+			                         #if($ksrq && !$ksrq.equals(""))
+										and qd.larq >= #[ksrq]
+									  #end
+									  #if($jzrq && !$jzrq.equals(""))
+										and qd.larq <= #[jzrq]
+									  #end          
+			  left join v_aj_jg_tj dxzp on substr(org.orgcode, 1, 8) =
+			                               substr(dxzp.djdwdm, 1, 8)
+			                           and dxzp.new_ajlb = '7' --电信诈骗 = 7 
+			                          #if($ksrq && !$ksrq.equals(""))
+										and dxzp.larq >= #[ksrq]
+									  #end
+									  #if($jzrq && !$jzrq.equals(""))
+										and dxzp.larq <= #[jzrq]
+									  #end 
+			  left join v_aj_jg_tj hj on substr(org.orgcode, 1, 8) =
+			                             substr(hj.djdwdm, 1, 8)
+			                         and hj.new_ajlb in
+			                             ('1', '2', '3', '4', '5', '6', '7') -- 合计   
+			                         #if($ksrq && !$ksrq.equals(""))
+										and hj.larq >= #[ksrq]
+									  #end
+									  #if($jzrq && !$jzrq.equals(""))
+										and hj.larq <= #[jzrq]
+									  #end                                                                                                                                                                                        
+			 where org.leve = 4
+			   and org.parent_code = substr(#[djdwdm], 1, 6) || '000000' -- 带入的条件
+			 group by substr(org.orgcode, 1, 8)
+			 order by substr(org.orgcode, 1, 8)
+		]]>
+	</property>
+	<!-- 统计内保单位发案情况(按警务区统计) -->
+	<property name="queryNbdwfatjListJwq">
+		<![CDATA[
+			select org.orgcode as djdwdm,
+			       (select t.orgname
+			          from t_common_organization_sjjs t
+			         where t.orgcode = org.orgcode) as djdwmc,
+			       count(pq.ajbh) as pqsl,
+			       count(qtdq.ajbh) as qtdqsl,
+			       count(qtrsdq.ajbh) as qtrsdqsl,
+			       count(rhdq.ajbh) as rhdqsl,
+			       count(qj.ajbh) as qjsl,
+			       count(qd.ajbh) as qdsl,
+			       count(dxzp.ajbh) as dxzpsl,
+			       count(hj.ajbh) as hjsl
+			  from t_common_organization_sjjs org
+			  left join v_aj_jg_tj pq on org.orgcode = pq.djdwdm
+			                         and pq.new_ajlb = '1' -- 扒窃 = 1 
+			                         #if($ksrq && !$ksrq.equals(""))
+										and pq.larq >= #[ksrq]
+									  #end
+									  #if($jzrq && !$jzrq.equals(""))
+										and pq.larq <= #[jzrq]
+									  #end
+			  left join v_aj_jg_tj qtdq on org.orgcode = qtdq.djdwdm
+			                           and qtdq.new_ajlb = '2' --其他盗窃 = 2
+			                           #if($ksrq && !$ksrq.equals(""))
+										and qtdq.larq >= #[ksrq]
+									  #end
+									  #if($jzrq && !$jzrq.equals(""))
+										and qtdq.larq <= #[jzrq]
+									  #end  
+			  left join v_aj_jg_tj qtrsdq on org.orgcode = qtrsdq.djdwdm
+			                             and qtrsdq.new_ajlb = '3' --其他入室盗窃 = 3  
+			                           #if($ksrq && !$ksrq.equals(""))
+										and qtrsdq.larq >= #[ksrq]
+									  #end
+									  #if($jzrq && !$jzrq.equals(""))
+										and qtrsdq.larq <= #[jzrq]
+									  #end 
+			  left join v_aj_jg_tj rhdq on org.orgcode = rhdq.djdwdm
+			                           and rhdq.new_ajlb = '4' --其他入室盗窃 = 4 
+			                           #if($ksrq && !$ksrq.equals(""))
+										and rhdq.larq >= #[ksrq]
+									  #end
+									  #if($jzrq && !$jzrq.equals(""))
+										and rhdq.larq <= #[jzrq]
+									  #end 
+			  left join v_aj_jg_tj qj on org.orgcode = rhdq.djdwdm
+			                         and qj.new_ajlb = '5' --抢劫 = 5 
+			                         #if($ksrq && !$ksrq.equals(""))
+										and qj.larq >= #[ksrq]
+									  #end
+									  #if($jzrq && !$jzrq.equals(""))
+										and qj.larq <= #[jzrq]
+									  #end      
+			  left join v_aj_jg_tj qd on org.orgcode = qd.djdwdm
+			                         and qd.new_ajlb = '6' --抢夺 = 6 
+			                          #if($ksrq && !$ksrq.equals(""))
+										and qd.larq >= #[ksrq]
+									  #end
+									  #if($jzrq && !$jzrq.equals(""))
+										and qd.larq <= #[jzrq]
+									  #end        
+			  left join v_aj_jg_tj dxzp on org.orgcode = dxzp.djdwdm
+			                           and dxzp.new_ajlb = '7' --电信诈骗 = 7 
+			                           #if($ksrq && !$ksrq.equals(""))
+										and dxzp.larq >= #[ksrq]
+									  #end
+									  #if($jzrq && !$jzrq.equals(""))
+										and dxzp.larq <= #[jzrq]
+									  #end 
+			  left join v_aj_jg_tj hj on org.orgcode = hj.djdwdm
+			                         and hj.new_ajlb in
+			                             ('1', '2', '3', '4', '5', '6', '7') -- 合计
+			                         #if($ksrq && !$ksrq.equals(""))
+										and hj.larq >= #[ksrq]
+									  #end
+									  #if($jzrq && !$jzrq.equals(""))
+										and hj.larq <= #[jzrq]
+									  #end                                                                                                                                                                                           
+			 where org.leve = 5
+			   and substr(org.orgcode, 1, 8) = substr(#[djdwdm], 1, 8) -- 带入的条件  
+			 group by org.orgcode
+			 order by org.orgcode
+		]]>
+	</property>
+	
+	<property name="queryAjtjByDwfl">
+		<![CDATA[
+			select * from (
+			    select dic.dm,
+			        dic.mc as dwfl,
+			        sum(nvl(pq,0)) as pq, 
+			        sum(nvl(qtdq,0)) as qtdq, 
+			        sum(nvl(qtrsdq,0)) as qtrsdq,
+			        sum(nvl(rhdq,0)) as rhdq,
+			        sum(nvl(qj,0)) as qj,
+			        sum(nvl(qd,0)) as qd,
+			        sum(nvl(dxzp,0)) as dxzp,
+			        (sum(nvl(pq,0)) +  sum(nvl(qtdq,0)) + sum(nvl(qtrsdq,0)) +
+			        sum(nvl(rhdq,0)) +  sum(nvl(qj,0)) + sum(nvl(qd,0)）+ sum(nvl(dxzp,0))) as hj  
+			    from t_common_dictionary dic,
+			(
+			SELECT dwfl,
+				   SUM(decode(ajlb, 'qtdq', 1, 0)) AS qtdq,
+				   SUM(decode(ajlb, 'qtrsdq', 1, 0)) AS qtrsdq,
+				   SUM(decode(ajlb, 'rhdq', 1, 0)) AS rhdq,
+				   SUM(decode(ajlb, 'pq', 1, 0)) AS pq,
+				   SUM(decode(ajlb, 'qd', 1, 0)) AS qd,
+				   SUM(decode(ajlb, 'dxzp', 1, 0)) AS dxzp,
+			       SUM(decode(ajlb, 'qj', 1, 0)) AS qj
+			  FROM (SELECT aj.anjianbianhao AS ajbh,
+						   zddw.jgbh,
+						   zddw.dwfl,
+						   CASE
+							   WHEN aj.anjianleibie = '050201' THEN
+								'pq' --扒窃
+							   WHEN aj.anjianleibie = '050299' THEN
+								'qtdq' --其他盗窃
+							   WHEN aj.anjianleibie = '050202' THEN
+								'rhdq' --入户盗窃
+							   WHEN aj.anjianleibie = '050100' THEN
+								'qj' --抢劫
+							   WHEN aj.anjianleibie = '050400' THEN
+								'qd' --抢夺
+							   WHEN aj.anjianleibie = '050301' THEN
+								'dxzp' --电信诈骗
+							   WHEN aj.anjianleibie = '050280' THEN
+								'qtrsdq' --其他入室盗窃
+						   END ajlb
+					  FROM t_ajjbxxb aj,
+						   (SELECT dw.jgbh, nbdw.dwfl
+							  FROM t_za_jg_jbxx dw,
+								   (SELECT *
+									  FROM (SELECT jgbh,
+												   dwfl,
+												   row_number() over(PARTITION BY jgbh ORDER BY hcsj DESC) AS sn
+											  FROM t_za_dwhc
+											 WHERE dwfl IS NOT NULL)
+									 WHERE sn = 1) nbdw
+							 WHERE dw.jgbh = nbdw.jgbh
+							   AND (dw.zxbs = '0' OR dw.zxbs IS NULL)) zddw
+					 WHERE aj.zddwdm = zddw.jgbh
+					 #if($ksrq && !$ksrq.equals(""))
+                   	and to_date(aj.lianriqi,'yyyymmdd') >= to_date(#[ksrq],'yyyymmdd')  
+                   #end
+                   #if($jzrq && !$jzrq.equals(""))
+                   	and to_date(aj.lianriqi,'yyyymmdd') <= to_date(#[jzrq],'yyyymmdd')  
+                   #end
+					 ) tj
+			 GROUP BY dwfl ） a
+			  where zdlb = 'ZDY_NBDWLB'
+			  and dic.dm = a.dwfl(+)
+			  group by rollup(dic.dm,dic.mc)
+			  order by dic.dm) where (dm is not null and dwfl is not null) or (dm is null and dwfl is null)
+		]]>
+	</property>
+</properties>	

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryzyzxx">
+		<![CDATA[
+		select bh,
+       xm,
+       sfzh,
+       xb,
+       to_char(csrq,'yyyy-MM-dd') csrq,
+       whcd,
+       lxdh,
+       email,
+       qqhm,
+       jtzz,
+       ssjwqsdm,
+       ssjwqsmc,
+       sspcsdm,
+       sspcsmc,
+       djrxm,
+       to_char(djsj,'yyyy-MM-dd') djsj,
+       djdwdm,
+       djdwmc,
+       djrjh
+  from t_fwqz_zyzdjxx
+		where 1= 1
+			#if($jwsqdm && !$jwsqdm.equals(""))
+	    		and djdwdm = #[jwsqdm]
+    		#elseif ($pcsdm && !$pcsdm.equals(""))
+			 	and djdwdm like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+		   	#end
+			 
+			 
+			#if($xm and !$xm.equals(""))
+	      		and xm like '%'||#[xm]||'%' 
+	      	#end
+	      	#if($sfzh and !$sfzh.equals(""))
+	      		and sfzh like '%'||#[sfzh]||'%' 
+	      	#end
+	      	
+	      	order by djsj desc
+				]]>
+	</property>
+	<property name="queryZyzByBh">
+		<![CDATA[
+		select bh,
+       xm,
+       sfzh,
+       xb,
+       to_char(csrq,'yyyy-MM-dd') csrq,
+       whcd,
+       lxdh,
+       email,
+       qqhm,
+       jtzz,
+       ssjwqsdm,
+       ssjwqsmc,
+       sspcsdm,
+       sspcsmc,
+       djrxm,
+       to_char(djsj,'yyyy-MM-dd') djsj,
+       djdwdm,
+       djdwmc,
+       djrjh
+  from t_fwqz_zyzdjxx
+  where bh=?
+		
+				]]>
+	</property>
+	<property name="insertZyz">
+		<![CDATA[
+		insert into t_fwqz_zyzdjxx
+  (bh,
+   xm,
+   sfzh,
+   xb,
+   csrq,
+   whcd,
+   lxdh,
+   email,
+   qqhm,
+   jtzz,
+   ssjwqsdm,
+   ssjwqsmc,
+   sspcsdm,
+   sspcsmc,
+   djrxm,
+   djsj,
+   djdwdm,
+   djdwmc,
+   djrjh,djrsfzh)
+values
+  (#[bh],
+   #[xm],
+   #[sfzh],
+   #[xb],
+   to_date(#[csrq],'yyyy-MM-dd'),
+   #[whcd],
+   #[lxdh],
+   #[email],
+   #[qqhm],
+   #[jtzz],
+   #[ssjwqsdm],
+   #[ssjwqsmc],
+   #[sspcsdm],
+   #[sspcsmc],
+   #[djrxm],
+   to_date(#[djsj],'yyyy-MM-dd'),
+   #[djdwdm],
+   #[djdwmc],
+   #[djrjh],#[djrsfzh])
+					]]>
+	</property>
+	<property name="updateZyz">
+		<![CDATA[
+		update t_fwqz_zyzdjxx
+   set xm = #[xm],
+       sfzh = #[sfzh],
+       xb = #[xb],
+       csrq = to_date(#[csrq],'yyyy-MM-dd'),
+       whcd = #[whcd],
+       lxdh = #[lxdh],
+       email = #[email],
+       qqhm = #[qqhm],
+       jtzz = #[jtzz],
+       ssjwqsdm = #[ssjwqsdm],
+       ssjwqsmc = #[ssjwqsmc],
+       sspcsdm = #[sspcsdm],
+       sspcsmc = #[sspcsmc],
+       djrxm = #[djrxm],
+       djsj = to_date(#[djsj],'yyyy-MM-dd'),
+       djdwdm = #[djdwdm],
+       djdwmc = #[djdwmc],
+       djrjh = #[djrjh]
+ where bh = #[bh]
+		
+				]]>
+	</property>
+	<property name="deleteZyz">
+		<![CDATA[
+		delete t_fwqz_zyzdjxx
+ where bh = ?
+				]]>
+	</property>
+	<property name="insertZcxx">
+		<![CDATA[
+insert into t_fwqz_zyzzcxx
+  (bh, zyzbh, zcdm, jysm)
+values
+  (#[bh], #[zyzbh], #[zcdm], #[jysm])
+
+				]]>
+	</property>
+	<property name="queryzyzzcxx">
+		<![CDATA[
+	       select z.BH,
+	       ZYZBH,
+	       ZCDM,
+	       JYSM,
+	       XM,
+	       SFZH,
+	       XB,
+	       CSRQ,
+	       WHCD,
+	       LXDH,
+	       EMAIL,
+	       QQHM,
+	       JTZZ,
+	       SSJWQSDM,
+	       SSJWQSMC,
+	       SSPCSDM,
+	       SSPCSMC,
+	       DJRXM,
+	       DJSJ,
+	       DJDWDM,
+	       DJDWMC,
+	       djrjh
+	  from t_fwqz_zyzzcxx z, t_fwqz_zyzdjxx x
+	 where x.bh = z.ZYZBH
+       ]]>
+	</property>
+		<property name="queryZcxx">
+		<![CDATA[
+					select bh, zyzbh, zcdm, jysm from t_fwqz_zyzzcxx where zyzbh =?
+				]]>
+	</property>
+		<property name="deleteZc">
+			
+		<![CDATA[
+               delete t_fwqz_zyzzcxx
+                       where zyzbh =?
+                                                   
+				]]>
+	</property>
+		<property name="updateZc">
+			
+		<![CDATA[
+              update t_fwqz_zyzzcxx
+   set bh = #[bh],
+       zyzbh = #[zyzbh],
+       zcdm = #[zcdm],
+       jysm = #[jysm]
+ where bh = #[bh]
+                                                   
+				]]>
+	</property>
+			<property name="queryzyzzcxx">
+			
+		<![CDATA[
+        select bh, zyzbh, zcdm, jysm from t_fwqz_zyzzcxx where zyzbh = #[bh]
+                                                   
+				]]>
+	</property>
+		<property name="deleteZcxx">
+			
+		<![CDATA[
+               delete t_fwqz_zyzzcxx
+                       where bh =?
+                                                   
+				]]>
+	</property>
+		<property name="getzcxxbybh">
+			
+		<![CDATA[
+             select bh, zyzbh, zcdm, jysm from t_fwqz_zyzzcxx where bh = ?                                    
+				]]>
+	</property>
+	
+	<property name="getZyzxxBysfzh">
+		<![CDATA[
+				select bh,
+			       xm,
+			       sfzh,
+			       xb,
+			       to_char(csrq,'yyyy-MM-dd') csrq,
+			       whcd,
+			       lxdh,
+			       email,
+			       qqhm,
+			       jtzz,
+			       ssjwqsdm,
+			       ssjwqsmc,
+			       sspcsdm,
+			       sspcsmc,
+			       djrxm,
+			       to_char(djsj,'yyyy-MM-dd') djsj,
+			       djdwdm,
+			       djdwmc,
+			       djrjh
+			  from t_fwqz_zyzdjxx
+			  where sfzh=?
+		
+		]]>
+	</property>
+	
+	
+	<property name="queryZyzdjxxBeanBySfzhAndOrgcode">
+		<![CDATA[
+				select bh,
+			       xm,
+			       sfzh,
+			       xb,
+			       to_char(csrq,'yyyy-MM-dd') csrq,
+			       whcd,
+			       lxdh,
+			       email,
+			       qqhm,
+			       jtzz,
+			       ssjwqsdm,
+			       ssjwqsmc,
+			       sspcsdm,
+			       sspcsmc,
+			       djrxm,
+			       to_char(djsj,'yyyy-MM-dd') djsj,
+			       djdwdm,
+			       djdwmc,
+			       djrjh
+			  from t_fwqz_zyzdjxx
+			  where sfzh=?
+			  and djdwdm=?
+		
+		]]>
+	</property>
+</properties>

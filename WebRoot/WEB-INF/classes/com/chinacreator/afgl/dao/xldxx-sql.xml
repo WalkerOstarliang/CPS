@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryAfxldxxListByQueryBean">
+		<![CDATA[
+			select xldbh,
+		       xldmc,
+		       to_char(zjsj,'yyyy-mm-dd') as zjsj,
+		       ssdwdm,
+		       ssdwmc,
+		       ssdwfgld,
+		       ssdwfgldlxdh,
+		       xldzrrxm,
+		       xldzrrlxdh,
+		       xldlxdh,
+		       to_char(cxsj,'yyyy-mm-dd hh24:mi:ss') as cxsj,
+		       xlqy,
+		       bz,
+		       djrxm,
+		       djrjh,
+		       djdwdm,
+		       djdwmc,
+		       djsj,
+		       xldlx,
+		       cxbs,
+		       cxyy
+		  from t_af_xldxx
+		  where 1=1
+	     #if ($xldlx && !$xldlx.equals(""))
+	  		and xldlx=#[xldlx]
+	     #end
+	     
+	     #if ($xldzrrxm && !$xldzrrxm.equals(""))
+	  		and xldzrrxm like '%'||#[xldzrrxm]||'%'
+	     #end
+	     
+	     #if ($ssdwfgld && !$ssdwfgld.equals(""))
+	  		and ssdwfgld=#[ssdwfgld]
+	     #end
+	    
+		 #if ($jwsqdm && !$jwsqdm.equals(""))
+			and djdwdm = #[jwsqdm]
+		 #elseif ($pcsdm && !$pcsdm.equals(""))
+	 		and djdwdm like substr(#[pcsdm],1,8)||'%'
+	     #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+		    and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+	 	 #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+		    and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+	     #end
+		 
+		 #if($cxbs && !$cxbs.equals(""))
+		 	and cxbs = #[cxbs]
+		 #end
+		 
+		 #if ($zjrqstart && !$zjrqstart.equals(""))
+	  		and zjsj >= to_date(#[zjrqstart]||' 00:00:00','yyyy-mm-dd hh24:mi:ss')
+	     #end
+	     #if ($zjrqend && !$zjrqend.equals(""))
+	  		and zjsj <= to_date(#[zjrqend]||' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+	     #end
+	     
+	     #if ($cxrqstart && !$cxrqstart.equals(""))
+	  		and cxrq >= to_date(#[cxrqstart]||' 00:00:00','yyyy-mm-dd hh24:mi:ss')
+	     #end
+	     #if ($cxrqend && !$cxrqend.equals(""))
+	  		and cxrq <= to_date(#[cxrqend]||' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+	     #end
+		 
+		  
+		  order by djsj desc
+		]]>
+	</property>
+	
+	<property name="queryAfxldxxBeanByXldbh">
+		<![CDATA[
+			select xldbh,
+		       xldmc,
+		       to_char(zjsj,'yyyy-mm-dd') as zjsj,
+		       ssdwdm,
+		       ssdwmc,
+		       ssdwfgld,
+		       ssdwfgldlxdh,
+		       xldzrrxm,
+		       xldzrrlxdh,
+		       xldlxdh,
+		       to_char(cxsj,'yyyy-mm-dd hh24:mi:ss') as cxsj,
+		       xlqy,
+		       bz,
+		       djrxm,
+		       djrjh,
+		       djdwdm,
+		       djdwmc,
+		       djsj,
+		       xldlx,
+		       cxbs,
+		       cxyy
+		  from t_af_xldxx
+		  where xldbh=?
+		]]>
+	</property>
+	
+	<property name="insertXldxxBean">
+		<![CDATA[
+			insert into t_af_xldxx
+			  (xldbh, xldmc, zjsj, 
+			  ssdwdm, ssdwmc, ssdwfgld, ssdwfgldlxdh, 
+			  xldzrrxm, xldzrrlxdh, xldlxdh, cxsj, xlqy, bz, 
+			  djrxm, djrjh, djdwdm, djdwmc, djsj, xldlx,djrsfzh)
+			values
+			  (#[xldbh], 
+			  #[xldmc], to_date(#[zjsj],'yyyy-mm-dd hh24:mi:ss'), 
+			  #[ssdwdm], #[ssdwmc], #[ssdwfgld], #[ssdwfgldlxdh], 
+			  #[xldzrrxm], #[xldzrrlxdh], #[xldlxdh], null, #[xlqy], #[bz], 
+			  #[djrxm], #[djrjh], #[djdwdm], #[djdwmc], sysdate, #[xldlx],#[djrsfzh])
+		]]>
+	</property>
+	
+	<property name="updateXldxxBean">
+		<![CDATA[
+			update t_af_xldxx
+			   set
+			       xldmc = #[xldmc],
+			       ssdwdm = #[ssdwdm],
+			       ssdwmc = #[ssdwmc],
+			       ssdwfgld = #[ssdwfgld],
+			       ssdwfgldlxdh = #[ssdwfgldlxdh],
+			       xldzrrxm = #[xldzrrxm],
+			       xldzrrlxdh = #[xldzrrlxdh],
+			       xldlxdh = #[xldlxdh],
+			       cxsj = to_date(#[cxsj],'yyyy-mm-dd'),
+			       xlqy = #[xlqy],
+			       bz = #[bz],
+			       cxbs=#[cxbs],
+			       cxyy=#[cxyy]
+			 where xldbh = #[xldbh]
+		]]>
+	</property>
+	
+	<property name="deleteXldxxBeanByXldbh">
+		<![CDATA[
+			update t_af_xldxx
+			set cxbs='0',
+			    cxsj=sysdate
+			where xldbh=?
+		]]>
+	</property>
+	
+	<property name="queryAfxldRyxxBeanListByQueryBean">
+		<![CDATA[
+			select xldybh, xldbh, (select xldmc from t_af_xldxx where xldbh=t.xldbh) as xldmc,
+				   xldyxm, xldyxb, xldysfzh,
+			       to_char(xldycsrq,'yyyy-mm-dd') as xldycsrq, 
+			       xldyhjdxz, xldyxzdxz, xldylxdh,
+			       to_char(sgrq,'yyyy-mm-dd') as sgrq, to_char(tcrq,'yyyy-mm-dd') as tcrq, 
+			       zgzt, bz, djrxm, djrjh,
+			       djdwdm, djdwmc, to_char(djsj,'yyyy-mm-dd') as djsj, 
+			       to_char(gxsj,'yyyy-mm-dd hh24:mi:ss') as gxsj,
+			       djrsfzh, bwzw, sfftjzry, zzhjz, dwdh, 
+			       zzdh, tc, jlqk, grjl, jtcy, xzzw
+			from t_af_xldyxx t
+			where 1=1
+			
+			--单位所在辖区判断
+			and xldbh in (
+				select xldbh 
+				from t_af_xldxx 
+				where 1=1
+				 #if ($xldlx && !$xldlx.equals(""))
+				 and xldlx=#[xldlx]
+				 #end
+				 #if ($pcsdm && !$pcsdm.equals(""))
+			 	and substr(t.djdwdm,1,8) like substr(#[pcsdm],1,8)||'%'
+			 #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and substr(t.djdwdm,1,6) like substr(#[countrygajgjgdm],1,6)||'%'
+			 #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and substr(t.djdwdm, 1, 4)like substr(#[citygajgjgdm],1,4)||'%'
+			 #end
+			)
+			
+			--巡逻队
+			#if($xldbh && !$xldbh.equals(""))
+				and xldbh = #[xldbh]
+			#else
+				#if($xldmc && !$xldmc.equals(""))
+					and xldbh in (select xldbh from t_af_xldxx where xldmc like '%'||#[xldmc]||'%')
+				#end
+			#end
+			
+			--姓名
+			#if($xldyxm && !$xldyxm.equals(""))
+				and xldyxm like '%'||trim(#[xldyxm])||'%'
+			#end
+			
+			--性别
+			#if($xldyxb && !$xldyxb.equals(""))
+				and xldyxb = trim(#[xldyxb])
+			#end
+			
+			--身份证号
+			#if($xldysfzh && !$xldysfzh.equals(""))
+			   and xldysfzh=trim(#[xldysfzh])
+			#end
+			--上岗日期
+			#if($sgrqstart && !$sgrqstart.equals(""))
+				and sgrq >= to_date(#[sgrqstart]||' 00:00:00','yyyy-mm-dd hh24:mi:ss')
+			#end
+			#if($sgrqend && !$sgrqend.equals(""))
+			   and sgrq <= to_date(#[sgrqend]||' 23:59:59', 'yyyy-mm-dd hh24:mi:ss')
+			#end
+			--退出日期
+			#if($tcrqstart && !$tcrqstart.equals(""))
+				and tcrq >= to_date(#[tcrqstart]||' 00:00:00','yyyy-mm-dd hh24:mi:ss')
+			#end
+			#if($tcrqend && !$tcrqend.equals(""))
+				and tcrq <= to_date(#[tcrqend]||' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+			#end
+			--在岗状态
+			#if($zgzt && !$zgzt.equals(""))
+				and zgzt=#[zgzt]
+			#end
+			order by djsj desc
+		]]>
+	</property>
+	
+	<property name="queryAfxldyxxBeanByXldybh">
+		<![CDATA[
+			select xldybh, xldbh,  xldyxm, xldyxb, xldysfzh,
+			       xldycsrq, xldyhjdxz, xldyxzdxz, xldylxdh,
+			       sgrq, tcrq, zgzt, bz, djrxm, djrjh,
+			       djdwdm, djdwmc, djsj, gxsj
+			from t_af_xldyxx
+			where xldybh=?
+		]]>
+	</property>
+	
+	<property name="insertAfxldyxxBean">
+		<![CDATA[
+			 insert into t_af_xldyxx
+			   (xldybh, xldbh, xldyxm, xldyxb, 
+			   xldysfzh, xldycsrq, xldyhjdxz, 
+			   xldyxzdxz, xldylxdh, sgrq,
+			   tcrq,
+			   zgzt, bz, djrxm, djrjh, djdwdm, 
+			   djdwmc, djsj, gxsj,djrsfzh,
+			   bwzw, sfftjzry, zzhjz, dwdh, 
+			   zzdh, tc, jlqk, grjl, jtcy, xzzw)
+			 values
+			   (#[xldybh],#[xldbh],#[xldyxm],#[xldyxb], 
+			   #[xldysfzh],to_date(#[xldycsrq],'yyyy-mm-dd'),
+			   #[xldyhjdxz],#[xldyxzdxz],#[xldylxdh], 
+			   to_date(#[sgrq],'yyyy-mm-dd'),
+			   to_date(#[tcrq],'yyyy-mm-dd'),
+			   #[zgzt],#[bz], 
+			   #[djrxm],#[djrjh],#[djdwdm], 
+			   #[djdwmc],to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+			   sysdate,#[djrsfzh],
+			   #[bwzw], #[sfftjzry], #[zzhjz], #[dwdh], 
+			   #[zzdh], #[tc], #[jlqk], #[grjl], #[jtcy], #[xzzw])
+		]]>
+	</property>
+	
+	<property name="updateAfxldyxxBean">
+		<![CDATA[
+			update t_af_xldyxx
+			   set 
+			       xldyxm = #[xldyxm],
+			       xldyxb = #[xldyxb],
+			       xldysfzh = #[xldysfzh],
+			       xldycsrq = to_date(#[xldycsrq],'yyyy-mm-dd'),
+			       xldyhjdxz = #[xldyhjdxz],
+			       xldyxzdxz = #[xldyxzdxz],
+			       xldylxdh = #[xldylxdh],
+			       sgrq = to_date(#[sgrq],'yyyy-mm-dd'),
+			  	   tcrq = to_date(#[tcrq],'yyyy-mm-dd'),
+			       zgzt = #[zgzt],
+			       bz = #[bz],
+			       djrxm = #[djrxm],
+			       djrjh = #[djrjh],
+			       djdwdm = #[djdwdm],
+			       djdwmc = #[djdwmc],
+			       djsj = to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+			       gxsj = sysdate,
+			       bwzw = #[bwzw], 
+			       sfftjzry = #[sfftjzry], 
+			       zzhjz = #[zzhjz], 
+			       dwdh = #[dwdh], 
+			       zzdh = #[zzdh], 
+			       tc = #[tc], 
+			       jlqk = #[jlqk], 
+			       grjl = #[grjl], 
+			       jtcy = #[jtcy], 
+			       xzzw = #[xzzw]
+			 where xldybh = #[xldybh]
+		]]>
+	</property>
+	
+	<property name="deleteAfxldyxxBeanByXldybh">
+		<![CDATA[
+			delete t_af_xldyxx
+ 		    where xldybh = ?
+		]]>
+	</property>
+	
+	<property name="queryXldryBeanListByXldbh">
+		<![CDATA[
+				select xldybh, xldbh, (select xldmc from t_af_xldxx where xldbh=t.xldbh) as xldmc,
+				   xldyxm, xldyxb, xldysfzh,
+			       to_char(xldycsrq,'yyyy-mm-dd') as xldycsrq, xldyhjdxz, xldyxzdxz, xldylxdh,
+			       to_char(sgrq,'yyyy-mm-dd') as sgrq, to_char(tcrq,'yyyy-mm-dd') as tcrq, 
+			       zgzt, bz, djrxm, djrjh,
+			       djdwdm, djdwmc, to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       djrsfzh, bwzw, sfftjzry, zzhjz, dwdh, 
+			       zzdh, tc, jlqk, grjl, jtcy, xzzw
+				from t_af_xldyxx t
+				where xldbh=?
+				order by djsj desc
+		]]>
+	</property>
+	
+		<property name="queryAfxldyxxBeanBySfzh">
+		<![CDATA[
+			select xldybh, xldbh,  xldyxm, xldyxb, xldysfzh,
+			       to_char(xldycsrq,'yyyy-mm-dd') xldycsrq, xldyhjdxz, xldyxzdxz, xldylxdh,
+			       to_char(sgrq,'yyyy-mm-dd') sgrq, to_char(tcrq,'yyyy-mm-dd') tcrq, zgzt, bz, djrxm, djrjh,
+			       djdwdm, djdwmc, djsj, gxsj
+			from t_af_xldyxx
+			where xldysfzh=?
+		]]>
+	</property>
+	<!-- 巡防队员查询 -->
+	<property name="queryAfxfdyxxBeanByqueryBean">
+		<![CDATA[
+			select xldybh,
+	               --xldbh,
+			       xldyxm,
+			       xldyxb,
+			       xldysfzh,
+			       xldycsrq,
+			       xldyhjdxz,
+			       xldyxzdxz,
+			       xldylxdh,
+			       to_char(sgrq,'yyyy-mm-dd') sgrq,
+			       to_char(tcrq,'yyyy-mm-dd') tcrq,
+			       zgzt,
+			       bz,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       djsj,
+			       gxsj,
+			       djrsfzh
+  		from t_af_xldyxx
+		  where 1=1	     
+	     #if ($xldyxm && !$xldyxm.equals(""))
+	  		and xldyxm like '%'||#[xldyxm]||'%'
+	     #end
+	     
+	     #if ($xldysfzh && !$xldysfzh.equals(""))
+	  		and xldysfzh=#[xldysfzh]
+	     #end
+         #if ($zgzt && !$zgzt.equals(""))
+	  		and zgzt=#[zgzt]
+	     #end
+	     #if ($tcrq && !$tcrq.equals(""))
+	  		and tcrq=#[tcrq]
+	     #end
+		 #if ($jwsqdm && !$jwsqdm.equals(""))
+			and djdwdm = #[jwsqdm]
+		 #elseif ($pcsdm && !$pcsdm.equals(""))
+	 		and djdwdm like substr(#[pcsdm],1,8)||'%'
+	     #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+		    and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+	 	 #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+		    and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+	     #end
+		 
+		 #if ($sgrqstart && !$sgrqstart.equals(""))
+	  		and sgrq >= to_date(#[sgrqstart]||' 00:00:00','yyyy-mm-dd hh24:mi:ss')
+	     #end
+	     #if ($sgrqend && !$sgrqend.equals(""))
+	  		and sgrq <= to_date(#[sgrqend]||' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+	     #end
+		  order by djsj desc
+		]]>
+	</property>
+	<!--根据巡防人员编号查询巡防人员信息 queryAfxfryxxBeanByxldybh -->
+	<property name="queryAfxfryxxBeanByxldybh">
+		<![CDATA[
+			select xldybh,
+	               --xldbh,
+			       xldyxm,
+			       xldyxb,
+			       xldysfzh,
+			       xldycsrq,
+			       xldyhjdxz,
+			       xldyxzdxz,
+			       xldylxdh,
+			       to_char(sgrq,'yyyy-mm-dd') sgrq,
+			       to_char(tcrq,'yyyy-mm-dd') tcrq,
+			       zgzt,
+			       bz,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       djsj,
+			       gxsj,
+			       djrsfzh
+  		from t_af_xldyxx
+		  where 1=1	
+		  and      
+	     XLDYBH=?
+	     order by djsj desc
+		]]>
+	</property>
+	<!-- updateXfryxxBean -->
+	<property name="updateXfryxxBean">
+		<![CDATA[
+			update t_af_xldyxx
+  		    set 
+  		     xldyxm = #[xldyxm],
+			       xldyxb = #[xldyxb],
+			       xldysfzh = #[xldysfzh],
+			       xldycsrq = to_date(#[xldycsrq],'yyyy-mm-dd'),
+			       xldyhjdxz = #[xldyhjdxz],
+			       xldyxzdxz = #[xldyxzdxz],
+			       xldylxdh = #[xldylxdh],
+			       sgrq = to_date(#[sgrq],'yyyy-mm-dd'),
+			  	   tcrq = to_date(#[tcrq],'yyyy-mm-dd'),
+			       zgzt = #[zgzt],
+			       bz = #[bz],
+			       djrxm = #[djrxm],
+			       djrjh = #[djrjh],
+			       djdwdm = #[djdwdm],
+			       djdwmc = #[djdwmc],
+			       djsj = to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+			       gxsj = sysdate
+			 where xldybh = #[xldybh]
+		]]>
+	</property>
+	<!-- deleteAfryxxByrybh -->
+	<property name="deleteAfryxxByrybh">
+		<![CDATA[
+			update t_af_xldyxx
+  		    set 
+			  	   tcrq = sysdate,
+			       zgzt = '0',
+			       gxsj = sysdate
+			 where xldybh = ?
+		]]>
+	</property>
+	<!-- insertXfryxxBean 新增巡防人员 -->
+	<property name="insertXfryxxBean">
+		<![CDATA[
+		 insert into t_af_xldyxx  
+		 (
+		 xldybh,
+		 xldyxm,
+		 xldyxb,
+		 xldysfzh,
+		 xldycsrq,
+		 xldyhjdxz,
+		 xldyxzdxz,
+		 xldylxdh,
+		 sgrq,
+		 zgzt,
+		 bz,
+		 djrxm,
+		 djrjh,
+		 djdwdm,
+		 djdwmc,
+		 djsj,
+		 gxsj
+		 )values
+		 (#[xldybh],
+  		  #[xldyxm],
+		  #[xldyxb],
+		  #[xldysfzh],
+		  to_date(#[xldycsrq],'yyyy-mm-dd'),
+		  #[xldyhjdxz],
+		  #[xldyxzdxz],
+		  #[xldylxdh],
+		  to_date(#[sgrq],'yyyy-mm-dd'),
+		  #[zgzt],
+		  #[bz],
+		  #[djrxm],
+		  #[djrjh],
+		  #[djdwdm],
+		  #[djdwmc],
+		  to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+		  sysdate)
+		]]>
+	</property>
+	<!-- selectXfryxxBysfzh -->
+	<property name="selectXfryxxBysfzh">
+		<![CDATA[
+		 select    xldybh,
+			       xldyxm,
+			       xldyxb,
+			       xldysfzh,
+			       xldycsrq,
+			       xldyhjdxz,
+			       xldyxzdxz,
+			       xldylxdh,
+			       to_char(sgrq,'yyyy-mm-dd') sgrq,
+			       to_char(tcrq,'yyyy-mm-dd') tcrq,
+			       zgzt,
+			       bz,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       djsj,
+			       gxsj,
+			       djrsfzh
+  		from t_af_xldyxx
+		  where 1=1	
+		  and zgzt='1'
+		  and  xldysfzh=#[xldysfzh]
+	     order by djsj desc
+		]]>
+	</property>
+</properties>

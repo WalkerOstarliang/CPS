@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+
+	 <property name="queryCmsDocumentList">
+	 	<![CDATA[
+	 	select *
+	 	from (
+	 		select t.*,rownum as rn 
+	 		from (
+				select doc.*
+				from v_cms_document doc
+				where doc.status='5'
+					#if ($channelId && !$channelId.equals(""))
+						and doc.channelid=#[channelId]
+					#end
+					#if($orgLeve && $orgLeve.equals("1"))
+						and doc.orgcode LIKE substr(#[orgcode],1,2)||'%'
+				    #elseif($orgLeve && $orgLeve.equals("2"))
+						#if($leve>1)
+							and doc.orgcode LIKE substr(#[orgcode],1,4)||'00%'
+						#else	
+							and doc.orgcode LIKE substr(#[orgcode],1,2)||'%'
+						#end
+						    
+				    #elseif($orgLeve && $orgLeve.equals("3"))
+				    	#if($leve>2)
+				    		and doc.orgcode LIKE substr(#[orgcode],1,6)||'%'
+				    	#else
+				    		and doc.orgcode LIKE substr(#[orgcode],1,2)||'%'
+				    	#end
+				    #end
+				    
+			  order by doc.docwtime desc
+		  ) t
+		  where rownum < 10
+		) a
+		where a.rn>=0
+	 	]]>
+	 </property>
+</properties>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="nbgl_fatj" namespace="/nbgl/fatj" extends="default"> 
+	  		<action name="*" class="com.chinacreator.nbgl.action.NbfatjAction" method="{1}">
+	  			<result name="toNbdwfaTjListPage">/jsp/nbgl/pages/fatj/nbdwfatjlistPage.jsp</result>
+	  			<result name="toExportExcelNbdwfatjInfoPage">/jsp/nbgl/pages/fatj/downnbdwfatjlistPage.jsp</result>
+	  			<result name="toAjtjByDwfl">/jsp/nbgl/pages/fatj/ajtjbydwfl.jsp</result>
+	  			<result name="toAjtjByDwflData">/jsp/nbgl/pages/fatj/ajtjbydwfldata.jsp</result>
+	  		</action>
+	  </package>
+</struts>

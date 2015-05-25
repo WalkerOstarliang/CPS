@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="xqxx" namespace="/xqxx" extends="default"> 
+	  		<action name="*" class="com.chinacreator.afgl.action.XqxxAction" method="{1}">
+	  			<result name="toXqxxList">/jsp/afgl/pages/xqxx/xqxxList.jsp</result>
+	  			<result name="toAddXqxx">/jsp/afgl/pages/xqxx/addXqxx.jsp</result>
+	  			<result name="toUpdateXqxxByXqbh">/jsp/afgl/pages/xqxx/addXqxx.jsp</result>
+	  			<result name="toDeleteXqxxByXqbh">/jsp/afgl/pages/xqxx/deleteXqxx.jsp</result>
+	  			<result name="viewXqxxByXqbh">/jsp/afgl/pages/xqxx/viewXqxx.jsp</result>
+	  			<result name="toSelectXqxx">/jsp/afgl/pages/xqxx/selectXqxx.jsp</result>
+	  			<result name="toBatchDeleteXqxxByXqbhs">/jsp/afgl/pages/xqxx/batchDeleteXqxx.jsp</result>
+	  			<result name="toGjQueryXqxx">/jsp/afgl/pages/xqxx/xqxxGjQuery.jsp</result>
+	  		</action>
+	  </package>
+</struts>

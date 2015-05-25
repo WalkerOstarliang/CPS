@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryZfqzdjListInfo">
+		<![CDATA[
+			select bh,
+		       zfdxxm,
+		       zfdxsfzh,
+		       zfdxlxdh,
+		       zfdxlx,
+		       zfdxlx as zfdxlxmc,
+		       jtzz,
+		       to_char(zfsj,'yyyy-MM-dd') zfsj,
+		       zfsy,
+		       zfsy as zfsymc,
+		       zfdcnr,
+		       zfdcjg,
+		       zfmjjh,
+		       zfmjxm,
+		       zfmjdwdm,
+		       zfmjdwmc,
+		       sfjwdc,
+		       sfjwdc as sfjwdcmc,
+		       xxsfss,
+		       xxsfss as xxsfssmc,
+		       dcjgms,
+		       dcrxm,
+		       dcrdwdm,
+		       dcrdwmc,
+		       to_char(dcsj,'yyyy-MM-dd') dcsj,
+		       djrxm,
+		       to_char(djsj,'yyyy-MM-dd') djsj,
+		       djdwdm,
+		       djdwmc
+		  from t_fwqz_zfqzdjxx
+			where 1=1
+			 #if($jwsqdm and !$jwsqdm.equals(""))
+      		and djdwdm=#[jwsqdm]
+	      	#else
+		      	#if($pcsdm and !$pcsdm.equals(""))
+					and substr(djdwdm,1,8)=substr(#[pcsdm],1,8)
+				#else
+					--精确到县区
+					#if($countrydm and !$countrydm.equals(""))
+						and substr(djdwdm,1,6)=substr(#[countrydm],1,6)
+					#else
+					   --精确到市州
+						 #if($citydm and !$citydm.equals(""))
+							and substr(djdwdm,1,4)=substr(#[citydm],1,4)
+						 #end
+					#end
+				#end
+			#end
+			#if($sfjwdc and !$sfjwdc.equals(""))
+				and sfjwdc=#[sfjwdc]
+			#end 
+			#if($xxsfss and !$xxsfss.equals(""))
+				and xxsfss=#[xxsfss]
+			#end 
+			#if($zfdxxm and !$zfdxxm.equals(""))
+				and zfdxxm=#[zfdxxm]
+			#end
+			#if($zfmjjh and !$zfmjjh.equals(""))
+				and zfmjjh=#[zfmjjh]
+			#end 
+			#if($zfsj_from and !$zfsj_from.equals(""))
+			and zfsj >= to_date(#[zfsj_from],'yyyy-MM-dd')
+			#end
+      		#if($zfsj_to && !$zfsj_to.equals(""))
+			and zfsj <= to_date(#[zfsj_to],'yyyy-MM-dd')
+			#end
+			order by zfsj desc
+		]]>
+	</property>
+	
+	<property name="queryZfqzdjInfoByBh">
+		<![CDATA[
+			select bh,
+		       zfdxxm,
+		       zfdxsfzh,
+		       zfdxlxdh,
+		       zfdxlx,
+		       zfdxlx as zfdxlxmc,
+		       jtzz,
+		       to_char(zfsj,'yyyy-MM-dd') zfsj,
+		       zfsy,
+		       zfsy as zfsymc,
+		       zfdcnr,
+		       zfdcjg,
+		       zfmjjh,
+		       zfmjxm,
+		       zfmjdwdm,
+		       zfmjdwmc,
+		       sfjwdc,
+		       sfjwdc as sfjwdcmc,
+		       xxsfss,
+		       xxsfss as xxsfssmc,
+		       dcjgms,
+		       dcrxm,
+		       dcrdwdm,
+		       dcrdwmc,
+		       dcsj,
+		       djrxm,
+		       to_char(djsj,'yyyy-MM-dd') djsj,
+		       djdwdm,
+		       djdwmc
+		 	 from t_fwqz_zfqzdjxx
+		 	 where bh=?
+  		    
+			
+		]]>
+	</property>
+	
+	<property name="insertZfqzdjInfo">
+		<![CDATA[
+			insert into t_fwqz_zfqzdjxx
+			  (bh,
+			   zfdxxm,
+			   zfdxsfzh,
+			   zfdxlxdh,
+			   zfdxlx,
+			   jtzz,
+			   zfsj,
+			   zfsy,
+			   zfdcnr,
+			   zfdcjg,
+			   zfmjjh,
+			   zfmjxm,
+			   zfmjdwdm,
+			   zfmjdwmc,
+			   sfjwdc,
+			   xxsfss,
+			   dcjgms,
+			   dcrxm,
+			   dcrdwdm,
+			   dcrdwmc,
+			   dcsj,
+			   djrxm,
+			   djsj,
+			   djdwdm,
+			   djdwmc)
+			values
+			  (#[bh],
+			   #[zfdxxm],
+			   #[zfdxsfzh],
+			   #[zfdxlxdh],
+			   #[zfdxlx],
+			   #[jtzz],
+			   to_date(#[zfsj],'yyyy-MM-dd'),
+			   #[zfsy],
+			   #[zfdcnr],
+			   #[zfdcjg],
+			   #[zfmjjh],
+			   #[zfmjxm],
+			   #[zfmjdwdm],
+			   #[zfmjdwmc],
+			   '0', --是否警务调查默认为 否：0
+			   #[xxsfss],
+			   #[dcjgms],
+			   #[dcrxm],
+			   #[dcrdwdm],
+			   #[dcrdwmc],
+			   to_date(#[dcsj],'yyyy-MM-dd'),
+			   #[djrxm],
+			   to_date(#[djsj],'yyyy-MM-dd'),
+			   #[djdwdm],
+			   #[djdwmc]
+			   )
+			
+		]]>
+	</property>
+	
+	<property name="updateZfqzdjInfo">
+		<![CDATA[
+			
+update t_fwqz_zfqzdjxx
+   set bh = #[bh],
+       zfdxxm = #[zfdxxm],
+       zfdxsfzh = #[zfdxsfzh],
+       zfdxlxdh = #[zfdxlxdh],
+       zfdxlx = #[zfdxlx],
+       jtzz = #[jtzz],
+       zfsj = to_date(#[zfsj],'yyyy-MM-dd'),
+       zfsy = #[zfsy],
+       zfdcnr = #[zfdcnr],
+       zfdcjg = #[zfdcjg],
+       zfmjjh = #[zfmjjh],
+       zfmjxm = #[zfmjxm],
+       zfmjdwdm = #[zfmjdwdm],
+       zfmjdwmc = #[zfmjdwmc],
+       sfjwdc = '0',--警务调查为 否：'0'
+       xxsfss = #[xxsfss],
+       dcjgms = #[dcjgms],
+       dcrxm = #[dcrxm],
+       dcrdwdm = #[dcrdwdm],
+       dcrdwmc = #[dcrdwmc],
+       dcsj = to_date(#[dcsj],'yyyy-MM-dd'),
+       djrxm = #[djrxm],
+       djsj = to_date(#[djsj],'yyyy-MM-dd'),
+       djdwdm = #[djdwdm],
+       djdwmc = #[djdwmc]
+ 	 where bh = #[bh]
+		]]>
+	</property>
+	
+	
+	<property name="updateZfqzdcInfo">
+		<![CDATA[
+			update t_fwqz_zfqzdjxx
+			   set 
+			       sfjwdc = '1',             
+			       xxsfss = #[xxsfss],
+			       dcjgms = #[dcjgms]
+			 where bh = #[bh]
+			
+		]]>
+	</property>
+	
+	<property name="deleteZfqzdjInfo">
+		<![CDATA[
+			delete t_fwqz_zfqzdjxx
+			where bh=?
+		]]>
+	</property>
+	<property name="batchDeleteZfqzdjInfo">
+		<![CDATA[
+			delete  t_fwqz_zfqzdjxx 
+			where bh = #[bh]
+		]]>
+	</property>
+</properties>

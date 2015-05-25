@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 注销入户走访 -->
+	<property name="cancelRhzf">
+		<![CDATA[
+			update t_za_rhzf
+			   set 
+			       czsj = sysdate,
+			       czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czbs = #[czbs]
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<!-- 删除走访人员 -->
+	<property name="deleteZfry">
+		<![CDATA[
+			delete t_za_rhzf_ry
+ 			where zfid = ?
+		]]>
+	</property>
+	
+	<!-- 新增入户走访 -->
+	<property name="insertRhzf">
+		<![CDATA[
+			insert into t_za_rhzf
+			  (id, dzid, dzmc, zflx, zfyy, zfnr, zfrxm, zfrjh, zfsj, 
+			  lrqk, djrxm, djrjh, djrsfzh, djsj, djdwdm, djdwmc, 
+			  czsj, czrxm, czrjh, czrsfzh, czdwdm, czdwmc, czbs)
+			values
+			  (#[id], #[dzid], #[dzmc], #[zflx], #[zfyy], #[zfnr], 
+			  #[zfrxm], #[zfrjh], to_date(#[zfsj],'yyyy-mm-dd'), #[lrqk], #[djrxm], 
+			  #[djrjh], #[djrsfzh], sysdate, #[djdwdm], #[djdwmc], 
+			  sysdate, #[czrxm], #[czrjh], #[czrsfzh], 
+			  #[czdwdm], #[czdwmc], #[czbs])
+		]]>
+	</property>
+	
+	<!-- 新增走访人员 -->
+	<property name="insertZfry">
+		<![CDATA[
+			insert into t_za_rhzf_ry
+			  (zfid, rybh)
+			values
+			  (?, ?)
+		]]>
+	</property>
+	
+	<!-- 根据地址id查询走访人员 -->
+	<property name="queryZfryByDzid">
+		<![CDATA[
+			--常口
+			SELECT rk.xm, ck.czrkbh as rkid, rk.rybh, '1' AS rylb, rk.hjdxz, rk.lxdh,gl.rkfwglid,rk.sfzh
+			  FROM t_lsgl_rk_jbxx rk, t_lsgl_rk_czrk ck, t_lsgl_rkfw_gl gl
+			 WHERE rk.rybh = ck.rybh
+			   AND gl.rkfwglid = ck.rkfwglid
+			   AND gl.zxbs = '0'
+			   AND ck.zxbs = '0'
+			   AND gl.dzid = ?
+			union
+			--流口
+			SELECT rk.xm, lk.zzbh as rkid, rk.rybh, '2' AS rylb, rk.hjdxz, rk.lxdh,gl.rkfwglid,rk.sfzh
+			  FROM t_lsgl_rk_jbxx rk, t_lsgl_rk_ldrkzzxx lk, t_lsgl_rkfw_gl gl
+			 WHERE rk.rybh = lk.rybh
+			   AND gl.rkfwglid = lk.rkfwglid
+			   AND gl.zxbs = '0'
+			   AND lk.zxbs = '0'
+			   AND gl.dzid = ?
+			union
+			--寄口
+			SELECT rk.xm, jk.jzbh  as rkid, rk.rybh, '5' AS rylb, rk.hjdxz, rk.lxdh,gl.rkfwglid,rk.sfzh
+			  FROM t_lsgl_rk_jbxx rk, t_lsgl_rk_jzrkxx jk, t_lsgl_rkfw_gl gl
+			 WHERE rk.rybh = jk.rybh
+			   AND gl.rkfwglid = jk.rkfwglid
+			   AND gl.zxbs = '0'
+			   AND jk.zxbs = '0'
+			   AND gl.dzid = ?  
+		]]>
+	</property>
+	
+	<!-- 根据走访id查询走访人员 -->
+	<property name="queryZfryByZfid">
+		<![CDATA[
+			--常口
+		      select ry.*,zfry.sfjm from 
+			      (SELECT zf.id,rk.xm, ck.czrkbh  as rkid, rk.rybh, '1' AS rylb, rk.hjdxz, rk.lxdh,gl.rkfwglid,rk.sfzh
+			        FROM t_lsgl_rk_jbxx rk, t_lsgl_rk_czrk ck, t_lsgl_rkfw_gl gl,t_za_rhzf zf
+			       WHERE rk.rybh = ck.rybh
+			         AND gl.rkfwglid = ck.rkfwglid
+			         AND gl.zxbs = '0'
+			         AND ck.zxbs = '0'
+			         AND gl.dzid = zf.dzid
+			         and zf.id = ?
+			         order by ck.djsj desc 
+			        ) ry ,(select '1' as sfjm,zfid,rybh from t_za_rhzf_ry ) zfry
+		        where ry.rybh = zfry.rybh(+)
+		      union
+		      --流口
+		      select ry.*,zfry.sfjm from 
+			      (SELECT zf.id, rk.xm, lk.zzbh  as rkid, rk.rybh, '2' AS rylb, rk.hjdxz, rk.lxdh,gl.rkfwglid,rk.sfzh
+			        FROM t_lsgl_rk_jbxx rk, t_lsgl_rk_ldrkzzxx lk, t_lsgl_rkfw_gl gl,t_za_rhzf zf
+			       WHERE rk.rybh = lk.rybh
+			         AND gl.rkfwglid = lk.rkfwglid
+			         AND gl.zxbs = '0'
+			         AND lk.zxbs = '0'
+			         AND gl.dzid = zf.dzid
+			         and zf.id = ?
+			         order by lk.djsj desc 
+			         ) ry ,(select '1' as sfjm,zfid,rybh from t_za_rhzf_ry ) zfry
+		         where ry.rybh = zfry.rybh(+)
+		      union
+		      --寄口
+		       select ry.*,zfry.sfjm from 
+			      (SELECT zf.id, rk.xm, jk.jzbh  as rkid, rk.rybh, '5' AS rylb, rk.hjdxz, rk.lxdh,gl.rkfwglid,rk.sfzh
+			        FROM t_lsgl_rk_jbxx rk, t_lsgl_rk_jzrkxx jk, t_lsgl_rkfw_gl gl,t_za_rhzf zf
+			       WHERE rk.rybh = jk.rybh
+			         AND gl.rkfwglid = jk.rkfwglid
+			         AND gl.zxbs = '0'
+			         AND jk.zxbs = '0'
+			         AND gl.dzid = zf.dzid
+			         and zf.id = ?
+			         order by jk.djsj desc 
+			         ) ry,(select '1' as sfjm,zfid,rybh from t_za_rhzf_ry ) zfry
+		        where ry.rybh = zfry.rybh(+)
+		]]>
+	</property>
+	
+	<!-- 更新走访信息 -->
+	<property name="updateRhzf">
+		<![CDATA[
+			update t_za_rhzf
+			   set 
+			       zflx = #[zflx],
+			       zfyy = #[zfyy],
+			       zfnr = #[zfnr],
+			       zfrxm = #[zfrxm],
+			       zfrjh = #[zfrjh],
+			       zfsj = to_date(#[zfsj],'yyyy-mm-dd'),
+			       lrqk = #[lrqk],
+			       czsj = sysdate,
+			       czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czbs = #[czbs]
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<!-- 根据走访ID查询入户走访 -->
+	<property name="queryRhzfByZfid">
+		<![CDATA[
+			select zf.id, zf.dzid, zf.dzmc, zf.zflx, zf.zfyy, zf.zfnr, zf.zfrxm, zf.zfrjh, 
+				to_char(zf.zfsj,'yyyy-mm-dd') as zfsj, zf.lrqk, zf.czsj, zf.czrxm,
+				zf.djrxm, zf.djrjh, zf.djrsfzh, zf.djsj, zf.djdwdm, zf.djdwmc,  zf.czrjh, 
+				zf.czrsfzh, zf.czdwdm, zf.czdwmc, zf.czbs,fw.fwid
+			from t_za_rhzf zf ,  t_lsgl_fw_jbxx fw 
+			where  zf.dzid = fw.dzid and zf.id = ?
+		]]>
+	</property>
+	
+	<!-- 分页查询入户走访 -->
+	<property name="queryRhzfList">
+		<![CDATA[
+			select id , zfrxm ,dzmc , zflx, to_char(zfsj,'yyyy-mm-dd') as zfsj ,f_get_syrktotalbydzid(dzid) as jzrs,djdwmc 
+			from t_za_rhzf where czbs <> '4'
+			#if($zfrxm && !$zfrxm.equals(""))
+				and zfrxm like '%'||#[zfrxm]||'%'
+			#end
+			#if($zfsj_s && !$zfsj_s.equals(""))
+				and zfsj >= to_date(#[zfsj_s],'yyyy-mm-dd')
+			#end
+			#if($zfsj_e && !$zfsj_e.equals(""))
+				and zfsj <= to_date(#[zfsj_e],'yyyy-mm-dd')
+			#end
+			#if($zflx && !$zflx.equals(""))
+				and zflx = #[zflx]
+			#end
+			#if($jwsqdm && !$jwsqdm.equals(""))
+				and  djdwdm = #[jwsqdm]
+			#elseif($pcsdm && !$pcsdm.equals(""))
+				and (djdwdm like substr(#[pcsdm],1,8)||'%')
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			#end
+		]]>
+	</property>
+	
+	<!-- 导出入户走访 -->
+	<property name="expRhzf">
+		<![CDATA[
+			SELECT decode(zf.zflx, '01', '8', '7') AS sx,
+			   zf.id AS fz,
+			   ry.rybh AS id,
+			   rk.xm,
+			   rk.sfzh,
+			   rk.lxdh,
+			   rk.hjdxz,
+			   rk.xzzxz,
+		       (select mc from t_common_hnxzqh where dm = fw.sssq) as sssq,
+		       zf.djdwmc as ssjwq,
+		       zf.djrxm as sqmj,
+		       (select orgjc from t_common_organization_sjjs where orgcode = substr(zf.djdwdm,1,8)||'0000') as pcs,
+		       (select orgjc from t_common_organization_sjjs where orgcode = substr(zf.djdwdm,1,6)||'000000') as fxj
+		  FROM t_za_rhzf zf, t_za_rhzf_ry ry, t_lsgl_rk_jbxx rk,t_lsgl_rkfw_gl gl,t_lsgl_fw_jbxx fw
+		 WHERE zf.id = ry.zfid
+		   AND ry.rybh = rk.rybh
+		   and zf.dzid = gl.dzid
+		   and gl.rybh = ry.rybh
+		   and gl.fwid = fw.fwid
+		   and gl.zxbs = '0'
+		   AND zf.czbs IN ('1', '2')
+		   #if($zfrxm && !$zfrxm.equals(""))
+				and zf.zfrxm like '%'||#[zfrxm]||'%'
+			#end
+			#if($zfsj_s && !$zfsj_s.equals(""))
+				and zf.zfsj >= to_date(#[zfsj_s],'yyyy-mm-dd')
+			#end
+			#if($zfsj_e && !$zfsj_e.equals(""))
+				and zf.zfsj <= to_date(#[zfsj_e],'yyyy-mm-dd')
+			#end
+			#if($zflx && !$zflx.equals(""))
+				and zf.zflx = #[zflx]
+			#end
+			#if($jwsqdm && !$jwsqdm.equals(""))
+				and  zf.djdwdm = #[jwsqdm]
+			#elseif($pcsdm && !$pcsdm.equals(""))
+				and zf.djdwdm like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				and zf.djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				and zf.djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			#end
+		]]>
+	</property>
+</properties>

@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="querySqgbxxPageResultInfoByQueryBean">
+		<![CDATA[
+				select 
+					gbbh,
+			       sssqbh,
+			       gbxm,
+			       gbxb,
+			       gbsfzh,
+			       to_char(gbcsrq,'yyyy-mm-dd') as gbcsrq,
+			       gblxdh,
+			       gbzzmm,
+			       gbzw,
+			       gbhjdqh,
+			       gbxzdxz,
+			       to_char(gbdrsj,'yyyy-mm-dd') as gbdrsj,
+			       to_char(gbdcsj,'yyyy-mm-dd') as gbdcsj,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       sssqmc,
+			       zxbs,
+			       to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+			       zxyy,
+			       bz,
+			       sfdl,
+			       whcd,
+			       lx,
+			       (select JDXZFZRDH from T_AF_SQJBXX where SQBH=t.sssqbh and rownum=1) as sqlxdh
+				from t_af_sqgbxx t
+				where 1=1
+			   	#if($sqdm && !$sqdm.equals(""))
+			   		and sssqbh = #[sqdm]
+			   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+		    		and djdwdm = #[jwsqdm]
+	    		#elseif ($pcsdm && !$pcsdm.equals(""))
+				 	and djdwdm like substr(#[pcsdm],1,8)||'%'
+				#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				 	and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				 	and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			   	#end
+				#if($gbxm && !$gbxm.equals(""))
+				 	and gbxm like '%'||#[gbxm]||'%'
+				#end
+				#if($gbsfzh && !$gbsfzh.equals(""))
+				 	and gbsfzh=#[gbsfzh]
+				#end
+				#if($lx && !$lx.equals(""))
+				 	and lx=#[lx]
+				#else
+					and lx = '1' 	
+				#end
+				 order by djsj desc
+		]]>
+	</property>
+	<property name="querySqddbxxPageResultInfoByQueryBean">
+		<![CDATA[
+				select id,
+				       ddbxm,
+				       ddbsfzh,
+				       ddblxdh,
+				       zzmm,
+				       hjdqh,
+				       xzzxz,
+				       to_date(drsj, 'yyyy-mm-dd') drsj,
+				       sfrddb,
+				       sfzxwy,
+				       sfdc,
+				       to_date(dcrq, 'yyyy-mm-dd') dcrq,
+				       djrxm,
+				       djrjh,
+				       djrsfzh,
+				       djdwdm,
+				       djdwmc,
+				       ssjwqdm,
+				       ssjwqmc,
+				       sqdm,
+				       sqmc,
+				       zxbs,
+				       zxsj,
+				       ip,
+				       xgrxm,
+				       xgrjh,
+				       xgsj,
+				       djsj,
+				       to_char(csrq,'yyyy-mm-dd') csrq,
+				       xb
+				  from t_zfdx_ddb t
+				where 1=1
+				and zxbs ='0'
+			   	#if($sqdm && !$sqdm.equals(""))
+			   		and sqdm = #[sqdm]
+			   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+		    		and djdwdm = #[jwsqdm]
+	    		#elseif ($pcsdm && !$pcsdm.equals(""))
+				 	and djdwdm like substr(#[pcsdm],1,8)||'%'
+				#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				 	and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				 	and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			   	#end
+				#if($ddbxm && !$ddbxm.equals(""))
+				 	and ddbxm like '%'||#[ddbxm]||'%'
+				#end
+				#if($ddbsfzh && !$ddbsfzh.equals(""))
+				 	and ddbsfzh=#[ddbsfzh]
+				#end
+				 order by djsj desc
+		]]>
+	</property>
+	<property name="querySqgbxxBeanByGbbh">
+		<![CDATA[
+			select gbbh,
+		       sssqbh,
+		       gbxm,
+		       gbxb,
+		       gbsfzh,
+		       to_char(gbcsrq,'yyyy-mm-dd') as gbcsrq,
+		       gblxdh,
+		       gbzzmm,
+		       gbzw,
+		       gbhjdqh,
+		       gbxzdxz,
+		       to_char(gbdrsj,'yyyy-mm-dd') as gbdrsj,
+		       to_char(gbdcsj,'yyyy-mm-dd') as gbdcsj,
+		       djrxm,
+		       djrjh,
+		       djdwdm,
+		       djdwmc,
+		       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+		       sssqmc,
+		       zxbs,
+		       to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+		       zxyy,
+		       bz,
+		       sfdl,whcd
+		  from t_af_sqgbxx
+		  where gbbh=?
+		  order by djsj desc
+		]]>
+	</property>
+	<property name="querySqddbxxBeanById">
+		<![CDATA[
+			select id,
+			       ddbxm,
+			       ddbsfzh,
+			       ddblxdh,
+			       zzmm,
+			       hjdqh,
+			       xzzxz,
+			       to_date(drsj, 'yyyy-mm-dd') drsj,
+			       sfrddb,
+			       sfzxwy,
+			       sfdc,
+			       to_date(dcrq, 'yyyy-mm-dd') dcrq,
+			       djrxm,
+			       djrjh,
+			       djrsfzh,
+			       djdwdm,
+			       djdwmc,
+			       ssjwqdm,
+			       ssjwqmc,
+			       sqdm,
+			       sqmc,
+			       zxbs,
+			       zxsj,
+			       ip,
+			       xgrxm,
+			       xgrjh,
+			       xgsj,
+			       djsj,
+			       to_char(csrq,'yyyy-mm-dd') csrq,
+			       xb
+			  from t_zfdx_ddb t
+		  where id=?
+		]]>
+	</property>
+	<property name="insertSqgbxxBean">
+		<![CDATA[
+			insert into t_af_sqgbxx
+			  (gbbh,
+			   sssqbh,
+			   gbxm,
+			   gbxb,
+			   gbsfzh,
+			   gbcsrq,
+			   gblxdh,
+			   gbzzmm,
+			   gbzw,
+			   gbhjdqh,
+			   gbxzdxz,
+			   gbdrsj,
+			   djrxm,
+			   djrjh,
+			   djdwdm,
+			   djdwmc,
+			   djsj,
+			   sssqmc,
+			   bz,
+			   sfdl,
+			   djrsfzh,lx,whcd)
+			values
+			  (#[gbbh],
+			   #[sssqbh],
+			   #[gbxm],
+			   #[gbxb],
+			   #[gbsfzh],
+			   to_date(#[gbcsrq],'yyyy-mm-dd'),
+			   #[gblxdh],
+			   #[gbzzmm],
+			   #[gbzw],
+			   #[gbhjdqh],
+			   #[gbxzdxz],
+			   to_date(#[gbdrsj],'yyyy-mm-dd'),
+			   #[djrxm],
+			   #[djrjh],
+			   #[djdwdm],
+			   #[djdwmc],
+			   sysdate,
+			   #[sssqmc],
+			   #[bz],
+			   #[sfdl],
+			   #[djrsfzh],#[lx],#[whcd])
+		]]>
+	</property>
+	
+	<property name="updateSqgbxxBean">
+		<![CDATA[
+			update t_af_sqgbxx
+			   set 
+			       sssqbh = #[sssqbh],
+			       gbxm = #[gbxm],
+			       gbxb = #[gbxb],
+			       gbsfzh = #[gbsfzh],
+			       gbcsrq = to_date(#[gbcsrq],'yyyy-mm-dd'),
+			       gblxdh = #[gblxdh],
+			       gbzzmm = #[gbzzmm],
+			       gbzw = #[gbzw],
+			       gbhjdqh = #[gbhjdqh],
+			       gbxzdxz = #[gbxzdxz],
+			       gbdrsj = to_date(#[gbdrsj],'yyyy-mm-dd'),
+			       gbdcsj = to_date(#[gbdcsj],'yyyy-mm-dd'),
+			       sssqmc = #[sssqmc],
+			       zxbs = #[zxbs],
+			       zxsj = to_date(#[zxsj],'yyyy-mm-dd hh24:mi:ss'),
+			       zxyy = #[zxyy],
+			       bz = #[bz],
+			       djrxm = #[djrxm],
+			       djrjh =#[djrjh],
+			       djdwdm = #[djdwdm],
+			       djdwmc = #[djdwmc],
+			       sfdl = #[sfdl],
+			       whcd=#[whcd]
+			 where gbbh = #[gbbh]
+			
+		]]>
+	</property>
+	
+	<property name="deleteSqgbxxBeanByGbbh">
+		<![CDATA[
+			delete t_af_sqgbxx
+ 			where gbbh = ?
+		]]>
+	</property>
+	
+	<property name="querySqgbxxBeanBySfzh">
+		<![CDATA[
+			select gbbh,
+		       sssqbh,
+		       gbxm,
+		       gbxb,
+		       gbsfzh,
+		       to_char(gbcsrq,'yyyy-mm-dd') as gbcsrq,
+		       gblxdh,
+		       gbzzmm,
+		       gbzw,
+		       gbhjdqh,
+		       gbxzdxz,
+		       to_char(gbdrsj,'yyyy-mm-dd') as gbdrsj,
+		       to_char(gbdcsj,'yyyy-mm-dd') as gbdcsj,
+		       djrxm,
+		       djrjh,
+		       djdwdm,
+		       djdwmc,
+		       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+		       sssqmc,
+		       zxbs,
+		       to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+		       zxyy,
+		       bz,
+		       sfdl,lx,whcd
+		  from t_af_sqgbxx
+		  where gbsfzh=?
+		]]>
+	</property>
+	
+	<property name="querySqgbCountBySssqbhAndSfzh">
+		<![CDATA[
+		  select count(1)
+		  from t_af_sqgbxx
+		  where sssqbh=? and gbsfzh=? and zxbs='1'
+		]]>
+	</property>
+	<property name="querySqddbCountBySssqbhAndSfzh">
+		<![CDATA[
+		  select count(1)
+		  from t_zfdx_ddb
+		  where sqdm=? and ddbsfzh=? and zxbs='0'
+		]]>
+	</property>
+	<property name="deleteSqddbxxBeanById">
+		<![CDATA[
+		  update t_zfdx_ddb
+		   set zxbs ='1' , zxsj = sysdate
+		  where id =  ?
+		]]>
+	</property>
+	<property name="insertSqddbxxBean">
+		<![CDATA[
+			  insert into t_zfdx_ddb
+					  (id,
+					   ddbxm,
+					   ddbsfzh,
+					   ddblxdh,
+					   zzmm,
+					   hjdqh,
+					   xzzxz,
+					   sfrddb,
+					   sfzxwy,
+					   djrxm,
+					   djrjh,
+					   djrsfzh,
+					   djdwdm,
+					   djdwmc,
+					   ssjwqdm,
+					   ssjwqmc,
+					   sqdm,
+					   sqmc,
+					   zxbs,
+					   ip,
+					   xgrxm,
+					   xgrjh,
+					   xgsj,
+					   djsj,
+					   csrq,
+					   xb)
+					values
+					  (#[id],
+					   #[ddbxm],
+					   #[ddbsfzh],
+					   #[ddblxdh],
+					   #[zzmm],
+					   #[hjdqh],
+					   #[xzzxz],
+					   #[sfrddb],
+					   #[sfzxwy],
+					   #[djrxm],
+					   #[djrjh],
+					   #[djrsfzh],
+					   #[djdwdm],
+					   #[djdwmc],
+					   #[ssjwqdm],
+					   #[ssjwqmc],
+					   #[sqdm],
+					   #[sqmc],
+					   '0',
+					   #[ip],
+					   #[xgrxm],
+					   #[xgrjh],
+					   sysdate,
+					   sysdate,
+					   to_date(#[csrq],'yyyy-mm-dd'),
+					   #[xb])
+		]]>
+	</property>
+	<property name="updateSqddbxxBean">
+		<![CDATA[
+		  update t_zfdx_ddb
+			   set ddblxdh = #[ddblxdh],
+			       zzmm = #[zzmm],
+			       hjdqh = #[hjdqh],
+			       xzzxz = #[xzzxz],
+			       drsj = #[drsj],
+			       sfrddb = #[sfrddb],
+			       sfzxwy = #[sfzxwy],
+			       sfdc = #[sfdc],
+			       #if($dcrq && !$dcrq.equals(""))
+				 	 dcrq= to_date(#[dcrq],'yyyy-mm-dd hh24:mi:ss'),
+				   #end
+			       djrxm = #[djrxm],
+			       djrjh = #[djrjh],
+			       djrsfzh = #[djrsfzh],
+			       djdwdm = #[djdwdm],
+			       djdwmc = #[djdwmc],
+			       ssjwqdm = #[ssjwqdm],
+			       ssjwqmc = #[ssjwqmc],
+			       sqdm = #[sqdm],
+			       sqmc = #[sqmc],
+			       #if($zxbs && !$zxbs.equals(""))
+				 	 zxbs= #[zxbs],
+					#end
+			       #if($zxsj && !$zxsj.equals(""))
+				 	 zxsj= to_date(#[zxsj],'yyyy-mm-dd hh24:mi:ss'),
+				   #end
+			       xgrxm = #[xgrxm],
+			       xgrjh = #[xgrjh],
+			       xgsj = sysdate
+			 where id =#[id]
+		]]>
+	</property>
+</properties>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	 <package name="rxgl" namespace="/rk/rxgl" extends="default">
+	  		<action name="*" class="com.chinacreator.rxgl.action.RxglAction" method="{1}">
+		  		<result name="toRxgl">/jsp/rxgl/pages/rxgl.jsp</result>
+		  		<result name="toRyzpglPageInfo">/jsp/rxgl/pages/ryzpxginfo.jsp</result>
+		  	</action>
+	  </package>
+</struts>

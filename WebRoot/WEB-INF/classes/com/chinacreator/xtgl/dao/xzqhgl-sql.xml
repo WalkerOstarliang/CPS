@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<property name="queryHnxzqhChildByParentDm">
+		<![CDATA[
+			 select t.dm, t.mc, t.parent_dm, t.leve, t.jc, t.isvalid, t.len,t.sspcsdm,t.ssjwsdm as gxsqjwsdm
+      		 from t_common_hnxzqh t
+			 where parent_dm=? and isvalid='1' 
+			 order by dm
+		]]>
+	</property>
+	
+	<property name="queryHnXzqhBeanByParentDm">
+		<![CDATA[
+			 select t.dm, t.mc, t.parent_dm, t.leve, t.jc, t.isvalid, t.len ,t.sspcsdm,t.ssjwsdm as gxsqjwsdm
+      		from t_common_hnxzqh t
+			where parent_dm=? and isvalid='1' 
+			order by dm
+		]]>
+	</property>
+	
+	<property name="queryHnXzqhBeanByDm">
+		<![CDATA[
+			 select t.dm, t.mc, t.parent_dm, t.leve, t.jc, t.isvalid, t.len,t.sspcsdm,t.ssjwsdm as gxsqjwsdm
+      		from t_common_hnxzqh t 
+			where dm = ?
+		]]>
+	</property>
+	
+	<property name="insertHnxzqhBean">
+		<![CDATA[
+			insert into t_common_hnxzqh
+			  (dm, mc, parent_dm, leve, jc, isvalid, len,sspcsdm,ssjwsdm)
+			values
+			  (#[dm], #[mc], #[parent_dm], #[leve], #[jc], #[isvalid], #[len],#[sspcsdm],#[gxsqjwsdm])
+		]]>
+	</property>
+	
+	<property name="updateHnxzqhBean">
+		<![CDATA[
+			 update t_common_hnxzqh
+			    set 
+			        mc = #[mc],
+			        parent_dm = #[parent_dm],
+			        leve = #[leve],
+			        jc = #[jc],
+			        sspcsdm = #[sspcsdm],
+			        ssjwsdm = #[gxsqjwsdm],
+			        isvalid = #[isvalid]
+			  where dm=#[dm]
+		]]>
+	</property>
+	
+	<property name="zxHnxzqhBean">
+		<![CDATA[
+			update t_common_hnxzqh
+			    set 
+			        isvalid = '0'
+			  where dm=?
+		]]>
+	</property>
+	
+	<property name="queryMaxXzjddmByParentDM">
+		<![CDATA[
+			 select to_number(nvl(maxdm, ? || '00')) + 1 || '000'
+			 from (
+			 	select max(to_number(substr(dm,1,9))) as maxdm from t_common_hnxzqh where  parent_dm=? and dm like ?||'%'
+			 )
+ 
+		]]>
+	</property>
+	
+	<property name="queryMaxXzjddm">
+		<![CDATA[
+			 select nvl(max(to_number(substr(dm,1,9))),substr(?,1,6)||'000') +1 ||'000'
+         	from t_common_hnxzqh
+         	where parent_dm=?
+		]]>
+	</property>
+	
+	<property name="queryMaxSqdmByParentDm">
+		<![CDATA[
+			 select nvl(maxdm,?) + 1
+			 from (
+				 select max(to_number(dm)) as maxdm from t_common_hnxzqh where  parent_dm=?
+			 )
+		]]>
+	</property>
+	
+	<property name="updateChildxzqhSspcsdm">
+		<![CDATA[
+			update t_common_hnxzqh
+			set sspcsdm=?
+			where parent_dm=?
+		]]>
+	</property>
+	
+	<property name="updateStxxBeanOfSqdm">
+		<![CDATA[
+			update t_common_stxx
+			set sqdm=?,GXSJ=sysdate
+			where id=?
+		]]>
+	</property>
+	
+	<property name="queryStxxBeanStid">
+		<![CDATA[
+			select s.*,(select ssjwsdm from t_common_hnxzqh where dm=s.sqdm) as ssjwqdm
+  			from t_common_stxx s
+			where id=?
+		]]>
+	</property>
+	
+	<property name="insertStbgBean">
+		<![CDATA[
+			 insert into t_common_stxx_bgjl
+			  (id,
+			   qystid,
+			   fromsqdm,
+			   fromjwqdm,
+			   tosqdm,
+			   tojwqdm,
+			   czdwdm,
+			   czdwmc,
+			   czsj,
+			   czrsfzh,
+			   czrjh,
+			   czrxm,
+			   isexec)
+			values
+			  (#[id],
+			   #[qystid],
+			   #[fromsqdm],
+			   #[fromjwqdm],
+			   #[tosqdm],
+			   #[tojwqdm],
+			   #[czdwdm],
+			   #[czdwmc],
+			   sysdate,
+			   #[czrsfzh],
+			   #[czrjh],
+			   #[czrxm],
+			   #[isexec])
+		]]>
+	</property>
+	
+	<property name="updateStbgExecuteStatus">
+		<![CDATA[
+			update t_common_stxx_bgjl
+			set isexec=?
+			where id=?
+		]]>
+	</property>
+	
+	<property name="zxHnxzqhByDm">
+		<![CDATA[
+			update t_common_hnxzqh
+			set isvalid='0'
+			where dm=#[dm] and parent_dm=#[dm]
+		]]>
+	</property>
+	
+</properties>

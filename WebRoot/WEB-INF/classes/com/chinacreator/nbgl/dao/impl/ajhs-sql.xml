@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="getAjlbDic">
+		<![CDATA[
+			SELECT '' AS id,
+			   'AJLB' AS zdlb,
+			   '案件类别' AS zdmc,
+			   zidianbianhao AS dm,
+			   zidianmiaoshu AS mc,
+			   '' AS parent_dm,
+			   '' AS jc,
+			   '1' AS isyx,
+			   '' AS sn
+		  FROM T_ZDDMXXB
+		 WHERE leibiebianhao = '0056'
+		 and (zidianbianhao = '050299' or zidianbianhao = '050201' or zidianbianhao = '050280' 
+		 		or zidianbianhao = '050202' or zidianbianhao = '050100' or zidianbianhao = '050400'
+		 		or zidianbianhao = '050301' )
+		]]>
+	</property>
+	
+	<!-- 查询案件信息列表 -->
+	<property name="queryAjxxList">
+		<![CDATA[
+			SELECT aj.anjianbianhao ajbh,
+				   aj.anjianmingcheng ajmc,
+				   aj.lianriqi larq,
+				   (select zidianmiaoshu from T_ZDDMXXB zd where zd.leibiebianhao = '0056' and zd.zidianbianhao =  aj.anjianleibie) as  ajlx,
+				   aj.liandanwei ladw,
+				   aj.jianyaoanqing jyaq,
+			       aj.sfhs ,
+			       aj.sfzddwfa,
+			       aj.zddwdm,
+			       (select dwmc from t_za_jg_jbxx where jgbh = aj.zddwdm) as zddwmc,
+			       aj.rksj,
+			       aj.gjc,
+			       aj.faanshequ as fasqdm,
+			       (select jc from t_common_hnxzqh where dm = aj.faanshequ) as fasqmc
+			  FROM T_AJJBXXB aj where aj.liandanwei is not null 
+			  	and aj.lianriqi is not null  and actflag <> '4'
+			  	and (aj.anjianleibie = '050299' or aj.anjianleibie = '050201' or aj.anjianleibie = '050280' 
+		 		or aj.anjianleibie = '050202' or aj.anjianleibie = '050100' or aj.anjianleibie = '050400'
+		 		or aj.anjianleibie = '050301' )
+			  	and aj.gjc is not null
+			  	#if($ajbh && !$ajbh.equals(""))
+					and anjianbianhao = #[ajbh]
+				#end
+				#if($gjc && !$gjc.equals(""))
+					and gjc like '%'||#[gjc]||'%'
+				#end
+				#if($larq_s && !$larq_s.equals(""))
+					and to_date(aj.lianriqi,'yyyymmdd') >= to_date(#[larq_s],'yyyymmdd')
+				#end
+				#if($larq_e && !$larq_e.equals(""))
+					and to_date(aj.lianriqi,'yyyymmdd') <= to_date(#[larq_e],'yyyymmdd')
+				#end
+				#if($ladw && !$ladw.equals(""))
+					and aj.liandanwei = #[ladw]
+				#end
+				
+				#if($sfhs && !$sfhs.equals(""))
+					and sfhs = #[sfhs]
+				#else
+					and sfhs in ('0','1')
+				#end
+				
+				#if($ajlx && !$ajlx.equals(""))
+					and aj.anjianleibie = #[ajlx]
+				#end
+				#if($sfzddwfa && !$sfzddwfa.equals(""))
+					#if($sfzddwfa.equals("1"))
+						and sfzddwfa = '1'
+					#elseif($sfzddwfa.equals("0"))
+						and (sfzddwfa = '0' or sfzddwfa is null)
+					#end
+				#end
+				order by to_date(aj.lianriqi,'yyyymmdd') desc ,aj.anjianbianhao
+		]]>
+	</property>
+	
+	<!-- 根据案件编号查询案件信息 -->
+	<property name="queryAjxxInfoByAjbh">
+		<![CDATA[
+			SELECT aj.anjianbianhao ajbh,
+				   aj.anjianmingcheng ajmc,
+				   aj.lianriqi larq,
+				   (select zidianmiaoshu from T_ZDDMXXB zd where zd.leibiebianhao = '0056' and zd.zidianbianhao =  aj.anjianleibie) as  ajlx,
+				   (select orgname from v_common_organization o where o.orgcode = aj.liandanwei) as ladw,
+				   aj.jianyaoanqing jyaq,
+			       aj.sfhs ,
+			       aj.sfzddwfa,
+			       aj.zddwdm,
+			       (select dwmc from t_za_jg_jbxx where jgbh = aj.zddwdm) as zddwmc,
+			       aj.rksj,
+			       aj.gjc,
+				   row_number() over(PARTITION BY anjianbianhao ORDER BY rksj DESC) AS sn
+			  FROM T_AJJBXXB aj where aj.sfhs != '2' and aj.anjianbianhao = ?
+		]]>
+	</property>
+	
+	<!-- 更新操作信息 -->
+	<property name="updateCzxx">
+		<![CDATA[
+			UPDATE T_AJJBXXB a
+		    SET czrxm = #[czrxm],
+		   		czrjh = #[czrjh],
+		   		czrsfzh = #[czrsfzh],
+		   		czsj = sysdate,
+		   		czdwdm = #[czdwdm],
+		   		czdwmc = #[czdwmc]
+			 WHERE  a.anjianbianhao =  #[ajbh]
+		]]>
+	</property>
+	
+	<!-- 更新案件信息是否核实 -->
+	<property name="updateAJxxSfhs">
+		<![CDATA[
+			UPDATE T_AJJBXXB a
+		    SET sfhs = ?
+			 WHERE a.anjianbianhao = ?
+		]]>
+	</property>
+	
+	
+	<!-- 更新案件信息是否核实 -->
+	<property name="updateAjxxSfZddwFa">
+		<![CDATA[
+			UPDATE T_AJJBXXB a
+		    SET sfzddwfa = ?
+			 WHERE 
+			  AND a.anjianbianhao = ?
+		]]>
+	</property>
+	
+	
+	<!-- 更新案件信息重点单位代码-->
+	<property name="updateAjxxZddwdm">
+		<![CDATA[
+			UPDATE T_AJJBXXB a
+		    SET zddwdm = ?
+			 WHERE anjianbianhao = ?
+		]]>
+	</property>
+</properties>

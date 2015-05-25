@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 社区网络信息 -->
+<properties>
+	<property name="getOrgTypeStatistics">
+		<![CDATA[
+			select title, data
+  			from (select mc title, count(jgbh) over(partition by dwsx) data
+         		from t_za_jg_jbxx dw, t_common_dictionary zd
+         		where dw.dwsx(+) = zd.dm
+          		and zd.zdlb = 'ZAGL_DWSX'
+           		and dw.sspcsdm(+) like substr(?, 1, ?) || '%') rs
+ 			group by title, data
+		]]>
+	</property>
+	
+	<property name="getOrgStatistics">
+		<![CDATA[
+			select 'javascript:orgStatistics('||org.code||')' link, org.org_name title, nvl(k.data, 0) data
+  			from (select code, org_name
+          		from td_sm_organization
+         		where code like '43%'
+          		and code <> rpad(substr(code, 0, ?), 12, '0')
+           		and parent_id = rpad(substr(?, 0, ?), 12, '0')
+           		and code = rpad(substr(code, 0, ?), 12, '0')
+         		group by code, org_name) org
+  			left join (select rpad(substr(dw.sspcsdm, 0, ?), 12, '0') code,
+                    count(dw.jgbh) as data
+               		from t_za_jg_jbxx dw
+              		where exists
+              		(select code
+                       from td_sm_organization
+                      where code = dw.sspcsdm
+                      start with code = rpad(substr(?, 0, ?), 12, '0')
+                     connect by prior org_id = parent_id)
+              group by rpad(substr(dw.sspcsdm, 0, ?), 12, '0')) k on org.code = k.code
+		]]>
+	</property>
+</properties>

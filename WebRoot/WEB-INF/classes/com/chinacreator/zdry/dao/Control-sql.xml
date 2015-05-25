@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryZdryJbxx">
+		<![CDATA[
+			SELECT RYBH,
+               RYLX,
+               SFZH,
+               XM,
+               BM,
+               XB,
+               MZ,
+               ZDRYLBBJ,
+               ZDRYXL,
+               WHCD,
+               CSRQ,
+               ZYLB,
+               FWCS,
+               ZW,
+               QTZJLX,
+               QTZJHM,
+               JG,
+               GJ,
+               HJDXZQH,
+               HJDXZ,
+               XZDQH,
+               XZDXZ,
+               ZJXY,
+               ZZMH,
+               HYZK,
+               JKZK,
+               BYZK,
+               XX,
+               LXFS,
+               SG,
+               TBTZ,
+               LX,
+               TX,
+               YWSB,
+               SBWZ,
+               KY,
+               XH,
+               ZC,
+               GLLB,
+               GLFS,
+               LGLY,
+               XXCJXY,
+               AJLX,
+               TC,
+               ZRDWDM,
+               ZRDWMC,
+               ZRRXM,
+               ZRRLXDH,
+               DJSJ,
+               DJRXM,
+               DJDWDM,
+               DJDWMC,
+               SSPCSDM,
+               SSPCSMC,
+               SQJWSDM,
+               SQJWSMC,
+               TO_CHAR(GXSJ,'YYYY-MM-DD HH24:MI:SS') AS GXSJ,
+               RKSJ,
+               ISGK,
+               TO_CHAR(KCDQSJ,'YYYY-MM-DD') AS KCDQSJ
+          FROM T_ZDRY_JBXX
+          WHERE 1=1 
+          --精确到派出所
+		  #if($pcsdm and !$pcsdm.equals(""))
+		  	and substr(SSPCSDM,1,8)=substr(#[pcsdm],1,8)
+		  #else
+		  	  --精确到县区
+			  #if($countrydm and !$countrydm.equals(""))
+			  	and substr(SSPCSDM,1,6)=#[countrydm]
+			  #else
+			     --精确到市州
+			  	 #if($citydm and !$citydm.equals(""))
+			  		and substr(SSPCSDM,1,4)=substr(#[citydm],1,4)
+			  	 #end
+			  #end
+		  #end
+          #if($sfzh and !$sfzh.equals(""))
+          	AND SFZH LIKE '%'||#[sfzh]||'%'
+          #end
+          #if($xm and !$xm.equals(""))
+          	AND XM LIKE '%'||#[xm]||'%'
+          #end
+          #if($rylx and !$rylx.equals(""))
+          	AND RYLX = #[rylx]
+          #end
+          #if($xb and !$xb.equals(""))
+          	AND XB = #[xb]
+          #end
+          #if($isgk and !$isgk.equals(""))
+          	AND ISGK = #[isgk]
+          #end
+          #if($startDjsj and !$startDjsj.equals(""))
+          	AND DJSJ >= TO_DATE(#[startDjsj],'YYYY-MM-DD')
+          #end
+          #if($endDjsj and !$endDjsj.equals(""))
+          	AND DJSJ <= TO_DATE(#[endDjsj],'YYYY-MM-DD')
+          #end
+		]]>
+	</property>
+</properties>

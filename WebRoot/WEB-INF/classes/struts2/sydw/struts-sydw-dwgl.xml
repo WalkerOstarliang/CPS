@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="dwgl" namespace="/sydw/dwgl" extends="default"> 
+	  		<action name="*" class="com.chinacreator.sydw.action.SydwManageAction" method="{1}">
+	  			<result name="submitDwBeanForm">/jsp/sydw/pages/sydwinfo.jsp</result>
+	  			<result name="toSydwdjDwQueryPage">/jsp/sydw/pages/sydwdjlist.jsp</result>
+	  			<result name="toDwdjFwSelectPage">/jsp/sydw/pages/sydwdjfwselect.jsp</result>
+	  			<result name="toDwInfoPage">/jsp/sydw/pages/sydwinfo.jsp</result>
+	  			<result name="thlgxxinfo">/jsp/sydw/pages/thlgxxinfo.jsp</result>
+	  			<result name="tzhy">/jsp/sydw/pages/tzhy.jsp</result>
+	  			<result name="thksy">/jsp/sydw/pages/thksy.jsp</result>
+	  			<result name="ggcsinfo">/jsp/sydw/pages/ggcsinfo.jsp</result>
+	  			<result name="nbdwinfo">/jsp/sydw/pages/nbdwinfo.jsp</result>
+	  			<result name="wxwpdwinfo">/jsp/sydw/pages/wxwpdwinfo.jsp</result>
+	  			<result name="swfwcsinfo">/jsp/sydw/pages/swfwcsinfo.jsp</result>
+	  			<result name="swdwinfo">/jsp/sydw/pages/swdwinfo.jsp</result>
+	  			<result name="cyryinfo">/jsp/sydw/pages/cyryinfo.jsp</result>
+	  			<result name="aqjcinfo">/jsp/sydw/pages/aqjcinfo.jsp</result>
+	  			<result name="dwjcinfo">/jsp/sydw/pages/dwjcinfo.jsp</result>
+	  			<result name="zdyhbwinfo">/jsp/sydw/pages/zdyhbwinfoinfo.jsp</result>
+	  			<result name="aqsbinfo">/jsp/sydw/pages/aqsbinfo.jsp</result>
+	  			<result name="dwzpinfo">/jsp/sydw/pages/dwzpinfo.jsp</result>
+	  			<result name="afxtinfo">/jsp/sydw/pages/afxtinfo.jsp</result>
+	  			<result name="abryinfo">/jsp/sydw/pages/abryinfo.jsp</result>
+	  			<result name="znsginfo">/jsp/sydw/pages/znsginfo.jsp</result>
+	  			<result name="bwjginfo">/jsp/sydw/pages/bwjginfo.jsp</result>
+	  			<result name="tfsjyainfo">/jsp/sydw/pages/tfsjyainfo.jsp</result>
+	  			<result name="badysinfo">/jsp/sydw/pages/badysinfo.jsp</result>
+	  			
+	  			
+	  			<!-- 单位管理部门核查 -->
+	  			<result name="toDwglbmhcListPage">/jsp/sydw/pages/dwhs/dwhcList.jsp</result>
+	  			<result name="toDwGlbmhcPage">/jsp/sydw/pages/dwhs/dwhc.jsp</result>
+	  		</action>
+	  </package>
+</struts>

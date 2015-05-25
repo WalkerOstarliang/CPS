@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<!-- 获取辖区内各派出所的地址信息 -->
+	<property name="getDzNumOfPcs">
+		<![CDATA[
+			SELECT count(*) cou, substr(DZ.DJRDWDM,1,8) code  FROM T_COMMON_DZXX DZ WHERE substr(DZ.DJRDWDM,1,6) ='' group by substr(DZ.DJRDWDM,1,8) order by substr(DZ.DJRDWDM,1,8)
+		]]>
+	</property>	
+	
+
+	<!-- 获取辖区人口信息 -->
+	<property name="querySyrkInfoOfDept">
+		<![CDATA[
+			select a.orgcode as deptcode, a.orgname as deptname, a.czrks as czrk, a.ldrks as ldrk,
+		       a.jwrks as jwrk, a.jzrks as jzrk, a.wlhrks as wlhrk, (a.czrks + a.ldrks + a.jzrks + a.wlhrks) as rkSum, remark7 from 
+		        (select orgcode, orgname, parent_code, czrks, ldrks, jwrks, jzrks, wlhrks, b.remark7
+		            from t_common_xqtjqk t, cs_jz_ptgl.td_sm_organization b
+		           where leve = #[childLevel]
+		             and parent_code = #[deptCode] and t.orgcode = b.code(+) and nvl(remark6,'1') <>'2') a
+		       order by a.remark7
+		]]>
+	</property>		
+
+	<!-- 获取辖区建筑信息 -->
+	<property name="querySyjzInfoOfDept">
+		<![CDATA[
+			select a.orgcode as deptcode, a.orgname as deptname, 
+				a.sts as stjz from 
+			  (select orgcode, orgname, parent_code, sts, b.remark7
+			      from t_common_xqtjqk t, cs_jz_ptgl.td_sm_organization b
+			     where leve = #[childLevel]
+			       and parent_code = #[deptCode] and t.orgcode = b.code(+) and nvl(remark6,'1') <>'2') a
+			order by a.remark7
+		]]>
+	</property>
+	<!-- queryCyryInfoOfDept 获取辖区从业人员信息 -->
+	<property name="queryCyryInfoOfDept">
+		<![CDATA[
+			select a.orgcode as deptCode, a.orgname as deptName, 
+				a.cyrys as cyrys from 
+			  (select t.orgcode, b.orgname, t.parent_code, t.cyrys
+			      from t_common_xqtjqk t, v_common_organization b
+			     where 1=1
+			       #if($childLevel==6)
+				    and t.leve = '5'
+				    and t.orgcode = #[deptCode] 
+				   #end 
+				   #if($childLevel!=6)
+				    and t.leve = #[childLevel]
+				    and t.parent_code = #[deptCode] 
+				   #end 
+				    
+			       and t.orgcode = b.orgcode(+) and nvl(isyx,'1') ='1') a
+		]]>
+	</property>
+	<!-- 获取辖区房屋信息 -->
+	<property name="querySyfwInfoOfDept">
+		<![CDATA[
+			select a.orgcode as deptcode, a.orgname as deptname, 
+				a.fws as fw, a.czfws as czfw from 
+			  (select orgcode, orgname, parent_code, fws,czfws , b.remark7
+			      from t_common_xqtjqk t, cs_jz_ptgl.td_sm_organization b
+			     where leve = #[childLevel]
+			       and parent_code = #[deptCode] and t.orgcode = b.code(+) and nvl(remark6,'1') <>'2') a
+			order by a.remark7
+		]]>
+	</property>
+	
+	<!-- 获取辖区单位信息 -->
+	<property name="querySydwInfoOfDept">
+		<![CDATA[			
+            select a.orgcode as deptcode, a.orgname as deptname, 
+				a.tzhys as tzhy, a.ggcss as ggcs, a.wxpdws as wxpdw, a.nbdws as qsydw, a.swcss as swfwdw, a.swdws as swdw, 
+        		ksydw as ksy, jfdw as jfdw, lgcs as lgy, qtdw as qtdw,
+				(a.ksydw + a.jfdw + a.qtdw + a.tzhys + a.ggcss + a.nbdws + a.wxpdws + a.swcss + a.swdws + a.lgcs) as dwSum from 
+			  (select orgcode, orgname, parent_code, ksydw , jfdw , qtdw , tzhys , ggcss , nbdws , wxpdws , swcss , swdws , lgcs, b.remark7
+			      from t_common_xqtjqk t, cs_jz_ptgl.td_sm_organization b
+			     where leve = #[childLevel]
+			       and parent_code = #[deptCode] and t.orgcode = b.code(+) and nvl(remark6,'1') <>'2') a
+			order by a.remark7					 
+		]]>
+	</property>
+		
+	<!-- 获取辖区重点人员信息 -->
+	<property name="queryZdryInfoOfDept">
+		<![CDATA[
+	      select a.orgcode as deptcode, a.orgname as deptname, 
+	        qlskrys as skry, qlswrys as swry, qlztrys as ztry, qlsdrys as sdry,
+	        qlxsfzrys as qkry, qlzszhjsbrys as jsbr, qlsfrys as sfry, qlgzdxrys as gzdx,
+	       (qlsdrys + qlswrys + qlztrys + qlxsfzrys + qlzszhjsbrys + qlsfrys + qlskrys + qlgzdxrys) as rySum from 
+	        (select orgcode, orgname, parent_code, qlskrys, qlswrys, qlztrys, qlsdrys, qlxsfzrys, qlzszhjsbrys, qlsfrys, qlgzdxrys, b.remark7
+	            from t_common_xqtjqk t, cs_jz_ptgl.td_sm_organization b
+	           where leve = #[childLevel]
+	             and parent_code = #[deptCode] and t.orgcode = b.code(+) and nvl(remark6,'1') <>'2') a
+	      order by a.remark7
+		]]>
+	</property>
+        
+    <!-- 获取辖区本级重点人员信息 -->
+	<property name="querySelfZdryOfDept">
+		<![CDATA[
+		   select a.orgcode as deptcode, a.orgname as deptname,
+		       qlskrys as skry,qlswrys as swry,qlztrys as ztry,qlsdrys as sdry,
+		       qlxsfzrys as qkry,qlzszhjsbrys as jsbr,qlsfrys as sfry,qlgzdxrys as gzdx,
+		       (qlsdrys + qlswrys + qlztrys + qlxsfzrys + qlzszhjsbrys + qlsfrys + qlskrys + qlgzdxrys) as rySum
+		  	from (select orgcode,orgname,parent_code,qlskrys,qlswrys,qlztrys,qlsdrys,qlxsfzrys,qlzszhjsbrys,qlsfrys,qlgzdxrys
+		          from t_common_xqtjqk t 
+		          where orgcode = ?) a
+		]]>
+	</property>
+                
+	<!-- 获取辖区治安信息 -->
+	<property name="queryXqzaInfo">
+		<![CDATA[
+			select 
+				qjsl,qdsl,dqsl,zpsl,dfxqcsl,
+				(zs - qjsl - qdsl - dqsl - zpsl) qtsl,zs 
+			from t_common_xqtjqk where orgcode = #[deptCode]
+		]]>
+	</property>		
+		
+	<!-- 获取辖区发案信息 -->
+	<!-- 
+		select dwbm as deptcode, dwmc as deptname, qjajs as qja, qdajs as qda, dqajs as dqa, zpajs as zpa,  
+			(ajzs - qjajs - qdajs - dqajs - zpajs) as qtaj, ajzs as ajSum, orgsn 
+  		   from (select parent_id dwbm,
+               		(select remark5 
+                  		from cs_jz_ptgl.td_sm_organization
+                 		where org_id = dw.parent_id) dwmc,
+                 	(select remark7
+                      from cs_jz_ptgl.td_sm_organization
+                     where org_id = dw.parent_id) orgsn,
+               		nvl(sum(qjajs), 0) qjajs,
+               		nvl(sum(qdajs), 0) qdajs,
+               		nvl(sum(dqajs), 0) dqajs,
+               		nvl(sum(zpajs), 0) zpajs,
+               		nvl(sum(ajzs), 0) ajzs 
+          		from (select connect_by_root org_id parent_id,
+                       code dwbm, org_name dwmc 
+                  from cs_jz_ptgl.td_sm_organization a
+                 start with parent_id = #[queryCode]
+                connect by prior a.org_id = parent_id) dw,
+               (select banandanweiid,
+                       case when aj.anjianleibie like '0501%' then 1 else 0 end qjajs,
+                       case when aj.anjianleibie = '050400' then 1 else 0 end qdajs,
+                       case when aj.anjianleibie like '0502%' then 1 else 0 end dqajs,
+                       case when aj.anjianleibie like '0503%' then 1 else 0 end zpajs,
+                       1 ajzs 
+                  from cs_jz_bb.t_wajclqkb aj
+                 where banandanweiid is not null and banandanweiid <> 'null'
+                   and aj.actflag < '4'
+                   and aj.farq >= #[startTime]
+		           and aj.farq <= #[endTime]
+                   and banandanweiid in
+                       (select code dwbm 
+                          	from cs_jz_ptgl.td_sm_organization a
+                         start with parent_id in (#[queryCode])
+                         connect by prior a.org_id = parent_id)
+                ) sl 
+                where dw.dwbm = sl.banandanweiid(+)
+         	group by parent_id)
+         order by orgsn
+	 -->
+	<property name="queryXqzaInfoOfDept">
+		<![CDATA[
+			select a.orgcode as deptcode, a.orgname as deptname, 
+				qjsl, qdsl, dqsl, zpsl, (zs - qjsl - qdsl - dqsl - zpsl) as qtsl,(zs+rsdqsl) as zs,rsdqsl 
+			  from (select orgcode, orgname, parent_code, qjsl,qdsl,dqsl,zpsl,zs,rsdqsl, b.remark7
+			      from t_common_xqtjqk t, cs_jz_ptgl.td_sm_organization b
+			     where leve = #[childLevel]
+			       and parent_code = #[deptCode] and t.orgcode = b.code(+) and nvl(remark6,'1') <>'2') a
+			order by a.remark7		
+		]]>
+	</property>		
+</properties>

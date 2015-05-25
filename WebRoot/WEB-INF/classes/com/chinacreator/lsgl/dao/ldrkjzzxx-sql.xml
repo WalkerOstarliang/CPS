@@ -1,0 +1,1202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+ 	<property name="insertJzzxxBean">
+ 		<![CDATA[
+ 			insert into t_lsgl_ldrk_jzzxx
+			  (jzzxxbh,
+			   fzrq,
+			   yxqx,
+			   djsj,
+			   djdw,
+			   djdwmc,
+			   djr,
+			   djrxm,
+			   xgsj,
+			   xgr,
+			   xgdw,
+			   xgrxm,
+			   xgdwmc,
+			   jzzrybh,
+			   jzzdyzt,
+			   jzzzxbs,
+			   zpbh,
+			   jzzzxsj,
+			   jzzzxyy,
+			   dyzt,
+			   djrsfzh,
+			   sfzh,
+			   xb,
+			   hjdqh,
+			   rkfwglid,
+			   zzbh,
+			   zzdwdm,
+			   zzdwmc,
+			   dyrjh ,
+			   dyrxm,
+			   dyip ,
+			   dysj ,
+			   dydwdm ,
+			   dydwmc,
+			   zzsj
+			   )
+			values
+			  (#[jzzxxbh],
+			   to_date(#[fzrq],'yyyy-mm-dd'),
+			   #[yxqx],
+			   sysdate,
+			   #[djdw],
+			   #[djdwmc],
+			   #[djr],
+			   #[djrxm],
+			   to_date(#[xgsj],'yyyy-mm-dd hh24:mi:ss'),
+			   #[xgr],
+			   #[xgdw],
+			   #[xgrxm],
+			   #[xgdwmc],
+			   #[jzzrybh],
+			   #[jzzdyzt],
+			   #[jzzzxbs],
+			   #[zpbh],
+			   null,
+			   #[jzzzxyy],
+			   #[dyzt],
+			   #[djrsfzh],
+			   #[sfzh],
+			   #[xb],
+			   #[hjdqh],
+			   #[rkfwglid],
+			   #[zzbh],
+			   #[zzdwdm],
+			   #[zzdwmc],
+			   #[dyrjh],
+			   #[dyrxm],
+			   #[dyip],
+			   sysdate,
+			   #[dydwdm],
+			   #[dydwmc],
+			   #if($zzsj && !$zzsj.equals(""))
+			   	 sysdate
+			   #else
+			   	 null
+			   #end
+			  
+			   )
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryJzzxxBeanByRybh">
+ 		<![CDATA[
+ 			select jzzxxbh,
+			       to_char(fzrq,'yyyy-mm-dd') fzrq,
+			       yxqx,
+			       djsj,
+			       djdw,
+			       djdwmc,
+			       djr,
+			       djrxm,
+			       xgsj,
+			       xgr,
+			       xgdw,
+			       xgrxm,
+			       xgdwmc,
+			       jzzrybh,
+			       jzzdyzt,
+			       jzzzxbs,
+			       zpbh,
+			        to_char(jzzzxsj,'yyyy-mm-dd') jzzzxsj,
+			       jzzzxyy,
+			       dyzt,sfzh,xb,hjdqh,rkfwglid,zzbh,zzdwdm,zzdwmc,to_char(zzsj,'yyyy-mm-dd hh24:mi:ss') as zzsj
+			  from t_lsgl_ldrk_jzzxx
+			  where jzzrybh = ?
+			  and jzzzxbs='0'
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryJzzxxBeanByZzbh">
+ 		<![CDATA[
+ 			select j.jzzxxbh,
+		       to_char(j.fzrq,'yyyy-mm-dd') fzrq,
+		       j.yxqx,
+		       j.djsj,
+		       j.djdw,
+		       j.djdwmc,
+		       j.djr,
+		       j.djrxm,
+		       j.xgsj,
+		       j.xgr,
+		       j.xgdw,
+		       j.xgrxm,
+		       j.xgdwmc,
+		       j.jzzrybh,
+		       j.jzzdyzt,
+		       j.jzzzxbs,
+		       to_char(j.jzzzxsj,'yyyy-mm-dd') jzzzxsj,
+		       j.jzzzxyy,
+		       j.dyzt,
+		       j.sfzh,
+		       j.xb,
+		       j.hjdqh,
+		       j.rkfwglid,
+		       j.zzbh,
+		       j.zzdwdm,
+		       j.zzdwmc,
+		       to_char(j.zzsj,'yyyy-mm-dd hh24:mi:ss') as zzsj,
+		       to_char(l.djsj,'yyyy-mm-dd hh24:mi:ss') as ldrkdjsj,
+		      f_get_dzmc_byrkfwglid(l.rkfwglid) xzzxz
+		  from t_lsgl_ldrk_jzzxx j inner join t_lsgl_rk_ldrkzzxx l on j.zzbh=l.zzbh
+		  where j.zzbh = ? and jzzzxbs='0' and rownum=1
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryJzzxxBeanByJzzbh">
+ 		<![CDATA[
+ 			select l.jzzxxbh,
+			       to_char(l.fzrq,'yyyy-mm-dd') fzrq,
+			       l.yxqx,
+			       l.djsj,
+			       l.djdw,
+			       l.djdwmc,
+			       l.djr,
+			       l.djrxm,
+			       l.xgsj,
+			       l.xgr,
+			       l.xgdw,
+			       l.xgrxm,
+			       l.xgdwmc,
+			       l.jzzrybh,
+			       l.jzzdyzt,
+			       l.jzzzxbs,
+			       to_char(l.jzzzxsj,'yyyy-mm-dd') jzzzxsj,
+			       l.jzzzxyy,
+			       l.dyzt,
+			       l.sfzh,
+			       l.zzbh,
+			       f_get_dzmc_byrkfwglid(j.rkfwglid) xzzxz
+			  from t_lsgl_ldrk_jzzxx l inner join t_lsgl_rk_ldrkzzxx j on j.zzbh=l.zzbh
+			  where jzzxxbh = #[jzzxxbh]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryJzzxxPageByRybh">
+ 		<![CDATA[
+ 			select 
+ 				   jbxx.xm,
+		           jbxx.sfzh,
+		           jbxx.xb,
+		           f_get_dzmc_byrkfwglid(ldrk.rkfwglid) xzzxz,
+		           '4' rylb,
+		           jbxx.mz,
+		           jbxx.hjdxz,
+		           jzzxx.jzzxxbh,
+		           to_char(jzzxx.fzrq,'yyyy-mm-dd') fzrq,
+		           jzzxx.yxqx,
+		           jzzxx.djsj,
+		           jzzxx.djdw,
+		           jzzxx.djdwmc,
+		           jzzxx.djr,
+		           jzzxx.djrxm,
+		           jzzxx.xgsj,
+		           jzzxx.xgr,
+		           jzzxx.xgdw,
+		           jzzxx.xgrxm,
+		           jzzxx.xgdwmc,
+		           jzzxx.jzzrybh,
+		           jzzxx.jzzdyzt,
+		           jzzxx.jzzzxbs,
+		           to_char(jzzzxsj,'yyyy-mm-dd') jzzzxsj,
+		           jzzxx.jzzzxyy,
+		           jzzxx.dyzt,
+		           jbxx.hjdqh,
+		           jzzxx.zzbh,
+		           jzzxx.zzdwdm,
+		           jzzxx.zzdwmc,
+		           to_char(jzzxx.zzsj,'yyyy-mm-dd hh24:mi:ss') as zzsj,
+		           ldrk.zxbs as ldrkzxbs 
+	  	from t_lsgl_ldrk_jzzxx jzzxx 
+		           inner join t_lsgl_rk_ldrkzzxx ldrk on ldrk.zzbh=jzzxx.zzbh
+		           inner join t_lsgl_rk_jbxx jbxx on ldrk.rybh = jbxx.rybh
+	  	where jzzrybh = ?
+	  	order by djsj desc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryJzzxxPageByZzbh">
+ 		<![CDATA[
+ 			select 
+		           jbxx.xm,
+		           jbxx.sfzh,
+		           jbxx.xb,
+		           f_get_dzmc_byrkfwglid(ldrk.rkfwglid) xzzxz,
+		           '4' rylb,
+		           jbxx.mz,
+		           jbxx.hjdxz,
+		           jzzxx.jzzxxbh,
+		           to_char(jzzxx.fzrq,'yyyy-mm-dd') fzrq,
+		           jzzxx.yxqx,
+		           to_char(jzzxx.djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+		           jzzxx.djdw,
+		           jzzxx.djdwmc,
+		           jzzxx.djr,
+		           jzzxx.djrxm,
+		           jzzxx.xgsj,
+		           jzzxx.xgr,
+		           jzzxx.xgdw,
+		           jzzxx.xgrxm,
+		           jzzxx.xgdwmc,
+		           jzzxx.jzzrybh,
+		           jzzxx.jzzdyzt,
+		           jzzxx.jzzzxbs,
+		           to_char(jzzzxsj,'yyyy-mm-dd') jzzzxsj,
+		           jzzxx.jzzzxyy,
+		           jzzxx.dyzt,
+		           jbxx.hjdqh,
+		           jzzxx.zzbh,
+		           jzzxx.zzdwdm,
+		           jzzxx.zzdwmc,
+		           to_char(jzzxx.zzsj,'yyyy-mm-dd hh24:mi:ss') as zzsj,
+		            ldrk.zxbs as ldrkzxbs 
+		      from t_lsgl_ldrk_jzzxx jzzxx 
+		           inner join t_lsgl_rk_ldrkzzxx ldrk on ldrk.zzbh=jzzxx.zzbh
+		           inner join t_lsgl_rk_jbxx jbxx on ldrk.rybh = jbxx.rybh
+		  	where jzzxx.zzbh = ?
+		  	order by djsj desc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateJzzxxBean">
+ 		<![CDATA[
+ 			update t_lsgl_ldrk_jzzxx
+			   set 
+			   #if($jzzdyzt && $jzzdyzt.equals("30"))
+			       xgsj = to_date(#[xgsj],'yyyy-mm-dd hh24:mi:ss'),
+			       xgr = #[xgr],
+			       xgdw = #[xgdw],
+			       xgrxm = #[xgrxm],
+			       xgdwmc = #[xgdwmc],
+			       xgrsfzh = #[xgrsfzh],
+			       jzzdyzt = #[jzzdyzt],
+			       jzzzxbs = #[jzzzxbs],
+			       jzzzxsj = to_date(#[jzzzxsj],'yyyy-mm-dd'),
+			       jzzzxyy = #[jzzzxyy]
+			   #else
+			       fzrq = to_date(#[fzrq],'yyyy-mm-dd'),
+			       yxqx = #[yxqx],
+			       xgsj = to_date(#[xgsj],'yyyy-mm-dd hh24:mi:ss'),
+			       xgr = #[xgr],
+			       xgdw = #[xgdw],
+			       xgrxm = #[xgrxm],
+			       xgdwmc = #[xgdwmc],
+			       xgrsfzh = #[xgrsfzh],
+			       jzzrybh = #[jzzrybh],
+			       jzzdyzt = #[jzzdyzt],
+			       jzzzxbs = #[jzzzxbs],
+			       zpbh = #[zpbh],
+			       jzzzxsj = to_date(#[jzzzxsj],'yyyy-mm-dd'),
+			       jzzzxyy = #[jzzzxyy],
+			       rkfwglid = #[rkfwglid]
+			   #end
+			 where jzzxxbh = #[jzzxxbh]
+ 			
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryJzzxxBeanPageInfo">
+ 		<![CDATA[
+ 			select 
+	 			jbxx.xm,
+				jbxx.sfzh,
+				jbxx.xb,
+				jbxx.hjdqh,
+				to_char(jbxx.csrq,'yyyy-mm-dd') as csrq,
+				f_get_dzmc_byrkfwglid(lk.rkfwglid) xzzxz,
+				'2' as rylb,
+				jbxx.mz,
+				jbxx.hjdxz,
+	 			jzzxx.jzzxxbh,
+		        to_char(jzzxx.fzrq,'yyyy-mm-dd') fzrq,
+		        jzzxx.yxqx,
+		        to_char(jzzxx.djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+		        jzzxx.djdw,
+		        jzzxx.djdwmc,
+		        jzzxx.djr,
+		        jzzxx.djrxm,
+		        jzzxx.xgsj,
+		        jzzxx.xgr,
+		        jzzxx.xgdw,
+		        jzzxx.xgrxm,
+		        jzzxx.xgdwmc,
+		        jzzxx.jzzrybh,
+		        jzzxx.jzzdyzt,
+		        jzzxx.jzzzxbs,
+		        to_char(jzzzxsj,'yyyy-mm-dd') jzzzxsj,
+		        jzzzxyy,
+		        jzzxx.dyzt,
+		        jzzxx.zzbh,
+		        jzzxx.zzdwdm,
+		        jzzxx.zzdwmc,
+		        to_char(jzzxx.zzsj,'yyyy-mm-dd hh24:mi:ss') as zzsj,
+		        lk.zxbs as ldrkzxbs 
+	 	 from t_lsgl_ldrk_jzzxx jzzxx 
+	 	 	  inner join t_lsgl_rk_ldrkzzxx lk on jzzxx.zzbh=lk.zzbh
+	 	 	  inner join t_lsgl_rk_jbxx jbxx  on lk.rybh = jbxx.rybh
+		 where  1=1
+ 			#if($jzzdyzt && !$jzzdyzt.equals(""))
+ 				and jzzxx.jzzdyzt = #[jzzdyzt]
+ 			#end
+ 			
+ 			#if($dyzt && !$dyzt.equals(""))
+ 				and jzzxx.dyzt = #[dyzt]
+ 			#end
+ 			#if($jzzzxbs && !$jzzzxbs.equals(""))
+ 				and jzzxx.jzzzxbs = #[jzzzxbs]
+ 			#end
+ 			
+ 			#if($jzzsfzh && !$jzzsfzh.equals(""))
+ 				and jbxx.sfzh = #[jzzsfzh]
+ 			#end
+ 			
+ 			#if($fzrq_start && !$fzrq_start.equals(""))
+ 				and jzzxx.fzrq >= to_date(#[fzrq_start],'yyyy-mm-dd')
+ 			#end
+ 			#if($fzrq_end && !$fzrq_end.equals(""))
+ 				and jzzxx.fzrq <= to_date(#[fzrq_end],'yyyy-mm-dd')
+ 			#end
+ 			
+ 			#if($csrq_start && !$csrq_start.equals(""))
+ 				and jbxx.csrq >= to_date(#[csrq_start],'yyyy-mm-dd')
+ 			#end
+ 			#if($csrq_end && !$csrq_end.equals(""))
+ 				and jbxx.csrq <= to_date(#[csrq_end],'yyyy-mm-dd')
+ 			#end
+ 			
+ 			#if($xb && !$xb.equals(""))
+ 				and jbxx.xb = #[xb]
+ 			#end
+ 			
+ 			#if($sqdm && !$sqdm.equals(""))
+ 				and lk.sssqbh=#[sqdm]
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+				and (lk.djdwdm = #[jwsqdm])
+ 			#elseif ($pcsdm && !$pcsdm.equals(""))
+				 and lk.djdwdm like substr(#[pcsdm],1,8)||'%'
+ 			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+ 				 and lk.djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+ 			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+ 				 and lk.djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+ 			#end
+ 			
+ 			#if($ywzp.equals("0"))
+ 				and not exists (select 1 from t_lsgl_rk_zpxx zp where zp.rybh=jbxx.rybh) 
+ 			#elseif($ywzp.equals("1"))
+ 				and exists (select 1 from t_lsgl_rk_zpxx zp where zp.rybh=jbxx.rybh)
+ 			#end
+ 			order by jzzxx.djsj
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateJzzxxBeanDyZt">
+ 		<![CDATA[
+ 			update t_lsgl_ldrk_jzzxx
+			   set 
+			       jzzdyzt = '20',
+			       dyzt = #[dyzt],
+			       xgr = #[xgr],
+			       xgrxm = #[xgrxm],
+			       xgrsfzh = #[xgrsfzh],
+			       xgdw = #[xgdw],
+			       xgdwmc = #[xgdwmc],
+			       xgsj = sysdate,
+			       JZZZXBS='0',
+			       zzdwdm = #[zzdwdm],
+			       zzdwmc = #[zzdwmc],
+			       zzsj = sysdate,
+			       dyrjh = #[dyrjh],
+				   dyrxm =   #[dyrxm],
+				   dyip  = #[dyip],
+				   dysj  = sysdate,
+				   dydwdm  = #[dydwdm],
+				   dydwmc  = #[dydwmc],
+				   zpbh = #[zpbh]
+			 where JZZXXBH = #[jzzxxbh]
+ 		]]>
+ 	</property>
+ 	<property name="queryLdrkTjBean">
+ 		<![CDATA[
+       		select o.orgcode, o.orgname, nvl(s.total, 0) as count
+  			from v_common_organization o
+  			left join 
+  			(  select substr(lk.djdwdm, 1, (to_number(#[leve])+1)*2) as dm,count(1) as total
+               from t_lsgl_rk_ldrkzzxx lk inner join t_lsgl_rk_jbxx jb on lk.rybh = jb.rybh  
+               where lk.djdwdm is not null
+               and (lk.zxbs='0' or lk.zxbs is null)
+               #if($djsj_start && !$djsj_start.equals(""))
+                  and lk.djsj >= to_date(#[djsj_start],'yyyy-mm-dd hh24:mi:ss')
+               #end
+               #if($djsj_start && !$djsj_start.equals(""))
+                  and lk.djsj <= to_date(#[djsj_end],'yyyy-mm-dd hh24:mi:ss')
+               #end
+               #if($hjdqh && !$hjdqh.equals(""))
+                  and rk.hjdqh like  substr(#[hjdqh],0,4)||'%'
+               #end          
+              group by substr(lk.djdwdm, 1, (to_number(#[leve])+1)*2)
+            ) s 
+            on substr(o.orgcode, 1, (to_number(#[leve])+1)*2) = s.dm
+       		where o.orgcode like substr(#[orgcode],1,to_number(#[leve])*2)||'%'
+	         #if($leve == 2)
+	            and substr(orgcode, 5, 2) <> '00'
+	            and substr(orgcode, 7, 6) = '000000'
+	         #end
+	         #if($leve == 3)
+	            and substr(orgcode, 7, 2) <> '00'
+	            and substr(orgcode, 9, 4) = '0000'
+	         #end
+	         #if($leve == 4)
+	            and substr(orgcode, 9, 2) = '31'
+	            and substr(orgcode, 11, 2) <> '00'
+	         #end
+	         #if($leve == 5)
+	          and orgcode = #[orgcode]
+	         #end
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryLdrkZhQueryPageResult">
+ 		<![CDATA[
+ 			select jb.rybh,jb.sfzh,jb.xm,jb.xb,jb.csrq,
+ 				jb.hjdqh,jb.hjdxz,jb.xzzqh,jb.xzzxz,jb.lxdh,
+ 				to_char(l.LBDRQ,'yyyy-mm-dd') as lbdrq,
+ 				to_char(l.czsj,'yyyy-mm-dd') as czsj,
+ 				l.zzsy,
+ 				l.djdwmc,
+ 				l.djrxm,
+ 				to_char(l.djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+ 				to_char(l.njzrq,'yyyy-mm-dd') as njzrq
+			from t_lsgl_rk_ldrkzzxx l inner join t_lsgl_rk_jbxx jb on l.rybh=jb.rybh
+			where (l.zxbs is null or l.zxbs='0')
+				  
+				  #if($sqdm && !$sqdm.equals(""))
+				  	and l.sssqbh=#[sqdm]
+				  #elseif ($jwsqdm && !$jwsqdm.equals(""))
+				  	and l.ZRDWDM=#[jwsqdm]
+				  #elseif($pcsdm &&!$pcsdm.equals(""))
+				  	and l.ZRDWDM like substr(#[pcsdm],1,8)||'%'
+				  #elseif($countrygajgjgdm &&!$countrygajgjgdm.equals(""))
+				  	and l.ZRDWDM like substr(#[pcsdm],1,6)||'%'
+				  #elseif($citygajgjgdm &&!$citygajgjgdm.equals(""))
+				    and l.ZRDWDM like substr(#[pcsdm],1,4)||'%'
+				  #end
+				  
+				  #if($gwdq && !$gwdq.equals(""))
+				  	and jb.hjdqh=#[gwdq]
+				  #end
+				  #if($xb && !$xb.equals(""))
+				  	and jb.xb =#[xb]
+				  #end
+				  #if($csrq_start && !$csrq_start.equals(""))
+				  	 and jb.csrq>=to_date(#[csrq_start],'yyyy-mm-dd') 
+				  #end
+				  #if($csrq_end && !$csrq_end.equals(""))
+	  			  	 and jb.csrq<=to_date(#[csrq_end],'yyyy-mm-dd')
+	  			  #end
+				 
+			      --是否从业人员
+			      #if($sfcyry && $sfcyry.equals("1"))
+				      and exists (
+				             select 1 from t_za_ry_cyry c where l.rybh=c.rybh and zxbs='0'
+				      )
+			      #elseif($sfcyry && $sfcyry.equals("0"))
+			      	  and not exists (
+				             select 1 from t_za_ry_cyry c where l.rybh=c.rybh and zxbs='0'
+				      )
+			      #end
+			      
+			      --是否前科人员
+			      #if($sfqkljry && $sfqkljry.equals("1"))
+				      and exists (
+				             select 1 from t_zdry_gzdx z where l.rybh=z.rybh and (yxx='1' or yxx is null)
+				      )
+			      #elseif($sfqkljry && $sfqkljry.equals("0"))
+			      	  and not exists (
+				             select 1 from t_zdry_gzdx z where l.rybh=z.rybh and (yxx='1' or yxx is null)
+				      )
+			      #end
+			      
+			      --是否入室盗窃
+			      #if($sfrsdqqkry && $sfrsdqqkry.equals("1"))
+			      	and exists (select 1 from v_zfba_wfrjbxx wf where wf.sfzh=l.sfzh and ajlb='050202')
+			      #elseif($sfrsdqqkry && $sfrsdqqkry.equals("0"))
+			      	and not exists (select 1 from v_zfba_wfrjbxx where wf.sfzh=l.sfzh and ajlb='050202')
+			      #end
+			      
+			      --一个月内
+			      #if($lbdsc && $lbdsc.equals("1"))
+			      	  and l.djsj>sysdate-31 
+			      --一年以内
+			      #elseif($lbdsc && $lbdsc.equals("2"))
+			          and l.djsj>sysdate-365
+			      --两年以内
+			      #elseif($lbdsc && $lbdsc.equals("3"))
+			      	  and l.djsj>sysdate-730
+			      #elseif($lbdsc && $lbdsc.equals("4"))
+			      	  and l.djsj<sysdate-730
+			      #end
+			      
+			      --登记时间
+			      #if($djsj_start && !$djsj_start.equals(""))
+			      	 and djsj>=to_date(#[djsj_start],'yyyy-mm-dd')
+			      #end
+			      #if($djsj_end && !$djsj_end.equals(""))
+			      	and djsj<=to_date(#[djsj_end]||' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+			      #end
+			      
+			      --登记次数
+			      #if($djcs && $djcs.equals("1"))
+				      and exists (
+		                  select 1 
+		                  from t_lsgl_rk_ldrkzzxx ld 
+		                  where l.sfzh=ld.sfzh
+		                  group by sfzh
+		                  having count(1) = 1
+		              )
+			      #elseif($djcs && $djcs.equals("2"))
+			         and exists (
+		                  select 1 
+		                  from t_lsgl_rk_ldrkzzxx ld 
+		                  where l.sfzh=ld.sfzh
+		                  group by sfzh
+		                  having count(1) = 2
+		              )
+			      #elseif($djcs && $djcs.equals("3"))
+			        and exists (
+		                  select 1 
+		                  from t_lsgl_rk_ldrkzzxx ld 
+		                  where l.sfzh=ld.sfzh
+		                  group by sfzh
+		                  having count(1) = 3
+		              )
+			      #elseif($djcs && $djcs.equals("4"))
+			        and exists (
+		                  select 1 
+		                  from t_lsgl_rk_ldrkzzxx ld 
+		                  where l.sfzh=ld.sfzh
+		                  group by sfzh
+		                  having count(1) > 3
+		              )
+			      #end
+      
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryFatjBean">
+ 		<![CDATA[
+			select
+			 org.orgname, 
+			 nvl(ss.laxsaj,0) laxsaj,
+			 nvl(ss.larsdq,0) larsdq,
+			 nvl(ss.paxsaj,0) paxsaj,
+			 nvl(ss.parsdq,0) parsdq
+			 from sqjw.t_common_organization_sjjs org left join
+			(	select
+		 			#if($tjjb && $tjjb.equals("2"))
+		 				 substr(dwbm,1,4) as orgcode,
+		 			#elseif($tjjb && $tjjb.equals("3"))
+		 				 substr(dwbm,1,6) as orgcode,
+		 			#elseif($tjjb && $tjjb.equals("4"))
+		 				 substr(dwbm,1,8) as orgcode,
+		 			#elseif($tjjb && $tjjb.equals("5"))
+		 				 substr(dwbm,1,10) as orgcode,
+		 			#end
+					sum(XSAJZS_LA) laxsaj,sum(RSDQS_LA) larsdq,  sum(XSAJZS_PA) paxsaj,  sum(RSDQS_PA) parsdq from (
+			          select dwbm,case when aj.xs_flag='1' and aj.la_flag='1' then aj.anjianbqs else 0 end xsajzs_la,
+			          case when aj.xs_flag='1' and aj.la_flag='1' and aj.anjianbianhao='050202'  then aj.anjianbqs else 0 end rsdqs_la, 
+			          case when aj.xs_flag='1' and aj.pa_flag='1' then aj.anjianbqs else 0 end xsajzs_pa,
+			          case when aj.xs_flag='1' and aj.pa_flag='1' and aj.anjianbianhao='050202'  then aj.anjianbqs else 0 end rsdqs_pa
+			          from t_report_ajdate_ywdw aj
+			          where 1=1
+			          and aj.xs_flag='1'
+			          #if($tjkssj && !$tjkssj.equals(""))
+				   		 and to_date(aj.tjrq,'yyyymmdd') >= to_date(#[tjkssj],'yyyy-mm-dd')
+				      #end 
+					  #if($tjjssj && !$tjjssj.equals(""))
+				   		 and to_date(aj.tjrq,'yyyymmdd') <= to_date(#[tjjssj],'yyyy-mm-dd')
+				      #end ) 
+				
+				#if($tjjb && $tjjb.equals("2"))
+ 					 group by substr(dwbm,1,4)
+	 			#elseif($tjjb && $tjjb.equals("3"))
+	 				 group by substr(dwbm,1,6)
+	 			#elseif($tjjb && $tjjb.equals("4"))
+	 				group by substr(dwbm,1,8)
+	 			#elseif($tjjb && $tjjb.equals("5"))
+	 				group by substr(dwbm,1,10)
+	 			#end      
+		     
+			) 
+				#if($tjjb && $tjjb.equals("2"))
+ 					ss on substr(org.orgcode,1,4) = ss.orgcode
+	 			#elseif($tjjb && $tjjb.equals("3"))
+	 				ss on substr(org.orgcode,1,6) = ss.orgcode
+	 			#elseif($tjjb && $tjjb.equals("4"))
+	 				ss on substr(org.orgcode,1,8) = ss.orgcode
+	 			#elseif($tjjb && $tjjb.equals("5"))
+	 				ss on substr(org.orgcode,1,10) = ss.orgcode
+	 			#end    
+			
+			where 1=1
+			
+			#if($tjdwdm && !$tjdwdm.equals(""))
+	      		 and org.orgcode like substr(#[tjdwdm],1,2*f_get_dwleve(#[tjdwdm]))||'%'
+			#end
+			#if($tjjb && !$tjjb.equals(""))
+			  	and org.leve = #[tjjb]
+			  	#if($jwqfl && !$jwqfl.equals("") && $tjjb.equals("5"))
+			  		and org.jwqfl = #[jwqfl]
+	       		#end
+	       		#if($pcsdj && !$pcsdj.equals("") && $tjjb.equals("4"))
+			  		and org.jwqfl = #[pcsdj]
+	       		#end
+	        #end
+	        
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	<property name="queryFatjBean1">
+ 		<![CDATA[
+			select
+			 org.orgname, 
+			 nvl(ss.xslas,0) laxsaj,
+			 nvl(ss.rsdqlas,0) larsdq,
+			 nvl(ss.xspas,0) paxsaj,
+			 nvl(ss.rsdqpas,0) parsdq
+			 from sqjw.t_common_organization_sjjs org left join
+			(	select
+		 			#if($tjjb && $tjjb.equals("2"))
+		 				 substr(faanshequ,1,4) as orgcode,
+		 			#elseif($tjjb && $tjjb.equals("3"))
+		 				 substr(faanshequ,1,6) as orgcode,
+		 			#elseif($tjjb && $tjjb.equals("4"))
+		 				 substr(faanshequ,1,8) as orgcode,
+		 			#elseif($tjjb && $tjjb.equals("5"))
+		 				 substr(faanshequ,1,10) as orgcode,
+		 			#end
+                    sum(xslas) xslas,
+                    sum(rsdqla) rsdqlas,
+                    sum(xspas) xspas,
+                    sum(rsdqpa) rsdqpas
+               from (select faanshequ, la xslas, case when anjianleibie = '050202' then la else  0  end rsdqla, pa xspas,
+                            case when anjianleibie = '050202' then  pa  else 0  end rsdqpa
+                       from (select aj.faanshequ, aj.anjianleibie, 1 la, 0 pa
+                               from cs_jz_zfba.t_ajjbxxb@to_199 aj
+                               where 1 =1
+                                and length(aj.lianriqi)>7
+                               #if($tjkssj && !$tjkssj.equals(""))
+						   		  and to_date(aj.lianriqi,'yyyymmdd') >= to_date(#[tjkssj],'yyyy-mm-dd')
+						       #end 
+							   #if($tjjssj && !$tjjssj.equals(""))
+						   		  and to_date(aj.lianriqi,'yyyymmdd') <= to_date(#[tjjssj],'yyyy-mm-dd')
+						       #end  
+                                and aj.anjianbiaozhi = '1'
+                                and aj.gonganbianhao like '4301%'
+                             union all
+                             select aj.faanshequ, aj.anjianleibie, 0 la, 1 pa
+                               from cs_jz_zfba.t_ajjbxxb@to_199 aj
+                               where 1=1
+                               and length(aj.poanriqi)>7
+                               #if($tjkssj && !$tjkssj.equals(""))
+						   		  and to_date(aj.poanriqi,'yyyymmdd') >= to_date(#[tjkssj],'yyyy-mm-dd')
+						       #end 
+							   #if($tjjssj && !$tjjssj.equals(""))
+
+						   		  and to_date(aj.poanriqi,'yyyymmdd') <= to_date(#[tjjssj],'yyyy-mm-dd')
+						       #end  
+                                and aj.anjianbiaozhi = '1'
+                                and aj.gonganbianhao like '4301%'
+                            )
+                     ) sl
+                    #if($tjjb && $tjjb.equals("2"))
+ 					 	group by substr(faanshequ,1,4)
+		 			#elseif($tjjb && $tjjb.equals("3"))
+		 				group by substr(faanshequ,1,6)
+		 			#elseif($tjjb && $tjjb.equals("4"))
+		 				group by substr(faanshequ,1,8)
+		 			#elseif($tjjb && $tjjb.equals("5"))
+		 				group by substr(faanshequ,1,10)
+		 			#end
+             ) ss
+             
+               #if($tjjb && $tjjb.equals("2"))
+ 					 on substr(org.orgcode,1,4) = ss.orgcode
+	 			#elseif($tjjb && $tjjb.equals("3"))
+	 				 on substr(org.orgcode,1,6) = ss.orgcode
+	 			#elseif($tjjb && $tjjb.equals("4"))
+	 				 on substr(org.orgcode,1,8) = ss.orgcode
+	 			#elseif($tjjb && $tjjb.equals("5"))
+	 				 on substr(org.orgcode,1,10) = ss.orgcode
+	 			#end    
+			where 1=1
+			#if($tjdwdm && !$tjdwdm.equals(""))
+	      		 and org.orgcode like substr(#[tjdwdm],1,2*f_get_dwleve(#[tjdwdm]))||'%'
+			#end
+			#if($tjjb && !$tjjb.equals(""))
+			  	and org.leve = #[tjjb]
+			  	#if($jwqfl && !$jwqfl.equals("") && $tjjb.equals("5"))
+			  		and org.jwqfl = #[jwqfl]
+	       		#end
+	       		#if($pcsdj && !$pcsdj.equals("") && $tjjb.equals("4"))
+			  		and org.jwqfl = #[pcsdj]
+	       		#end
+	        #end
+	        
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryRsdfxBeansPageResult">
+ 		<![CDATA[
+ 			#if($orgLeve.equals("2"))
+		 			select s.orgcode,s.orgname,s.leve,nvl(t.zs,0) as zs,
+		 				   nvl(t.s340823,0) as s340823,nvl(t.s360900,0) as s360900,
+					       nvl(t.s421023,0) as s421023,nvl(t.s421081,0) as s421081,
+					       nvl(t.s430481,0) as s430481,nvl(t.s430822,0) as s430822,
+					       nvl(t.s430923,0) as s430923,nvl(t.s431226,0) as s431226,
+					       nvl(t.s433125,0) as s433125,nvl(t.s433127,0) as s433127,
+					       nvl(t.s522228,0) as s522228
+					from t_common_organization_sjjs s left join (
+					    select substr(l.djdwdm,1,4)||'00000000' as orgcode,
+					    count(1) as zs,
+					    sum(decode(jb.hjdqh,'340823',1,0)) s340823,
+					    sum(decode(jb.hjdqh,'360900',1,0)) s360900,
+					    sum(decode(jb.hjdqh,'421023',1,0)) s421023,
+					    sum(decode(jb.hjdqh,'421081',1,0)) s421081,
+					    sum(decode(jb.hjdqh,'430481',1,0)) s430481,
+					    sum(decode(jb.hjdqh,'430822',1,0)) s430822,
+					    sum(decode(jb.hjdqh,'430923',1,0)) s430923,
+					    sum(decode(jb.hjdqh,'431226',1,0)) s431226,
+					    sum(decode(jb.hjdqh,'433125',1,0)) s433125,
+					    sum(decode(jb.hjdqh,'433127',1,0)) s433127,
+					    sum(decode(jb.hjdqh,'522228',1,0)) s522228
+					    from t_lsgl_rk_ldrkzzxx l 
+					         inner join t_lsgl_rk_jbxx jb on l.rybh=jb.rybh
+					    where (l.zxbs is null or l.zxbs='0') 
+					    	#if($djsj_start && !$djsj_start.equals(""))
+					          and djsj>=to_date(replace(#[djsj_start],'-'),'yyyymmdd')
+					        #end
+					        #if($djsj_end && !$djsj_end.equals(""))  
+					          and djsj<=to_date(replace(#[djsj_end],'-'),'yyyymmdd')
+					        #end   
+					          and djdwdm like substr(l.djdwdm,1,4)||'%'
+					          and jb.hjdqh in ('340823','360900','421023','421081','430481','430822','430923','431226','433125','433127','522228')
+					    group by substr(l.djdwdm,1,4)
+					) t on t.orgcode=s.orgcode
+					where leve='2' and parent_code=#[parentCode]
+					order by orgcode,zs desc
+					
+			#elseif($orgLeve.equals("3"))
+				   select s.orgcode,s.orgname,s.leve,
+				   		   nvl(t.zs,0) as zs,
+		 				   nvl(t.s340823,0) as s340823,nvl(t.s360900,0) as s360900,
+					       nvl(t.s421023,0) as s421023,nvl(t.s421081,0) as s421081,
+					       nvl(t.s430481,0) as s430481,nvl(t.s430822,0) as s430822,
+					       nvl(t.s430923,0) as s430923,nvl(t.s431226,0) as s431226,
+					       nvl(t.s433125,0) as s433125,nvl(t.s433127,0) as s433127,
+					       nvl(t.s522228,0) as s522228
+					from t_common_organization_sjjs s left join (
+					    select substr(l.djdwdm,1,6)||'000000' as orgcode,
+					    count(1) as zs,
+					    sum(decode(jb.hjdqh,'340823',1,0)) s340823,
+					    sum(decode(jb.hjdqh,'360900',1,0)) s360900,
+					    sum(decode(jb.hjdqh,'421023',1,0)) s421023,
+					    sum(decode(jb.hjdqh,'421081',1,0)) s421081,
+					    sum(decode(jb.hjdqh,'430481',1,0)) s430481,
+					    sum(decode(jb.hjdqh,'430822',1,0)) s430822,
+					    sum(decode(jb.hjdqh,'430923',1,0)) s430923,
+					    sum(decode(jb.hjdqh,'431226',1,0)) s431226,
+					    sum(decode(jb.hjdqh,'433125',1,0)) s433125,
+					    sum(decode(jb.hjdqh,'433127',1,0)) s433127,
+					    sum(decode(jb.hjdqh,'522228',1,0)) s522228
+					    from t_lsgl_rk_ldrkzzxx l 
+					         inner join t_lsgl_rk_jbxx jb on l.rybh=jb.rybh
+					    where (l.zxbs is null or l.zxbs='0') 
+					         #if($djsj_start && !$djsj_start.equals(""))
+					          and djsj>=to_date(replace(#[djsj_start],'-'),'yyyymmdd')
+					        #end
+					        #if($djsj_end && !$djsj_end.equals(""))  
+					          and djsj<=to_date(replace(#[djsj_end],'-'),'yyyymmdd')
+					        #end  
+					          and djdwdm like substr(l.djdwdm,1,6)||'%'
+					          and jb.hjdqh in ('340823','360900','421023','421081','430481','430822','430923','431226','433125','433127','522228')
+					    group by substr(l.djdwdm,1,6)
+					) t on t.orgcode=s.orgcode
+					where leve='3' and parent_code=#[parentCode]
+					order by zs desc
+					
+			#elseif($orgLeve.equals("4"))
+				   select s.orgcode,s.orgname,s.leve,
+				   		   nvl(t.zs,0) as zs,
+		 				   nvl(t.s340823,0) as s340823,nvl(t.s360900,0) as s360900,
+					       nvl(t.s421023,0) as s421023,nvl(t.s421081,0) as s421081,
+					       nvl(t.s430481,0) as s430481,nvl(t.s430822,0) as s430822,
+					       nvl(t.s430923,0) as s430923,nvl(t.s431226,0) as s431226,
+					       nvl(t.s433125,0) as s433125,nvl(t.s433127,0) as s433127,
+					       nvl(t.s522228,0) as s522228
+					from t_common_organization_sjjs s left join (
+					    select substr(l.djdwdm,1,8)||'0000' as orgcode,
+					    count(1) as zs,
+					    sum(decode(jb.hjdqh,'340823',1,0)) s340823,
+					    sum(decode(jb.hjdqh,'360900',1,0)) s360900,
+					    sum(decode(jb.hjdqh,'421023',1,0)) s421023,
+					    sum(decode(jb.hjdqh,'421081',1,0)) s421081,
+					    sum(decode(jb.hjdqh,'430481',1,0)) s430481,
+					    sum(decode(jb.hjdqh,'430822',1,0)) s430822,
+					    sum(decode(jb.hjdqh,'430923',1,0)) s430923,
+					    sum(decode(jb.hjdqh,'431226',1,0)) s431226,
+					    sum(decode(jb.hjdqh,'433125',1,0)) s433125,
+					    sum(decode(jb.hjdqh,'433127',1,0)) s433127,
+					    sum(decode(jb.hjdqh,'522228',1,0)) s522228
+					    from t_lsgl_rk_ldrkzzxx l 
+					         inner join t_lsgl_rk_jbxx jb on l.rybh=jb.rybh
+					    where (l.zxbs is null or l.zxbs='0') 
+					         #if($djsj_start && !$djsj_start.equals(""))
+					          and djsj>=to_date(replace(#[djsj_start],'-'),'yyyymmdd')
+					        #end
+					        #if($djsj_end && !$djsj_end.equals(""))  
+					          and djsj<=to_date(replace(#[djsj_end],'-'),'yyyymmdd')
+					        #end  
+					          and djdwdm like substr(l.djdwdm,1,8)||'%'
+					          and jb.hjdqh in ('340823','360900','421023','421081','430481','430822','430923','431226','433125','433127','522228')
+					    group by substr(l.djdwdm,1,8)
+					) t on t.orgcode=s.orgcode
+					where leve='4' and parent_code=#[parentCode]
+					order by zs desc
+					
+			#elseif($orgLeve.equals("5"))
+				select s.orgcode,s.orgname,
+				   		   nvl(t.zs,0) as zs,s.leve,
+		 				   nvl(t.s340823,0) as s340823,nvl(t.s360900,0) as s360900,
+					       nvl(t.s421023,0) as s421023,nvl(t.s421081,0) as s421081,
+					       nvl(t.s430481,0) as s430481,nvl(t.s430822,0) as s430822,
+					       nvl(t.s430923,0) as s430923,nvl(t.s431226,0) as s431226,
+					       nvl(t.s433125,0) as s433125,nvl(t.s433127,0) as s433127,
+					       nvl(t.s522228,0) as s522228
+					from t_common_organization_sjjs s left join (
+					    select l.djdwdm as orgcode,
+					    count(1) as zs,
+					    sum(decode(jb.hjdqh,'340823',1,0)) s340823,
+					    sum(decode(jb.hjdqh,'360900',1,0)) s360900,
+					    sum(decode(jb.hjdqh,'421023',1,0)) s421023,
+					    sum(decode(jb.hjdqh,'421081',1,0)) s421081,
+					    sum(decode(jb.hjdqh,'430481',1,0)) s430481,
+					    sum(decode(jb.hjdqh,'430822',1,0)) s430822,
+					    sum(decode(jb.hjdqh,'430923',1,0)) s430923,
+					    sum(decode(jb.hjdqh,'431226',1,0)) s431226,
+					    sum(decode(jb.hjdqh,'433125',1,0)) s433125,
+					    sum(decode(jb.hjdqh,'433127',1,0)) s433127,
+					    sum(decode(jb.hjdqh,'522228',1,0)) s522228
+					    from t_lsgl_rk_ldrkzzxx l 
+					         inner join t_lsgl_rk_jbxx jb on l.rybh=jb.rybh
+					    where (l.zxbs is null or l.zxbs='0') 
+					         #if($djsj_start && !$djsj_start.equals(""))
+					          and djsj>=to_date(replace(#[djsj_start],'-'),'yyyymmdd')
+					        #end
+					        #if($djsj_end && !$djsj_end.equals(""))  
+					          and djsj<=to_date(replace(#[djsj_end],'-'),'yyyymmdd')
+					        #end  
+					          and djdwdm like substr(l.djdwdm,1,8)||'%'
+					          and jb.hjdqh in ('340823','360900','421023','421081','430481','430822','430923','431226','433125','433127','522228')
+					    group by l.djdwdm
+					) t on t.orgcode=s.orgcode
+					where leve='5' and parent_code=substr(#[parentCode],0,8)||'3100'
+					order by zs desc
+			#end
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	<property name="queryFatjBean2">
+ 		<![CDATA[
+ 		#if($tjjb && $tjjb.equals("6"))
+      select org.dm dwbm,org.jc orgname,
+       nvl(ss.xslas,0) laxsaj,
+       nvl(ss.rsdqlas,0) larsdq,
+       nvl(ss.xspas,0) paxsaj,
+       nvl(ss.rsdqpas,0) parsdq from sqjw.t_common_hnxzqh org
+      , 
+      (select --SSJWSDM  dwbm,
+              dm,
+        --     (select org_name from cs_jz_ptgl.td_sm_organization where code = substr(SSJWSDM, 1, 6) || '000000') dwmc,
+            sum(xslas) xslas,
+            sum(rsdqlas) rsdqlas,
+            sum(xspas) xspas,
+            sum(rsdqpas) rsdqpas
+        from (select dm, mc, SSJWSDM, SSpcsDM
+                from sqjw.t_common_hnxzqh
+               where dm like '4301%'
+                 AND SSJWSDM IS NOT NULL
+                 AND ISVALID = '1') dw,
+             (select faanshequ,
+                     sum(xslas) xslas,
+                     sum(rsdqla) rsdqlas,
+                     sum(xspas) xspas,
+                     sum(rsdqpa) rsdqpas
+                from (select faanshequ,
+                             la xslas,
+                             case when ( anjianleibie = '050202' or anjianleibie = '050280' ) then la else 0 end rsdqla, pa xspas,
+                             case when ( anjianleibie = '050202' or anjianleibie = '050280' ) then pa else 0 end rsdqpa
+                        from (select aj.faanshequ, aj.anjianleibie, 1 la, 0 pa
+                                from v_ajjbxxb aj
+                               where to_date(aj.lianriqi,'yyyymmdd') >= to_date(#[tjkssj],'yyyy-mm-dd')
+                                 and to_date(aj.lianriqi,'yyyymmdd') <= to_date(#[tjjssj],'yyyy-mm-dd')
+                                 and aj.anjianbiaozhi = '1'
+                                 and aj.gonganbianhao like '4301%' 
+                              union all
+                              select aj.faanshequ, aj.anjianleibie, 0 la, 1 pa
+                                from v_ajjbxxb aj
+                               where   aj.poanriqi  >= replace(#[tjkssj],'-','')
+                                 and  aj.poanriqi  <= replace(#[tjjssj],'-','')
+                                 and aj.anjianbiaozhi = '1'
+                                 and aj.gonganbianhao like '4301%' 
+                              ))
+               group by faanshequ) sl
+               where dw.dm = faanshequ(+)
+       group by dm
+      
+       )ss 
+       where ss.dm = org.dm(+)
+       
+       #if($orgLeve && $orgLeve.equals("5"))
+         and org.ssjwsdm = #[tjdwdm]
+       #elseif($orgLeve && $orgLeve.equals("4"))
+         and org.sspcsdm = #[tjdwdm]  
+       #elseif($orgLeve && $orgLeve.equals("3"))
+         and org.ssjwsdm like substr(#[tjdwdm],1,6)||'%'
+       #else
+         and org.ssjwsdm like substr(#[tjdwdm],1,4)||'%'
+       #end
+       
+       and org.leve = '5'
+       and org.isvalid = '1'
+     #else
+        select dwbm,org.orgname,
+        nvl(ss.xslas,0) laxsaj,
+       nvl(ss.rsdqlas,0) larsdq,
+       nvl(ss.xspas,0) paxsaj,
+       nvl(ss.rsdqpas,0) parsdq
+        from sqjw.t_common_organization_sjjs  org
+      , (select
+          #if($tjjb && $tjjb.equals("2"))
+               substr(SSJWSDM, 1, 4) ||'00000000' dwbm,
+           #elseif($tjjb && $tjjb.equals("3"))
+               substr(SSJWSDM, 1, 6) ||'000000' dwbm,
+           #elseif($tjjb && $tjjb.equals("4"))
+               substr(SSJWSDM, 1, 8) ||'0000' dwbm,
+           #elseif($tjjb && $tjjb.equals("5"))
+               SSJWSDM dwbm,
+           #end
+               sum(xslas) xslas,
+               sum(rsdqlas) rsdqlas,
+               sum(xspas) xspas,
+               sum(rsdqpas) rsdqpas
+          from (select dm, mc, SSJWSDM, SSpcsDM
+                  from sqjw.t_common_hnxzqh
+                 where dm like '4301%'
+                   AND SSJWSDM IS NOT NULL
+                   AND ISVALID = '1') dw,
+               (select faanshequ,
+                       sum(xslas) xslas,
+                       sum(rsdqla) rsdqlas,
+                       sum(xspas) xspas,
+                       sum(rsdqpa) rsdqpas
+                  from (select faanshequ,
+                               la xslas,
+                               case when ( anjianleibie = '050202' or anjianleibie = '050280' ) then la else 0 end rsdqla, pa xspas,
+                               case when ( anjianleibie = '050202' or anjianleibie = '050280' ) then pa else 0 end rsdqpa
+                          from (select aj.faanshequ, aj.anjianleibie, 1 la, 0 pa
+                                  from v_ajjbxxb aj
+                                  where 1=1
+                                  and length(aj.lianriqi)>7
+                                    #if($tjkssj && !$tjkssj.equals(""))
+                          and to_date(aj.lianriqi,'yyyymmdd') >= to_date(#[tjkssj],'yyyy-mm-dd')
+                        #end 
+                      #if($tjjssj && !$tjjssj.equals(""))
+                          and to_date(aj.lianriqi,'yyyymmdd') <= to_date(#[tjjssj],'yyyy-mm-dd')
+                        #end  
+                                  and aj.anjianbiaozhi = '1'
+                                  and aj.gonganbianhao like '4301%' 
+                                union all
+                                select aj.faanshequ, aj.anjianleibie, 0 la, 1 pa
+                                  from v_ajjbxxb aj
+                                  where 1=1
+                                   and length(aj.poanriqi)>7
+                                    #if($tjkssj && !$tjkssj.equals(""))
+                          and  aj.poanriqi >= replace(#[tjkssj],'-','')  
+                        #end 
+                      #if($tjjssj && !$tjjssj.equals(""))
+                          and  aj.poanriqi  <= replace(#[tjjssj],'-','')
+                        #end  
+                                  and aj.anjianbiaozhi = '1'
+                                  and aj.gonganbianhao like '4301%' 
+                                ))
+                 group by faanshequ) sl
+                 where dw.dm = faanshequ(+)
+                    #if($tjjb && $tjjb.equals("2"))
+               group by  substr(SSJWSDM, 1, 4)
+           #elseif($tjjb && $tjjb.equals("3"))
+              group by  substr(SSJWSDM, 1, 6)
+           #elseif($tjjb && $tjjb.equals("4"))
+              group by  substr(SSJWSDM, 1, 8)
+           #elseif($tjjb && $tjjb.equals("5"))
+              group by  SSJWSDM
+           #end      
+         )ss 
+         where ss.dwbm = org.orgcode(+)
+         #if($tjdwdm && !$tjdwdm.equals(""))
+           #if($tjjb.equals("5") && $orgLeve.equals("5"))
+                and org.orgcode =  #[tjdwdm]
+              #else
+                  and org.orgcode like substr(#[tjdwdm],1,2*f_get_dwleve(#[tjdwdm]))||'%'
+              #end
+         #end
+        #if($tjjb && !$tjjb.equals(""))
+            and org.leve = #[tjjb]
+            #if($jwqfl && !$jwqfl.equals("") && $tjjb.equals("5"))
+              and org.jwqfl = #[jwqfl]
+               #end
+               #if($pcsdj && !$pcsdj.equals("") && $tjjb.equals("4"))
+              and org.jwqfl = #[pcsdj]
+               #end
+            #end
+     #end
+     order by larsdq desc
+ 		]]>
+ 	</property>
+ 	
+ 	<!-- 居住证统计 -->
+ 	<property name="queryJzztjBeanList">
+ 		<![CDATA[
+ 			SELECT * FROM (
+ 				select 
+ 					org.orgcode,
+ 					org.orgname,
+ 					org.leve as orgLeve,
+ 					SUM(JZZDJS) AS JZZDJS,
+	       			SUM(JZZDJMS) AS JZZDJMS,
+	                SUM(JZZDJWS) AS JZZDJWS,
+	                SUM(JZZDJBSRS) AS JZZDJBSRS,
+	                SUM(JZZDJWSRS) AS JZZDJWSRS,
+	                SUM(FZS) AS FZS,
+	                DECODE(SUM(JZZDYS),0,DECODE(SUM(FZS), 0, '0.00%', '100%'),TO_CHAR((SUM(FZS) / SUM(JZZDYS)) * 100, '9990.99') || '%') AS FZL,
+	                SUM(YSBDS) AS YSBDS,
+	                DECODE(SUM(JZZDYS),0,DECODE(SUM(YSBDS), 0, '0.00%', '100%'),TO_CHAR((SUM(YSBDS) / SUM(JZZDYS)) * 100, '9990.99') || '%') AS YSBDL,
+	                DECODE(SUM(LDRKDJS),0,DECODE(SUM(JZZDJS), 0, '0.00%', '100%'),TO_CHAR((SUM(JZZDJS) / SUM(LDRKDJS)) * 100, '9990.99') || '%') AS BZL 
+	 			from (
+					select
+					#if($tjjb.equals("5"))
+						orgcode as code,
+					#elseif($tjjb.equals("4"))
+					 	substr(orgcode ,1,10) as code,
+					#elseif($tjjb.equals("3"))
+						substr(orgcode ,1,8) as code,
+					#elseif($tjjb.equals("2"))
+						substr(orgcode ,1,6) as code,
+					#elseif($tjjb.equals("1"))
+						substr(orgcode ,1,4) as code,	
+					#end
+				       SUM(JZZDJS) AS JZZDJS,
+		               SUM(JZZDJMS) AS JZZDJMS,
+		               SUM(JZZDJWS) AS JZZDJWS,
+		               SUM(JZZDJBSRS) AS JZZDJBSRS,
+		               SUM(JZZDJWSRS) AS JZZDJWSRS,
+		               SUM(FZS) AS FZS,
+		               SUM(LDRKDJS) AS LDRKDJS,
+		               SUM(JZZDYS) AS JZZDYS,
+		               SUM(YSBDS) AS YSBDS
+				   from t_common_jzztj 
+				   where 1=1
+			       #if($tjsj_start && !$tjsj_start.equals(""))
+				       and jssj >= to_date(#[tjsj_start],'yyyy-mm-dd')
+			       #end
+			       #if($tjsj_end && !$tjsj_end.equals(""))
+				       and jssj <= to_date(#[tjsj_end],'yyyy-mm-dd')
+			       #end
+				       and orgcode like substr(#[tjdwdm] , 1 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'
+				       
+			       #if($tjjb.equals("5"))
+						 group by rollup(orgcode)
+				   #elseif($tjjb.equals("4"))
+					 	 group by rollup(substr(orgcode ,1,10))
+				   #elseif($tjjb.equals("3"))
+						group by rollup(substr(orgcode ,1,8))
+				   #elseif($tjjb.equals("2"))
+						group by rollup(substr(orgcode ,1,6))
+				   #elseif($tjjb.equals("1"))
+						group by rollup(substr(orgcode ,1,4))
+				   #end
+				) tj 
+				left join t_common_organization_sjjs org 
+				on 1 = 1
+				#if($tjjb.equals("5"))
+					and org.orgcode = tj.code
+			   #elseif($tjjb.equals("4"))
+				 	and substr(org.orgcode,1,10) = tj.code
+			   #elseif($tjjb.equals("3"))
+					and	substr(org.orgcode,1,8) = tj.code
+			   #elseif($tjjb.equals("2"))
+					and	substr(org.orgcode,1,6) = tj.code
+			   #elseif($tjjb.equals("1"))
+					and	substr(org.orgcode,1,4) = tj.code
+			   #end
+			where 1=1
+				#if($orgLeve && $orgLeve.equals('5'))
+			       and org.orgcode = #[tjdwdm]
+			    #else
+				   and org.orgcode like substr(#[tjdwdm] , 1 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'
+			    #end
+			    #if(!$tjjb.equals("5"))
+					and org.leve = to_number(#[tjjb]) + 1
+			    #else
+			    	and org.leve = to_number(#[tjjb])
+			    #end
+				GROUP BY rollup(ORGCODE,ORGNAME,leve)
+		) 
+		WHERE 
+		(
+			(orgcode IS NULL AND orgname IS NULL AND orgleve IS NULL) 
+			OR
+			(orgcode IS NOT NULL AND orgname IS NOT NULL AND orgleve IS NOT NULL)
+		) 
+ 		ORDER BY orgcode  NULLS LAST
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="zxJzzxxBean">
+ 		<![CDATA[
+ 			update t_lsgl_ldrk_jzzxx
+ 			set JZZZXBS='1',JZZZXSJ=sysdate
+ 			where JZZXXBH=#[jzzxxbh]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryRkJbxxBeanByRybh">
+ 		<![CDATA[
+ 			select * 
+			from v_lsgl_rk_jbxx
+			where rybh=#[rybh]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="getLdrkXzzxz">
+ 		<![CDATA[
+ 			select zzbh,sfzh,f_get_dzmc_byrkfwglid(rkfwglid) as zzdxz,rkfwglid,to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj
+ 			from t_lsgl_rk_ldrkzzxx 
+ 			where zzbh=?
+ 		]]>
+ 	</property>
+ 	
+ 	 <property name="zxLdrkJzzxx">
+	 	<![CDATA[
+	 		update t_lsgl_ldrk_jzzxx
+	 		set JZZZXBS='1',JZZZXSJ=sysdate,XGSJ=sysdate
+	 		where JZZRYBH=#[rybh]
+	 	]]>
+	 </property>
+</properties>

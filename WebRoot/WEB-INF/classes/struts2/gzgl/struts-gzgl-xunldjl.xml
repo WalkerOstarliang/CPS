@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	 <package name="xunldjl" extends="default" namespace="/gzgl/xldjl">
+	 	<action name="*" class="com.chinacreator.gzgl.action.XunldJLAction" method="{1}">
+			<result name="toListPage">/jsp/gzgl/pages/xldjl/xunldJLList.jsp</result>
+			<result name="toView">/jsp/gzgl/pages/xldjl/xunldJL.jsp</result>
+	 	</action>
+	 </package>
+</struts>

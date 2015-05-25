@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="pcsxchd" extends="default" namespace="/gzgl/pcsxchd">
+		<action name="*" class="com.chinacreator.gzgl.action.PcsXcHdAction" method="{1}">
+	 		<result name="toPcsXcHdListPage">/jsp/gzgl/pages/pcsxchd/pcsxchdList.jsp</result>
+	 		<result name="toPcsXcHdInfoPage">/jsp/gzgl/pages/pcsxchd/pcsxchdinfo.jsp</result>
+	 		
+	 		<result name="toPcsXcHdTjPage">/jsp/gzgl/pages/pcsxchd/pcsxchdtj.jsp</result>
+	 		
+	 	</action>
+	</package>
+</struts>     

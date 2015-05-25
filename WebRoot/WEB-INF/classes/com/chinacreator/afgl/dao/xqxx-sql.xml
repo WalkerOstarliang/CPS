@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<property name="insertXqxxBean">
+		<![CDATA[
+			 insert into t_af_xqjbxx
+			  (xqbh,
+			   xqmc,
+			   xqdz,
+			   xqfzrxm,
+			   xqfzrlxdh,
+			   wygsmc,
+			   wygsfzr,
+			   wygsfzrlxdh,
+			   gllx,
+			   glms,
+			   dms,
+			   lds,
+			   xqmj,
+			   jlrq,
+			   cxrq,
+			   cxyy,
+			   djrxm,
+			   djrjh,
+			   djdwdm,
+			   djdwmc,
+			   djsj,
+			   cxbs,
+			   sssqbh,
+			   gxsj)
+			values
+			  (#[xqbh],
+			   #[xqmc],
+			   #[xqdz],
+			   #[xqfzrxm],
+			   #[xqfzrlxdh],
+			   #[wygsmc],
+			   #[wygsfzr],
+			   #[wygsfzrlxdh],
+			   #[gllx],
+			   #[glms],
+			   #[dms],
+			   #[lds],
+			   #[xqmj],
+			   to_date(#[jlrq],'yyyy-mm-dd'),
+			   to_date(#[cxrq],'yyyy-mm-dd'),
+			   #[cxyy],
+			   #[djrxm],
+			   #[djrjh],
+			   #[djdwdm],
+			   #[djdwmc],
+			   to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+			   #[cxbs],
+			   #[sssqbh],
+			   sysdate)
+		]]>
+	</property>
+	
+	<property name="updateXqxxBean">
+		<![CDATA[
+			update t_af_xqjbxx
+			   set 
+			       xqmc = #[xqmc],
+			       xqdz = #[xqdz],
+			       xqfzrxm = #[xqfzrxm],
+			       xqfzrlxdh = #[xqfzrlxdh],
+			       wygsmc = #[wygsmc],
+			       wygsfzr = #[wygsfzr],
+			       wygsfzrlxdh = #[wygsfzrlxdh],
+			       gllx = #[gllx],
+			       glms = #[glms],
+			       dms = #[dms],
+			       lds = #[lds],
+			       xqmj = #[xqmj],
+			       jlrq = to_date(#[jlrq],'yyyy-mm-dd'),
+			       cxrq = to_date(#[cxrq],'yyyy-mm-dd'),
+			       cxyy = #[cxyy],
+			       djrxm = #[djrxm],
+			       djrjh = #[djrjh],
+			       djdwdm = #[djdwdm],
+			       djdwmc = #[djdwmc],
+			       djsj = to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+			       cxbs = #[cxbs],
+			       sssqbh = #[sssqbh],
+			       gxsj = sysdate
+			 where xqbh = #[xqbh]
+
+		]]>
+	</property>
+	
+	<property name="changeXqxxBeanSatusByXqbh">
+		<![CDATA[
+			--注销
+			#if ($cxbs && $cxbs.equals("0"))
+				update t_af_xqjbxx
+			    set cxbs = '0',
+			   		cxrq = sysdate,
+       				cxyy = null
+			    where xqbh = #[xqbh]
+			--有效
+			#else
+				update t_af_xqjbxx
+			    set cxbs = '1',
+			   		cxrq = null,
+       				cxyy = null
+			    where xqbh = #[xqbh]
+			#end
+			
+		]]>
+	</property>
+	
+	<property name="queryXqxxList">
+		<![CDATA[
+			select xqbh,
+			       xqmc,
+			       xqdz,
+			       xqfzrxm,
+			       xqfzrlxdh,
+			       wygsmc,
+			       wygsfzr,
+			       wygsfzrlxdh,
+			       gllx,
+			       glms,
+			       dms,
+			       lds,
+			       xqmj,
+			       to_char(jlrq,'yyyy-mm-dd hh24:mi:ss') as jlrq,
+			       to_char(cxrq,'yyyy-mm-dd hh24:mi:ss') as cxrq,
+			       cxyy,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       cxbs,
+			       to_char(gxsj,'yyyy-mm-dd hh24:mi:ss') as gxsj,
+			       sssqbh,
+			       (select sqmc from t_af_sqjbxx a where a.sqbh= t.sssqbh) as sssqmc
+			  from t_af_xqjbxx t
+			where 1=1
+			  #if ($sqbh and !$sqbh.equals(""))
+			  	  and sssqbh = #[sqbh]
+			  #end
+			 #if ($pcsdm && !$pcsdm.equals(""))
+			 	and djdwdm like substr(#[pcsdm],1,8)||'%'
+			 #end
+			 #if($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			 #end
+			 #if($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			 #end
+			  #if ($xqmc && !$xqmc.equals(""))
+			  	and xqmc like '%'||#[xqmc]||'%'
+			  #end
+			  order by t.sssqbh asc
+		]]>
+	</property>
+	
+	<property name="queryXqxxBeanByXqbh">
+		<![CDATA[
+			select xqbh,
+			       xqmc,
+			       xqdz,
+			       xqfzrxm,
+			       xqfzrlxdh,
+			       wygsmc,
+			       wygsfzr,
+			       wygsfzrlxdh,
+			       gllx,
+			       glms,
+			       dms,
+			       lds,
+			       xqmj,
+			       to_char(jlrq,'yyyy-mm-dd hh24:mi:ss') as jlrq,
+			       to_char(cxrq,'yyyy-mm-dd hh24:mi:ss') as cxrq,
+			       cxyy,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       cxbs,
+			       to_char(gxsj,'yyyy-mm-dd hh24:mi:ss') as gxsj,
+			       sssqbh,
+			       (select sqmc from t_af_sqjbxx a where a.sqbh= t.sssqbh) as sssqmc
+			  from t_af_xqjbxx t
+			where xqbh=?
+		]]>
+	</property>
+	
+</properties>

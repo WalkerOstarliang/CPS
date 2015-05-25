@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryFjBeanPageInfo">
+	<![CDATA[
+			select id,
+		       fjxm,
+		       fjjh,
+		       sfzh,
+		       xb,
+		       mz,
+		       whcd,
+		       gzgw,
+		       zw,
+		       sfczbz,
+		       sfgajgglsykh,
+		       hjd,
+		       xzz,
+		       cyfjsj,
+		       dnjlcs,
+		       dncccs,
+		       dnjzywpxcs,
+		       lxfs,
+		       ssdwdm,
+		       ssdwmc,
+		       fjlb,
+		       djrjh,
+			   djrxm,
+			   djrsfzh,
+			   djdwdm,
+			   djdwmc,
+			   zxbs,
+			   sfzz,
+			   djsj,
+			   to_char(pysj,'yyyy-mm-dd') pysj,
+			   cqorxz,
+			   htqx,
+			   gzly,
+			   gze,
+			   wxyj,
+			   xldbh,
+			   gzjl
+		  from t_common_organization_fj
+		  where ssdwdm=?
+		  and (zxbs = '0' or zxbs is null)
+		
+	]]>
+	</property>
+	
+	
+	<property name="insertFjBean">
+	<![CDATA[
+		
+	insert into t_common_organization_fj
+	  (id,
+	   fjxm,
+	   fjjh,
+	   sfzh,
+	   xb,
+	   mz,
+	   whcd,
+	   gzgw,
+	   zw,
+	   sfczbz,
+	   sfgajgglsykh,
+	   hjd,
+	   xzz,
+	   cyfjsj,
+	   dnjlcs,
+	   dncccs,
+	   dnjzywpxcs,
+	   lxfs,
+	   ssdwdm,
+	   ssdwmc,
+	   fjlb,
+	   djrjh,
+	   djrxm,
+	   djrsfzh,
+	   djdwdm,
+	   djdwmc,
+	   zxbs,
+	   sfzz,
+	   djsj,
+	   pysj,
+	   cqorxz,
+	   htqx,
+	   gzly,
+	   gze,
+	   wxyj,
+	   xldbh,
+	   gzjl)
+	values
+	  (#[id],
+	   #[fjxm],
+	   #[fjjh],
+	   #[sfzh],
+	   #[xb],
+	   #[mz],
+	   #[whcd],
+	   #[gzgw],
+	   #[zw],
+	   #[sfczbz],
+	   #[sfgajgglsykh],
+	   #[hjd],
+	   #[xzz],
+	   #[cyfjsj],
+	   #[dnjlcs],
+	   #[dncccs],
+	   #[dnjzywpxcs],
+	   #[lxfs],
+	   #[ssdwdm],
+	   #[ssdwmc],
+	   #[fjlb],
+	   #[djrjh],
+	   #[djrxm],
+	   #[djrsfzh],
+	   #[djdwdm],
+	   #[djdwmc],
+	   #[zxbs],
+	   #[sfzz],
+	   sysdate,
+	   to_date(#[pysj],'yyyy-mm-dd'),
+	   #[cqorxz],
+	   #[htqx],
+	   #[gzly],
+	   #[gze],
+	   #[wxyj],
+	   #[xldbh],
+	   #[gzjl]
+	   )
+	]]>
+	</property>
+
+	<property name="updateFjBean">
+	<![CDATA[
+		update t_common_organization_fj
+		   set id = #[id],
+		       fjxm = #[fjxm],
+		       fjjh = #[fjjh],
+		       sfzh = #[sfzh],
+		       xb = #[xb],
+		       mz = #[mz],
+		       whcd = #[whcd],
+		       gzgw = #[gzgw],
+		       zw = #[zw],
+		       sfczbz = #[sfczbz],
+		       sfgajgglsykh = #[sfgajgglsykh],
+		       hjd = #[hjd],
+		       xzz = #[xzz],
+		       cyfjsj = #[cyfjsj],
+		       dnjlcs = #[dnjlcs],
+		       dncccs = #[dncccs],
+		       dnjzywpxcs = #[dnjzywpxcs],
+		       lxfs = #[lxfs],
+		       ssdwdm = #[ssdwdm],
+		       ssdwmc = #[ssdwmc],
+		       fjlb  = #[fjlb],
+   			   sfzz= #[sfzz],
+   			   pysj = to_date(#[pysj],'yyyy-mm-dd'),
+			   cqorxz = #[cqorxz],
+			   htqx = #[htqx],
+			   gzly = #[gzly],
+			   gze  = #[gze],
+			   wxyj = #[wxyj],
+			   gzjl = #[gzjl]
+		 where id = #[id]
+		
+	]]>
+	</property>
+	
+	<property name="queryFjBeanByJh">
+	<![CDATA[
+		select id,
+	       fjxm,
+	       fjjh,
+	       sfzh,
+	       xb,
+	       mz,
+	       whcd,
+	       gzgw,
+	       zw,
+	       sfczbz,
+	       sfgajgglsykh,
+	       hjd,
+	       xzz,
+	       cyfjsj,
+	       dnjlcs,
+	       dncccs,
+	       dnjzywpxcs,
+	       lxfs,
+	       ssdwdm,
+	       ssdwmc,
+	       fjlb,
+	       djrjh,
+		   djrxm,
+		   djrsfzh,
+		   djdwdm,
+		   djdwmc,
+		   zxbs,
+		   sfzz,
+		   djsj,
+		   to_char(pysj,'yyyy-mm-dd') pysj,
+		   cqorxz,
+		   htqx,
+		   gzly,
+		   gze,
+		   wxyj,
+		   xldbh,
+		   gzjl
+	  from t_common_organization_fj
+	  where fjjh=?
+	]]>
+	</property>
+	
+	<property name="queryFjBeanByFjid">
+		<![CDATA[
+			select id,
+		       fjxm,
+		       fjjh,
+		       sfzh,
+		       xb,
+		       mz,
+		       whcd,
+		       gzgw,
+		       zw,
+		       sfczbz,
+		       sfgajgglsykh,
+		       hjd,
+		       xzz,
+		       cyfjsj,
+		       dnjlcs,
+		       dncccs,
+		       dnjzywpxcs,
+		       lxfs,
+		       ssdwdm,
+		       ssdwmc,
+		       fjlb,
+		       djrjh,
+			   djrxm,
+			   djrsfzh,
+			   djdwdm,
+			   djdwmc,
+			   zxbs,
+			   sfzz,
+			   djsj,
+			   to_char(pysj,'yyyy-mm-dd') pysj,
+			   cqorxz,
+			   htqx,
+			   gzly,
+			   gze,
+			   wxyj,
+			   xldbh,
+			   gzjl
+		  from t_common_organization_fj
+		  where id=?
+		]]>
+	</property>
+	
+	
+	
+	<property name="queryFjBeanBySfzh">
+		<![CDATA[
+			select id,
+		       fjxm,
+		       fjjh,
+		       sfzh,
+		       xb,
+		       mz,
+		       whcd,
+		       gzgw,
+		       zw,
+		       sfczbz,
+		       sfgajgglsykh,
+		       hjd,
+		       xzz,
+		       cyfjsj,
+		       dnjlcs,
+		       dncccs,
+		       dnjzywpxcs,
+		       lxfs,
+		       ssdwdm,
+		       ssdwmc,
+		       fjlb,
+		       djrjh,
+			   djrxm,
+			   djrsfzh,
+			   djdwdm,
+			   djdwmc,
+			   zxbs,
+			   sfzz,
+			   djsj,
+			   to_char(pysj,'yyyy-mm-dd') pysj,
+			   cqorxz,
+			   htqx,
+			   gzly,
+			   gze,
+			   wxyj,
+			   xldbh,
+			   gzjl
+		  from t_common_organization_fj
+		  where sfzh=?
+		]]>
+	</property>
+	
+	
+	<property name="queryFjBeanPageInfoByQueryBean">
+		<![CDATA[
+			select id,
+			       fjxm,
+			       fjjh,
+			       sfzh,
+			       xb,
+			       mz,
+			       whcd,
+			       gzgw,
+			       zw,
+			       sfczbz,
+			       sfgajgglsykh,
+			       hjd,
+			       xzz,
+			       cyfjsj,
+			       dnjlcs,
+			       dncccs,
+			       dnjzywpxcs,
+			       lxfs,
+			       ssdwdm,
+			       ssdwmc,
+			       fjlb,
+			       djrjh,
+				   djrxm,
+				   djrsfzh,
+				   djdwdm,
+				   djdwmc,
+				   zxbs,
+				   sfzz,
+				   djsj,
+				   to_char(pysj,'yyyy-mm-dd') pysj,
+				   cqorxz,
+				   htqx,
+				   gzly,
+				   gze,
+				   wxyj,
+				   xldbh,
+				   (select xldmc from t_af_xldxx where xldbh=fj.xldbh and rownum=1) as xldmc,
+				   gzjl
+			  from t_common_organization_fj fj
+			  where 1=1
+			  	 #if($xldbh && !$xldbh.equals(""))
+			  	 	and xldbh = #[xldbh]
+			  	 #end
+			  	 #if($fjlb && !$fjlb.equals(""))
+			  	 	and fjlb=#[fjlb]
+			  	 #end
+			  	 #if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+			 	 	and (zxbs = #[zxbs] or zxbs is null)
+			     #end
+			     #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+			 	 	and (zxbs = #[zxbs])
+			     #end 
+			     
+			      #if ($djsj_start && !$djsj_start.equals(""))
+							and djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+					#end
+					#if($djsj_end && !$djsj_end.equals(""))
+							and djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+					#end
+			     
+			     #if($zjhm && !$zjhm.equals(""))
+		 			and sfzh=trim(#[zjhm])
+				 #end
+				 #if ($xb && !$xb.equals(""))
+					and xb=#[xb]
+				 #end
+				 
+				 #if ($fjjh && !$fjjh.equals(""))
+					and fjjh=#[fjjh]
+				 #end
+				 
+				 #if ($xm && !$xm.equals(""))
+					and fjxm like '%'||#[xm]||'%'
+				 #end
+				 #if($gzgw && !$gzgw.equals(""))
+				 	and gzgw = #[gzgw]
+				 #end
+				 
+				#if($jwsqdm && !$jwsqdm.equals(""))
+					and (ssdwdm = #[jwsqdm] or djdwdm  = #[jwsqdm])
+				#elseif($pcsdm && !$pcsdm.equals(""))
+		 			and (ssdwdm like substr(#[pcsdm],1,8)||'%' or djdwdm like substr(#[pcsdm],1,8)||'%')
+				#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+					and (ssdwdm like substr(#[countrygajgjgdm],1,6)||'%' or djdwdm like substr(#[countrygajgjgdm],1,6)||'%')
+				#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+					and (ssdwdm like substr(#[citygajgjgdm],1,4)||'%' or djdwdm like substr(#[citygajgjgdm],1,4)||'%')
+		   		#end
+				order by ssdwdm,djsj
+		]]>
+	</property>
+	<property name="deleteFjBean">
+		<![CDATA[
+			update t_common_organization_fj
+			set zxbs = '1',
+			    lzsj = sysdate
+			where id = ?
+		]]>
+	</property>
+	
+	<property name="queryFjBeanBySfzhInDw">
+		<![CDATA[
+			select * 
+			from t_common_organization_fj 
+			where sfzh = #[sfzh]
+			      and (zxbs = '0' or zxbs is null)
+		]]>
+	</property>
+	
+	<property name="queryFjBeanByIds">
+		<![CDATA[
+			select id,
+		       fjxm,
+		       fjjh,
+		       sfzh,
+		       xb,
+		       mz,
+		       whcd,
+		       gzgw,
+		       zw,
+		       sfczbz,
+		       sfgajgglsykh,
+		       hjd,
+		       xzz,
+		       cyfjsj,
+		       dnjlcs,
+		       dncccs,
+		       dnjzywpxcs,
+		       lxfs,
+		       ssdwdm,
+		       ssdwmc,
+		       fjlb,
+		       djrjh,
+			   djrxm,
+			   djrsfzh,
+			   djdwdm,
+			   djdwmc,
+			   zxbs,
+			   sfzz,
+			   djsj,
+			   pysj,
+			   cqorxz,
+			   htqx,
+			   gzly,
+			   gze,
+			   wxyj,
+			   xldbh,
+			   gzjl
+		  from t_common_organization_fj
+		  where id in (#[ids])
+		]]>
+	</property>
+	
+	
+	<property name="queryFjBeansByQueryBean">
+		<![CDATA[
+			select id,
+		       fjxm,
+		       fjjh,
+		       sfzh,
+		       xb,
+		       mz,
+		       whcd,
+		       gzgw,
+		       zw,
+		       sfczbz,
+		       sfgajgglsykh,
+		       hjd,
+		       xzz,
+		       cyfjsj,
+		       dnjlcs,
+		       dncccs,
+		       dnjzywpxcs,
+		       lxfs,
+		       ssdwdm,
+		       ssdwmc,
+		       fjlb,
+		       djrjh,
+			   djrxm,
+			   djrsfzh,
+			   djdwdm,
+			   djdwmc,
+			   zxbs,
+			   sfzz,
+			   djsj,
+			   gzjl
+		  from t_common_organization_fj
+		  where 1=1
+		  
+		  	 #if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+		 	 	and (zxbs = #[zxbs] or zxbs is null)
+		     #end
+		     #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+		 	 	and (zxbs = #[zxbs])
+		     #end 
+		     
+		      #if ($djsj_start && !$djsj_start.equals(""))
+						and djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+				#end
+				#if($djsj_end && !$djsj_end.equals(""))
+						and djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+				#end
+		     
+		     #if($zjhm && !$zjhm.equals("")                                                                 )
+	 			and sfzh=trim(#[zjhm])
+			 #end
+			 #if ($xb && !$xb.equals(""))
+				and xb=#[xb]
+			 #end
+			 
+			 #if ($fjjh && !$fjjh.equals(""))
+				and fjjh=#[fjjh]
+			 #end
+			 
+			#if($ssdwtype && $ssdwtype.equals("1"))
+			 	 and ssdwdm like substr(#[ssdwdm],1,2)||'%'
+			 #elseif($ssdwtype && $ssdwtype.equals("2"))
+			 	 and ssdwdm like substr(#[ssdwdm],1,4)||'%'
+			 #elseif($ssdwtype && $ssdwtype.equals("3"))
+			     and ssdwdm like substr(#[ssdwdm],1,6)||'%'
+			 #elseif($ssdwtype && $ssdwtype.equals("4"))
+			    and ssdwdm like substr(#[ssdwdm],1,8)||'%'
+			 #elseif($ssdwtype && $ssdwtype.equals("0"))
+			 	and ssdwdm = #[ssdwdm]
+			 #end
+			 order by ssdwdm
+		]]>
+	</property>
+</properties>

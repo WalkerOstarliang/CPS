@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="xtglstxx" namespace="/xtgl/stxx" extends="default"> 
+	  		<action name="*" class="com.chinacreator.xtgl.action.StxxManagerAction" method="{1}">
+	  			<result name="toStxxManagerPage">/jsp/xtgl/pages/stxx/stxxlist.jsp</result>
+	  			<result name="toDzxxManagerPage">/jsp/xtgl/pages/stxx/qyfwlist.jsp</result>
+	  			<result name="toXzqhQyPage">/jsp/xtgl/pages/stxx/xzqhqy.jsp</result>
+	  		</action>
+	  </package>
+</struts>

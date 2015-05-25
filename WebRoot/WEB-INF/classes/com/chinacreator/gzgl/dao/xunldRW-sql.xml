@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+<!-- 新增巡逻队任务 -->
+	<property name="addXunldRW">
+		<![CDATA[
+			insert into t_gzgl_xldrwapxx (bh,zxxldbh,zxryxm,
+					zxdyfw,zxrwms,djrxm,djsj,djdwdm,djdwmc,gxsj,czbz,xlfs,xlsj,ddmj,djrsfzh)
+			values(#[bh],#[zxxldbh],#[zxryxm],
+					#[zxdyfw],#[zxrwms],#[djrxm],to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'),
+					#[djdwdm],#[djdwmc],to_date(#[gxsj],'yyyy-mm-dd HH24:mi:ss'),#[czbz],#[xlfs],to_date(#[xlsj],'yyyy-MM-dd'),#[ddmj],#[djrsfzh])
+		]]>
+	</property>
+	
+<!-- 修改巡逻队任务 -->
+	<property name="updateXunldRW">
+		<![CDATA[
+			update t_gzgl_xldrwapxx set 
+				zxxldbh = #[zxxldbh] ,
+				zxryxm = #[zxryxm] ,
+				zxdyfw = #[zxdyfw] ,
+				zxrwms = #[zxrwms] ,
+				gxsj = to_date(#[gxsj],'yyyy-mm-dd HH24:mi:ss') ,
+				czbz = #[czbz],
+				xlfs = #[xlfs],
+				xlsj = to_date(#[xlsj],'yyyy-MM-dd'),
+				ddmj = #[ddmj]
+			where bh = #[bh]	
+		]]>
+	</property>
+	
+<!-- 删除巡逻队任务 -->
+	<property name="delXunldRW">
+		<![CDATA[
+			update t_gzgl_xldrwapxx set 
+				gxsj = to_date(#[gxsj],'yyyy-mm-dd HH24:mi:ss') ,
+				czbz = #[czbz]
+			where bh = #[bh]	
+		]]>
+	</property>
+	
+<!-- 根据主键查询巡逻队任务 -->
+	<property name="queryXunldRWByPK">
+		<![CDATA[
+			select rw.bh bh,
+            xld.xldmc xldmc,
+             rw.zxryxm zxryxm,
+             rw.zxdyfw zxdyfw,
+             rw.zxrwms zxrwms,
+             rw.zxxldbh zxxldbh,
+             rw.djrxm djrxm,
+             to_char(rw.djsj,'yyyy-MM-dd HH24:mi:ss') djsj,
+             rw.djdwdm djdwdm,
+             rw.djdwmc djdwmc,
+             rw.xlfs xlfs,
+             to_char(rw.xlsj,'yyyy-MM-dd') xlsj,
+             rw.ddmj ddmj
+        from t_gzgl_xldrwapxx rw left join  t_af_xldxx xld on
+        rw.zxxldbh=xld.xldbh
+        where 
+         rw.bh =#[bh]
+		]]>
+	</property>
+	
+<!-- 根据机构编码查询巡逻队 -->
+	<property name="queryXldsByOrgCode">
+		<![CDATA[
+			select xldbh,xldmc from t_af_xldxx where ssdwdm = ? and cxbs != '0' 
+		]]>
+	</property>
+	
+<!-- 分页查询巡逻队任务 -->
+	<property name="queryXunldRW">
+		<![CDATA[
+			select rw.bh bh,
+            xld.xldmc xldmc,
+             rw.zxryxm zxryxm,
+             rw.zxdyfw zxdyfw,
+             rw.zxxldbh zxxldbh,
+             rw.djrxm djrxm,
+             to_char(rw.djsj,'yyyy-MM-dd HH24:mi:ss') djsj,
+             rw.djdwdm djdwdm,
+             rw.djdwmc djdwmc, 
+              rw.xlfs xlfs,
+             to_char(rw.xlsj,'yyyy-MM-dd HH24:mi:ss') xlsj,
+             rw.ddmj ddmj
+        from t_gzgl_xldrwapxx rw left join  t_af_xldxx xld
+        on rw.zxxldbh=xld.xldbh
+        where  rw.czbz !='0'
+        
+   			#if($zxxldbh && !$zxxldbh.equals(""))
+   				and rw.zxxldbh = #[zxxldbh]
+   			#end
+   			
+   			#if($gzqsrq_start && !$gzqsrq_start.equals(""))
+   				and rw.xlsj >= to_date(#[gzqsrq_start],'yyyy-mm-dd')
+   			#end
+   			
+   			#if($gzqsrq_end && !$gzqsrq_end.equals(""))
+   				and rw.xlsj <= to_date(#[gzqsrq_end],'yyyy-mm-dd')
+   			#end
+   			
+   			#if($zxdyfw && !$zxdyfw.equals(""))
+   				and rw.zxdyfw like '%'||#[zxdyfw]||'%'
+   			#end
+   			 #if($jwsqdm && !$jwsqdm.equals(""))
+		    	and rw.djdwdm = #[jwsqdm]
+   			 #elseif ($pcsdm && !$pcsdm.equals(""))
+			 	and rw.djdwdm like substr(#[pcsdm],1,8)||'%'
+			 #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and rw.djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			 #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and rw.djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			 #end
+ 			order by rw.djsj desc
+		]]>
+	</property>	
+	
+<!-- 通过巡逻队编号查询巡逻队员 -->
+	<property name="queryXldyByBh">
+		<![CDATA[
+			select xldyxm from t_af_xldyxx where xldbh = ? and zgzt !='0'
+		]]>
+	</property>
+	
+	<property name="queryAfxldxxListByQueryBean">
+		<![CDATA[
+			select xldbh,
+		       xldmc,
+		       to_char(zjsj,'yyyy-mm-dd') as zjsj,
+		       ssdwdm,
+		       ssdwmc,
+		       ssdwfgld,
+		       ssdwfgldlxdh,
+		       xldzrrxm,
+		       xldzrrlxdh,
+		       xldlxdh,
+		       to_char(cxsj,'yyyy-mm-dd hh24:mi:ss') as cxsj,
+		       xlqy,
+		       bz,
+		       djrxm,
+		       djrjh,
+		       djdwdm,
+		       djdwmc,
+		       djsj,
+		       xldlx,
+		       cxbs,
+		       cxyy
+		  from t_af_xldxx
+		  where 1=1
+		  and cxbs!='0'
+		  --巡逻队名称
+		   #if ($xldlx && !$xldlx.equals(""))
+		  	and xldlx=#[xldlx]
+		   #end
+		  #if($xldmc && !$xldmc.equals(""))
+		  	and xldmc like '%'||#[xldmc]||'%'
+		  #end
+		   #if ($pcsdm && !$pcsdm.equals(""))
+			 	and djdwdm like substr(#[pcsdm],1,8)||'%'
+			 #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			 #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			 #end
+		  order by djsj desc
+		]]>
+	</property>
+</properties>

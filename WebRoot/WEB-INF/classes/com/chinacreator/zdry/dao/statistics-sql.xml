@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 查询重点人员SQL -->
+	<property name="indexZdryLbSQL">
+		<![CDATA[
+			SELECT T.MC AS TITLE, COUNT(J.RYBH) AS DATA
+			  FROM (SELECT * FROM T_ZDRY_JBXX WHERE 1 = 1
+				#if($jwsqdm and !$jwsqdm.equals(""))
+		          	and SSPCSDM=#[jwsqdm]
+		          #else
+		          	#if($pcsdm and !$pcsdm.equals(""))
+					  	and substr(SSPCSDM,1,8)=substr(#[pcsdm],1,8)
+					  #else
+						  #if($countrydm and !$countrydm.equals(""))
+						  	and substr(SSPCSDM,1,6) = #[countrydm]
+						  #else
+						  	 #if($citydm and !$citydm.equals(""))
+						  		and substr(SSPCSDM,1,4) = substr(#[citydm],1,4)
+						  	 #end
+						  #end
+					  #end
+		          #end	
+			) J, T_COMMON_DICTIONARY T
+			 WHERE  T.ZDLB = 'ZDRY_RYLX'
+			   AND T.DM = J.RYLX(+)
+			 GROUP BY T.MC
+			 ORDER BY COUNT(J.RYBH) DESC
+		]]>
+	</property>
+	
+	<property name="indexZdryGkSQL">
+		<![CDATA[
+			SELECT S1.TITLE, S1.DATA as zdryCount, S2.DATA as zdryGkCount
+			  FROM (SELECT T.ORGCODE, T.ORGJC AS TITLE, COUNT(J.SSPCSDM) AS DATA
+			          FROM (SELECT * FROM T_ZDRY_JBXX where 1=1
+			          		#if($jwsqdm and !$jwsqdm.equals(""))
+					          	and SSPCSDM=#[jwsqdm]
+					          #else
+					          	#if($pcsdm and !$pcsdm.equals(""))
+								  	and substr(SSPCSDM,1,8)=substr(#[pcsdm],1,8)
+								  #else
+									  #if($countrydm and !$countrydm.equals(""))
+									  	and substr(SSPCSDM,1,6) = #[countrydm]
+									  #else
+									  	 #if($citydm and !$citydm.equals(""))
+									  		and substr(SSPCSDM,1,4) = substr(#[citydm],1,4)
+									  	 #end
+									  #end
+								  #end
+					          #end	
+			          	   ) J,
+			               (SELECT *
+			                  FROM v_COMMON_ORGANIZATION
+			                 WHERE 1=1
+					          #if($jwsqdm and !$jwsqdm.equals(""))
+					          	and ORGCODE=#[jwsqdm]
+					          #else
+					          	#if($pcsdm and !$pcsdm.equals(""))
+								  	and substr(ORGCODE,1,8)=substr(#[pcsdm],1,8)
+								  #else
+									  #if($countrydm and !$countrydm.equals(""))
+									  	and ORGCODE like #[countrydm]||'__0000'
+									  #else
+									  	 #if($citydm and !$citydm.equals(""))
+									  		and ORGCODE like substr(#[citydm],1,4)||'__000000'
+									  	 #end
+									  #end
+								  #end
+					          #end
+							) T
+			         WHERE 
+					#if($jwsqdm and !$jwsqdm.equals(""))
+					     T.ORGCODE = J.SSPCSDM(+)
+			        #else
+			          	#if($pcsdm and !$pcsdm.equals(""))
+						  	 substr(T.ORGCODE,1,10)=substr(J.SSPCSDM(+),1,10)
+						#else
+							  #if($countrydm and !$countrydm.equals(""))
+							  	 substr(T.ORGCODE,1,8)=substr(J.SSPCSDM(+),1,8)
+							  #else
+							  	 #if($citydm and !$citydm.equals(""))
+							  		 substr(T.ORGCODE,1,6)=substr(J.SSPCSDM(+),1,6)
+							  	 #else
+							  	 	T.ORGCODE = J.SSPCSDM(+)
+							  	 #end
+							  #end
+						  #end
+			          #end
+			         GROUP BY T.ORGJC, T.ORGCODE) S1,
+			       (SELECT T.ORGCODE, T.ORGJC AS TITLE, COUNT(J.SSPCSDM) AS DATA
+			          FROM (SELECT * FROM T_ZDRY_JBXX WHERE ISGK = '1'
+			               	#if($jwsqdm and !$jwsqdm.equals(""))
+					          	and SSPCSDM=#[jwsqdm]
+					          #else
+					          	#if($pcsdm and !$pcsdm.equals(""))
+								  	and substr(SSPCSDM,1,8)=substr(#[pcsdm],1,8)
+								  #else
+									  #if($countrydm and !$countrydm.equals(""))
+									  	and substr(SSPCSDM,1,6) = #[countrydm]
+									  #else
+									  	 #if($citydm and !$citydm.equals(""))
+									  		and substr(SSPCSDM,1,4) = substr(#[citydm],1,4)
+									  	 #end
+									  #end
+								  #end
+					          #end
+			               ) J,
+			               (SELECT *
+			                  FROM v_COMMON_ORGANIZATION
+			                WHERE 1=1
+			                #if($jwsqdm and !$jwsqdm.equals(""))
+					          	and ORGCODE=#[jwsqdm]
+					          #else
+					          	#if($pcsdm and !$pcsdm.equals(""))
+								  	and substr(ORGCODE,1,8)=substr(#[pcsdm],1,8)
+								  #else
+									  #if($countrydm and !$countrydm.equals(""))
+									  	and ORGCODE like #[countrydm]||'__0000'
+									  #else
+									  	 #if($citydm and !$citydm.equals(""))
+									  		and ORGCODE like substr(#[citydm],1,4)||'__000000'
+									  	 #end
+									  #end
+								  #end
+					          #end
+					         ) T
+			         WHERE 
+			         #if($jwsqdm and !$jwsqdm.equals(""))
+					     T.ORGCODE = J.SSPCSDM(+)
+			          #else
+			          	#if($pcsdm and !$pcsdm.equals(""))
+						  	 substr(T.ORGCODE,1,10)=substr(J.SSPCSDM(+),1,10)
+						  #else
+							  #if($countrydm and !$countrydm.equals(""))
+							  	 substr(T.ORGCODE,1,8)=substr(J.SSPCSDM(+),1,8)
+							  #else
+							  	 #if($citydm and !$citydm.equals(""))
+							  		 substr(T.ORGCODE,1,6)=substr(J.SSPCSDM(+),1,6)
+							  	 #else
+							  	 	T.ORGCODE = J.SSPCSDM(+)
+							  	 #end
+							  #end
+						  #end
+			          #end
+			         GROUP BY T.ORGJC, T.ORGCODE) S2
+			 WHERE S1.ORGCODE = S2.ORGCODE
+			 ORDER BY S1.DATA DESC
+		]]>
+	</property>
+	
+</properties>

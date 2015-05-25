@@ -1,0 +1,1131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryDwBeansPageResult">
+ 		<![CDATA[
+ 			select jgbh,dwmc,dwdh,dwdz,djsj
+ 			from t_za_jg_jbxx
+ 			where ZRDWPCSDM=#[orgcode]
+ 			#if ($dwmc && !$dwmc.equals(""))
+ 				and dwmc like '%'||#[dwmc]||'%'
+ 			#end
+ 		]]>
+ 	</property>
+ 	
+ 	<property id="queryFwJbxxBeanByFwid">
+ 		<![CDATA[
+ 			 select fwid,dzid,f_get_dzmc(dzid) as dzmc,hzsfzh,hzxm,sssq
+			 from t_lsgl_fw_jbxx t 
+			 where fwid=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="insertDwJbxxBean">
+ 		<![CDATA[
+ 			insert into t_za_jg_jbxx
+			  (jgbh,
+			   dwmc,
+			   hylb,
+			   cyrs,
+			   dsz,
+			   dwcz,
+			   dwdh,
+			   dwdm,
+			   dwdzyx,
+			   fhdj,
+			   frdb,
+			   frsfzhm,
+			   frlxdh,
+			   frzz,
+			   fzjg,
+			   fzrq,
+			   glbm,
+			   gljb,
+			   dzid,
+			   fwbh,
+			   jyfw,
+			   kyrq,
+			   swdjh,
+			   yxqx,
+			   yyzzbh,
+			   yzbm,
+			   zafzr,
+			   zcdz,
+			   zcrq,
+			   zczb,
+			   zddwbs,
+			   gggdczqk,
+			   bmjb,
+			   bz,
+			   zxbs,
+			   zxrq,
+			   zxyy,
+			   djrxm,
+			   djsj,
+			   djdwdm,
+			   djdwmc,
+			   dwxz,
+			   czrxm,
+			   czsj,
+			   czdwdm,
+			   czdwmc,
+			   czbs,
+			   zrdwpcsdm,
+			   zrdwpcsmc,
+			   zrmjjh,
+			   zrmjxm,
+			   zrmjdh,
+			   dwlb,
+			   sssqdm,
+			   wwm,
+			   zgbm,
+			   djrjh,
+			   czrjh,
+			   dwdz,
+			   djrsfzh,
+			   czrsfzh)
+			values
+			  (#[jgbh],
+			   #[dwmc],
+			   #[hylb],
+			   #[cyrs],
+			   #[dsz],
+			   #[dwcz],
+			   #[dwdh],
+			   #[dwdm],
+			   #[dwdzyx],
+			   #[fhdj],
+			   #[frdb],
+			   #[frsfzhm],
+			   #[frlxdh],
+			   #[frzz],
+			   #[fzjg],
+			   to_date(#[fzrq],'yyyy-mm-dd'),
+			   #[glbm],
+			   #[gljb],
+			   #[dzid],
+			   #[fwbh],
+			   #[jyfw],
+			   to_date(#[kyrq],'yyyy-mm-dd'),
+			   #[swdjh],
+			   to_date(#[yxqx],'yyyy-mm-dd'),
+			   #[yyzzbh],
+			   #[yzbm],
+			   #[zafzr],
+			   #[zcdz],
+			   to_date(#[zcrq],'yyyy-mm-dd'),
+			   to_number(#[zczb]),
+			   #[zddwbs],
+			   #[gggdczqk],
+			   #[bmjb],
+			   #[bz],
+			   #[zxbs],
+			   null,
+			   #[zxyy],
+			   #[djrxm],
+			   sysdate,
+			   #[djdwdm],
+			   #[djdwmc],
+			   #[dwxz],
+			   #[czrxm],
+			   sysdate,
+			   #[czdwdm],
+			   #[czdwmc],
+			   #[czbs],
+			   #[zrdwpcsdm],
+			   #[zrdwpcsmc],
+			   #[zrmjjh],
+			   #[zrmjxm],
+			   #[zrmjdh],
+			   #[dwlb],
+			   #[sssqdm],
+			   #[wwm],
+			   #[zgbm],
+			   #[djrjh],
+			   #[czrjh],
+			   #[dwdz],
+			   #[djrsfzh],
+			   #[czrsfzh])
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateDwJbxxBean">
+ 		<![CDATA[
+ 			update t_za_jg_jbxx
+			   set 
+			       dwmc = #[dwmc],
+			       hylb = #[hylb],
+			       cyrs = to_number(#[cyrs]),
+			       dsz = #[dsz],
+			       dwcz = #[dwcz],
+			       dwdh = #[dwdh],
+			       dwdm = #[dwdm],
+			       dwdzyx = #[dwdzyx],
+			       fhdj = #[fhdj],
+			       frdb = #[frdb],
+			       frsfzhm = #[frsfzhm],
+			       frlxdh = #[frlxdh],
+			       frzz = #[frzz],
+			       fzjg = #[fzjg],
+			       fzrq = to_date(#[fzrq],'yyyy-mm-dd'),
+			       glbm = #[glbm],
+			       gljb = #[gljb],
+			       dzid = #[dzid],
+			       fwbh = #[fwbh],
+			       jyfw = #[jyfw],
+			       kyrq = to_date(#[kyrq],'yyyy-mm-dd'),
+			       swdjh = #[swdjh],
+			       yxqx = to_date(#[yxqx],'yyyy-mm-dd'),
+			       yyzzbh = #[yyzzbh],
+			       yzbm = #[yzbm],
+			       zafzr = #[zafzr],
+			       zcdz = #[zcdz],
+			       zcrq = to_date(#[zcrq],'yyyy-mm-dd'),
+			       zczb = to_number(#[zczb]),
+			       zddwbs = #[zddwbs],
+			       gggdczqk = #[gggdczqk],
+			       bmjb = #[bmjb],
+			       bz = #[bz],
+			       #if($zxbs && !$zxbs.equals(""))
+				       zxbs = #[zxbs],
+			       	   zxrq = to_date(#[zxrq],'yyyy-mm-dd hh24:mi:ss'),
+				       zxyy = #[zxyy],
+			       #end
+			       dwxz = #[dwxz],
+			       czrxm = #[czrxm],
+			       czsj = sysdate,
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czbs = '2',
+			       zrdwpcsdm = #[zrdwpcsdm],
+			       zrdwpcsmc = #[zrdwpcsmc],
+			       zrmjjh = #[zrmjjh],
+			       zrmjxm = #[zrmjxm],
+			       zrmjdh = #[zrmjdh],
+			       dwlb = #[dwlb],
+			       sssqdm = #[sssqdm],
+			       wwm = #[wwm],
+			       zgbm = #[zgbm],
+			       djrjh = #[djrjh],
+			       czrjh = #[czrjh],
+			       dwdz = #[dwdz],
+			       djrsfzh = #[djrsfzh],
+			       czrsfzh = #[czrsfzh]
+			 where jgbh = #[jgbh]
+ 			
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="insertTzhyBean">
+ 		<![CDATA[
+ 			insert into t_za_dw_tzhy
+			  (thbh,
+			   jgbh,
+			   thmc,
+			   thlb,
+			   thxl,
+			   jylb,
+			   thsffz,
+			   tzhyxkz,
+			   thbm,
+			   hfr,
+			   xkzhfdw,
+			   xkzyxrq,
+			   thjdrq,
+			   barq,
+			   bgqk,
+			   bz,
+			   jyfzr,
+			   jyfzrsfzh,
+			   jyfzrlxdh,
+			   abfzrxm,
+			   abfzrsfzh,
+			   abfzrlxdh,
+			   lzr,
+			   zrmj,
+			   mjdh,
+			   pcsdh,
+			   zazrdwmc,
+			   zazrdwdm)
+			values
+			  (#[thbh],
+			   #[jgbh],
+			   #[thmc],
+			   #[thlb],
+			   #[thxl],
+			   #[jylb],
+			   #[thsffz],
+			   #[tzhyxkz],
+			   #[thbm],
+			   #[hfr],
+			   #[xkzhfdw],
+			   to_date(#[xkzyxrq],'yyyy-mm-dd'),
+			   to_date(#[thjdrq],'yyyy-mm-dd'),
+			   to_date(#[barq],'yyyy-mm-dd'),
+			   #[bgqk],
+			   #[bz],
+			   #[jyfzr],
+			   #[jyfzrsfzh],
+			   #[jyfzrlxdh],
+			   #[abfzrxm],
+			   #[abfzrsfzh],
+			   #[abfzrlxdh],
+			   #[lzr],
+			   #[zrmj],
+			   #[mjdh],
+			   #[pcsdh],
+			   #[zazrdwmc],
+			   #[zazrdwdm])
+ 		]]>
+ 	</property>
+	
+	<property name="updateTzhyBean">
+		<![CDATA[
+			update t_za_dw_tzhy
+			   set 
+			       thmc = #[thmc],
+			       thlb = #[thlb],
+			       thxl = #[thxl],
+			       jylb = #[jylb],
+			       thsffz = #[thsffz],
+			       tzhyxkz = #[tzhyxkz],
+			       thbm = #[thbm],
+			       hfr = #[hfr],
+			       xkzhfdw = #[xkzhfdw],
+			       xkzyxrq = to_date(#[xkzyxrq],'yyyy-mm-dd'),
+			       thjdrq = to_date(#[thjdrq],'yyyy-mm-dd'),
+			       barq = to_date(#[barq],'yyyy-mm-dd'),
+			       bgqk = #[bgqk],
+			       bz = #[bz],
+			       jyfzr = #[jyfzr],
+			       jyfzrsfzh = #[jyfzrsfzh],
+			       jyfzrlxdh = #[jyfzrlxdh],
+			       abfzrxm = #[abfzrxm],
+			       abfzrsfzh = #[abfzrsfzh],
+			       abfzrlxdh = #[abfzrlxdh],
+			       lzr = #[lzr],
+			       zrmj = #[zrmj],
+			       mjdh = #[mjdh],
+			       pcsdh = #[pcsdh],
+			       zazrdwmc = #[zazrdwmc],
+			       zazrdwdm = #[zazrdwdm]
+			 where thbh = #[thbh]
+		]]>
+	</property>
+	
+	<property name="updateTzhylbField">
+		<![CDATA[
+			update t_za_dw_tzhy
+			   set 
+			       thmc = #[thmc],
+			       thlb = #[thlb],
+			       thxl = #[thxl],
+			       jylb = #[jylb]
+			 where jgbh = #[jgbh]
+		]]>
+	</property>
+	
+	<property name="insertTzhyTgxxBean">
+		<![CDATA[
+			insert into t_za_dw_thlgy
+			  (lgbh,
+			   jgbh,
+			   thbh,
+			   lgmc,
+			   lglx,
+			   sfjdlg,
+			   lgjfsb,
+			   lgxj,
+			   lgdj,
+			   lglcs,
+			   lgkfs,
+			   lgcws,
+			   lgtcws,
+			   lgzt,
+			   lgsflw,
+			   jyxm,
+			   zjzt,
+			   zjfs,
+			   jzmj,
+			   tdkd,
+			   mtmj,
+			   hksmj,
+			   jcsmj,
+			   tcsmj,
+			   kfmj,
+			   ylcsmj)
+			values
+			  (#[lgbh],
+			   #[jgbh],
+			   #[thbh],
+			   #[lgmc],
+			   #[lglx],
+			   #[sfjdlg],
+			   #[lgjfsb],
+			   #[lgxj],
+			   #[lgdj],
+			   to_number(#[lglcs]),
+			   to_number(#[lgkfs]),
+			   to_number(#[lgcws]),
+			   to_number(#[lgtcws]),
+			   #[lgzt],
+			   #[lgsflw],
+			   #[jyxm],
+			   #[zjzt],
+			   #[zjfs],
+			   to_number(#[jzmj]),
+			   to_number(#[tdkd]),
+			   to_number(#[mtmj]),
+			   to_number(#[hksmj]),
+			   to_number(#[jcsmj]),
+			   to_number(#[tcsmj]),
+			   to_number(#[kfmj]),
+			   to_number(#[ylcsmj]))
+		]]>
+	</property>
+	
+	<property name="updateTzhylgxxBean">
+		<![CDATA[
+			update t_za_dw_thlgy
+			   set 
+			       lgmc = #[lgmc],
+			       lglx = #[lglx],
+			       sfjdlg = #[sfjdlg],
+			       lgjfsb = #[lgjfsb],
+			       lgxj = #[lgxj],
+			       lgdj = #[lgdj],
+			       lglcs = to_number(#[lglcs]),
+			       lgkfs = to_number(#[lgkfs]),
+			       lgcws = to_number(#[lgcws]),
+			       lgtcws = to_number(#[lgtcws]),
+			       lgzt = #[lgzt],
+			       lgsflw = #[lgsflw],
+			       jyxm = #[jyxm],
+			       zjzt = #[zjzt],
+			       zjfs = #[zjfs],
+			       jzmj = to_number(#[jzmj]),
+			       tdkd = to_number(#[tdkd]),
+			       mtmj = to_number(#[mtmj]),
+			       hksmj = to_number(#[hksmj]),
+			       jcsmj = to_number(#[jcsmj]),
+			       tcsmj = to_number(#[tcsmj]),
+			       kfmj = to_number(#[kfmj]),
+			       ylcsmj = to_number(#[ylcsmj])
+			 where lgbh = #[lgbh]
+		]]>
+	</property>
+	
+	<property name="insertThksyBean">
+		<![CDATA[
+			insert into t_za_dw_thksy
+			  (ksbh, jgbh, thbh, jgmc, kslx, fwqy, zggs, bdzgs, wdzgs, bz, kysj)
+			values
+			  (#[ksbh],
+			   #[jgbh],
+			   #[thbh],
+			   #[jgmc],
+			   #[kslx],
+			   #[fwqy],
+			   #[zggs],
+			   #[bdzgs],
+			   #[wdzgs],
+			   #[bz],
+			   to_date(#[kysj],'yyyy-mm-dd'))
+		]]>
+	</property>
+	
+	<property name="updateThksyBean">
+		<![CDATA[
+			update t_za_dw_thksy
+			   set 
+			       jgmc = #[jgmc],
+			       kslx = #[kslx],
+			       fwqy = #[fwqy],
+			       zggs = #[zggs],
+			       bdzgs = #[bdzgs],
+			       wdzgs = #[wdzgs],
+			       bz = #[bz],
+			       kysj = to_date(#[kysj],'yyyy-mm-dd')
+			 where ksbh = #[ksbh]
+		]]>
+	</property>
+	
+	<property name="insertGgcsBean">
+		<![CDATA[
+			insert into t_za_dw_ggcs
+			  (jlbh,
+			   ggcsbh,
+			   jgbh,
+			   badjhm,
+			   csmc,
+			   cslb,
+			   csxl,
+			   csdj,
+			   csfzr,
+			   cslxfs,
+			   csdz,
+			   jzwjg,
+			   csnbjg,
+			   csqtqk,
+			   cstdk,
+			   csdksl,
+			   ywxjjcc,
+			   cszmj,
+			   yymj,
+			   zwhj,
+			   lqzzsj,
+			   hdrs,
+			   ggcsmj,
+			   ktvbjs,
+			   bz)
+			values
+			  (#[jlbh],
+			   #[ggcsbh],
+			   #[jgbh],
+			   #[badjhm],
+			   #[csmc],
+			   #[cslb],
+			   #[csxl],
+			   #[csdj],
+			   #[csfzr],
+			   #[cslxfs],
+			   #[csdz],
+			   #[jzwjg],
+			   #[csnbjg],
+			   #[csqtqk],
+			   #[cstdk],
+			   to_number(#[csdksl]),
+			   #[ywxjjcc],
+			   to_number(#[cszmj]),
+			   to_number(#[yymj]),
+			   #[zwhj],
+			   to_date(#[lqzzsj],'yyyy-mm-dd'),
+			   to_number(#[hdrs]),
+			   to_number(#[ggcsmj]),
+			   to_number(#[ktvbjs]),
+			   #[bz])
+			
+		]]>
+	</property>
+	
+	<property name="updateGgcsBean">
+		<![CDATA[
+			update t_za_dw_ggcs
+			   set 
+			       ggcsbh = #[ggcsbh],
+			       jgbh = #[jgbh],
+			       badjhm = #[badjhm],
+			       csmc = #[csmc],
+			       cslb = #[cslb],
+			       csxl = #[csxl],
+			       csdj = #[csdj],
+			       csfzr = #[csfzr],
+			       cslxfs = #[cslxfs],
+			       csdz = #[csdz],
+			       jzwjg = #[jzwjg],
+			       csnbjg = #[csnbjg],
+			       csqtqk = #[csqtqk],
+			       cstdk = #[cstdk],
+			       csdksl = to_number(#[csdksl]),
+			       ywxjjcc = #[ywxjjcc],
+			       cszmj = to_number(#[cszmj]),
+			       yymj = to_number(#[yymj]),
+			       zwhj = to_number(#[zwhj]),
+			       lqzzsj = to_date(#[lqzzsj],'yyyy-mm-dd'),
+			       hdrs = to_number(#[hdrs]),
+			       ggcsmj = to_number(#[ggcsmj]),
+			       ktvbjs = to_number(#[ktvbjs]),
+			       bz = #[bz]
+			 where jlbh = #[jlbh]
+			
+		]]>
+	</property>
+	
+	<property name="updateGgcsCslbField">
+		<![CDATA[
+			update t_za_dw_ggcs
+			   set 
+			       ggcsbh = #[ggcsbh],
+			       csmc = #[csmc],
+			       cslb = #[cslb],
+			       csxl = #[csxl]
+			 where  jgbh = #[jgbh]
+		]]>
+	</property>
+	
+	<property name="insertNbdwBean">
+		<![CDATA[
+			insert into t_za_dw_nbdw
+			  (nbdwbh,
+			   jgbh,
+			   dwfl,
+			   dwxz,
+			   jfqk,
+			   glbm,
+			   bwjgsz,
+			   scjyzk,
+			   zybws,
+			   yhbws,
+			   zddj,
+			   pdyj,
+			   nlr,
+			   nxse,
+			   zgzgs,
+			   wpzjs,
+			   lsgs,
+			   wjssygs,
+			   zgxsrs,
+			   gatssygs,
+			   ssmzssygs,
+			   bwzzlb,
+			   bwbmfzr,
+			   bwfzrlxdh,
+			   zzbwgbs,
+			   jzbwgbs,
+			   jjs,
+			   bas,
+			   hwrs,
+			   hwqs,
+			   qdzazrssj,
+			   zbdts,
+			   zbmtcs,
+			   zbqk,
+			   jgs,
+			   zbqcs,
+			   sfyjzb,
+			   sfnwwht,
+			   ytwzym,
+			   nbjywmc,
+			   bwzzmc,
+			   hlwckip,
+			   nbbbsmc,
+			   bz,
+			   dwllr,
+			   bwbmfzrsfzh,
+			   ltxrys,
+			   xgzgs,
+			   xjygs,
+			   dwxl)
+			values
+			  (#[nbdwbh],
+			   #[jgbh],
+			   #[dwfl],
+			   #[dwxz],
+			   #[jfqk],
+			   #[glbm],
+			   #[bwjgsz],
+			   #[scjyzk],
+			   #[zybws],
+			   to_number(#[yhbws]),
+			   #[zddj],
+			   #[pdyj],
+			   to_number(#[nlr]),
+			   to_number(#[nxse]),
+			   to_number(#[zgzgs]),
+			   to_number(#[wpzjs]),
+			   to_number(#[lsgs]),
+			   to_number(#[wjssygs]),
+			   to_number(#[zgxsrs]),
+			   to_number(#[gatssygs]),
+			   to_number(#[ssmzssygs]),
+			   #[bwzzlb],
+			   #[bwbmfzr],
+			   #[bwfzrlxdh],
+			   to_number(#[zzbwgbs]),
+			   to_number(#[jzbwgbs]),
+			   to_number(#[jjs]),
+			   to_number(#[bas]),
+			   to_number(#[hwrs]),
+			   to_number(#[hwqs]),
+			   to_date(#[qdzazrssj],'yyyy-mm-dd'),
+			   to_number(#[zbdts]),
+			   to_number(#[zbmtcs]),
+			   #[zbqk],
+			   to_number(#[jgs]),
+			   to_number(#[zbqcs]),
+			   #[sfyjzb],
+			   #[sfnwwht],
+			   #[ytwzym],
+			   #[nbjywmc],
+			   #[bwzzmc],
+			   #[hlwckip],
+			   #[nbbbsmc],
+			   #[bz],
+			   #[dwllr],
+			   #[bwbmfzrsfzh],
+			   to_number(#[ltxrys]),
+			   to_number(#[xgzgs]),
+			   to_number(#[xjygs]),
+			   #[dwxl])
+		]]>
+	</property>
+	
+	<property name="updateNbdwBean">
+		<![CDATA[
+			update t_za_dw_nbdw
+			   set  
+			       jgbh =#[jgbh],
+			       dwfl =#[dwfl],
+			       dwxz =#[dwxz],
+			       jfqk =#[jfqk],
+			       glbm =#[glbm],
+			       bwjgsz =#[bwjgsz],
+			       scjyzk =#[scjyzk],
+			       zybws =#[zybws],
+			       yhbws =#[yhbws],
+			       zddj =#[zddj],
+			       pdyj =#[pdyj],
+			       nlr =to_number(#[nlr]),
+			       nxse =to_number(#[nxse]),
+			       zgzgs =to_number(#[zgzgs]),
+			       wpzjs =to_number(#[wpzjs]),
+			       lsgs =to_number(#[lsgs]),
+			       wjssygs =to_number(#[wjssygs]),
+			       zgxsrs =to_number(#[zgxsrs]),
+			       gatssygs =to_number(#[gatssygs]),
+			       ssmzssygs =to_number(#[ssmzssygs]),
+			       bwzzlb =#[bwzzlb],
+			       bwbmfzr =#[bwbmfzr],
+			       bwfzrlxdh =#[bwfzrlxdh],
+			       zzbwgbs =to_number(#[zzbwgbs]),
+			       jzbwgbs =to_number(#[jzbwgbs]),
+			       jjs =to_number(#[jjs]),
+			       bas =to_number(#[bas]),
+			       hwrs =to_number(#[hwrs]),
+			       hwqs =to_number(#[hwqs]),
+			       qdzazrssj =to_date(#[qdzazrssj],'yyyy-mm-dd'),
+			       zbdts =to_number(#[zbdts]),
+			       zbmtcs =to_number(#[zbmtcs]),
+			       zbqk =#[zbqk],
+			       jgs =to_number(#[jgs]),
+			       zbqcs =to_number(#[zbqcs]),
+			       sfyjzb =#[sfyjzb],
+			       sfnwwht =#[sfnwwht],
+			       ytwzym =#[ytwzym],
+			       nbjywmc =#[nbjywmc],
+			       bwzzmc =#[bwzzmc],
+			       hlwckip =#[hlwckip],
+			       nbbbsmc =#[nbbbsmc],
+			       bz =#[bz],
+			       dwllr =#[dwllr],
+			       bwbmfzrsfzh =#[bwbmfzrsfzh],
+			       ltxrys =to_number(#[ltxrys]),
+			       xgzgs =to_number(#[xgzgs]),
+			       xjygs =to_number(#[xjygs]),
+			       dwxl =#[dwxl]
+			 where nbdwbh =#[nbdwbh]
+		]]>
+	</property>
+	
+	<property name="updateNbdwxlField">
+		<![CDATA[
+			update t_za_dw_nbdw
+			   set  
+			       dwfl =#[dwxl],
+			       dwxz =#[dwxz],
+			       dwxl =#[dwxl]
+			 where jgbh =#[jgbh]
+		]]>
+	</property>
+	
+	<property name="insertWxwpdwBean">
+		<![CDATA[
+			insert into t_za_dw_wxwpdw
+			  (jlbh, jgbh, hwlb, dwfl, fbxkfw, scdz, cssb, bz)
+			values
+			  (#[jlbh], #[jgbh], #[hwlb], #[dwfl], #[fbxkfw], #[scdz], #[cssb], #[bz])
+		]]>
+	</property>
+	
+	<property name="updateWxwpdwBean">
+		<![CDATA[
+			update t_za_dw_wxwpdw
+			   set 
+			       jgbh = #[jgbh],
+			       hwlb = #[hwlb],
+			       dwfl = #[dwfl],
+			       fbxkfw = #[fbxkfw],
+			       scdz = #[scdz],
+			       cssb = #[cssb],
+			       bz = #[bz]
+			 where jlbh = #[jlbh]
+		]]>
+	</property>
+	
+	<property name="updateWxwpdwglField">
+		<![CDATA[
+			update t_za_dw_wxwpdw
+			   set hwlb = #[hwlb],
+			       dwfl = #[dwfl]
+			 where jgbh = #[jgbh]
+		]]>
+	</property>
+	
+	<property name="insertSwfwcsBean">
+		<![CDATA[
+			insert into t_za_jg_swfwcs
+			  (jlbh,
+			   jgbh,
+			   wbbh,
+			   wlwhxkzh,
+			   kdjrfws,
+			   dnts,
+			   yymj,
+			   wlaqshyjsh,
+			   lsswksl,
+			   jrfs,
+			   xfshyjsh,
+			   xsyip,
+			   bz)
+			values
+			  (#[jlbh],
+			   #[jgbh],
+			   #[wbbh],
+			   #[wlwhxkzh],
+			   #[kdjrfws],
+			   to_number(#[dnts]),
+			   to_number(#[yymj]),
+			   #[wlaqshyjsh],
+			   to_number(#[lsswksl]),
+			   #[jrfs],
+			   #[xfshyjsh],
+			   #[xsyip],
+			   #[bz])
+		]]>
+	</property>
+	
+	<property name="updateSwfwcsBean">
+		<![CDATA[
+			update t_za_jg_swfwcs
+			   set 
+			       jgbh = #[jgbh],
+			       wbbh = #[wbbh],
+			       wlwhxkzh = #[wlwhxkzh],
+			       kdjrfws = #[kdjrfws],
+			       dnts = #[dnts],
+			       yymj = #[yymj],
+			       wlaqshyjsh = #[wlaqshyjsh],
+			       lsswksl = #[lsswksl],
+			       jrfs = #[jrfs],
+			       xfshyjsh = #[xfshyjsh],
+			       xsyip = #[xsyip],
+			       bz = #[bz]
+			 where jlbh = #[jlbh]
+		]]>
+	</property>
+	
+	<property name="updateSwfwcsField">
+		<![CDATA[
+			update t_za_jg_swfwcs
+			   set 
+			       wbbh = #[wbbh],
+			       xsyip = #[xsyip]
+			 where jgbh = #[jgbh]
+		]]>
+	</property>
+	
+	<property name="insertSwdwBean">
+		<![CDATA[
+			insert into t_za_dw_swdw
+			  (jlbh,
+			   jgbh,
+			   wmmc,
+			   tzgjdq,
+			   zftzdw,
+			   wftzdw,
+			   dsz,
+			   fdsz,
+			   zjl,
+			   fzjl,
+			   lxr,
+			   swwfzb,
+			   swzfzb,
+			   sjbgdz,
+			   email,
+			   qyqkjz,
+			   bz)
+			values
+			  (#[jlbh],
+			   #[jgbh],
+			   #[wmmc],
+			   #[tzgjdq],
+			   #[zftzdw],
+			   #[wftzdw],
+			   #[dsz],
+			   #[fdsz],
+			   #[zjl],
+			   #[fzjl],
+			   #[lxr],
+			   to_number(#[swwfzb]),
+			   to_number(#[swzfzb]),
+			   #[sjbgdz],
+			   #[email],
+			   #[qyqkjz],
+			   #[bz])
+		]]>
+	</property>
+	
+	<property name="updateSwdwBean">
+		<![CDATA[
+			update t_za_dw_swdw
+			   set  
+			       jgbh = #[jgbh],
+			       wmmc = #[wmmc],
+			       tzgjdq = #[tzgjdq],
+			       zftzdw = #[zftzdw],
+			       wftzdw = #[wftzdw],
+			       dsz = #[dsz],
+			       fdsz = #[fdsz],
+			       zjl = #[zjl],
+			       fzjl = #[fzjl],
+			       lxr = #[lxr],
+			       swwfzb = to_number(#[swwfzb]),
+			       swzfzb = to_number(#[swzfzb]),
+			       sjbgdz = #[sjbgdz],
+			       email = #[email],
+			       qyqkjz = #[qyqkjz],
+			       bz = #[bz]
+			 where jlbh = #[jlbh]
+			
+		]]>
+	</property>
+	
+	<property name="deleteTzhyBeanByJgbh">
+		<![CDATA[
+			delete from t_za_dw_tzhy where jgbh=?
+		]]>
+	</property> 	
+	
+	<property name="deleteTzhyTgxxBeanByJgbh">
+		<![CDATA[
+			delete from t_za_dw_thlgy where jgbh=?
+		]]>
+	</property>
+	
+	<property name="deleteThksyBeanByJgbh">
+		<![CDATA[
+			delete from t_za_dw_thksy where jgbh=?
+		]]>
+	</property>
+	
+	<property name="deleteGgcsBeanByJgbh">
+		<![CDATA[
+			delete from t_za_dw_ggcs where jgbh=?
+		]]>
+	</property>
+	
+	<property name="deleteNbdwBeanByJgbh">
+		<![CDATA[
+			delete from t_za_dw_nbdw where jgbh=?
+		]]>
+	</property>
+	
+	<property name="deleteWxpdwBeanByJgbh">
+		<![CDATA[
+			delete from t_za_dw_wxwpdw where jgbh=?
+		]]>
+	</property>
+	
+	<property name="deleteSwdwBeanByJgbh">
+		<![CDATA[
+			delete from t_za_dw_swdw where jgbh=?
+		]]>
+	</property>
+	
+	<property name="deleteSwfwcsBeanByJgbh">
+		<![CDATA[
+			delete from t_za_jg_swfwcs where jgbh=?
+		]]>
+	</property>
+	
+	<property name="queryDwJbxxBeanByJgbh">
+		<![CDATA[
+			select jgbh,
+			       dwmc,
+			       hylb,
+			       to_number(cyrs) as cyrs,
+			       dsz,
+			       dwcz,
+			       dwdh,
+			       dwdm,
+			       dwdzyx,
+			       fhdj,
+			       frdb,
+			       frsfzhm,
+			       frlxdh,
+			       frzz,
+			       fzjg,
+			       to_char(fzrq,'yyyy-mm-dd') as fzrq,
+			       glbm,
+			       gljb,
+			       dzid,
+			       fwbh,
+			       jyfw,
+			       to_char(kyrq,'yyyy-mm-dd') as kyrq,
+			       swdjh,
+			        to_char(yxqx,'yyyy-mm-dd') as yxqx,
+			       yyzzbh,
+			       yzbm,
+			       zafzr,
+			       zcdz,
+			       to_char(zcrq,'yyyy-mm-dd') as zcrq,
+			       zczb,
+			       zddwbs,
+			       gggdczqk,
+			       bmjb,
+			       bz,
+			       zxbs,
+			       to_char(zxrq,'yyyy-mm-dd hh24:mi:ss') as zxrq,
+			       zxyy,
+			       djrxm,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       djdwdm,
+			       djdwmc,
+			       dwxz,
+			       czrxm,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+			       czdwdm,
+			       czdwmc,
+			       czbs,
+			       zrdwpcsdm,
+			       zrdwpcsmc,
+			       zrmjjh,
+			       zrmjxm,
+			       zrmjdh,
+			       dwlb,
+			       sssqdm,
+			       wwm,
+			       zgbm,
+			       djrjh,
+			       czrjh,
+			       dwdz,
+			       djrsfzh,
+			       czrsfzh,
+			       sfzagl
+			  from t_za_jg_jbxx
+			where jgbh=#[jgbh]
+		]]>
+	</property>
+	
+	<property name="zxDwfwglBean">
+		<![CDATA[
+			update t_lsgl_dwfw_gl
+			set ZXBS=#[zxbs],
+				ZXSJ=sysdate,
+				ZXMJXM=#[zxmjxm],
+				ZXDWDM=#[zxdwdm],
+				ZXDWMC=#[zxdwmc],
+				ZXYY = #[zxyy]
+			where jgbh=#[jgbh]
+		]]>
+	</property>
+	
+	<property name="insertDwfwglBean">
+		<![CDATA[
+			insert into t_lsgl_dwfw_gl
+			  (dwfwglid, jgbh, fwid, dzid, qrsj, qcsj, zxbs, zxsj, zxmjxm, zxdwdm, zxdwmc, zxyy, djsj)
+			values
+			  (#[dwfwglid], #[jgbh], #[fwid], #[dzid], null, null, '0', null, #[zxmjxm], #[zxdwdm], #[zxdwmc], #[zxyy], sysdate)
+		]]>
+	</property>
+	
+	<!-- 单位管理部门核实 -->
+	<property name="insertDwglbmHs">
+		<![CDATA[
+			INSERT INTO t_za_dwhc
+			  (id, jgbh, nbhc, zahc, xfhc, wjhc, hcrxm, hcrjh, hcrsfzh, hcdwdm, hcdwmc, hcsj,dwfl,zddwbz)
+			VALUES
+			  (#[id], #[jgbh], #[nbhc], #[zahc], #[xfhc], #[wjhc], #[hcrxm], #[hcrjh], #[hcrsfzh], #[hcdwdm], #[hcdwmc], sysdate,#[dwfl],#[zddwbz])
+		]]>
+	</property>
+	
+	<property name="updateDwglbmHs">
+		<![CDATA[
+			update t_za_dwhc set
+			  hcrxm = #[hcrxm], 
+			  hcrjh = #[hcrjh],
+			  hcrsfzh = #[hcrsfzh],
+			  hcdwdm = #[hcdwdm], 
+			  hcdwmc = #[hcdwmc], 
+			  hcsj = sysdate,
+			  dwfl = #[dwfl],
+			  zddwbz = #[zddwbz]
+			  
+			 #if($nbhc && !$nbhc.equals("") )
+				, nbhc = #[nbhc]
+			 #end
+			 #if($xfhc && !$xfhc.equals("") )
+				, xfhc = #[xfhc]
+			 #end
+			 #if($wjhc && !$wjhc.equals("") )
+				, wjhc = #[wjhc]
+			 #end
+			 #if($zahc && !$zahc.equals("") )
+				, zahc = #[zahc]
+			 #end
+			where id = #[id]
+		]]>
+	</property>
+	
+	<!-- 更新单位管理部门标识 -->
+	<property name="updateDwjbxxGlbmBz">
+		<![CDATA[
+			update t_za_jg_jbxx 
+			set jgbh = #[jgbh]
+			#if($sfnbgl && !$sfnbgl.equals("") )
+				, sfnbgl = #[sfnbgl]
+			#end
+			#if($sfxfgl && !$sfxfgl.equals("") )
+				, sfxfgl = #[sfxfgl]
+			#end
+			#if($sfwjgl && !$sfwjgl.equals("") )
+				, sfwjgl = #[sfwjgl]
+			#end
+			#if($sfzagl && !$sfzagl.equals("") )
+				, sfzagl = #[sfzagl]
+			#end
+			where jgbh = #[jgbh]
+		]]>
+	</property>
+	
+	<property name="queryDwBeanBeanByXqDwmc">
+		<![CDATA[
+			select jgbh,dwmc,dwdz from t_za_jg_jbxx where djdwdm=#[orgcode] and dwmc=#[dwmc]
+		]]>
+	</property>
+	
+	<property name="queryDwhcByJgbhAndHylb">
+		<![CDATA[
+			SELECT ID, jgbh, nbhc, zahc, xfhc, wjhc, hcrxm, hcrjh, hcrsfzh, hcdwdm, hcdwmc, to_char(hcsj,'yyyy-mm-dd hh24:mi:ss') as hcsj, dwfl, zddwbz 
+			FROM t_za_dwhc
+			WHERE jgbh = #[jgbh]
+			#if($hylb && !$hylb.equals(""))
+				#if($hylb.equals("1"))
+					and zahc is null
+				#end
+				#if($hylb.equals("2"))
+					and nbhc is null
+				#end
+				#if($hylb.equals("4"))
+					and wjhc is null
+				#end
+				#if($hylb.equals("5"))
+					and xfhc is null
+				#end 
+			#end
+		]]>
+	</property>
+	
+	<!-- 根据机构编号查询单位行业类别 -->
+	<property name="queryDwHylbByJgbh">
+		<![CDATA[
+			select hylb from t_za_jg_jbxx where jgbh = ?
+		]]>
+	</property>
+	
+	<!-- 根据机构编号更新单位行业类别 -->
+	<property name="updateDwHylbByJgbh">
+		<![CDATA[
+			update t_za_jg_jbxx set hylb = ? where jgbh = ?
+		]]>
+	</property>
+</properties>

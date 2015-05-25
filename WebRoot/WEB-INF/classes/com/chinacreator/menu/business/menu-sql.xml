@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryOneLevelMenuBeans">
+		<![CDATA[
+			 select *
+			 from t_common_menu
+			 where MENULEVEL='1' and isvalid='1'
+			 order by sn asc
+		]]>
+	</property>
+ 
+ 	<property name="queryChildMenuByParentId">
+		<![CDATA[
+			 select m.*,exist_menushortcut(m.menuid,?) as isShortCut
+			 from t_common_menu m
+			 where m.parentid=? and m.isvalid='1'
+			 order by m.sn asc
+		]]>
+	</property>
+ 
+ 	<property name="saveMenuBean">
+ 		<![CDATA[
+ 			insert into t_common_menu
+			  (menuid, title, href, parentid, menulevel, sn,imageicon, createdate, isvalid)
+			values
+			  (?, ?, ?, ?, ?, ?,?, sysdate, '1')
+ 		]]>
+ 	</property>
+ 
+ 	<property name="updateMenuBean">
+ 		<![CDATA[
+			update t_common_menu
+			   set 
+			       title = #[title],
+			       href = #[href],
+			       isvalid = #[isvalid]
+			 where menuid = #[menuid]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryMenuBeanByMenuid">
+ 		<![CDATA[
+ 			 select *
+			 from t_common_menu
+			 where menuid=?
+ 		]]>
+ 	</property>
+ 
+ 	<property name="deleteMenuBean">
+ 		<![CDATA[
+			delete from  t_common_menu  where menuid = ?
+ 		]]>
+ 	</property>
+ 	
+ 		<property name="deleteOutSiteMenuBean">
+ 		<![CDATA[
+			delete from  t_common_menu_outsite  where id = ?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryOutSiteMenuBeans">
+ 		<![CDATA[
+ 			select * 
+ 			from t_common_menu_outsite
+ 			where (CREATEUSERSFZH=? or CREATEUSERSFZH is null)
+ 			 order by createusersfzh desc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="saveOutSiteMenuBean">
+ 		<![CDATA[
+ 			insert into t_common_menu_outsite
+			  (id, menuname, menuhref, createusersfzh, createdate, orderflag)
+			values
+			  (seq_common.nextval, #[menuname], #[menuhref], #[createusersfzh], sysdate, '')
+ 		]]>
+ 	</property>
+ 
+ 	<property name="updateOutSiteMenuBean">
+ 		<![CDATA[
+ 			 update t_common_menu_outsite
+			 set orderflag=nvl(orderflag,0)+1
+			 where id=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryShortCutMenuBeans">
+ 		<![CDATA[
+ 			select m.* 
+			from t_common_menu_shortcut s inner join t_common_menu m on s.menuid=m.menuid
+			where s.sfzh=?
+			order by s.orderflag desc,s.createdate desc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="insertMenuShortCut">
+ 		<![CDATA[
+		insert into t_common_menu_shortcut
+		  (sfzh, menuid, createdate, orderflag)
+		values
+		  (?, ?, sysdate, 0)
+ 		]]>
+ 	</property>
+ 
+ 	<property name="deleteMenuShortCut">
+ 		<![CDATA[
+ 			 delete t_common_menu_shortcut
+  			 where sfzh=? and menuid=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryXttxpzBeans">
+ 		<![CDATA[
+ 			select id,pzdm,title,description,href,isvalid,executesn,resultfield,setfield,iconpath,sql,downloadsql 
+ 			from t_common_xttx_pz 
+			where isvalid='1'
+			order by executesn
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryXttxpzBeanById">
+ 		<![CDATA[
+ 			select * 
+ 			from t_common_xttx_pz 
+			where id=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryXqqktjNumber">
+ 		<![CDATA[
+ 			select 
+ 				czrks,
+ 				ldrks,
+ 				fws,
+ 				czfws,
+ 				zddxs,
+ 				xdrys,
+ 				jsbrs,
+ 				tzhys,
+ 				ggcss,
+ 				nbdws,
+ 				wxpdws,
+ 				swcss,
+ 				swdws
+			from t_common_xqtjqk
+			where ORGCODE=#[orgcode]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryMhxxcjtjNumber">
+ 		<![CDATA[
+ 			select 
+			     t.dm,
+			     ORGNAME as mc,
+			     czrks,
+			     ldrks,
+			     fws,
+			     czfws,
+			     zddxs,
+			     xdrys,
+			     jsbrs,
+			     tzhys,
+			     ggcss,
+			     nbdws,
+			     wxpdws,
+			     swcss,
+			     swdws
+			  from t_common_xqtjqk t
+			  where  t2.PARENT_CODE=#[parent_dm]  
+			  order by t.dm
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryMhxxcjtjForPcsLevel">
+ 		<![CDATA[
+ 			#if($leve<=5)
+ 				select dm,
+				       nvl((select orgname from t_common_organization_sjjs where orgcode=a.dm),'合计') as mc,
+				       a.czrks,
+				       a.ldrks,
+				       a.jzrks,
+				       a.jwrks,
+				       a.fws,
+				       a.czfws,
+				       a.zddxs,
+				       a.xdrys,
+					   a.swrys,
+					   a.ztrys,
+					   a.xsfzrys,
+					   a.jsbrs,
+					   a.sfrys,
+					   a.skrys,
+				       a.tzhys,
+				       a.ggcss,
+				       a.nbdws,
+				       a.wxpdws,
+				       a.swcss,
+				       a.swdws,
+				       a.cyrys,
+				       a.dwzs
+				from (
+				        select 
+				         nvl(t.orgcode,'999999999999') as dm,
+				         sum(t.czrks) as czrks,
+				         sum(t.ldrks) as ldrks,
+				         sum(t.jzrks) as jzrks,
+				       	 sum(t.jwrks) as jwrks,
+				         sum(t.fws) as fws,
+				         sum(t.czfws) as czfws,
+				         sum(t.zddxs) as zddxs,
+				         
+				         sum(t.QLSDRYS) as xdrys,
+				         sum(t.QLSWRYS) as swrys,
+				         sum(t.QLZTRYS) as ztrys,
+				         sum(t.QLXSFZRYS) as xsfzrys,
+				         sum(t.QLZSZHJSBRYS) as jsbrs,
+				         sum(t.QLSFRYS) as sfrys,
+				         sum(t.QLSKRYS) as skrys,
+				         
+				         sum(t.tzhys) as tzhys,
+				         sum(t.ggcss) as ggcss,
+				         sum(t.nbdws) as nbdws,
+				         sum(t.wxpdws) as wxpdws,
+				         sum(t.swcss) as swcss,
+				         sum(t.swdws) as swdws,
+				         sum(t.cyrys) as cyrys,
+				         sum(t.dwzs) as dwzs
+				      from t_common_organization_sjjs s inner join t_common_xqtjqk t on s.orgcode=t.orgcode
+				      where t.PARENT_CODE=#[parent_dm]
+				      group by rollup(t.orgcode)
+				  ) a
+				  order by dm
+ 			#elseif($leve==6)
+ 				select dm,
+				      nvl((select orgname from t_common_organization_sjjs where orgcode=a.dm),'合计') as mc,
+				       a.czrks,
+				       a.ldrks,
+				       a.jzrks,
+				       a.jwrks,
+				       a.fws,
+				       a.czfws,
+				       a.zddxs,
+				       a.xdrys,
+				       a.jsbrs,
+				       a.tzhys,
+				       a.ggcss,
+				       a.nbdws,
+				       a.wxpdws,
+				       a.swcss,
+				       a.swdws,
+				       a.cyrys,
+				       a.dwzs
+				  from (select nvl(t.orgcode, '999999999999') as dm,
+				               sum(t.czrks) as czrks,
+				               sum(t.ldrks) as ldrks,
+				               sum(t.jzrks) as jzrks,
+				       	 	   sum(t.jwrks) as jwrks,
+				               sum(t.fws) as fws,
+				               sum(t.czfws) as czfws,
+				               sum(t.zddxs) as zddxs,
+				               
+				               sum(t.QLSDRYS) as xdrys,
+					           sum(t.QLSWRYS) as swrys,
+					           sum(t.QLZTRYS) as ztrys,
+					           sum(t.QLXSFZRYS) as xsfzrys,
+					           sum(t.QLZSZHJSBRYS) as jsbrs,
+					           sum(t.QLSFRYS) as sfrys,
+					           sum(t.QLSKRYS) as skrys,
+					           
+				               sum(t.tzhys) as tzhys,
+				               sum(t.ggcss) as ggcss,
+				               sum(t.nbdws) as nbdws,
+				               sum(t.wxpdws) as wxpdws,
+				               sum(t.swcss) as swcss,
+				               sum(t.swdws) as swdws,
+				               sum(t.cyrys) as cyrys,
+				               sum(t.dwzs) as dwzs
+				          from t_common_xqtjqk t
+				         where t.PARENT_CODE = #[parent_dm]
+				         group by rollup(t.orgcode)) a
+				 order by dm
+ 			#end
+ 		]]>
+ 	</property>
+ 	
+ 	<!-- 辖区发案统计汇总 -->
+ 	<property name="queryCountXqJzFazs">
+ 		<![CDATA[
+ 			SELECT DWDM,
+		       DWMC,
+		       NVL((QJASL_N + QDASJ_N + DQZSL_N + ZPASL_N + QTASL_N), 0) AS LJFASL_N,
+		       NVL((QJASL_Y + QDASJ_Y + DQZSL_Y + ZPASL_Y + QTASL_Y), 0) AS LJFASL_Y,
+		       NVL((QJASL + QDASJ + DQZSL + ZPASL + QTASL), 0) AS LJFASL,
+		       NVL(QJASL_N, 0) AS LJQJASL,
+		       NVL(QDASJ_N, 0) AS LJQDASL,
+		       NVL(DQZSL_N, 0) AS LJDQASL,
+		       NVL(ZPASL_N, 0) AS LJZPASL,
+		       NVL(QTASL_N, 0) AS LJQTASL
+		  FROM T_COMMON_XQFAQKTJ_SY
+		 WHERE TRUNC(JSSJ, 'dd') = TRUNC(SYSDATE, 'dd')
+		 #if($dwdm && !$dwdm.equals(""))
+		 	AND dwdm = #[dwdm]
+		 #end
+		 #if($parent_dm && !$parent_dm.equals(""))
+		 	AND parentcode = #[parent_dm]
+		 #end
+		 ORDER BY LJFASL_N DESC
+ 		]]>
+ 	</property>
+ 	
+ 	<!-- 辖区发案统计 -->
+ 	<property name="queryXqajtjList">
+ 		<![CDATA[
+ 			SELECT DWDM,
+		       orgjc as DWMC,leve as OrgLeve,parentcode,
+		       NVL((QJASL_N + QDASJ_N + DQZSL_N + ZPASL_N + QTASL_N), 0) AS ajzsl_n,
+		       NVL((QJASL_Y + QDASJ_Y + DQZSL_Y + ZPASL_Y + QTASL_Y), 0) AS ajzsl_y,
+		       NVL((QJASL + QDASJ + DQZSL + ZPASL + QTASL), 0) AS ajzsl,
+		       NVL(QJASL, 0) AS qjasl, NVL(QJASL_N, 0) AS qjasl_n, NVL(QJASL_Y, 0) AS qjasl_y,
+		       NVL(QDASJ, 0) AS qdasl, NVL(QDASJ_N, 0) AS qdasl_n, NVL(QDASJ_Y, 0) AS qdasl_y,
+		       NVL(DQZSL, 0) AS dqasl, NVL(DQZSL_N, 0) AS dqasl_n, NVL(DQZSL_Y, 0) AS dqasl_y,
+		       NVL(ZPASL, 0) AS zpasl, NVL(ZPASL_N, 0) AS zpasl_n, NVL(ZPASL_Y, 0) AS zpasl_y,
+		       NVL(QTASL, 0) AS qtasl, NVL(QTASL_N, 0) AS qtasl_n, NVL(QTASL_Y, 0) AS qtasl_y
+		  FROM T_COMMON_XQFAQKTJ_SY
+		 WHERE TRUNC(JSSJ, 'dd') = TRUNC(SYSDATE, 'dd')
+		 #if($dwdm && !$dwdm.equals(""))
+		 	AND dwdm = #[dwdm]
+		 #end
+		 #if($parent_dm && !$parent_dm.equals(""))
+		 	AND parentcode = #[parent_dm]
+		 #end
+		 ORDER BY ajzsl_n DESC
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryQmstAjxx">
+ 		<![CDATA[
+ 			select *
+ 			from (
+ 			select id,
+			       acttime,
+			       actflag,
+			       actuser,
+			       anjianbiaozhi,
+			       anjianbianhao,
+			       gonganbianhao,
+			       wenshunianfen,
+			       wenshubianhao,
+			       wenshuwenhao,
+			       anyou,
+			       anjianmingcheng,
+			       anjianzhuangtai,
+			       anjianlaiyuan,
+			       baoanriqi,
+			       anjianleibie,
+			       fuanleibie,
+			       shouliriqi,
+			       shemibiaozhi,
+			       lianriqi,
+			       lianleixing,
+			       liandanwei,
+			       poanriqi,
+			       poanleixing,
+			       poandanwei,
+			       jieanriqi,
+			       jieanleixing,
+			       bananren1id,
+			       bananren2id,
+			       banandanweiid,
+			       yijiaoqianid,
+			       faanshijiankaishi,
+			       faanshijianjieshu,
+			       shifouweituo,
+			       yunxulian,
+			       zhishu,
+			       byorder,
+			       kpzt,
+			       mscore,
+			       zxkp,
+			       zscore,
+			       xyrflag,
+			       shrflag,
+			       score1,
+			       score2,
+			       score3,
+			       faanshequ,
+			       cheanriqi,
+			       lshjflag,
+			       gxsj,
+			       rownum as rn
+			  from t_asj_jbxx_dxf
+ 			  where 1=1
+ 			  	    #if($anjianmingcheng && !$anjianmingcheng.equals(""))
+ 			  	    	and anjianmingcheng like '%'||#[anjianmingcheng]||'%'
+ 			  	    #end
+ 			  	    #if($baoanriqi_start && !$baoanriqi_start.equals(""))
+ 			  	    	and baoanriqi>=to_char(sysdate-7,'yyyymmddhh24miss')
+ 			  	    #end
+ 			  	    #if($baoanriqi_end && !$baoanriqi_end.equals(""))
+ 			  	    	and baoanriqi<=to_char(sysdate,'yyyymmddhh24miss')
+ 			  	    #end
+ 			  	    
+ 			  	    #if($leve == 2)
+ 			  	    	and FAANSHEQU like substr(#[orgcode],1,4)||'%'
+ 			  	    #elseif($leve == 3)
+ 			  	    	and FAANSHEQU like substr(#[orgcode],1,6)||'%'
+ 			  	    #elseif($leve == 4)
+ 			  	    	and FAANSHEQU in (select dm from t_common_hnxzqh where SSPCSDM=#[orgcode])
+ 			  	    #elseif($leve==5)
+ 			  	    	and FAANSHEQU in (select dm from t_common_hnxzqh where SSJWSDM=#[orgcode])
+ 			  	    #end
+ 			  	    order by baoanriqi desc
+ 			  	) k
+ 			  	where k.rn<=10
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryAjjbxxListPageInfo">
+ 		<![CDATA[
+ 			select *
+			  from t_asj_jbxx_dxf t
+ 			  where 1=1
+ 			  	    #if($id && !$id.equals(""))
+ 			  	    	and id=#[id]
+ 			  	    #end
+ 			  	    #if($ajbh && !$ajbh.equals(""))
+ 			  	    	and anjianbianhao = #[ajbh]
+ 			  	    #end
+ 			  	    #if($ajmc && !$ajmc.equals(""))
+ 			  	    	and anjianmingcheng like '%'||#[ajmc]||'%'
+ 			  	    #end
+ 			  	    #if($fasq && !$fasq.equals(""))
+ 			  	    	and FAANSHEQU=#[fasq]
+ 			  	    #end
+ 			  	    #if($fapcs && !$fapcs.equals(""))
+ 			  	    	and FAANSHEQU in (SELECT dm FROM t_common_hnxzqh WHERE sspcsdm = #[fapcs] and isvalid = '1')
+ 			  	    #end
+ 			  	    #if ($ajlb && !$ajlb.equals(""))
+ 			  	    	and ANJIANLEIBIE=#[ajlb]
+ 			  	    #end
+ 		]]>
+ 	</property>
+ 	
+</properties>

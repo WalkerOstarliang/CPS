@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	 <package name="cs" namespace="/cs" extends="default">
+	  		<action name="*" class="com.chinacreator.cs.action.CsIndexAction" method="{1}">
+		  		<result name="gzgl">/jsp/cs/gzgl/index.jsp</result>
+		  		<result name="xqgk">/jsp/cs/xqgk/index.jsp</result>
+		  		<result name="dzgl">/jsp/cs/dzgl/index.jsp</result>
+		  		<result name="lsgl">/jsp/cs/lsgl/index.jsp</result>
+		  		<result name="zagl">/jsp/cs/zagl/index.jsp</result>
+		  		<result name="aqff">/jsp/cs/aqff/index.jsp</result>
+		  		<result name="zdry">/jsp/cs/zdry/index.jsp</result>
+		  		<result name="khkp">/jsp/cs/khkp/index.jsp</result>
+		  		<result name="xtgl">/jsp/cs/xtgl/index.jsp</result>
+		  		<result name="qbxs">/jsp/cs/qbxs/index.jsp</result>
+		  		<result name="pcsgl">/jsp/cs/pcsgl/index.jsp</result>
+		  		<result name="tjfx">/jsp/cs/tjfx/index.jsp</result>
+		  		<result name="nbgl">/jsp/cs/nbgl/index.jsp</result>
+		  		<result name="toCsPage">/jsp/cs/pages/index.jsp</result>
+		  	</action>
+	  </package>
+</struts>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="hzld" namespace="/xfdw/hzld" extends="default"> 
+	  		<action name="*" class="com.chinacreator.xfdw.action.HzglAction" method="{1}">
+	  			<result name="touploadexcel">/jsp/xfdw/pages/uploadExcel.jsp</result>
+	  			<result name="toHzldListPage">/jsp/xfdw/pages/hzldList.jsp</result>
+	  			<result name="toHzpfPage">/jsp/xfdw/pages/hzpfInfo.jsp</result>
+	  			<result name="toHzThPage">/jsp/xfdw/pages/hzthInfo.jsp</result>
+	  			<result name="toHzldDeailPage">/jsp/xfdw/pages/hzldDeail.jsp</result>
+	  			<result name="toHzldPfPage">/jsp/xfdw/pages/hzqsInfo.jsp</result>
+	  		</action>
+	  </package>
+
+	   <package name="import" namespace="/xfdw/import" extends="default"> 
+	  		<action name="*" class="com.chinacreator.xfdw.action.ImportExcelAction" method="{1}">
+	  		</action>				
+	  </package>
+
+	  <package name="hztj" namespace="/xfdw/hztj" extends="default"> 
+	  		<action name="*" class="com.chinacreator.xfdw.action.HztjAction" method="{1}">
+	  			<result name="toHztjList">/jsp/xfdw/pages/hztj.jsp</result>
+	  			<result name="toHzxqList">/jsp/xfdw/pages/hztjList.jsp</result>
+	  		</action>
+	  </package>
+	  
+	   <package name="export" namespace="/xfdw/export" extends="default"> 
+	  		<action name="*" class="com.chinacreator.xfdw.action.ExportReportAction" method="{1}">
+	  		</action>
+	  </package>
+
+</struts>

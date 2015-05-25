@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="rkdr" namespace="/lsgl/rkdr" extends="default"> 
+	  		<action name="*" class="com.chinacreator.lsgl.action.LsglSyrkImportAction" method="{1}">
+	  			<result name="toSyrkImportPage">/jsp/lsgl/pages/rkdr/syrkdrpage.jsp</result>
+	  			<result name="importSyrkInfo">/jsp/lsgl/pages/rkdr/syrkdrlistpage.jsp</result>
+	  			<result name="exportSyrkZdryList">/jsp/lsgl/pages/rkdr/syrkzdrylistexport.jsp</result>
+	  			
+	  			<result name="toSyrkImportHcPage">/jsp/lsgl/pages/rkdr/syrkhcpage.jsp</result>
+	  			<result name="exportSyrkImportHcPage">/jsp/lsgl/pages/rkdr/syrkhcexportpage.jsp</result>
+	  		</action>
+	  </package>
+</struts>

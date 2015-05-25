@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 火灾统计查询 -->	
+	<property name="queryHztj">
+		<![CDATA[
+			select decode(t2.orgjc, null, '合计', t2.orgjc) as xzqybm,
+			       t1.ssdwdm,
+			       t1.hzxh,
+			       t1.swrs,
+			       t1.ssrs,
+			       t1.zjccss,
+			       t1.szhs,
+			       t1.hzdj
+			  from (select decode(aa.orgcode, null, 'Total', aa.orgcode) as ssdwdm,
+			               count(bb.hzxh) as hzxh, --暂用存放火灾起数。
+			               sum(nvl(bb.swrs, 0)) as swrs,
+			               sum(nvl(bb.ssrs, 0)) as ssrs,
+			               sum(nvl(bb.zjccss, 0)) as zjccss,
+			               sum(nvl(bb.szhs, 0)) as szhs,
+			               aa.hzdj
+			          from (select a.orgjc, a.orgcode, b.hzdj
+			                  from (select orgjc, orgcode
+			                          from v_common_organization a
+			                         where isyx = '1'
+			                         #if($org_code && !$org_code.equals(""))
+						                and parent_code = #[org_code] 
+						             #else
+						                and parent_code = '430100000000' 
+						             #end
+						             #if($leve && !$leve.equals(""))
+						                and leve = #[leve] 
+						             #else
+						                and leve = '3' 
+						             #end
+			                         and orgcode <> '430197000000') a,
+			                       (select rownum as hzdj
+			                          from t_common_hnxzqh
+			                         where rownum <= 3) b) aa,
+			               (select o.ORG_ID_1 as orgid1, h.*
+			                  from t_xfdw_hzldxx h,
+			                       (select CONNECT_BY_ROOT orgcode ORG_ID_1, orgcode
+			                          from v_common_organization
+			                         start with 
+			                         #if($org_code && !$org_code.equals(""))
+									  parent_code = #[org_code] 
+								     #else
+									  parent_code = '430100000000'
+								     #end
+			                        connect by prior orgid = parent_orgid) o
+			                 where h.ssdwdm = o.orgcode
+			                   and h.ssdwdm is not null
+			                   and hzdj is not null
+			                     #if($kssj && !$kssj.equals(""))
+						           and qhsj >= to_char(trunc(to_date(#[kssj],'yyyy-mm-dd'),'dd'),'yyyy-MM-dd HH24:mi:ss') 
+						         #else
+						           and qhsj >= to_char(trunc(sysdate,'mm'),'yyyy-MM-dd HH24:mi:ss') 
+						         #end
+						         #if($jssj && !$jssj.equals(""))
+						           and qhsj < to_char(trunc(to_date(#[jssj],'yyyy-mm-dd'),'dd'),'yyyy-MM-dd HH24:mi:ss') 
+						         #else
+						           and qhsj < to_char(trunc(sysdate),'yyyy-MM-dd HH24:mi:ss') 
+						         #end
+			                ) bb
+			         where aa.orgcode = bb.orgid1(+)
+			           and aa.hzdj = bb.hzdj(+)
+			         group by rollup(aa.orgcode), rollup(aa.hzdj)
+			         order by aa.orgcode asc, aa.hzdj asc) t1,
+			       (select *
+			          from v_common_organization a
+			         where isyx = '1'
+			           #if($org_code && !$org_code.equals(""))
+						  and parent_code = #[org_code] 
+					   #else
+						  and parent_code = '430100000000'
+					   #end
+			           #if($leve && !$leve.equals(""))
+			              and leve = #[leve] 
+			           #else
+			              and leve = '3'
+			           #end
+			           and orgcode <> '430197000000') t2
+			 where t2.orgcode(+) = t1.ssdwdm
+			   and t1.hzdj is not null
+			 order by t1.ssdwdm asc, t1.hzdj asc
+		]]>
+	</property>
+	<property name="queryHzxq">
+		<![CDATA[
+		select o.ORG_ID_1 as orgid1, h.*
+		  from t_xfdw_hzldxx h,
+		       (select CONNECT_BY_ROOT orgcode ORG_ID_1, orgcode
+		          from v_common_organization
+		         start with 
+		         #if($org_code && !$org_code.equals(""))
+		           orgcode = #[org_code] 
+		         #else
+				   orgcode = '430100000000'
+				 #end
+		        connect by prior orgid = parent_orgid) o
+		 where h.ssdwdm = o.orgcode
+		   and h.ssdwdm is not null
+		   and hzdj is not null
+		   #if($kssj && !$kssj.equals(""))
+		     and qhsj >= to_char(trunc(to_date(#[kssj],'yyyy-mm-dd'),'dd'),'yyyy-MM-dd HH24:mi:ss') 
+		   #else
+		     and qhsj >= to_char(trunc(sysdate,'mm'),'yyyy-MM-dd HH24:mi:ss') 
+		   #end
+		   #if($jssj && !$jssj.equals(""))
+		     and qhsj < to_char(trunc(to_date(#[jssj],'yyyy-mm-dd'),'dd'),'yyyy-MM-dd HH24:mi:ss') 
+		   #else
+		     and qhsj < to_char(trunc(sysdate),'yyyy-MM-dd HH24:mi:ss') 
+		   #end
+		   #if($hzdj && !$hzdh.equals(""))
+		     and h.hzdj = #[hzdj] 
+		   #end
+
+		   
+		]]>
+	</property>
+</properties>

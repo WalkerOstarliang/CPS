@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.devMode" value="true" />  
+	<constant name="struts.custom.i18n.resources" value="Message" />
+	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.action.extension" value="action,do" />
+    <!-- 改变struts2默认为10M的上传文件大小限制  -->
+    <constant name="struts.multipart.maxSize" value="2048000000000"/> 
+    <constant name="struts.multipart.saveDir" value="/temp"/> 
+    
+    <package name="default" namespace="/" extends="struts-default"> 
+    	 <interceptors>
+    		
+    		<!-- 单点登录拦截器-->
+    		<interceptor name="verificationInterceptor" class="com.chinacreator.common.interceptor.CheckLoginInterceptor"></interceptor>
+    		 
+    		 <!-- 非单点登录拦截器
+    		<interceptor name="verificationInterceptor" class="com.chinacreator.common.interceptor.CheckLoginNotSSOInterceptor"></interceptor>
+    		 -->
+    		<interceptor name="exceptionInterceptor" class="com.chinacreator.common.interceptor.ExceptionInterceptor"></interceptor>
+    		<interceptor name="logInterceptor" class="com.chinacreator.common.interceptor.LogInterceptor"></interceptor>
+    		
+    		<interceptor-stack name="CSPDefaultInterceptorStack">
+    			<interceptor-ref name="verificationInterceptor">
+    				<param name="logicalName">loginInfo</param>  
+    			</interceptor-ref>
+    			<interceptor-ref name="logInterceptor"></interceptor-ref>
+    			<interceptor-ref name="exceptionInterceptor"></interceptor-ref>
+    			<interceptor-ref name="defaultStack"></interceptor-ref>
+    		</interceptor-stack>
+    	</interceptors>
+    	 
+    	<default-interceptor-ref name="CSPDefaultInterceptorStack"></default-interceptor-ref>
+    
+    	<global-results>
+			<result name="error"  type="redirect">/jsp/common/error.jsp</result>
+			<result name="input">/jsp/common/input.jsp</result>
+			<result name="logout"  type="redirect">/jsp/common/logout.jsp</result>
+			<result name="loginfailure"  type="redirect">/jsp/common/loginfailure.jsp</result>
+			<result name="exception"  type="redirect">/jsp/common/exception.jsp</result>
+			<result name="notfound"  type="redirect">/jsp/common/404.jsp</result>
+		</global-results>
+			
+    	<global-exception-mappings>
+			 <!--  指Action抛出Exception异常时，转入名为exception的结果。 -->
+			<exception-mapping result="input" exception="java.lang.Exception"/>
+		</global-exception-mappings>
+		
+		<action name="download" class="com.chinacreator.common.action.FileDownLoadAction">  
+            <!-- 设置文件名参数，由页面上传入 -->  
+            <param name="fileName"></param>  
+            <result name="success" type="stream">  
+                <!-- 下载文件类型定义 -->  
+                <param name="contentType">text/plain</param>  
+                <!-- 下载文件处理方法 -->  
+                <param name="contentDisposition">  
+                    attachment;filename="${downloadChineseFileName}"  
+                </param>  
+                <!-- 下载文件输出流定义 -->  
+                <param name="inputName">downloadFile</param>  
+            </result>  
+        </action>  
+		
+		
+		<action name="*" class="com.chinacreator.common.action.LoginAction" method="{1}">
+			<result name="index">/main/index.jsp</result>
+			<result name="autoIndex">/main/autoindex.jsp</result>
+			<result name="toContentPage">/main/main.jsp</result>
+			<result name="mainIndex">/jsp/mainicon/main.jsp</result>
+			<result name="leftIndex">/jsp/main/leftIndex.jsp</result>
+			<result name="topIndex">/jsp/main/topIndex.jsp</result>
+			<result name="zdrygl">/jsp/zdrygl/main/index.jsp</result>
+			<result name="zagl">/jsp/zagl/main/index.jsp</result>
+			<result name="afgl">/jsp/afgl/main/index.jsp</result>
+			<result name="qzgl">/jsp/qzgl/main/index.jsp</result>
+			<result name="gzgl">/jsp/gzgl/main/index.jsp</result>
+			<result name="khkp">/jsp/khkp/main/index.jsp</result>
+			<result name="lsgl">/jsp/lsgl/main/index.jsp</result>
+			<result name="xtgl">/jsp/xtgl/main/index.jsp</result>
+			<result name="test">/test/main/index.jsp</result>
+			<result name="toUpdatePasswordPage">/jsp/xtgl/pages/yhgl/userinfo.jsp</result>
+		</action>
+		 
+	</package>
+   	
+   	<include file="struts-testcase.xml" />
+   	
+   	<include file="struts-cps-common.xml" />
+    <include file="struts-zdry.xml" />
+    <include file="struts-zagl.xml" />
+    <include file="struts-afgl.xml" />
+   	<include file="struts-gzgl.xml" />
+   	<include file="struts-qzgl.xml" />
+   	<include file="struts-khkp.xml" />
+   	<include file="struts-xtgl.xml" />
+   	<include file="struts-lsgl.xml" />
+   	<include file="struts-pgis.xml" />
+   	<include file="struts-menu.xml" />
+   	<include file="struts-cs.xml" />
+   	<include file="struts-dzgl.xml" />
+   	<include file="struts-xqgk.xml" />
+   	<include file="struts-qbxs.xml" />
+    <include file="struts-sydw.xml" />
+    <include file="struts-tjbb.xml" />
+    <include file="struts-yjcj.xml" />
+    <include file="struts-dwdj.xml" />
+    <include file="struts-xfdw.xml" />
+    <include file="struts-nbgl.xml" />
+    <include file="struts-whsrk.xml" />
+</struts>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	 <package name="dzglmain" namespace="/dzgl/dzxx" extends="default">
+	  		<action name="*" class="com.chinacreator.dzgl.action.DzglAction" method="{1}">
+		  		<result name="toStxxListPage">/jsp/dzgl/stxx/stxxlistwithoutmap.jsp</result>
+		  		<result name="toStxxListPagetMap">/jsp/dzgl/stxx/stxxlistmap.jsp</result>
+		  		<result name="toDzxxListPage">/jsp/dzgl/dzxx/dzxxlist.jsp</result>
+		  		<result name="toStxxDetailPage">/jsp/dzgl/stxx/stxxdetail.jsp</result>
+		  		<result name="toDzxxDetailPage">/jsp/dzgl/dzxx/dzxxdetail.jsp</result>
+		  		<result name="toStxxBeanSelectPage">/jsp/dzgl/stxx/stxxselectlist.jsp</result>
+		  		<result name="toStxxDetailPageInfo">/jsp/dzgl/stxx/stxxdetailpage.jsp</result>
+		  		<result name="toStxxDetailNoMapPageInfo">/jsp/dzgl/stxx/stxxnotmapinfo.jsp</result>
+		  		<result name="exportStxxBeans">/jsp/dzgl/stxx/exportstxx.jsp</result>
+		  		<result name="toStxxDetailDivInfo">/jsp/dzgl/stxx/stxxDetailWithDiv.jsp</result>
+		  		
+		  		<result name="toStxxFwJgDetailPage">/jsp/dzgl/stxx/stxxfwjgpage.jsp</result>
+		  		<result name="loadFwlcjgPage">/jsp/dzgl/stxx/fwjgpage.jsp</result>
+		  		<result name="toFwrkShowPage">/jsp/dzgl/stxx/fwrkzppage.jsp</result>
+		  	</action>
+	  </package>
+</struts>

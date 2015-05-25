@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	 <package name="gongzuorenwu" extends="default" namespace="/gzgl/rwgl">
+	 	<action name="*" class="com.chinacreator.gzgl.action.RenwuAction" method="{1}">
+	 		<result name="toRwListPage">/jsp/gzgl/pages/gzrw/rwList.jsp</result>
+	 		<result name="toAddRenwu">/jsp/gzgl/pages/gzrw/addNewRW.jsp</result>
+	 		<result name="toViewRenwu">/jsp/gzgl/pages/gzrw/addNewRW.jsp</result>
+	 		<result name="toMjRenwu">/jsp/gzgl/pages/gzrw/rwfkList.jsp</result>
+	 		<result name="toFankRenwu">/jsp/gzgl/pages/gzrw/fankuiRenwu.jsp</result>
+	 		<result name="toViewRenwucl">/jsp/gzgl/pages/gzrw/renwucldetail.jsp</result>
+	 	</action>
+	 </package>
+</struts>

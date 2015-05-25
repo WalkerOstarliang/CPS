@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<!-- 社区详细情况sql配置信息 -->
+	<property name="getAllSqDetailQuery">
+		<![CDATA[
+			select 
+				id,
+				code,
+				sql,
+				actUrl,
+				typeName
+			from TD_SQJW_SqDetailQueryInfo
+		]]>
+	</property>	
+		
+	<!-- 获取社区详细情况字段配置信息 -->
+	<property name="getAllSqDetailColumn">
+		<![CDATA[
+			select 
+				id,
+				code,
+				showColName,
+				widthNum,
+				colName,
+				align,
+				ordNum,
+				isParam
+			from TD_SQJW_SqDetailColumnInfo
+			order by code,ordNum
+		]]>
+	</property>	
+	
+</properties>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	 <package name="gongzuozongjie" extends="default" namespace="/gzgl/zjgl">
+	 	<action name="*" class="com.chinacreator.gzgl.action.ZjieAction" method="{1}">
+	 		<result name="init">/jsp/gzgl/pages/gzzj/zjList.jsp</result>
+	 		<result name="toAddZjie">/jsp/gzgl/pages/gzzj/addNewZJ.jsp</result>
+	 		<result name="toEditZjie">/jsp/gzgl/pages/gzzj/addNewZJ.jsp</result>
+	 		<result name="toViewZjie">/jsp/gzgl/pages/gzzj/addNewZJ.jsp</result>
+	 	</action>
+	 </package>
+</struts>

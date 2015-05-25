@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	 <package name="lxdjgl" namespace="/qzgl/lxdjgl" extends="default">
+	  		<action name="*" class="com.chinacreator.qzgl.action.LxdjglAction" method="{1}">
+		  		<result name="toLxdjListPage">/jsp/qzgl/pages/lxdj/lxdjgl.jsp</result>
+		  		<result name="toAddLxdj">/jsp/qzgl/pages/lxdj/lxdjInfo.jsp</result>
+		  	</action>
+	  </package>
+	  <package name="lxclgl" namespace="/qzgl/lxclgl" extends="default">
+	  		<action name="*" class="com.chinacreator.qzgl.action.LxclAction" method="{1}">
+		  		<result name="toLxclListPage">/jsp/qzgl/pages/lxcl/lxclList.jsp</result>
+		  		<result name="toClOrZf">/jsp/qzgl/pages/lxcl/lxclOrZf.jsp</result>
+		  		<result name="toXQ">/jsp/qzgl/pages/lxdj/lxdjInfo.jsp</result>
+		  	</action>
+	  </package>
+	  <package name="wmfwgl" namespace="/qzgl/wmfwgl" extends="default">
+	  		<action name="*" class="com.chinacreator.qzgl.action.WmfwAction" method="{1}">
+		  		<result name="toTgzmListPage">/jsp/qzgl/pages/wmfw/tgzmList.jsp</result>
+		  		<result name="toTgzmPage">/jsp/qzgl/pages/wmfw/tgzmInfo.jsp</result>
+		  		<result name="toMtryListPage">/jsp/qzgl/pages/wmfw/mtryList.jsp</result>
+		  		<result name="toMtryPage">/jsp/qzgl/pages/wmfw/mtryInfo.jsp</result>
+		  		<result name="toMtryYsxxPage">/jsp/qzgl/pages/wmfw/mtryYsxxInfo.jsp</result>
+		  		<result name="toQyryListPage">/jsp/qzgl/pages/wmfw/qyryList.jsp</result>
+		  		<result name="toQyryPage">/jsp/qzgl/pages/wmfw/qyryInfo.jsp</result>
+		  		<result name="toQyryYsxxPage">/jsp/qzgl/pages/wmfw/qyryYsxxInfo.jsp</result>
+		  		<result name="toQtryListPage">/jsp/qzgl/pages/wmfw/qtryList.jsp</result>
+		  		<result name="toQtryPage">/jsp/qzgl/pages/wmfw/qtryInfo.jsp</result>
+		  		<result name="toQtryQyPage">/jsp/qzgl/pages/wmfw/qtryqyInfo.jsp</result>
+		  		<result name="toQtryYsxxPage">/jsp/qzgl/pages/wmfw/qtryYsxxInfo.jsp</result>
+		  		<result name="toQtfwListPage">/jsp/qzgl/pages/wmfw/qtfwList.jsp</result>
+		  		<result name="toQtfwPage">/jsp/qzgl/pages/wmfw/qtfwInfo.jsp</result>
+		  		<result name="toStZapctbPage">/jsp/qzgl/pages/stzapctb/stzapctbInfo.jsp</result>
+		  		<result name="toStZapctbbbPage">/jsp/qzgl/pages/stzapctb/stzapctbbbPage.jsp</result>
+		  		<result name="downloadStZapcTbbExcel">/jsp/qzgl/pages/stzapctb/stzapctbbexcelmode.jsp</result>
+		  		<result name="openStZapcTbbMingXi">/jsp/qzgl/pages/stzapctb/stzapctbbMingxi.jsp</result>
+		  	</action>
+	  </package>
+</struts>

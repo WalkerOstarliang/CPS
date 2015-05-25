@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	 <include file="struts2/gzgl/struts-gzgl-rizhi.xml"></include>
+	 <include file="struts2/gzgl/struts-gzgl-zongjie.xml"></include>
+	 <include file="struts2/gzgl/struts-gzgl-renwu.xml"></include>
+	 <include file="struts2/gzgl/struts-gzgl-xunldrw.xml"></include>
+	 <include file="struts2/gzgl/struts-gzgl-xunldjl.xml"></include>
+	 <include file="struts2/gzgl/struts-gzgl-xxygl.xml"></include>
+	 <include file="struts2/gzgl/struts-gzgl-gztz.xml"></include>
+	 <include file="struts2/gzgl/struts-gzgl-jws.xml"></include>
+	 <include file="struts2/gzgl/struts-gzgl-userlxfs.xml"></include>
+	 <include file="struts2/gzgl/struts-gzgl-pcsxchd.xml"></include>
+	 
+</struts>

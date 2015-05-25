@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="zdry" namespace="/zdry" extends="default"> 
+	  		<action name="collect_*" class="com.chinacreator.zdry.action.CollectingAction" method="{1}">
+	  			<result name="toCollectZdryInfoPage">/jsp/zdrygl/pages/collect/zdryInfo.jsp</result>
+	  			<result name="toCollectLzxxPage">/jsp/zdrygl/pages/collect/lzxx.jsp</result>
+	  			<result name="toCollectSpPage">/jsp/zdrygl/pages/collect/application.jsp</result>
+	  			<result name="toCollectLgsqPage">/jsp/zdrygl/pages/collect/lgsq.jsp</result>
+	  		</action>
+	  		
+	  		<action name="control_*" class="com.chinacreator.zdry.action.ControlAction" method="{1}">
+	  			<result name="toControlZdryzkdjPage">/jsp/zdrygl/pages/control/zdryzkdj.jsp</result>
+	  		</action>
+	  		
+	  		<action name="crime_*" class="com.chinacreator.zdry.action.CrimeAction" method="{1}">
+	  			<result name="toCrimeFzryInfoPage">/jsp/zdrygl/pages/collect/fzryInfo.jsp</result>
+	  			<result name="toCrimeDetailsPage">/jsp/zdrygl/pages/collect/crimeDetails.jsp</result>
+	  		</action>
+	  		
+	  		
+	  		<action name="statistics_*" class="com.chinacreator.zdry.action.StatisticsAction" method="{1}">
+	  			<result name="toIndexHomePage">/jsp/zdrygl/main/home.jsp</result>
+	  		</action>
+	  		
+	  		<action name="staffsurvey_*" class="com.chinacreator.zdry.action.StaffsurveyAction" method="{1}">
+	            <interceptor-ref name="defaultStack"/>   
+	  			<result name="toStaffsurveyIndexPage">/jsp/zdrygl/pages/staffsurvey/index.jsp</result>
+	  			<result name="toStaffsurveyJbxxPage">/jsp/zdrygl/pages/staffsurvey/jbxx.jsp</result>
+	  			<result name="toStaffsurveyZpxxPage">/jsp/zdrygl/pages/staffsurvey/zpxx.jsp</result>
+	  			<result name="toStaffsurveyGzxxPage">/jsp/zdrygl/pages/staffsurvey/gzxx.jsp</result>
+	  			<result name="toStaffsurveyWfjlPage">/jsp/zdrygl/pages/staffsurvey/wfjl.jsp</result>
+	  			<result name="toStaffsurveyXsbxPage">/jsp/zdrygl/pages/staffsurvey/xsbx.jsp</result>
+	  			<result name="toStaffsurveyTmtzPage">/jsp/zdrygl/pages/staffsurvey/tmtz.jsp</result>
+	  			<result name="toStaffsurveyShgxPage">/jsp/zdrygl/pages/staffsurvey/shgx.jsp</result>
+	  			<result name="toStaffsurveyJjqkPage">/jsp/zdrygl/pages/staffsurvey/jjqk.jsp</result>
+	  			<result name="toStaffsurveyLlfsPage">/jsp/zdrygl/pages/staffsurvey/llfs.jsp</result>
+	  		</action>
+	  		
+	  		<action name="index_*" class="com.chinacreator.zdry.action.IndexAction" method="{1}">
+	  			
+	  		</action>
+	  		
+	  		<action name="comm_*" class="com.chinacreator.zdry.action.ForwardAction" method="{1}">
+	  			<!-- 首页跳转 -->
+	  			<result name="toIndexHomePage">/jsp/zdrygl/main/home.jsp</result>
+	  			<result name="toIndexPage">/jsp/zdrygl/main/index.jsp</result>
+	  			
+	  			<!-- 列管(撤管)申请跳转 -->
+	  			<result name="toApplicationPage">/jsp/zdrygl/pages/collect/application.jsp</result>
+	  			
+	  			<!-- 在控管理跳转 -->
+	  			<result name="toControlIndexPage">/jsp/zdrygl/pages/control/index.jsp</result>
+	  			<result name="toControlLeftPage">/jsp/zdrygl/pages/control/left.jsp</result>
+	  			
+	  			
+	  			<!-- 人员考察跳转 -->
+	  			<result name="toStaffsurveyIndexPage">/jsp/zdrygl/pages/staffsurvey/index.jsp</result>
+	  			<result name="toStaffsurveyJbxxPage">/jsp/zdrygl/pages/staffsurvey/jbxx.jsp</result>
+	  			<result name="toStaffsurveyZpxxPage">/jsp/zdrygl/pages/staffsurvey/zpxx.jsp</result>
+	  			<result name="toStaffsurveyGzxxPage">/jsp/zdrygl/pages/staffsurvey/gzxx.jsp</result>
+	  			<result name="toStaffsurveyWfjlPage">/jsp/zdrygl/pages/staffsurvey/wfjl.jsp</result>
+	  			<result name="toStaffsurveyXsbxPage">/jsp/zdrygl/pages/staffsurvey/xsbx.jsp</result>
+	  			<result name="toStaffsurveyTmtzPage">/jsp/zdrygl/pages/staffsurvey/tmtz.jsp</result>
+	  			<result name="toStaffsurveyShgxPage">/jsp/zdrygl/pages/staffsurvey/shgx.jsp</result>
+	  			<result name="toStaffsurveyJjqkPage">/jsp/zdrygl/pages/staffsurvey/jjqk.jsp</result>
+	  			<result name="toStaffsurveyLlfsPage">/jsp/zdrygl/pages/staffsurvey/llfs.jsp</result>
+	  			
+	  			
+	  			
+	  			<!-- 统计分析跳转 -->
+	  			<result name="toStatisticsCenterPage">/jsp/zdrygl/pages/statistics/center.jsp</result>
+	  			
+	  		</action>
+	  </package>
+</struts>

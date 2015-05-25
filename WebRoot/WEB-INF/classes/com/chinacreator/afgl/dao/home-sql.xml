@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<property name="homeKkfbqk">
+		<![CDATA[
+			SELECT substr(kk.sszrqdm,0,4)||'00000000' , COUNT(KK.KKBH) AS DATA
+			  FROM T_AF_ZAKKXX KK
+			 WHERE exists(select org_id
+			       from td_sm_organization
+			        where org_id=KK.Sszrqdm
+			       start with org_id = ?
+			       connect by prior org_id = parent_id)
+			       group by substr(kk.sszrqdm,0,4)||'00000000'
+		]]>
+	</property>
+	<property name="kkpcqktjList">
+		<![CDATA[
+		]]>
+	</property>
+	<property name="afjgtjList">
+		<![CDATA[
+		]]>
+	</property>
+</properties>

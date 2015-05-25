@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<systems>
+	<system>
+		<systemdm>CPS</systemdm>
+		<systemname>社区警务系统</systemname>
+		<projectname>CPS</projectname>
+		<ip>10.142.56.156</ip>
+		<port>8180</port>
+	</system>
+	<system>
+		<systemdm>cas</systemdm>
+		<systemname>统一认证服务器</systemname>
+		<projectname>cas</projectname>
+		<ip>10.142.56.151</ip>
+		<port>8888</port>
+	</system>
+	<system>
+		<systemdm>cms</systemdm>
+		<systemname>CMS服务器</systemname>
+		<projectname>cms</projectname>
+		<ip>10.142.56.157</ip>
+		<port>8484</port>
+	</system>
+	<system>
+		<systemdm>ptgl</systemdm>
+		<systemname>平台管理</systemname>
+		<projectname>ptgl</projectname>
+		<ip>10.142.55.67</ip>
+		<port></port>
+	</system>
+</systems>

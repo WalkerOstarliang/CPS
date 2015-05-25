@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 新增预警反馈 -->
+	<property name="insertCkyjFkxx">
+		<![CDATA[
+			insert into t_zdry_fkxx
+				  (id,
+				   ldxxbh,
+				   czfkxxbh,
+				   yjxxbh,
+				   sjyjjb,
+				   fksj,
+				   fkrsfzh,
+				   fkrxm,
+				   fkdw,
+				   fkdwjgdm,
+				   mbfxzt,
+				   dtxxlb,
+				   hdfssj,
+				   hdfsddqh,
+				   hdfsddxz,
+				   hdfsddssshcs,
+				   hdfsddssshcsdm,
+				   fxhdxgxx,
+				   fxmbzrmjsfzh,
+				   fxmbzrmjxm,
+				   fxmbzrdw,
+				   fxmbzrdwjgdm,
+				   cqczcs,
+				   czcsxl,
+				   czsj,
+				   czddqh,
+				   czzrmjsfzh,
+				   czzrmjxm,
+				   czzrdwjgdm,
+				   czjgms,
+				   xdchnjxx,
+				   xcchwpxx,
+				   lxzcgzpg,
+				   lxzcgzpgyj,
+				   mbcszylx,
+				   czjg,
+				   czfkbcxx,
+				   rksj,
+				   sfwzdfk,
+				   czddxz,
+				   czzrdw,
+				   fszt,
+				   sjczjg,
+				   sfbryj,
+				   fbryjcsyy)
+				values
+				  (#[id],
+				   #[ldxxbh],
+				   #[czfkxxbh],
+				   #[yjxxbh],
+				   #[sjyjjb],
+				   to_date(#[fksj],'yyyy-mm-dd HH24:mi:ss'),
+				   #[fkrsfzh],
+				   #[fkrxm],
+				   #[fkdw],
+				   #[fkdwjgdm],
+				   #[mbfxzt],
+				   #[dtxxlb],
+				   to_date(#[hdfssj],'yyyy-mm-dd HH24:mi:ss'),
+				   #[hdfsddqh],
+				   #[hdfsddxz],
+				   #[hdfsddssshcs],
+				   #[hdfsddssshcsdm],
+				   #[fxhdxgxx],
+				   #[fxmbzrmjsfzh],
+				   #[fxmbzrmjxm],
+				   #[fxmbzrdw],
+				   #[fxmbzrdwjgdm],
+				   #[cqczcs],
+				   #[czcsxl],
+				   to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+				   #[czddqh],
+				   #[czzrmjsfzh],
+				   #[czzrmjxm],
+				   #[czzrdwjgdm],
+				   #[czjgms],
+				   #[xdchnjxx],
+				   #[xcchwpxx],
+				   #[lxzcgzpg],
+				   #[lxzcgzpgyj],
+				   #[mbcszylx],
+				   #[czjg],
+				   #[czfkbcxx],
+				   to_date(#[rksj],'yyyy-mm-dd HH24:mi:ss'),
+				   #[sfwzdfk],
+				   #[czddxz],
+				   #[czzrdw],
+				   #[fszt],
+				   #[sjczjg],
+				   #[sfbryj],
+				   #[fbryjcsyy])
+		]]>
+	</property>
+	
+	<!-- 新增预警签收 -->
+	<property name="insertCkyjQsxx">
+		<![CDATA[
+			insert into t_zdry_yjqsxx
+				  (id,
+				   ldxxbh,
+				   yjxxbh,
+				   qssj,
+				   qsrsfzh,
+				   qsrxm,
+				   qsdw,
+				   qsdwjgdm,
+				   rksj,
+				   sfwzdqs,
+				   fszt)
+				values
+				  (#[id],
+				   #[ldxxbh],
+				   #[yjxxbh],
+				   to_date(#[qssj],'yyyy-mm-dd hh24:mi:ss'),
+				   #[qsrsfzh],
+				   #[qsrxm],
+				   #[qsdw],
+				   #[qsdwjgdm],
+				   to_date(#[rksj],'yyyy-mm-dd hh24:mi:ss'),
+				   #[sfwzdqs],
+				   #[fszt])
+		]]>
+	</property>
+	
+	<!-- 查询预警签收信息 -->
+	<property name="queryCkYjqsxxById">
+		<![CDATA[
+			select id,
+		       ldxxbh,
+		       yjxxbh,
+		       to_char(qssj, 'yyyy-mm-dd HH24:mi:ss') as qssj,
+		       qsrsfzh,
+		       qsrxm,
+		       qsdw,
+		       qsdwjgdm,
+		       to_date(rksj, 'yyyy-mm-dd HH24:mi:ss') as rksj,
+		       sfwzdqs,
+		       fszt
+		  from t_zdry_yjqsxx
+		  where id = ?
+		]]>
+	</property>
+	
+	<property name="queryCkYjqsxxByYjxxbh">
+		<![CDATA[
+			select id,
+		       ldxxbh,
+		       yjxxbh,
+		       to_char(qssj, 'yyyy-mm-dd HH24:mi:ss') as qssj,
+		       qsrsfzh,
+		       qsrxm,
+		       qsdw,
+		       qsdwjgdm,
+		       to_char(rksj, 'yyyy-mm-dd HH24:mi:ss') as rksj,
+		       sfwzdqs,
+		       fszt
+		  from t_zdry_yjqsxx
+		  where yjxxbh = ?
+		]]>
+	</property>
+	
+	<!-- 根据预警id查询反馈信息 -->
+	<property name="queryCkyjFkListByYjxxbh">
+		<![CDATA[
+			select id,
+		       ldxxbh,
+		       czfkxxbh,
+		       yjxxbh,
+		       sjyjjb,
+		       to_char(fksj,'yyyy-mm-dd HH24:mi:ss') as fksj,
+		       fkrsfzh,
+		       fkrxm,
+		       fkdw,
+		       fkdwjgdm,
+		       mbfxzt,
+		       dtxxlb,
+		       to_char(hdfssj,'yyyy-mm-dd HH24:mi:ss') as hdfssj,
+		       hdfsddqh,
+		       hdfsddxz,
+		       hdfsddssshcs,
+		       hdfsddssshcsdm,
+		       fxhdxgxx,
+		       fxmbzrmjsfzh,
+		       fxmbzrmjxm,
+		       fxmbzrdw,
+		       fxmbzrdwjgdm,
+		       cqczcs,
+		       czcsxl,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czddqh,
+		       czzrmjsfzh,
+		       czzrmjxm,
+		       czzrdwjgdm,
+		       czjgms,
+		       xdchnjxx,
+		       xcchwpxx,
+		       lxzcgzpg,
+		       lxzcgzpgyj,
+		       mbcszylx,
+		       czjg,
+		       czfkbcxx,
+		       to_char(rksj,'yyyy-mm-dd HH24:mi:ss') as rksj,
+		       sfwzdfk,
+		       czddxz,
+		       czzrdw,
+		       fszt,
+		       sjczjg,
+		       sfbryj,
+		       fbryjcsyy
+			from t_zdry_fkxx
+			where yjxxbh = ?
+		]]>
+	</property>
+	
+	<!-- 分页查询签收信息 -->
+	<property name="queryCkyjQsxxPageResultInfo">
+		<![CDATA[
+			select yj.yjxxbh,
+		       qs.id,
+		       yj.yjjb,
+		       yj.zdryxm,
+		       yj.sfzh,
+		       yj.zdryxl,
+		       yj.fbdw,
+		       yj.yjjsdw,
+		       yj.sffk,
+		       to_char(yj.yjfbsj, 'yyyy-mm-dd hh24:mi:ss') as yjfbsj,
+		       to_char(yj.scczfksx, 'yyyy-mm-dd HH24:mi:ss') as scczfksx,
+		       to_char(yj.qssx, 'yyyy-mm-dd HH24:mi:ss') as qssx
+			 from t_zdry_ckyjxx yj, t_zdry_yjqsxx qs
+			 where yj.yjxxbh = qs.yjxxbh and yj.sfqs = '1'
+			 #if($fbsj && !$fbsj.equals(""))
+		  		and yjfbsj >= to_date(#[fbsj] ||' 00:00:00','yyyy-mm-dd hh24:mi:ss') 
+		  		and yjfbsj <= to_date(#[fbsj] ||' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+			 #end
+			 #if($zdryxm && !$zdryxm.equals(""))
+			  	and zdryxm like #[zdryxm]||'%'
+			 #end
+			 #if($sfzh && !$sfzh.equals(""))
+			  	and sfzh = #[sfzh]
+			 #end
+			 #if($zdryxl && !$zdryxl.equals(""))
+			  	and zdryxl = #[zdryxl]
+			 #end
+			 #if($yjjsdw && !$yjjsdw.equals(""))
+			  	and yjjsdw = #[yjjsdw]
+			 #end
+			 #if($sffk && !$sffk.equals(""))
+			 	and sffk = #[sffk]
+			 #end			
+			 
+		]]>
+	</property>
+	
+	<!-- 根据id查询预警信息 -->
+	<property name="queryCkyjxxByYjxxbh" >
+		<![CDATA[
+			select id,
+		       ldxxbh,
+		       yjxxbh,
+		       fwzh,
+		       yjjsdw,
+		       yjjsdlx,
+		       yjjb,
+		       to_char(qssx,'yyyy-mm-dd HH24:mi:ss') as qssx,
+		       to_char(scczfksx,'yyyy-mm-dd HH24:mi:ss') as scczfksx,
+		       to_char(yjfbsj,'yyyy-mm-dd HH24:mi:ss') as yjfbsj,
+		       fbrxm,
+		       fbdwjgdm,
+		       fbdw,
+		       zdrybh,
+		       zdrylbbj,
+		       zdryxl,
+		       zdryxm,
+		       zdrywwxm,
+		       sfzh,
+		       qtzjhm,
+		       dtxxlb,
+		       to_char(hdfssj,'yyyy-mm-dd hh24:mi:ss') as hdfssj,
+		       hdfsddqh,
+		       hdfsddxz,
+		       hdfsddssshcsdm,
+		       hdfsddssshcs,
+		       hdfsddssgajgjgdm,
+		       hdfsddssgajg,
+		       djzjhm,
+		       djxm,
+		       djxb,
+		       djcsrq,
+		       hdxgxx,
+		       dtxxtgdwjgdm,
+		       dtxxtgdw,
+		       to_char(xxbdsj,'yyyy-mm-dd hh24:mi:ss') as xxbdsj,
+		       xxbddwjgdm,
+		       xxbddw,
+		       dtgjxxbh,
+		       bz,
+		       jfxx,
+		       sjlybs,
+		       to_char(rksj,'yyyy-mm-dd hh24:mi:ss') as rksj,
+		       sftsjz,
+		       sfxfds,
+		       sfscxyj,
+		       sfqs,
+		       sffk,
+		       sfyzdff,
+		       sfcfyj,
+		       sfyzdtsxq,
+		       czyq,
+		       sftl
+		  from t_zdry_ckyjxx
+		  where yjxxbh = ?
+		]]>
+	</property>
+	
+	<!-- 分页查询预警信息 -->
+	<property name="queryCkyjxxPageResultInfo">
+		<![CDATA[
+			select id,
+		       ldxxbh,
+		       yjxxbh,
+		       fwzh,
+		       yjjsdw,
+		       yjjsdlx,
+		       yjjb,
+		       to_char(qssx,'yyyy-mm-dd HH24:mi:ss') as qssx,
+		       to_char(scczfksx,'yyyy-mm-dd HH24:mi:ss') as scczfksx,
+		       to_char(yjfbsj,'yyyy-mm-dd HH24:mi:ss') as yjfbsj,
+		       fbrxm,
+		       fbdwjgdm,
+		       fbdw,
+		       zdrybh,
+		       zdrylbbj,
+		       zdryxl,
+		       zdryxm,
+		       zdrywwxm,
+		       sfzh,
+		       qtzjhm,
+		       dtxxlb,
+		       to_char(hdfssj,'yyyy-mm-dd hh24:mi:ss') as hdfssj,
+		       hdfsddqh,
+		       hdfsddxz,
+		       hdfsddssshcsdm,
+		       hdfsddssshcs,
+		       hdfsddssgajgjgdm,
+		       hdfsddssgajg,
+		       djzjhm,
+		       djxm,
+		       djxb,
+		       djcsrq,
+		       hdxgxx,
+		       dtxxtgdwjgdm,
+		       dtxxtgdw,
+		       to_char(xxbdsj,'yyyy-mm-dd hh24:mi:ss') as xxbdsj,
+		       xxbddwjgdm,
+		       xxbddw,
+		       dtgjxxbh,
+		       bz,
+		       jfxx,
+		       sjlybs,
+		       to_char(rksj,'yyyy-mm-dd hh24:mi:ss') as rksj,
+		       sftsjz,
+		       sfxfds,
+		       sfscxyj,
+		       sfqs,
+		       sffk,
+		       sfyzdff,
+		       sfcfyj,
+		       sfyzdtsxq,
+		       czyq,
+		       sftl
+		  from t_zdry_ckyjxx
+		  where sfqs = '0' 
+		  #if($fbsj && !$fbsj.equals(""))
+		  	and yjfbsj >= to_date(#[fbsj]||' 00:00:00','yyyy-mm-dd hh24:mi:ss') and yjfbsj <= to_date(#[fbsj]||' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+		  #end
+		  #if($zdryxm && !$zdryxm.equals(""))
+		  	and zdryxm like #[zdryxm]||'%'
+		  #end
+		  #if($sfzh && !$sfzh.equals(""))
+		  	and sfzh = #[sfzh]
+		  #end
+		  #if($zdryxl && !$zdryxl.equals(""))
+		  	and zdryxl = #[zdryxl]
+		  #end
+		  #if($yjjsdw && !$yjjsdw.equals(""))
+		  	and yjjsdw = #[yjjsdw]
+		  #end
+		  #if($yjjb && !$yjjb.equals(""))
+		  	and yjjb = #[yjjb]
+		  #end			
+		]]>
+	</property>
+	
+	<!-- 修改反馈信息 -->
+	<property name="updateCkyjFkxx">
+		<![CDATA[
+			update t_zdry_fkxx
+			   set czfkxxbh = #[czfkxxbh],
+			       yjxxbh = #[yjxxbh],
+			       sjyjjb = #[sjyjjb],
+			       fksj = to_date(#[fksj],'yyyy-mm-dd hh24:mi:ss'),
+			       fkrsfzh = #[fkrsfzh],
+			       fkrxm = #[fkrxm],
+			       fkdw = #[fkdw],
+			       fkdwjgdm = #[fkdwjgdm],
+			       mbfxzt = #[mbfxzt],
+			       dtxxlb = #[dtxxlb],
+			       hdfssj = to_date(#[hdfssj],'yyyy-mm-dd hh24:mi:ss'),
+			       hdfsddqh = #[hdfsddqh],
+			       hdfsddxz = #[hdfsddxz],
+			       hdfsddssshcs = #[hdfsddssshcs],
+			       hdfsddssshcsdm = #[hdfsddssshcsdm],
+			       fxhdxgxx = #[fxhdxgxx],
+			       fxmbzrmjsfzh = #[fxmbzrmjsfzh],
+			       fxmbzrmjxm = #[fxmbzrmjxm],
+			       fxmbzrdw = #[fxmbzrdw],
+			       fxmbzrdwjgdm = #[fxmbzrdwjgdm],
+			       cqczcs = #[cqczcs],
+			       czcsxl = #[czcsxl],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+			       czddqh = #[czddqh],
+			       czzrmjsfzh = #[czzrmjsfzh],
+			       czzrmjxm = #[czzrmjxm],
+			       czzrdwjgdm = #[czzrdwjgdm],
+			       czjgms = #[czjgms],
+			       xdchnjxx = #[xdchnjxx],
+			       xcchwpxx = #[xcchwpxx],
+			       lxzcgzpg = #[lxzcgzpg],
+			       lxzcgzpgyj = #[lxzcgzpgyj],
+			       mbcszylx = #[mbcszylx],
+			       czjg = #[czjg],
+			       czfkbcxx = #[czfkbcxx],
+			       czddxz = #[czddxz],
+			       czzrdw = #[czzrdw],
+			       fszt = #[fszt],
+			       sjczjg = #[sjczjg],
+			       sfbryj = #[sfbryj],
+			       fbryjcsyy = #[fbryjcsyy]
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<!-- 更新预警签收状态  -->
+	<property name="updateCkyjQszt" >
+		<![CDATA[
+			update t_zdry_ckyjxx set sfqs = ? where yjxxbh= ?
+		]]>
+	</property>
+	
+	<!-- 更新预警反馈状态  -->
+	<property name="updateCkyjFkzt" >
+		<![CDATA[
+			update t_zdry_ckyjxx set sffk = ? where yjxxbh= ?
+		]]>
+	</property>
+	
+	<!-- 查询预警反馈信息 -->
+	<property name="queryCkYjfkBeanById">
+		<![CDATA[
+			select id,
+		       ldxxbh,
+		       czfkxxbh,
+		       yjxxbh,
+		       sjyjjb,
+		       to_char(fksj,'yyyy-mm-dd HH24:mi:ss') as fksj,
+		       fkrsfzh,
+		       fkrxm,
+		       fkdw,
+		       fkdwjgdm,
+		       mbfxzt,
+		       dtxxlb,
+		       to_char(hdfssj,'yyyy-mm-dd HH24:mi:ss') as hdfssj,
+		       hdfsddqh,
+		       hdfsddxz,
+		       hdfsddssshcs,
+		       hdfsddssshcsdm,
+		       fxhdxgxx,
+		       fxmbzrmjsfzh,
+		       fxmbzrmjxm,
+		       fxmbzrdw,
+		       fxmbzrdwjgdm,
+		       cqczcs,
+		       czcsxl,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czddqh,
+		       czzrmjsfzh,
+		       czzrmjxm,
+		       czzrdwjgdm,
+		       czjgms,
+		       xdchnjxx,
+		       xcchwpxx,
+		       lxzcgzpg,
+		       lxzcgzpgyj,
+		       mbcszylx,
+		       czjg,
+		       czfkbcxx,
+		       to_char(rksj,'yyyy-mm-dd HH24:mi:ss') as rksj,
+		       sfwzdfk,
+		       czddxz,
+		       czzrdw,
+		       fszt,
+		       sjczjg,
+		       sfbryj,
+		       fbryjcsyy
+		  from t_zdry_fkxx where id = ?
+		]]>
+	</property>
+</properties>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<!-- 获取用户皮肤 -->
+	<property name="getUserSkin">
+		<![CDATA[
+			select skin	from td_qbmh_user_skin where username = ?
+		]]>
+	</property>	
+		
+	<!-- 获取用户关联机构代码（对照表） -->
+	<property name="getRelaUserDeptCode">
+		<![CDATA[
+			select 	
+				USERID,
+				USERCODE,
+				USERNAME,
+				DATADEPTCODE,
+				DATADEPTNAME,
+				DUTYDEPTCODE,
+				DUTYDEPTNAME
+			from TB_PTGL_USER_ORG_RELATION where userId = ?
+		]]>
+	</property>	
+			
+	<!-- 获取机构关联机构代码（对照表） -->
+	<property name="getRelaDeptCode">
+		<![CDATA[
+			select	
+				DEPTCODE,
+				DEPTNAME,
+				DATADEPTCODE,
+				DATADEPTNAME,
+				DUTYDEPTCODE,
+				DUTYDEPTNAME
+			from TB_PTGL_ORGCODERELATION where deptCode = ?
+		]]>
+	</property>
+	
+	<property name="queryMjNumByOrgCode">
+		<![CDATA[
+		select count(1) cou
+		  from v_common_user
+		 where isvalid='1' and userid in
+		       (select userid
+		          from v_common_orguser
+		         where orgid in (select orgid
+		                            from v_common_organization
+		                           where isyx='1' and orgcode like ?))
+		]]>
+	</property>
+	
+	<property name="querySqmjNumByOrgCode">
+		<![CDATA[
+		select count(1)
+          from cs_jz_ptgl.td_sm_organization a ,cs_jz_ptgl.td_sm_orguser us ,cs_jz_ptgl.td_sm_user b 
+		    where  b.user_id =us.user_id and us.org_id =a.org_id and code like (
+		select 
+		     case 
+		     when f_get_dwleve(#[deptCode]) != 5 then substr(#[deptCode], 0, 2*f_get_dwleve(#[deptCode])) || '%31__'
+		     when f_get_dwleve(#[deptCode]) = 5 then #[deptCode]
+		     end
+		 from dual) 
+		 and code not like '4301%3100'  and b.USER_ISVALID='2' 
+		]]>
+	</property>
+</properties>

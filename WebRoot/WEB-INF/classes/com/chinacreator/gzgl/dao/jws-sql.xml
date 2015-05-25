@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryOrgJwsBean">
+	<![CDATA[
+		select t.orgname          orgname,
+	       	   t.orgcode          orgcode,
+	       	   other.id           id,
+		       other.bgddlx       bgddlx,
+		       other.wljrfs       wljrfs,
+		       other.orgid        orgid,
+		       t.ispcs            ispcs,
+		       other.pcsszxm      pcsszxm,
+		       other.pcsszsfzh    pcsszsfzh,
+		       other.pcsszjh      pcsszjh,
+		       other.pcsfszxm     pcsfszxm,
+		       other.pcsfszsfzh   pcsfszsfzh,
+		       other.pcsfszjh     pcsfszjh,
+		       other.czrxm        czrxm,
+		       other.czrdwdm      czrdwdm,
+		       other.czrdwmc      czrdwmc,
+		       other.czsj         czsj,
+		       other.jls          jls,
+		       other.szjxcjl      szjxcjl,
+		       other.jjjl         jjjl,
+		       other.jgjl         jgjl,
+		       other.xjjl         xjjl,
+		       other.tjjl         tjjl,
+		       other.xjjxcjl      xjjxcjl,
+		       other.jdxldys      jdxldys,
+		       other.fjs          fjs,
+		       other.pcsfjs       pcsfjs,
+		       other.jwspbfjs     jwspbfjs,
+		       other.jb           jb,
+		       other.lb           lb,
+		       other.dj           dj,
+		       other.szjb         szjb,
+		       other.qtfhzb       qtfhzb,
+		       other.dzid         dzid,
+		       other.dzmc         dzmc,
+		       other.sfncjws      sfncjws,
+		       other.sfstpz,
+		       other.sfjljws
+		  from v_common_organization t
+		  left join t_common_organization_other other on other.orgcode = t.orgcode
+		where 1=1
+		 #if($bgddlx && !$bgddlx.equals(""))
+				   and other.bgddlx = #[bgddlx]
+		 #end
+		  #if($orgname && !$orgname.equals(""))
+				   and t.orgcode like  substr(#[orgcode],1,10)||'%'
+		 #end
+		 #if($ispcs && !$ispcs.equals(""))
+				   and t.ispcs = #[ispcs]
+		 #end
+		  #if ($pcsdm && !$pcsdm.equals(""))
+			 	and t.orgcode like substr(#[pcsdm],1,8)||'%'
+		  #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and t.orgcode like  substr(#[countrygajgjgdm],1,6)||'%'
+		  #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and t.orgcode like  substr(#[citygajgjgdm],1,4)||'%'
+		  #end
+		  order by other.czsj desc
+		 
+	]]>
+	</property>
+	<property name="queryOrgJwsBeanById">
+	<![CDATA[
+		select t.orgname          orgname,
+	       	   t.orgcode          orgcode,
+	       	   other.id           id,
+		       other.bgddlx       bgddlx,
+		       other.wljrfs       wljrfs,
+		       other.orgid        orgid,
+		       t.ispcs            ispcs,
+		       other.pcsszxm      pcsszxm,
+		       other.pcsszsfzh    pcsszsfzh,
+		       other.pcsszjh      pcsszjh,
+		       other.pcsfszxm     pcsfszxm,
+		       other.pcsfszsfzh   pcsfszsfzh,
+		       other.pcsfszjh     pcsfszjh,
+		       other.czrxm        czrxm,
+		       other.czrdwdm      czrdwdm,
+		       other.czrdwmc      czrdwmc,
+		       other.czsj         czsj,
+		       other.jls          jls,
+		       other.szjxcjl      szjxcjl,
+		       other.jjjl         jjjl,
+		       other.jgjl         jgjl,
+		       other.xjjl         xjjl,
+		       other.tjjl         tjjl,
+		       other.xjjxcjl      xjjxcjl,
+		       other.jdxldys      jdxldys,
+		       other.fjs          fjs,
+		       other.pcsfjs       pcsfjs,
+		       other.jwspbfjs     jwspbfjs,
+		       other.jb           jb,
+		       other.lb           lb,
+		       other.dj           dj,
+		       other.szjb         szjb,
+		       other.qtfhzb       qtfhzb,
+		       other.dzid         dzid,
+		       other.dzmc         dzmc,
+		       other.sfncjws,
+		       other.sfstpz,
+		       other.sfjljws
+		  from v_common_organization t
+		  left join t_common_organization_other other on other.orgcode = t.orgcode
+		  where t.orgcode =?
+	]]>
+	</property>
+	<property name="updateJwsBeanById">
+	<![CDATA[
+		update t_common_organization_other
+   set  bgddlx = #[bgddlx],
+       wljrfs = #[wljrfs],
+       orgname = #[orgname],
+       orgid = #[orgid],
+       ispcs = #[ispcs],
+       pcsszxm = #[pcsszxm],
+       pcsszsfzh = #[pcsszsfzh],
+       pcsszjh = #[pcsszjh],
+       pcsfszxm = #[pcsfszxm],
+       pcsfszsfzh = #[pcsfszsfzh],
+       pcsfszjh = #[pcsfszjh],
+       czrxm = #[czrxm],
+       czrdwdm = #[czrdwdm],
+       czrdwmc = #[czrdwmc],
+       czsj = sysdate,
+       jls =#[jls],
+        szjxcjl =#[szjxcjl], 
+	    jjjl=#[jjjl], 
+		jgjl=#[jgjl], 
+	    xjjl=#[xjjl], 
+		tjjl=#[tjjl], 
+	    xjjxcjl=#[xjjxcjl], 
+		jdxldys=#[jdxldys], 
+		fjs=#[fjs], 
+		pcsfjs=#[pcsfjs], 
+		jwspbfjs=#[jwspbfjs], 
+		jb=#[jb], 
+		lb=#[lb], 
+		dj=#[dj], 
+		szjb=#[szjb],
+	    qtfhzb = #[qtfhzb],
+        dzid = #[dzid],
+	    dzmc = #[dzmc],
+		sfncjws = #[sfncjws],
+		sfstpz = #[sfstpz],
+		sfjljws = #[sfjljws]
+ where orgcode = #[orgcode]
+	]]>
+	</property>
+	
+</properties>

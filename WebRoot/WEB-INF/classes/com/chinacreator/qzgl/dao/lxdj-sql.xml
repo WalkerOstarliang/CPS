@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="lxcxList">
+		<![CDATA[
+			select                    
+        		bh,
+				xjzt,
+				fwfs,
+				nrlx,
+				lflxrxm,
+				lflxrsfzh,
+				lflxrlxdh,
+				lflxrjtzz,
+				sjjdmjjh,
+				sjjdmjxm,
+				sjjdmjdwdm,
+				sjjdmjdwmc,
+				sjjdmjlxdh,
+				lfxjnr,
+				cllx,
+				clrxm,
+				clrjh,
+				cldwdm,
+				cldwmc,
+				cljgms,
+				jsdwdm,
+				jsdwmc,
+				djrxm,
+				to_char(djsj,'yyyy-MM-dd') djsj,
+				to_char(clsj,'yyyy-MM-dd') clsj,
+				to_char(lflxsj,'yyyy-MM-dd') lflxsj,
+				djdwdm,
+				djdwmc,
+				djrjh
+      	from t_fwqz_lflxdjxx   
+      	where 1=1
+      	
+      	#if($jwsqdm and !$jwsqdm.equals(""))
+      		and (jsdwdm=#[jwsqdm])
+      	#else
+	      	#if($pcsdm and !$pcsdm.equals(""))
+				and (substr(jsdwdm,1,8)=substr(#[pcsdm],1,8) or substr(jsdwdm,1,8)=substr(#[pcsdm],1,8))
+			#else
+				--精确到县区
+				#if($countrydm and !$countrydm.equals(""))
+					and (substr(jsdwdm,1,6)=substr(#[countrydm],1,6) or substr(jsdwdm,1,6)=substr(#[countrydm],1,6))
+				#else
+				   --精确到市州
+					 #if($citydm and !$citydm.equals(""))
+						and (substr(jsdwdm,1,4)=substr(#[citydm],1,4) or substr(jsdwdm,1,4)=substr(#[citydm],1,4))
+					 #end
+				#end
+			#end
+		#end
+      	#if($xjzt and !$xjzt.equals(""))
+      		and xjzt like '%'||#[xjzt]||'%' 
+      	#end
+      	#if($djsj_from && !$djsj_from.equals(""))
+			and djsj >= to_date(#[djsj_from],'yyyy-MM-dd')
+		#end
+      	#if($djsj_to && !$djsj_to.equals(""))
+			and djsj <= to_date(#[djsj_to],'yyyy-MM-dd')
+		#end
+		#if($cllx and !$cllx.equals(""))
+			and  cllx = #[cllx]
+        #end
+        #if($lflxsj_from && !$lflxsj_from.equals(""))
+       		and lflxsj >= to_date(#[lflxsj_from],'yyyy-MM-dd')
+		#end
+      	#if($lflxsj_to && !$lflxsj_to.equals(""))
+			and lflxsj <= to_date(#[lflxsj_to],'yyyy-MM-dd')
+		#end
+		order by djsj desc,bh
+		]]>
+	</property>
+	<property name="queryBeanByBh">
+		<![CDATA[
+			select
+				bh,
+				xjzt,
+				fwfs,
+				nrlx,
+				lflxrxm,
+				lflxrsfzh,
+				lflxrlxdh,
+				lflxrjtzz,
+				sjjdmjjh,
+				sjjdmjxm,
+				sjjdmjdwdm,
+				sjjdmjdwmc,
+				sjjdmjlxdh,
+				lfxjnr,
+				cllx,
+				clrxm,
+				clrjh,
+				cldwdm,
+				cldwmc,
+				cljgms,
+				jsdwdm,
+				jsdwmc,
+				djrxm,
+				to_char(djsj,'yyyy-MM-dd') djsj,
+				to_char(clsj,'yyyy-MM-dd') clsj,
+				to_char(lflxsj,'yyyy-MM-dd') lflxsj,
+				djdwdm,
+				djdwmc,
+				djrjh 
+      	from t_fwqz_lflxdjxx      
+      	where bh=?
+		]]>
+	</property>
+	<property name="insertLxdjBean">
+		<![CDATA[
+			insert into t_fwqz_lflxdjxx
+				(bh,
+				xjzt,
+				fwfs,
+				nrlx,
+				lflxrxm,
+				lflxrsfzh,
+				lflxrlxdh,
+				lflxrjtzz,
+				sjjdmjjh,
+				sjjdmjxm,
+				sjjdmjdwdm,
+				sjjdmjdwmc,
+				sjjdmjlxdh,
+				lfxjnr,
+				cllx,
+				jsdwdm,
+				jsdwmc,
+				djrxm,
+				djsj,
+				lflxsj,
+				djdwdm,
+				djdwmc,
+				djrjh
+				)
+			values
+				(#[bh],
+				#[xjzt],
+				#[fwfs],
+				#[nrlx],
+				#[lflxrxm],
+				#[lflxrsfzh],
+				#[lflxrlxdh],
+				#[lflxrjtzz],
+				#[sjjdmjjh],
+				#[sjjdmjxm],
+				#[sjjdmjdwdm],
+				#[sjjdmjdwmc],
+				#[sjjdmjlxdh],
+				#[lfxjnr],
+				#[cllx],
+				#[jsdwdm],
+				#[jsdwmc],
+				#[djrxm],
+				to_date(#[djsj],'yyyy-MM-dd'),
+				to_date(#[lflxsj],'yyyy-MM-dd'),
+				#[djdwdm],
+				#[djdwmc],
+				#[djrjh]
+				)
+		]]>
+	</property>
+	
+	<property name="deleteLxdjByBh">
+		<![CDATA[
+			delete t_fwqz_lflxdjxx
+ 			where bh=?
+		]]>
+	</property><property name="zhuanfa">
+		<![CDATA[
+			insert into t_fwqz_lfxjzflzxx
+			  (bh, lflxbh, czlx, czrxm, czrlxdh, czdwdm, czdwmc, zfzdwdm, zfzdwmc,czrjh, czsj)
+			values
+			  (#[zfbh], #[bh], #[czlx], #[czrxm], #[czrlxdh], #[czrdwdm], #[czrdwmc], #[zfdwdm], #[zfdwmc],#[czrjh],to_date(#[clsj],'yyyy-MM-dd'))
+		]]>
+	</property>
+	<property name="updateLxdj">
+		<![CDATA[
+			update t_fwqz_lflxdjxx
+			   set 
+				xjzt = #[xjzt],
+				fwfs = #[fwfs],
+				nrlx = #[nrlx],
+				lflxrxm = #[lflxrxm],
+				lflxrsfzh = #[lflxrsfzh],
+				lflxrlxdh = #[lflxrlxdh],
+				lflxrjtzz = #[lflxrjtzz],
+				sjjdmjjh = #[sjjdmjjh],
+				sjjdmjxm = #[sjjdmjxm],
+				sjjdmjdwdm = #[sjjdmjdwdm],
+				sjjdmjdwmc = #[sjjdmjdwmc],
+				sjjdmjlxdh = #[sjjdmjlxdh],
+				lfxjnr = #[lfxjnr],
+				cllx = #[cllx],
+				jsdwdm = #[jsdwdm],
+				jsdwmc = #[jsdwmc],
+				djrxm = #[djrxm],
+				djsj = to_date(#[djsj],'yyyy-MM-dd'),
+				djdwdm = #[djdwdm],
+				djdwmc = #[djdwmc],
+				lflxsj = to_date(#[lflxsj],'yyyy-MM-dd'),
+				djrjh = #[djrjh]
+			 where bh=#[bh] 
+		]]>
+	</property>
+	<property name="zhuanfaLxdj">
+		<![CDATA[
+			update t_fwqz_lflxdjxx
+			   set 
+				cllx = #[cllx],
+				jsdwdm = #[jsdwdm],
+				jsdwmc = #[jsdwmc]
+			 where bh=#[bh] 
+		]]>
+	</property>
+	<property name="clLxdj">
+		<![CDATA[
+			update t_fwqz_lflxdjxx
+			   set 
+				cllx = #[cllx],
+				clrxm = #[clrxm],
+				clrjh = #[clrjh],
+				cldwdm = #[cldwdm],
+				cldwmc = #[cldwmc],
+				cljgms = #[cljgms],
+				clsj = to_date(#[clsj],'yyyy-MM-dd')
+			 where bh=#[bh] 
+		]]>
+	</property>
+	<property name="deleteZf">
+		<![CDATA[
+			delete t_fwqz_lfxjzflzxx
+                         where lflxbh = ?
+		]]>
+	</property>
+</properties>

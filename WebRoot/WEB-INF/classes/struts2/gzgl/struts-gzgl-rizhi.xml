@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	 <package name="gongzuorizhi" extends="default" namespace="/gzgl/rzgl">
+	 	<action name="*" class="com.chinacreator.gzgl.action.RizhiAction" method="{1}">
+	 		<!--<result name="toIndex">/jsp/gzgl/pages/gzrz/rzList.jsp</result>-->
+	 		<result name="queryRizhiList">/jsp/gzgl/pages/gzrz/rzList.jsp</result>
+	 		<result name="toAddRizhi">/jsp/gzgl/pages/gzrz/addNewRZ.jsp</result>
+	 		<result name="toEditRizhi">/jsp/gzgl/pages/gzrz/addNewRZ.jsp</result>
+	 		<result name="toViewRizhiDetail">/jsp/gzgl/pages/gzrz/addNewRZ.jsp</result>
+	 		<result name="toJqtbPage">/jsp/gzgl/pages/gzrz/jqtbList.jsp</result>
+	 		<result name="toJqtbInfoPage">/jsp/gzgl/pages/gzrz/jqtbPage.jsp</result>
+	 		<result name="exportRzzhiList">/jsp/gzgl/pages/exportWord/rzWordTemplate.jsp</result>
+	 		<result name="exportJqtbWord">/jsp/gzgl/pages/gzrz/jqtbprint.jsp</result>
+	 		<result name="toRzhzPage" >/jsp/gzgl/pages/gzrz/rzhz.jsp</result>
+	 		<result name="dowloadRzhz" >/jsp/gzgl/pages/gzrz/dowloadRzhz.jsp</result>
+	 		<result name="downLoadRzlist" >/jsp/gzgl/pages/gzrz/dowloadRzlist.jsp</result>
+	 	</action>
+	 </package>
+	 
+</struts>

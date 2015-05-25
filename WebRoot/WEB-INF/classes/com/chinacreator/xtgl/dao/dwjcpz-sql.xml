@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="insertDwjcpz">
+		<![CDATA[
+			insert into t_za_dw_jcpz
+			  (id,
+			   hylb,
+			   dwdl,
+			   dwxl,
+			   jczq,
+			   djrq,
+			   djdwdm,
+			   djdwmc,
+			   djrxm,
+			   czdwdm,
+			   czdwmc,
+			   czrxm,
+			   czsj,
+			   czbs,
+			   dw,
+			   sz,tqtxts,czrjh,djrjh)
+			values
+			  (#[id],
+			   #[hylb],
+			   #[dwdl],
+			   #[dwxl],
+			   #[jczq],
+			   to_date(#[djrq],'yyyy-mm-dd HH24:mi:ss'),
+			   #[djdwdm],
+			   #[djdwmc],
+			   #[djrxm],
+			   #[czdwdm],
+			   #[czdwmc],
+			   #[czrxm],
+			   to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[czbs],
+			   #[dw],
+			   #[sz],#[tqtxts],#[czrjh],#[djrjh])
+		]]>
+	</property>
+	
+	<property name="updateDwjcpz">
+		<![CDATA[
+			update t_za_dw_jcpz
+			   set hylb = #[hylb],
+			       dwdl = #[dwdl],
+			       dwxl = #[dwxl],
+			       jczq = #[jczq],
+			       djrq = to_date(#[djrq],'yyyy-mm-dd HH24:mi:ss'),
+			       djdwdm = #[djdwdm],
+			       djdwmc = #[djdwmc],
+			       djrxm = #[djrxm],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czbs = #[czbs],
+			       dw = #[dw],
+			       sz = #[sz],
+			       tqtxts = #[tqtxts],
+			       czrjh = #[czrjh]
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<property name="batchDeleteDwjcpz">
+		<![CDATA[
+			update t_za_dw_jcpz
+			   set czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czbs = #[czbs],
+			       czrjh = #[czrjh]
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<property name="queryDwjcpzPageResultInfo">
+		<![CDATA[
+		 	select id,
+		       hylb,
+		       dwdl,
+		       dwxl,
+		       jczq,
+		       to_char(djrq,'yyyy-mm-dd HH24:mi:ss') as djrq,
+		       djdwdm,
+		       djdwmc,
+		       djrxm,
+		       czdwdm,
+		       czdwmc,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czbs,
+		       dw,
+		       sz,
+		       tqtxts,
+		       djrjh,
+		       czrjh
+		  from t_za_dw_jcpz where czbs != '3'
+       		#if($hylb && !$hylb.equals(""))
+       			and hylb = #[hylb]
+       		#end
+       		
+       		#if($dwdl && !$dwdl.equals(""))
+       			and dwdl = #[dwdl]
+       		#end
+       		#if($dwxl && !$dwxl.equals(""))
+       			and dwxl = #[dwxl]
+       		#end
+       		#if($sz && !$sz.equals(""))
+       			and sz = #[sz]
+       		#end
+       		#if($dw && !$dw.equals(""))
+       			and dw = #[dw]
+       		#end
+    	]]>
+	</property>
+	
+	<property name="queryDwjcpzById">
+		<![CDATA[
+			select id,
+		       hylb,
+		       dwdl,
+		       dwxl,
+		       jczq,
+		       to_char(djrq,'yyyy-mm-dd HH24:mi:ss') as djrq,
+		       djdwdm,
+		       djdwmc,
+		       djrxm,
+		       czdwdm,
+		       czdwmc,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czbs,
+		       dw,
+		       sz,
+		       tqtxts,
+		       djrjh,czrjh
+		  from t_za_dw_jcpz where id = ?
+		]]>
+	</property>
+	
+	<property name="getJjrZd">
+		<![CDATA[
+			select dm,mc from T_COMMON_XTJCTSRQPZ order by to_number(dm)
+		]]>
+	</property>
+	
+	<property name="insertJjrjc">
+		<![CDATA[
+			insert into t_za_dw_jcpz_jjrjc (id,dm) values (#[id],#[dm])
+		]]>
+	</property>
+	
+	<property name="deleteJjrjc">
+		<![CDATA[
+			delete t_za_dw_jcpz_jjrjc where id = ?
+		]]>
+	</property>
+	
+	<property name="queryJjrjcById">
+		<![CDATA[
+			select dm from t_za_dw_jcpz_jjrjc where id = ?
+		]]>
+	</property>
+	
+</properties>	

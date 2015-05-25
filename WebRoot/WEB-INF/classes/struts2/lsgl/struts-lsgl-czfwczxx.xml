@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="czfwczxx" namespace="/lsgl/czfwczxx" extends="default"> 
+	  		<action name="*" class="com.chinacreator.lsgl.action.LsglCzfwCzxxAction" method="{1}">
+	  			<result name="toCzfwCzxxPage">/jsp/lsgl/pages/fw/czfwczxxInfo.jsp</result>
+	  			<result name="toAddCzrPage">/jsp/lsgl/pages/fw/czrxxPage.jsp</result>
+	  			<result name="toAddCzrInfoPage">/jsp/lsgl/pages/fw/czrInfoPage.jsp</result>
+	  		</action>
+	  </package>
+</struts>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryFwjcpzBeanPageInfo">
+		<![CDATA[
+			select id,
+			       fwzdlb,
+			       jczq,
+			       tqtxts,
+			       djrq,
+			       djdwdm,
+			       djdwmc,
+			       djrxm,
+			       czdwdm,
+			       czdwmc,
+			       czrxm,
+			       czsj,
+			       czbs
+			  from t_common_fwjcpz
+			  where 1=1
+			  and czbs != '3'
+			  #if($fwzdlb && !$fwzdlb.equals(""))
+       			and fwzdlb = #[fwzdlb]
+       		  #end
+       		  
+       		  #if($jczq && !$jczq.equals(""))
+       			and jczq = #[jczq]
+       		  #end
+       		  
+       		  order by jczq desc
+		]]>
+	</property>
+	
+	<property name="queryFwjcpzBeanById">
+		<![CDATA[
+			select id,
+			       fwzdlb,
+			       jczq,
+			       tqtxts,
+			       djrq,
+			       djdwdm,
+			       djdwmc,
+			       djrxm,
+			       czdwdm,
+			       czdwmc,
+			       czrxm,
+			       czsj,
+			       czbs
+			  from t_common_fwjcpz
+			  where id=?
+		]]>
+	</property>
+	
+	<property name="insertFwjcpzBean">
+		<![CDATA[
+			insert into t_common_fwjcpz
+			  (id,
+			   fwzdlb,
+			   jczq,
+			   tqtxts,
+			   djrq,
+			   djdwdm,
+			   djdwmc,
+			   djrxm,
+			   czdwdm,
+			   czdwmc,
+			   czrxm,
+			   czsj,
+			   czbs)
+			values
+			  (#[id],
+			   #[fwzdlb],
+			   #[jczq],
+			   #[tqtxts],
+			   to_date(#[djrq],'yyyy-mm-dd hh24:mi:ss'),
+			   #[djdwdm],
+			   #[djdwmc],
+			   #[djrxm],
+			   #[czdwdm],
+			   #[czdwmc],
+			   #[czrxm],
+			   to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+			   '1')
+		]]>
+	</property>
+	
+	<property name="updateFwjcpzBean">
+		<![CDATA[
+		 	update t_common_fwjcpz
+			   set id = #[id],
+			       fwzdlb = #[fwzdlb],
+			       jczq = #[jczq],
+			       tqtxts = #[tqtxts],
+			       djrq = to_date(#[djrq],'yyyy-mm-dd hh24:mi:ss'),
+			       djdwdm = #[djdwdm],
+			       djdwmc = #[djdwmc],
+			       djrxm = #[djrxm],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+			       czbs = '2'
+			 where id = #[id]
+		 	
+    	]]>
+	</property>
+	
+	<property name="batchDelFwjcpzBean">
+		<![CDATA[
+			update t_common_fwjcpz
+			   set 
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czrxm = #[czrxm],
+			       czsj = sysdate,
+			       czbs = '3'
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<property name="insertXtpzBeanYellow">
+		<![CDATA[
+			insert into t_common_xttx_pz
+			  (id, pzdm, title, description, sql, href, isvalid, executesn, resultfield, setfield,iconpath)
+			values
+			  (seq_common.nextval, 'FWJCPZDMYellow'||seq_common.nextval, '出租房屋(一般户)',
+				#[description],
+			   (select sqlpz.sql from t_common_sqlexepz sqlpz where  sqlpz.dm='fwjc.sql')|| ' and fwpz.fwzdlb = ''301'' and ((f_get_fwmaxjcsj(fw.fwid) is null) or((f_get_fwmaxjcsj(fw.fwid) + fwpz.jczq) - trunc(sysdate, ''dd'')) <=fwpz.tqtxts)',
+			    #[href],
+			    '1',
+			    '50',
+			    'fwid,fwbm,dzmc,jczq,zhjcsj,dqts', 
+			    'orgcode',
+			    #[iconpath])
+		]]>
+	</property>
+	
+	<property name="insertXtpzBeanGreen">
+		<![CDATA[
+			insert into t_common_xttx_pz
+			  (id, pzdm, title, description, sql, href, isvalid, executesn, resultfield, setfield,iconpath)
+			values
+			  (seq_common.nextval, 'FWJCPZDMGreen'||seq_common.nextval, '出租房屋(放心户)',
+			   #[description],
+			   (select sqlpz.sql from t_common_sqlexepz sqlpz where  sqlpz.dm='fwjc.sql')|| ' and fwpz.fwzdlb = ''303'' and ((f_get_fwmaxjcsj(fw.fwid) is null) or((f_get_fwmaxjcsj(fw.fwid) + fwpz.jczq) - trunc(sysdate, ''dd'')) <=fwpz.tqtxts)',
+			  	#[href],
+			    '1',
+			    '60',
+			    'fwid,fwbm,dzmc,jczq,zhjcsj,dqts', 
+			    'orgcode',
+			    #[iconpath])
+		]]>
+	</property>
+	
+	<property name="insertXtpzBeanRed">
+		<![CDATA[
+			insert into t_common_xttx_pz
+			  (id, pzdm, title, description, sql, href, isvalid, executesn, resultfield, setfield,iconpath)
+			values
+			  (seq_common.nextval, 'FWJCPZDMRed'||seq_common.nextval, '出租房屋(重点户)',
+				#[description],
+			   (select sqlpz.sql from t_common_sqlexepz sqlpz where  sqlpz.dm='fwjc.sql')|| ' and fwpz.fwzdlb = ''302'' and ((f_get_fwmaxjcsj(fw.fwid) is null) or((f_get_fwmaxjcsj(fw.fwid) + fwpz.jczq) - trunc(sysdate, ''dd'')) <=fwpz.tqtxts)',
+				#[href],
+			    '1',
+			    '70',
+			    'fwid,fwbm,dzmc,jczq,zhjcsj,dqts', 
+			    'orgcode',
+			    #[iconpath])
+		]]>
+	</property>
+	
+	<property name="insertXtpzBeanCzfwjc">
+		<![CDATA[
+			insert into t_common_xttx_pz
+			  (id, pzdm, title, description, sql, href, isvalid, executesn, resultfield, setfield, iconpath)
+			values
+			  (#[id], #[pzdm], #[title], #[description], #[sql], #[href], #[isvalid], #[executesn], #[resultfield], #[setfield], #[iconpath])
+		]]>
+	</property>
+	<property name="updateXtpzBeanCzfwjc">
+		<![CDATA[
+			update t_common_xttx_pz
+		    set id = #[id],
+		        pzdm = #[pzdm],
+		        title = #[title],
+		        description = #[description],
+		        sql = #[sql],
+		        href = #[href],
+		        isvalid = #[isvalid],
+		        executesn = #[executesn],
+		        resultfield = #[resultfield],
+		        setfield = #[setfield],
+		        iconpath = #[iconpath]
+		  where pzdm = #[pzdm]
+		]]>
+	</property>
+	
+	<property name="deletextpzBeanCzfwjc">
+		<![CDATA[
+			delete t_common_xttx_pz
+ 				 where pzdm = #[pzdm]
+		]]>
+	</property>
+	
+	<property name="queryXtpzBeanByPzdm">
+		<![CDATA[
+			select * from t_common_xttx_pz
+			where pzdm=?
+		]]>
+	</property>
+	
+	
+</properties>	

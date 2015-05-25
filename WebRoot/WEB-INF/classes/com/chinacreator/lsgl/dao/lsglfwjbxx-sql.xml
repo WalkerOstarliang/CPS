@@ -1,0 +1,1648 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+ 	<property name="insertFwJbxxBean">
+ 		<![CDATA[
+			 insert into t_lsgl_fw_jbxx
+			   (fwid,fwbm, fwmc, dzid,jcnf, fwly, 
+			    sylb, fwlb, fwyt, hxjg, fwmj, dscs, 
+			    dxcs, sydwmc, fdsyrxm, fdsyrsfzh, 
+			    fdsyrlxdh, cqzhm, cqlx, czrq, 
+			    cqdwmc, cqrxm, cqrsfzh, cqrlxdh, 
+			    hzxm, hzsfzh, hzlxdh, fzsx, 
+			    sfczw, gllb, sssq, sszrdwdm, 
+			    sszrdwmc, sszrmjjh, sszrmjxm,
+			    sszrmjlxdh, djrxm, djdwdm, 
+			    djdwmc, czrxm, czdwdm, czdwmc, 
+			    czbs,djsj,czsj,
+			    zxsj,zxyy,zxbs,
+			    ssgajgjgdm,ssgajgjgmc,sspcsdm,sspcsmc,
+			    fwzdgllb,
+			    frdbsfzh,frdbxm,frdblxdh,fzzjlx,bz,djrsfzh,ssdwmc)
+			 values
+			   (#[fwid],#[fwbm], #[fwmc], #[dzid],  #[jcnf], #[fwlb], 
+			   #[sylb], #[fwlb], #[fwyt], #[hxjg], #[fwmj], #[dscs], #[dxcs], 
+			   #[sydwmc], #[fdsyrxm], #[fdsyrsfzh], #[fdsyrlxdh], 
+			   #[cqzhm], #[cqlx], to_date(#[czrq],'yyyy-mm-dd'), 
+			   #[cqdwmc], #[cqrxm], #[cqrsfzh], #[cqrlxdh], 
+			   #[hzxm], #[hzsfzh], #[hzlxdh], #[fzsx], 
+			   #[sfczw], #[gllb], #[sssq], #[sszrdwdm], 
+			   #[sszrdwmc], #[sszrmjjh], #[sszrmjxm],
+			   #[sszrmjlxdh], #[djrxm], #[djdwdm], 
+			   #[djdwmc], #[czrxm], #[czdwdm], #[czdwmc], 
+			   #[czbs],to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+			   to_date(#[zxsj],'yyyy-mm-dd hh24:mi:ss'),#[zxyy],#[zxbs],
+			   #[ssgajgjgdm],#[ssgajgjgmc],#[sspcsdm],#[sspcsmc],
+			   #[fwzdgllb],
+			   #[frdbsfzh],#[frdbxm],#[frdblxdh],#[fzzjlx],#[bz],#[djrsfzh],#[ssdwmc])
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	<property name="queryFwJbxxBeanByFwid">
+ 		<![CDATA[
+ 			select fwid,
+ 				   fwbm,
+			       fwmc,
+			       dzid,
+			       f_get_dzmc(t.dzid) as dzmc,
+			       jcnf,
+			       fwly,
+			       sylb,
+			       fwlb,
+			       fwyt,
+			       hxjg,
+			       fwmj,
+			       dscs,
+			       dxcs,
+			       sydwmc,
+			       fdsyrxm,
+			       fdsyrsfzh,
+			       fdsyrlxdh,
+			       cqzhm,
+			       cqlx,
+			       to_char(czrq,'yyyy-mm-dd') as czrq,
+			       cqdwmc,
+			       cqrxm,
+			       cqrsfzh,
+			       cqrlxdh,
+			       hzxm,
+			       hzsfzh,
+			       hzlxdh,
+			       fzsx,
+			       sfczw,
+			       gllb,
+			       sssq,
+			       (select jc from t_common_hnxzqh where dm=t.sssq) as sssqmc,
+			       f_get_dzxxxzqh(t.dzid) as ssxzqh,
+			       sszrdwdm,
+			       sszrdwmc,
+			       sszrmjjh,
+			       sszrmjxm,
+			       sszrmjlxdh,
+			       djrxm,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czdwdm,
+			       czdwmc,
+			       czbs,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+			       to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+			       zxyy,
+			       zxbs,
+			       ssgajgjgdm,
+			       ssgajgjgmc,
+			       sspcsdm,
+			       sspcsmc,
+			       fwzdgllb,
+			       frdbsfzh,
+			       frdbxm,
+			       frdblxdh,
+			       fzzjlx,
+			       bz,
+			       ssdwmc
+			  from t_lsgl_fw_jbxx t
+			  where fwid = ?
+ 		]]>
+ 	</property>
+ 	
+  
+ 	 <property name="queryFwJbxxBeanPageResult">
+ 		<![CDATA[
+ 			select 
+ 				   fwid,
+ 			       (select stid from t_common_dzxx where dzid = t.dzid ) as stid,
+ 			       fwbm,
+			       fwmc,
+			       dzid,
+			       f_get_dzmc(t.dzid) as dzmc,
+			       jcnf,
+			       fwly,
+			       sylb,
+			       fwlb,
+			       fwyt,
+			       hxjg,
+			       fwmj,
+			       dscs,
+			       dxcs,
+			       sydwmc,
+			       fdsyrxm,
+			       fdsyrsfzh,
+			       fdsyrlxdh,
+			       cqzhm,
+			       cqlx,
+			       to_char(czrq,'yyyy-mm-dd') as czrq,
+			       cqdwmc,
+			       cqrxm,
+			       cqrsfzh,
+			       cqrlxdh,
+			       hzxm,
+			       hzsfzh,
+			       hzlxdh,
+			       fzsx,
+			       sfczw,
+			       gllb,
+			       sssq,
+			       (select jc from t_common_hnxzqh where dm = t.sssq) as sssqmc,
+			        f_get_dzxxxzqh(t.dzid) as ssxzqh,
+			       sszrdwdm,
+			       sszrdwmc,
+			       sszrmjjh,
+			       sszrmjxm,
+			       sszrmjlxdh,
+			       djrxm,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czdwdm,
+			       czdwmc,
+			       czbs,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+			       to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+			       zxyy,
+			       zxbs,
+			       decode(nvl(zxbs,'0'),'0','正常','1','注销') as fwzxbsms,
+			       f_get_czfwzxbsms(fwid) czwzxbsms,			     
+			       ssgajgjgdm,
+			       ssgajgjgmc,
+			       sspcsdm,
+			       sspcsmc,
+			       fwzdgllb,
+			       frdbsfzh,
+			       frdbxm,
+			       frdblxdh,
+			       (select dyh from t_common_dzxx where dzid=t.dzid) as dyh,
+			       (select lch from t_common_dzxx where dzid=t.dzid) as lch,
+			       (select lchz from t_common_dzxx where dzid=t.dzid) as lchz,
+			       (select fjh from t_common_dzxx where dzid=t.dzid) as fjh,
+			       (select shhz from t_common_dzxx where dzid=t.dzid) as shhz,
+			       (select fsdz from t_common_dzxx where dzid=t.dzid) as fsdz,
+			       t.ssdwmc
+			  from t_lsgl_fw_jbxx t
+			  where 1=1
+			  	#if ($czfwbph && !$czfwbph.equals(""))
+					and t.fwid in (select fwbh from t_lsgl_czfw_jbxx where czfwbpbm like  #[czfwbph]||'%')
+			  	#end
+			  
+			  	#if ($sfczw && !$sfczw.equals(""))
+			  		and sfczw = #[sfczw]
+			  	#end
+			  	
+			  	#if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+		 	 		and (f_get_czfwzxbsms(fwid)='正常')
+			    #end
+			    #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+			 	 	and (f_get_czfwzxbsms(fwid)='注销')
+			    #end 
+			    #if($czwcx && !$czwcx.equals("") && $czwcx.equals("1"))
+			    	and exists (select 1 from t_lsgl_czfw_jbxx where fwbh = fwid)
+			    #end
+			  	
+			  	#if($fwzxbs && !$fwzxbs.equals("") && $fwzxbs.equals("0"))
+		 	 		and (zxbs ='0' or zxbs is null)
+			    #end
+			    
+			    #if($fwzxbs && !$fwzxbs.equals("") && $fwzxbs.equals("1"))
+			 	 	and zxbs ='1'
+			    #end 
+			    
+			  	#if($cqlx && !$cqlx.equals(""))
+			  		and CQLX = #[cqlx]
+			  	#end
+			  	
+			  	#if($sfqdzrz && $sfqdzrz.equals("0"))
+			  		and t.fwid in (select fwbh from t_lsgl_czfw_jbxx where (sfqdzrz =  #[sfqdzrz] or sfqdzrz is null))
+			  	#end
+			  	
+			  	#if($sfqdzrz && $sfqdzrz.equals("1"))
+			  		and t.fwid in (select fwbh from t_lsgl_czfw_jbxx where sfqdzrz =  #[sfqdzrz] )
+			  	#end
+			  	
+			  	#if($hzsfzh && !$hzsfzh.equals(""))
+			  		and (FRDBSFZH=#[hzsfzh] or HZSFZH=#[hzsfzh])
+			  	#end
+			  	
+			  	#if($hzxm && !$hzxm.equals(""))
+			  		and (FRDBXM like '%'||#[hzxm]||'%' or HZXM like '%'||#[hzxm]||'%')
+			  	#end
+			  	
+			   	 #if ($djsj_start && !$djsj_start.equals(""))
+					and djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+				#end
+				#if($djsj_end && !$djsj_end.equals(""))
+					  and djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+				#end
+			  	
+			  	#if($sqdm && !$sqdm.equals(""))
+			   		and sssq = #[sqdm]
+			   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+	    			and SSZRDWDM = #[jwsqdm]
+	    		#elseif ($pcsdm && !$pcsdm.equals(""))
+			 		and SSZRDWDM like substr(#[pcsdm],1,8)||'%'
+	 			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+	 				and SSZRDWDM like substr(#[countrygajgjgdm],1,6)||'%'
+	 			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+	 				and SSZRDWDM like substr(#[citygajgjgdm],1,4)||'%'
+			   	#end
+			  	
+			  	#if($wxcts && !$wxcts.equals(""))
+					and fwid in 
+					(select fwtx.czfwid from
+					
+					   (select fw.sfczw,
+					           fw.FDSYRXM,
+					           fw.fdsyrlxdh,
+					           fw.fwid czfwid,
+					           f_get_dzmc(fw.dzid) dzmc,
+					           cz.czfwbpbm,fw.fwid fwid,
+					           nvl((select max(xcdj.djsj)
+					                 from t_lsgl_fw_czwxcdj xcdj
+					                where xcdj.fwid = fw.fwid),
+					               (select max(czfw.djsj)
+					                  from t_lsgl_czfw_jbxx czfw
+					                 where czfw.FWBH = fw.fwid)) last_time
+					          from t_lsgl_fw_jbxx fw ,t_lsgl_czfw_jbxx cz
+					          where  fw.fwid = cz.fwbh
+					          and cz.fwzt='0' 
+					          and  fw.SFCZW = '1' 
+					          and fw.cqlx='2') fwtx
+					 where (fwtx.last_time + #[wxcts]) < sysdate ) 				
+				#end
+							  	
+			    and dzid in (
+			      		select dzid 
+			      		from v_common_dzxx dz
+			      		where 1=1
+			      			#if($sqdm && !$sqdm.equals(""))
+						   		and dz.sqdm = #[sqdm]
+						   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+				    			and dz.djdwdm = #[jwsqdm]
+				    		#elseif ($pcsdm && !$pcsdm.equals(""))
+						 		and dz.djdwdm like substr(#[pcsdm],1,8)||'%'
+				 			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				 				and dz.djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				 			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				 				and dz.djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+						   	#end
+			      			#if ($fsdz && !$fsdz.equals(""))
+			      				and dz.fsdz like '%'||#[fsdz]||'%'
+			      			#end
+			      			#if($jlxdm && !$jlxdm.equals(""))
+			      				and dz.jlxdm=#[jlxdm]
+			      			#end
+			      			#if($stmc && !$stmc.equals(""))
+			      				and dz.stmc like '%'||#[stmc]||'%'
+			      			#end
+			      			
+			      			#if($mph && !$mph.equals(""))
+			      				and dz.mph like #[mph]||'%'
+			      			#end
+			      			#if ($xqz && !$xqz.equals(""))
+			      				and xqz like '%'||#[xqz]||'%'
+			      			#end
+			      			#if($ldxz && !$ldxz.equals(""))
+			      				and ldxz like '%'||#[ldxz]||'%'
+			      			#end
+			      			#if($dyh && !$dyh.equals(""))
+			      				and dyh=#[dyh]
+			      			#end
+			      			#if($lch && !$lch.equals(""))
+			      				and lch like '%'||#[lch]||'%'
+		      					#if($lchz && !$lchz.equals(""))
+									and lchz = #[lchz]			      					
+		      					#end		
+			      			#end
+			      			#if($fjh && !$fjh.equals(""))
+			      				and fjh =#[fjh]
+			      				#if($shhz && !$shhz.equals(""))
+									and shhz = #[shhz]			      					
+		      					#end
+			      			#end
+			      )
+							 
+ 		]]>
+ 	</property>
+ 
+ 	<property name="updateFwJbxxByFwid">
+ 		<![CDATA[
+ 			update t_lsgl_fw_jbxx
+			   set  
+			       fwmc = #[fwmc],
+			       jcnf = #[jcnf],
+			       fwly = #[fwly],
+			       sylb = #[sylb],
+			       fwlb = #[fwlb],
+			       fwyt = #[fwyt],
+			       hxjg = #[hxjg],
+			       fwmj = #[fwmj],
+			       dscs = #[dscs],
+			       dxcs = #[dxcs],
+			       sydwmc = #[sydwmc],
+			       fdsyrxm = #[fdsyrxm],
+			       fdsyrsfzh = #[fdsyrsfzh],
+			       fdsyrlxdh = #[fdsyrlxdh],
+			       cqzhm = #[cqzhm],
+			       cqlx = #[cqlx],
+			       czrq = to_date(#[czrq],'yyyy-mm-dd'),
+			       cqdwmc = #[cqdwmc],
+			       cqrxm = #[cqrxm],
+			       cqrsfzh = #[cqrsfzh],
+			       cqrlxdh = #[cqrlxdh],
+			       hzxm = #[hzxm],
+			       hzsfzh = #[hzsfzh],
+			       hzlxdh = #[hzlxdh],
+			       fzsx = #[fzsx],
+			       sfczw = #[sfczw],
+			       gllb = #[gllb],
+			       sssq = #[sssq],
+			       sszrdwdm = #[sszrdwdm],
+			       sszrdwmc = #[sszrdwmc],
+			       sszrmjjh = #[sszrmjjh],
+			       sszrmjxm = #[sszrmjxm],
+			       sszrmjlxdh = #[sszrmjlxdh],
+			       czrxm = #[czrxm],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czbs = #[czbs],
+			       czsj = sysdate,
+			       zxsj = to_date(#[zxsj],'yyyy-mm-dd hh24:mi:ss'),
+			       zxyy = #[zxyy],
+			       zxbs = #[zxbs],
+			       ssgajgjgdm = #[ssgajgjgdm],
+			       ssgajgjgmc = #[ssgajgjgmc],
+			       sspcsdm = #[sspcsdm],
+			       sspcsmc = #[sspcsmc],
+			       fwzdgllb = #[fwzdgllb],
+			       frdbsfzh = #[frdbsfzh],
+			       frdbxm = #[frdbxm],
+			       frdblxdh = #[frdblxdh],
+			       fzzjlx=#[fzzjlx],
+			       bz=#[bz],
+			       ssdwmc = #[ssdwmc]
+			 where fwid = #[fwid]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryFwzpxxListByFwid">
+ 		<![CDATA[
+ 			 select id, fwid, ms,to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,djrxm,djdwdm,djdwmc
+ 			 from t_lsgl_fw_zpxx 
+ 			 where fwid=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="insertFwZpxx">
+ 		<![CDATA[
+ 			insert into t_lsgl_fw_zpxx(id, fwid, zp, ms,djrxm,djdwdm,djdwmc,djsj) 
+ 			values (?, ?, ?, ?,?,?,?,sysdate)
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="insertCzwxcdjxxBean">
+ 		<![CDATA[
+ 			insert into t_lsgl_fw_czwxcdj
+			  (xcdjbh,
+			   fwid,
+			   xcmjxm,
+			   xcmjdwdm,
+			   xcmjdwmc,
+			   xcsj,
+			   xcqknr,
+			   xccljg,
+			   djrxm,
+			   djdwdm,
+			   djdwmc,
+			   djsj)
+			values
+			  (#[xcdjbh],
+			   #[fwid],
+			   #[xcmjxm],
+			   #[xcmjdwdm],
+			   #[xcmjdwmc],
+			   to_date(#[xcsj],'yyyy-mm-dd'),
+			   #[xcqknr],
+			   #[xccljg],
+			   #[djrxm],
+			   #[djdwdm],
+			   #[djdwmc],
+			   sysdate)
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryCzwxcdjxxBeans">
+ 		<![CDATA[
+ 			select xcdjbh,
+		       fwid,
+		       xcmjxm,
+		       xcmjdwdm,
+		       xcmjdwmc,
+		       to_char(xcsj,'yyyy-mm-dd') as xcsj,
+		       xcqknr,
+		       xccljg,
+		       djrxm,
+		       djdwdm,
+		       djdwmc,
+		       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj
+		  from t_lsgl_fw_czwxcdj
+		  where fwid=?
+		  order by djsj desc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateCzwxcdjxxBean">
+ 		<![CDATA[
+ 			update t_lsgl_fw_czwxcdj
+			   set 
+			       xcmjxm = #[xcmjxm],
+			       xcmjdwdm = #[xcmjdwdm],
+			       xcmjdwmc = #[xcmjdwmc],
+			       xcsj = to_date(#[xcsj],'yyyy-mm-dd'),
+			       xcqknr = #[xcqknr],
+			       xccljg = #[xccljg]
+			 where xcdjbh = #[xcdjbh]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryFwrkxxBeans">
+ 		<![CDATA[
+ 			select *
+  		    from v_lsgl_fwrk
+  		    where fwid=? and zxbs <> '1'
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryFwJbxxBeanByDzid">
+ 		<![CDATA[
+ 			select fwid,
+ 				   fwbm,
+			       fwmc,
+			       dzid,
+			       f_get_dzmc(t.dzid) as dzmc,
+			       jcnf,
+			       fwly,
+			       sylb,
+			       fwlb,
+			       fwyt,
+			       hxjg,
+			       fwmj,
+			       dscs,
+			       dxcs,
+			       sydwmc,
+			       fdsyrxm,
+			       fdsyrsfzh,
+			       fdsyrlxdh,
+			       cqzhm,
+			       cqlx,
+			       to_char(czrq,'yyyy-mm-dd') as czrq,
+			       cqdwmc,
+			       cqrxm,
+			       cqrsfzh,
+			       cqrlxdh,
+			       hzxm,
+			       hzsfzh,
+			       hzlxdh,
+			       fzsx,
+			       sfczw,
+			       gllb,
+			       sssq,
+			       (select jc from t_common_hnxzqh where dm=t.sssq) as sssqmc,
+			        f_get_dzxxxzqh(t.dzid) as ssxzqh,
+			       sszrdwdm,
+			       sszrdwmc,
+			       sszrmjjh,
+			       sszrmjxm,
+			       sszrmjlxdh,
+			       djrxm,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czdwdm,
+			       czdwmc,
+			       czbs,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+			       to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+			       zxyy,
+			       zxbs,
+			       ssgajgjgdm,
+			       ssgajgjgmc,
+			       sspcsdm,
+			       sspcsmc,
+			       fwzdgllb,
+			       frdbsfzh,
+			       frdbxm,
+			       frdblxdh,
+			       ssdwmc
+			  from t_lsgl_fw_jbxx t
+			  where dzid = ?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryFwBeanPageResultInfoByStid">
+ 		<![CDATA[
+ 			select fwid,
+ 			       fwbm,
+			       fwmc,
+			       dzid,
+			       f_get_dzmc(t.dzid) as dzmc,
+			       jcnf,
+			       fwly,
+			       sylb,
+			       fwlb,
+			       fwyt,
+			       hxjg,
+			       fwmj,
+			       dscs,
+			       dxcs,
+			       sydwmc,
+			       fdsyrxm,
+			       fdsyrsfzh,
+			       fdsyrlxdh,
+			       cqzhm,
+			       cqlx,
+			       to_char(czrq,'yyyy-mm-dd') as czrq,
+			       cqdwmc,
+			       cqrxm,
+			       cqrsfzh,
+			       cqrlxdh,
+			       hzxm,
+			       hzsfzh,
+			       hzlxdh,
+			       fzsx,
+			       sfczw,
+			       gllb,
+			       sssq,
+			       (select jc from t_common_hnxzqh where dm = t.sssq) as sssqmc,
+			        f_get_dzxxxzqh(t.dzid) as ssxzqh,
+			       sszrdwdm,
+			       sszrdwmc,
+			       sszrmjjh,
+			       sszrmjxm,
+			       sszrmjlxdh,
+			       djrxm,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czdwdm,
+			       czdwmc,
+			       czbs,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+			       to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+			       zxyy,
+			       zxbs,
+			       ssgajgjgdm,
+			       ssgajgjgmc,
+			       sspcsdm,
+			       sspcsmc,
+			       fwzdgllb,
+			       frdbsfzh,
+			       frdbxm,
+			       frdblxdh,
+			       (select dyh from t_common_dzxx where dzid=t.dzid) as dyh,
+			       (select lch from t_common_dzxx where dzid=t.dzid) as lch,
+			       (select lchz from t_common_dzxx where dzid=t.dzid) as lchz,
+			       (select fjh from t_common_dzxx where dzid=t.dzid) as fjh,
+			       (select shhz from t_common_dzxx where dzid=t.dzid) as shhz,
+			       (select fsdz from t_common_dzxx where dzid=t.dzid) as fsdz,
+			       t.ssdwmc
+			  from t_lsgl_fw_jbxx t
+			  where 1=1
+			  and (zxbs = '0' or zxbs is null)
+			      and dzid in (
+			      		select dzid 
+			      		from v_common_dzxx dz
+			      		where 1=1
+			      	and dz.stid=?
+			      )
+			      order by dyh,lch,fjh asc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryFwBeanPageResultInfoByStidAndQueryBean">
+ 		<![CDATA[
+ 			select fwid,
+ 			       fwbm,
+			       fwmc,
+			       dzid,
+			       f_get_dzmc(t.dzid) as dzmc,
+			       jcnf,
+			       fwly,
+			       sylb,
+			       fwlb,
+			       fwyt,
+			       hxjg,
+			       fwmj,
+			       dscs,
+			       dxcs,
+			       sydwmc,
+			       fdsyrxm,
+			       fdsyrsfzh,
+			       fdsyrlxdh,
+			       cqzhm,
+			       cqlx,
+			       to_char(czrq,'yyyy-mm-dd') as czrq,
+			       cqdwmc,
+			       cqrxm,
+			       cqrsfzh,
+			       cqrlxdh,
+			       hzxm,
+			       hzsfzh,
+			       hzlxdh,
+			       fzsx,
+			       sfczw,
+			       gllb,
+			       sssq,
+			       (select jc from t_common_hnxzqh where dm = t.sssq) as sssqmc,
+			        f_get_dzxxxzqh(t.dzid) as ssxzqh,
+			       sszrdwdm,
+			       sszrdwmc,
+			       sszrmjjh,
+			       sszrmjxm,
+			       sszrmjlxdh,
+			       djrxm,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czdwdm,
+			       czdwmc,
+			       czbs,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+			       to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+			       zxyy,
+			       zxbs,
+			       ssgajgjgdm,
+			       ssgajgjgmc,
+			       sspcsdm,
+			       sspcsmc,
+			       fwzdgllb,
+			       frdbsfzh,
+			       frdbxm,
+			       frdblxdh,
+			       (select dyh from t_common_dzxx where dzid=t.dzid) as dyh,
+			       (select lch from t_common_dzxx where dzid=t.dzid) as lch,
+			       (select lchz from t_common_dzxx where dzid=t.dzid) as lchz,
+			       (select fjh from t_common_dzxx where dzid=t.dzid) as fjh,
+			       (select shhz from t_common_dzxx where dzid=t.dzid) as shhz,
+			       (select fsdz from t_common_dzxx where dzid=t.dzid) as fsdz,
+			       t.ssdwmc
+			  from t_lsgl_fw_jbxx t
+			  where 1=1
+			  and (zxbs = '0' or zxbs is null)
+			      and dzid in (
+			      		select dzid 
+			      		from v_common_dzxx dz
+			      		where 1=1
+			      			and dz.stid=#[stid]
+			      			#if($dyh && !$dyh.equals(""))
+			      				and dyh = #[dyh]
+			      			#end
+			      			#if($lch && !$lch.equals(""))
+			      				and lch = #[lch]
+			      			#end
+			      			#if($fjh && !$fjh.equals(""))
+			      				and fjh = #[fjh]
+			      			#end
+			      )
+			      order by dyh,fjh asc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryFwBeanPageResultInfoByStidWithPicNum">
+ 		<![CDATA[
+ 		select * from (
+ 			select fwid,
+ 			       fwbm,
+			       fwmc,
+			       dzid,
+			       f_get_dzmc(t.dzid) as dzmc,
+			       jcnf,
+			       fwly,
+			       sylb,
+			       fwlb,
+			       fwyt,
+			       hxjg,
+			       fwmj,
+			       dscs,
+			       dxcs,
+			       sydwmc,
+			       fdsyrxm,
+			       fdsyrsfzh,
+			       fdsyrlxdh,
+			       cqzhm,
+			       cqlx,
+			       to_char(czrq,'yyyy-mm-dd') as czrq,
+			       cqdwmc,
+			       cqrxm,
+			       cqrsfzh,
+			       cqrlxdh,
+			       hzxm,
+			       hzsfzh,
+			       hzlxdh,
+			       fzsx,
+			       sfczw,
+			       gllb,
+			       sssq,
+			       (select jc from t_common_hnxzqh where dm = t.sssq) as sssqmc,
+			        f_get_dzxxxzqh(t.dzid) as ssxzqh,
+			       sszrdwdm,
+			       sszrdwmc,
+			       sszrmjjh,
+			       sszrmjxm,
+			       sszrmjlxdh,
+			       djrxm,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czdwdm,
+			       czdwmc,
+			       czbs,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+			       to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+			       zxyy,
+			       zxbs,
+			       ssgajgjgdm,
+			       ssgajgjgmc,
+			       sspcsdm,
+			       sspcsmc,
+			       fwzdgllb,
+			       frdbsfzh,
+			       frdbxm,
+			       frdblxdh,
+			       t.ssdwmc,
+			       (select count(1) from t_lsgl_fw_zpxx where fwid = t.fwid) as zps,
+			       (select id from t_lsgl_fw_zpxx where fwid = t.fwid and rownum = 1) as zpid,
+			       (select dyh from t_common_dzxx where dzid=t.dzid) as dyh,
+			       (select lch from t_common_dzxx where dzid=t.dzid) as lch,
+			       (select lchz from t_common_dzxx where dzid=t.dzid) as lchz,
+			       (select fjh from t_common_dzxx where dzid=t.dzid) as fjh,
+			       (select shhz from t_common_dzxx where dzid=t.dzid) as shhz,
+			       (select fsdz from t_common_dzxx where dzid=t.dzid) as fsdz
+			  from t_lsgl_fw_jbxx t
+			  where 1=1
+			  and (zxbs = '0' or zxbs is null)
+			      and dzid in (
+			      		select dzid 
+			      		from v_common_dzxx dz
+			      		where 1=1
+			      	and dz.stid = #[stid]
+			      )
+			      order by dyh,fjh asc
+		) where 1=1
+		#if($fjh && !$fjh.equals(""))
+			and fjh = #[fjh]
+		#end
+		#if($ssDate && !$ssDate.equals(""))
+			and czsj >= #[ssDate]
+		#end
+		#if($seDate && !$seDate.equals(""))
+			and czsj <= #[seDate]
+		#end
+		#if($hasPic == 1)
+			and zps > 0
+		#end
+		#if($hasPic == 0)
+			and zps = 0
+		#end
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryFwBeanPageResultInfoByFwQueryBean">
+ 		<![CDATA[
+ 			select fwid,
+ 			       fwbm,
+			       fwmc,
+			       dzid,
+			       f_get_dzmc(t.dzid) as dzmc,
+			       jcnf,
+			       fwly,
+			       sylb,
+			       fwlb,
+			       fwyt,
+			       hxjg,
+			       fwmj,
+			       dscs,
+			       dxcs,
+			       sydwmc,
+			       fdsyrxm,
+			       fdsyrsfzh,
+			       fdsyrlxdh,
+			       cqzhm,
+			       cqlx,
+			       to_char(czrq,'yyyy-mm-dd') as czrq,
+			       cqdwmc,
+			       cqrxm,
+			       cqrsfzh,
+			       cqrlxdh,
+			       hzxm,
+			       hzsfzh,
+			       hzlxdh,
+			       fzsx,
+			       sfczw,
+			       gllb,
+			       sssq,
+			       (select jc from t_common_hnxzqh where dm = t.sssq) as sssqmc,
+			        f_get_dzxxxzqh(t.dzid) as ssxzqh,
+			       sszrdwdm,
+			       sszrdwmc,
+			       sszrmjjh,
+			       sszrmjxm,
+			       sszrmjlxdh,
+			       djrxm,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czdwdm,
+			       czdwmc,
+			       czbs,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+			       to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+			       zxyy,
+			       zxbs,
+			       ssgajgjgdm,
+			       ssgajgjgmc,
+			       sspcsdm,
+			       sspcsmc,
+			       fwzdgllb,
+			       frdbsfzh,
+			       frdbxm,
+			       frdblxdh,
+			       t.ssdwmc,
+			       (select dyh from t_common_dzxx where dzid=t.dzid) as dyh,
+			       (select lch from t_common_dzxx where dzid=t.dzid) as lch,
+			       (select lchz from t_common_dzxx where dzid=t.dzid) as lchz,
+			       (select fjh from t_common_dzxx where dzid=t.dzid) as fjh,
+			       (select shhz from t_common_dzxx where dzid=t.dzid) as shhz,
+			       (select fsdz from t_common_dzxx where dzid=t.dzid) as fsdz
+			  from t_lsgl_fw_jbxx t
+			  where 1=1
+			  and (zxbs = '0' or zxbs is null)
+			      and dzid in (
+			      		select dzid 
+			      		from v_common_dzxx dz
+			      		where 1=1 and dz.stid=#[stid]
+			      			 #if ($dyh && !$dyh.equals(""))
+						      	and dz.dyh=#[dyh]
+						     #end
+						     #if ($lch && !$lch.equals(""))
+						      	and dz.lch=#[lch]
+						     #end
+						     #if ($fjh && !$fjh.equals(""))
+						      	and dz.fjh=#[fjh]
+						     #end
+			      )
+			      order by dyh,fjh asc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryFwJbxxBeanByStidAndDyLcFj">
+ 		<![CDATA[
+ 			 select dzid
+			 from t_lsgl_fw_jbxx j
+			 where (zxbs='0' or zxbs is null) 
+			       and exists 
+			       (
+			           select 1 
+			           from t_common_dzxx d 
+			           where d.dzid=j.dzid 
+			           	  and d.stid=#[stid]
+		           		  #if ($dyh && !$dyh.equals(""))
+						      and dyh = #[dyh]	
+						  #else
+						  	  and dyh is null			
+						  #end
+						  
+						  #if ($lch && !$lch.equals(""))
+						  	  and lch = #[lch]
+						  	  and lchz = #[lchz]
+					  	  #else
+					  	  	  and lch is null
+						  #end
+						  
+						  #if ($fjh && !$fjh.equals(""))
+							  and fjh = #[fjh]
+							  and shhz = #[shhz]
+						  #else
+						  	and fjh is null
+						  #end
+						  
+						  #if ($fsdz && !$fsdz.equals(""))
+						  	and fsdz = #[fsdz]
+						  #else
+						    and fsdz is null
+						  #end
+			           
+			      )
+			      and rownum = 1
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryRklistInFwxx">
+ 		<![CDATA[
+ 			
+			select c.rybh,'111' as zjzl,c.sfzh as zjhm
+			from t_lsgl_rk_czrk c inner join t_lsgl_rkfw_gl gl on c.rkfwglid=gl.rkfwglid
+			where (c.zxbs is null or c.zxbs='0') and gl.fwid=#[fwid]
+			
+			union all
+			
+			select c.rybh,'111' as zjzl,c.sfzh as zjhm
+			from t_lsgl_rk_ldrkzzxx c inner join t_lsgl_rkfw_gl gl on c.rkfwglid=gl.rkfwglid
+			where (c.zxbs is null or c.zxbs='0') and gl.fwid=#[fwid]
+			
+			union all
+			
+			select c.rybh,'111' as zjzl,c.sfzh as zjhm
+			from t_lsgl_rk_jzrkxx c inner join t_lsgl_rkfw_gl gl on c.rkfwglid=gl.rkfwglid
+			where (c.zxbs is null or c.zxbs='0') and gl.fwid=#[fwid]
+			
+			union all
+			
+			select c.rybh,'111' as zjzl,c.sfzh as zjhm
+			from t_lsgl_rk_wlhczhk c inner join t_lsgl_rkfw_gl gl on c.rkfwglid=gl.rkfwglid
+			where (c.zxbs is null or c.zxbs='0') and gl.fwid=#[fwid]
+			 
+			union all
+			
+			select c.rybh,c.rjzjzl as zjzl,c.rjzjhm as zjhm
+			from t_lsgl_rk_jwrkxx c inner join t_lsgl_rkfw_gl gl on c.rkfwglid=gl.rkfwglid
+			where (c.zxbs is null or c.zxbs='0') and gl.fwid=#[fwid]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="deleteFwJbxxBean">
+ 		<![CDATA[
+ 			update t_lsgl_fw_jbxx
+			       set                       
+		           czrxm = #[czrxm],
+		           czdwdm = #[czdwdm],
+		           czdwmc = #[czdwmc],
+		           czbs = '3', 
+		           czsj = sysdate,
+		           zxsj = sysdate,
+		           zxyy = #[zxyy],
+		           zxbs = '1'                         
+		where      fwid = #[fwid]                        
+ 		
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryGlDwxxPageResultInfo">
+ 		<![CDATA[
+ 			select * 
+				from t_za_jg_jbxx jb
+				where exists (
+				      select 1 from T_LSGL_DWFW_GL gl where gl.jgbh=jb.jgbh and fwid=#[fwid]
+				)
+				 			
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	<property name="deleteCzFwJbxxBean">
+ 		<![CDATA[
+ 			update t_lsgl_fw_jbxx
+			       set                       
+		           czrxm = #[czrxm],
+		           czdwdm = #[czdwdm],
+		           czdwmc = #[czdwmc],
+		           czbs = '2', 
+		           sfczw = '0',
+		           czsj = sysdate                         
+		where      fwid = #[fwid]                        
+ 		
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="logoutCzfwJbxxBean">
+ 		<![CDATA[
+ 			update t_lsgl_czfw_jbxx
+			       set                       
+		           fwzt = '1' ,
+		           CZZZSJ = sysdate,
+		           xgsj = sysdate                        
+		where      fwbh = ?    
+		and fwzt = '0'                    
+ 		
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	<property name="queryFwInfoByHzsfzh">
+ 		<![CDATA[
+ 		
+ 		select fwid,
+ 			       fwbm,
+			       fwmc,
+			       dzid,
+			       f_get_dzmc(t.dzid) as dzmc,
+			       jcnf,
+			       fwly,
+			       sylb,
+			       fwlb,
+			       fwyt,
+			       hxjg,
+			       fwmj,
+			       dscs,
+			       dxcs,
+			       sydwmc,
+			       fdsyrxm,
+			       fdsyrsfzh,
+			       fdsyrlxdh,
+			       cqzhm,
+			       cqlx,
+			       to_char(czrq,'yyyy-mm-dd') as czrq,
+			       cqdwmc,
+			       cqrxm,
+			       cqrsfzh,
+			       cqrlxdh,
+			       hzxm,
+			       hzsfzh,
+			       hzlxdh,
+			       fzsx,
+			       sfczw,
+			       gllb,
+			       sssq,
+			       (select jc from t_common_hnxzqh where dm = t.sssq) as sssqmc,
+			        f_get_dzxxxzqh(t.dzid) as ssxzqh,
+			       sszrdwdm,
+			       sszrdwmc,
+			       sszrmjjh,
+			       sszrmjxm,
+			       sszrmjlxdh,
+			       djrxm,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czdwdm,
+			       czdwmc,
+			       czbs,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+			       to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+			       zxyy,
+			       zxbs,
+			       ssgajgjgdm,
+			       ssgajgjgmc,
+			       sspcsdm,
+			       sspcsmc,
+			       fwzdgllb,
+			       frdbsfzh,
+			       frdbxm,
+			       frdblxdh,
+			       (select dyh from t_common_dzxx where dzid=t.dzid) as dyh,
+			       (select lch from t_common_dzxx where dzid=t.dzid) as lch,
+			       (select lchz from t_common_dzxx where dzid=t.dzid) as lchz,
+			       (select fjh from t_common_dzxx where dzid=t.dzid) as fjh,
+			       (select shhz from t_common_dzxx where dzid=t.dzid) as shhz,
+			       (select fsdz from t_common_dzxx where dzid=t.dzid) as fsdz
+			  from t_lsgl_fw_jbxx t
+ 			 where hzsfzh = ? and (zxbs = '0' or zxbs is null)                     
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryFwListByFwids">
+ 		<![CDATA[
+ 			select fwid,
+ 				   fwbm,
+			       fwmc,
+			       dzid,
+			       f_get_dzmc(t.dzid) as dzmc,
+			       jcnf,
+			       fwly,
+			       sylb,
+			       fwlb,
+			       fwyt,
+			       hxjg,
+			       fwmj,
+			       dscs,
+			       dxcs,
+			       sydwmc,
+			       fdsyrxm,
+			       fdsyrsfzh,
+			       fdsyrlxdh,
+			       cqzhm,
+			       cqlx,
+			       to_char(czrq,'yyyy-mm-dd') as czrq,
+			       cqdwmc,
+			       cqrxm,
+			       cqrsfzh,
+			       cqrlxdh,
+			       hzxm,
+			       hzsfzh,
+			       hzlxdh,
+			       fzsx,
+			       sfczw,
+			       gllb,
+			       sssq,
+			       (select jc from t_common_hnxzqh where dm=t.sssq) as sssqmc,
+			       f_get_dzxxxzqh(t.dzid) as ssxzqh,
+			       sszrdwdm,
+			       sszrdwmc,
+			       sszrmjjh,
+			       sszrmjxm,
+			       sszrmjlxdh,
+			       djrxm,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czdwdm,
+			       czdwmc,
+			       czbs,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+			       to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+			       zxyy,
+			       zxbs,
+			       ssgajgjgdm,
+			       ssgajgjgmc,
+			       sspcsdm,
+			       sspcsmc,
+			       fwzdgllb,
+			       frdbsfzh,
+			       frdbxm,
+			       frdblxdh,
+			       fzzjlx,
+			       bz,
+			       (select czfwbpbm from  t_lsgl_czfw_jbxx where fwbh = t.fwid and rownum=1) as czfwbpbm
+			  from t_lsgl_fw_jbxx t
+			  where 
+			  fwid in  (#[fwids])
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryFwlistByFwqueryBean">
+ 		<![CDATA[
+ 		select 
+ 				   fwid,
+ 			       (select stid from t_common_dzxx where dzid = t.dzid ) as stid,
+ 			       fwbm,
+			       fwmc,
+			       dzid,
+			       f_get_dzmc(t.dzid) as dzmc,
+			       jcnf,
+			       fwly,
+			       sylb,
+			       fwlb,
+			       fwyt,
+			       hxjg,
+			       fwmj,
+			       dscs,
+			       dxcs,
+			       sydwmc,
+			       fdsyrxm,
+			       fdsyrsfzh,
+			       fdsyrlxdh,
+			       cqzhm,
+			       cqlx,
+			       to_char(czrq,'yyyy-mm-dd') as czrq,
+			       cqdwmc,
+			       cqrxm,
+			       cqrsfzh,
+			       cqrlxdh,
+			       hzxm,
+			       hzsfzh,
+			       hzlxdh,
+			       fzsx,
+			       sfczw,
+			       gllb,
+			       sssq,
+			       (select jc from t_common_hnxzqh where dm = t.sssq) as sssqmc,
+			        f_get_dzxxxzqh(t.dzid) as ssxzqh,
+			       sszrdwdm,
+			       sszrdwmc,
+			       sszrmjjh,
+			       sszrmjxm,
+			       sszrmjlxdh,
+			       djrxm,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czdwdm,
+			       czdwmc,
+			       czbs,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+			       to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+			       zxyy,
+			       zxbs,
+			       ssgajgjgdm,
+			       ssgajgjgmc,
+			       sspcsdm,
+			       sspcsmc,
+			       fwzdgllb,
+			       frdbsfzh,
+			       frdbxm,
+			       frdblxdh,
+			       (select dyh from t_common_dzxx where dzid=t.dzid) as dyh,
+			       (select lch from t_common_dzxx where dzid=t.dzid) as lch,
+			       (select lchz from t_common_dzxx where dzid=t.dzid) as lchz,
+			       (select fjh from t_common_dzxx where dzid=t.dzid) as fjh,
+			       (select shhz from t_common_dzxx where dzid=t.dzid) as shhz,
+			       (select fsdz from t_common_dzxx where dzid=t.dzid) as fsdz,
+			       (select czfwbpbm from  t_lsgl_czfw_jbxx where fwbh = t.fwid and rownum=1) as czfwbpbm
+			  from t_lsgl_fw_jbxx t
+			  where 1=1
+			  	#if ($czfwbph && !$czfwbph.equals(""))
+					and t.fwid in (select fwbh from t_lsgl_czfw_jbxx where czfwbpbm like  #[czfwbph]||'%')
+			  	#end
+			  
+			  	#if ($sfczw && !$sfczw.equals(""))
+			  		and sfczw = #[sfczw]
+			  	#end
+			  	
+			  	#if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+		 	 		and (zxbs = #[zxbs] or zxbs is null)
+			    #end
+			    #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+			 	 	and (zxbs = #[zxbs])
+			    #end 
+			  	
+			  	#if($cqlx && !$cqlx.equals(""))
+			  		and CQLX = #[cqlx]
+			  	#end
+			  	
+			  	#if($sfqdzrz && $sfqdzrz.equals("0"))
+			  		and t.fwid in (select fwbh from t_lsgl_czfw_jbxx where (sfqdzrz =  #[sfqdzrz] or sfqdzrz is null))
+			  	#end
+			  	
+			  	#if($sfqdzrz && $sfqdzrz.equals("1"))
+			  		and t.fwid in (select fwbh from t_lsgl_czfw_jbxx where sfqdzrz =  #[sfqdzrz] )
+			  	#end
+			  	
+			  	#if($hzsfzh && !$hzsfzh.equals(""))
+			  		and (FRDBSFZH=#[hzsfzh] or HZSFZH=#[hzsfzh])
+			  	#end
+			  	
+			  	#if($hzxm && !$hzxm.equals(""))
+			  		and (FRDBXM like '%'||#[hzxm]||'%' or HZXM like '%'||#[hzxm]||'%')
+			  	#end
+			  	
+			  	 #if ($djsj_start && !$djsj_start.equals(""))
+					and djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+				#end
+				#if($djsj_end && !$djsj_end.equals(""))
+						and djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+				#end
+			  	
+			  	#if($sqdm && !$sqdm.equals(""))
+			   		and sssq = #[sqdm]
+			   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+	    			and SSZRDWDM = #[jwsqdm]
+	    		#elseif ($pcsdm && !$pcsdm.equals(""))
+			 		and SSZRDWDM like substr(#[pcsdm],1,8)||'%'
+	 			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+	 				and SSZRDWDM like substr(#[countrygajgjgdm],1,6)||'%'
+	 			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+	 				and SSZRDWDM like substr(#[citygajgjgdm],1,4)||'%'
+			   	#end
+			  	
+			  	#if($wxcts && !$wxcts.equals(""))
+					and fwid in 
+					(select fwtx.czfwid from
+					
+					   (select fw.sfczw,
+					           fw.FDSYRXM,
+					           fw.fdsyrlxdh,
+					           fw.fwid czfwid,
+					           f_get_dzmc(fw.dzid) dzmc,
+					           cz.czfwbpbm,fw.fwid fwid,
+					           nvl((select max(xcdj.djsj)
+					                 from t_lsgl_fw_czwxcdj xcdj
+					                where xcdj.fwid = fw.fwid),
+					               (select max(czfw.djsj)
+					                  from t_lsgl_czfw_jbxx czfw
+					                 where czfw.FWBH = fw.fwid)) last_time
+					          from t_lsgl_fw_jbxx fw ,t_lsgl_czfw_jbxx cz
+					          where  fw.fwid = cz.fwbh
+					          and cz.fwzt='0' 
+					          and  fw.SFCZW = '1' 
+					          and fw.cqlx='2') fwtx
+					 where (fwtx.last_time + #[wxcts]) < sysdate ) 				
+				#end
+							  	
+			    and dzid in (
+			      		select dzid 
+			      		from v_common_dzxx dz
+			      		where 1=1
+			      			#if($sqdm && !$sqdm.equals(""))
+						   		and dz.sqdm = #[sqdm]
+						   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+				    			and dz.djdwdm = #[jwsqdm]
+				    		#elseif ($pcsdm && !$pcsdm.equals(""))
+						 		and dz.djdwdm like substr(#[pcsdm],1,8)||'%'
+				 			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				 				and dz.djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				 			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				 				and dz.djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+						   	#end
+			      			#if ($fsdz && !$fsdz.equals(""))
+			      				and dz.fsdz like '%'||#[fsdz]||'%'
+			      			#end
+			      			#if($jlxdm && !$jlxdm.equals(""))
+			      				and dz.jlxdm=#[jlxdm]
+			      			#end
+			      			#if($stmc && !$stmc.equals(""))
+			      				and dz.stmc like '%'||#[stmc]||'%'
+			      			#end
+			      			
+			      			#if($mph && !$mph.equals(""))
+			      				and dz.mph like #[mph]||'%'
+			      			#end
+			      			#if ($xqz && !$xqz.equals(""))
+			      				and xqz like '%'||#[xqz]||'%'
+			      			#end
+			      			#if($ldxz && !$ldxz.equals(""))
+			      				and ldxz like '%'||#[ldxz]||'%'
+			      			#end
+			      			#if($dyh && !$dyh.equals(""))
+			      				and dyh=#[dyh]
+			      			#end
+			      			#if($lch && !$lch.equals(""))
+			      				and lch like '%'||#[lch]||'%'
+		      					#if($lchz && !$lchz.equals(""))
+									and lchz = #[lchz]			      					
+		      					#end		
+			      			#end
+			      			#if($fjh && !$fjh.equals(""))
+			      				and fjh =#[fjh]
+			      				#if($shhz && !$shhz.equals(""))
+									and shhz = #[shhz]			      					
+		      					#end
+			      			#end
+			      )
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateFwtoCzfw">
+ 		<![CDATA[
+ 			update t_lsgl_fw_jbxx
+			       set sfczw = '1'
+			                         
+			where  fwid = ?                    
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateFwJbxxFromCzfw">
+ 		<![CDATA[
+ 			update t_lsgl_fw_jbxx
+			       set sfczw = '1',
+			           hzsfzh = #[hzsfzh],
+			       	   hzxm = #[hzxm],
+			           hzlxdh = #[hzlxdh],
+			           FRDBSFZH = #[frdbsfzh],
+			           FRDBXM = #[frdbxm],
+			           FRDBLXDH = #[frdblxdh]                      
+			where  fwid = #[fwid]                       
+ 		]]>
+ 	</property>
+ 	<!-- dzfwqyrkfwglupdate 地址房屋合并迁移(人口房屋关联表更新) -->
+ 	<property name="dzfwqyrkfwglupdate">
+ 		<![CDATA[
+ 			update t_lsgl_rkfw_gl
+  			 set (fwid, dzid) = (select distinct fwid, dzid
+                     from t_lsgl_fw_jbxx
+                     where fwid = #[fwid])
+			 where fwid = #[oldfwid]                       
+ 		]]>
+ 	</property>
+ 	<!-- dzfwqydwfwglupdate 地址房屋合并迁移(单位房屋关联表) -->
+ 	<property name="dzfwqydwfwglupdate">
+ 		<![CDATA[
+ 			update t_lsgl_dwfw_gl
+  			 set (fwid, dzid) = (select distinct fwid, dzid
+                     from t_lsgl_fw_jbxx
+                     where fwid = #[fwid])
+			 where fwid = #[oldfwid]                       
+ 		]]>
+ 	</property>
+ 	<!-- dzfwqyryxzzxzupdate 地址房屋合并迁移(单位房屋关联表) -->
+ 	<property name="dzfwqyryxzzxzupdate">
+ 		<![CDATA[
+ 			update t_lsgl_rk_jbxx
+    set xzzxz = (select f_get_dzmc((select distinct dzid from t_lsgl_fw_jbxx where fwid=#[fwid])) from dual)
+  where rybh in (select rybh from t_lsgl_rkfw_gl where fwid = #[oldfwid] and zxbs='0')                      
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	
+ 	<property name="queryCzfwPageInfoByQueryBean">
+ 		<![CDATA[
+ 			         select 
+            fw.fwid,
+              (select stid from t_common_dzxx where dzid = fw.dzid ) as stid,
+              fw.fwbm,
+             fw.dzid,
+             f_get_dzmc(fw.dzid) as dzmc,
+             fw.jcnf,
+             fw.fwly,
+             fw.sylb,
+             fw.fwlb,
+             fw.fwyt,
+             fw.hxjg,
+             fw.fwmj,
+             fw.dscs,
+             fw.dxcs,
+             fw.sydwmc,
+             fw.fdsyrxm,
+             fw.fdsyrsfzh,
+             fw.fdsyrlxdh,
+             fw.cqzhm,
+             fw.cqlx,
+             to_char(fw.czrq,'yyyy-mm-dd') as czrq,
+             fw.cqdwmc,
+             fw.cqrxm,
+             fw.cqrsfzh,
+             fw.cqrlxdh,
+             fw.hzxm,
+             fw.hzsfzh,
+             fw.hzlxdh,
+             fw.fzsx,
+             fw.sfczw,
+             fw.gllb,
+             fw.sssq,
+             (select jc from t_common_hnxzqh where dm = fw.sssq) as sssqmc,
+              f_get_dzxxxzqh(fw.dzid) as ssxzqh,
+             fw.sszrdwdm,
+             fw.sszrdwmc,
+             fw.sszrmjjh,
+             fw.sszrmjxm,
+             fw.sszrmjlxdh,
+             fw.djrxm,
+             fw.djdwdm,
+             fw.djdwmc,
+             fw.czrxm,
+             fw.czdwdm,
+             fw.czdwmc,
+             fw.czbs,
+             to_char(cz.djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+             to_char(fw.czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+             to_char(fw.zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+             fw.zxyy,
+             fw.zxbs,
+             fw.ssgajgjgdm,
+             fw.ssgajgjgmc,
+             fw.sspcsdm,
+             fw.sspcsmc,
+             fw.fwzdgllb,
+             fw.frdbsfzh,
+             fw.frdbxm,
+             fw.frdblxdh,
+             (select dyh from t_common_dzxx where dzid=fw.dzid) as dyh,
+             (select lch from t_common_dzxx where dzid=fw.dzid) as lch,
+             (select lchz from t_common_dzxx where dzid=fw.dzid) as lchz,
+             (select fjh from t_common_dzxx where dzid=fw.dzid) as fjh,
+             (select shhz from t_common_dzxx where dzid=fw.dzid) as shhz,
+             (select fsdz from t_common_dzxx where dzid=fw.dzid) as fsdz,
+             cz.czfwbpbm,
+             cz.fwbh
+  from t_lsgl_fw_jbxx fw
+ inner join t_lsgl_czfw_jbxx cz
+  on fw.fwid = cz.fwbh
+  where 1=1
+  and fw.sfczw = '1'
+          
+          #if($czfwbph && !$czfwbph.equals(""))
+            and cz.czfwbpbm like  #[czfwbph]||'%'
+          #end
+          
+          
+          #if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+            and (fw.zxbs = #[zxbs] or fw.zxbs is null)
+          #end
+          #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+            and (fw.zxbs = #[zxbs])
+          #end 
+          
+          #if($cqlx && !$cqlx.equals(""))
+            and fw.CQLX = #[cqlx]
+          #end
+          
+          #if($sfqdzrz && $sfqdzrz.equals("0"))
+            and (cz.sfqdzrz = #[sfqdzrz] or cz.sfqdzrz is null)
+          #end
+          
+          #if($sfqdzrz && $sfqdzrz.equals("1"))
+            and cz.sfqdzrz =  #[sfqdzrz]
+          #end
+          
+          #if($hzsfzh && !$hzsfzh.equals(""))
+            and (fw.FRDBSFZH=#[hzsfzh] or fw.HZSFZH=#[hzsfzh])
+          #end
+          
+          #if($hzxm && !$hzxm.equals(""))
+            and (fw.FRDBXM like '%'||#[hzxm]||'%' or fw.HZXM like '%'||#[hzxm]||'%')
+          #end
+          
+          #if ($djsj_start && !$djsj_start.equals(""))
+          and cz.djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+        #end
+        #if($djsj_end && !$djsj_end.equals(""))
+          and cz.djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+        #end
+          
+          #if($sqdm && !$sqdm.equals(""))
+             and fw.sssq = #[sqdm]
+          #elseif($jwsqdm && !$jwsqdm.equals(""))
+             and fw.SSZRDWDM = #[jwsqdm]
+          #elseif ($pcsdm && !$pcsdm.equals(""))
+             and fw.SSZRDWDM like substr(#[pcsdm],1,8)||'%'
+          #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+             and fw.SSZRDWDM like substr(#[countrygajgjgdm],1,6)||'%'
+          #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+             and fw.SSZRDWDM like substr(#[citygajgjgdm],1,4)||'%'
+           #end
+          
+          #if($wxcts && !$wxcts.equals(""))
+          and fw.fwid in 
+          (select fwtx.czfwid from
+          
+             (select fw.sfczw,
+                     fw.FDSYRXM,
+                     fw.fdsyrlxdh,
+                     fw.fwid czfwid,
+                     f_get_dzmc(fw.dzid) dzmc,
+                     cz.czfwbpbm,fw.fwid fwid,
+                     nvl((select max(xcdj.djsj)
+					                 from t_lsgl_fw_czwxcdj xcdj
+					                where xcdj.fwid = fw.fwid),
+					               (select max(czfw.djsj)
+					                  from t_lsgl_czfw_jbxx czfw
+					                 where czfw.FWBH = fw.fwid)) last_time
+					          from t_lsgl_fw_jbxx fw ,t_lsgl_czfw_jbxx cz
+					          where  fw.fwid = cz.fwbh
+					          and cz.fwzt='0' 
+					          and  fw.SFCZW = '1' 
+					          and fw.cqlx='2') fwtx
+					 where (fwtx.last_time + #[wxcts]) < sysdate ) 				
+				#end
+							  	
+			    and fw.dzid in (
+			      		select dzid 
+			      		from v_common_dzxx dz
+			      		where 1=1
+			      			#if($sqdm && !$sqdm.equals(""))
+						   	    	and dz.sqdm = #[sqdm]
+						    	#elseif($jwsqdm && !$jwsqdm.equals(""))
+				    			   and dz.djdwdm = #[jwsqdm]
+				    		  #elseif ($pcsdm && !$pcsdm.equals(""))
+						 		     and dz.djdwdm like substr(#[pcsdm],1,8)||'%'
+				 			    #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				 			   	   and dz.djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				 			    #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				 			       and dz.djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+						   	  #end
+			      			#if ($fsdz && !$fsdz.equals(""))
+			      				and dz.fsdz like '%'||#[fsdz]||'%'
+			      			#end
+			      			#if($jlxdm && !$jlxdm.equals(""))
+			      				and dz.jlxdm=#[jlxdm]
+			      			#end
+			      			#if($stmc && !$stmc.equals(""))
+			      				and dz.stmc like '%'||#[stmc]||'%'
+			      			#end
+			      			
+			      			#if($mph && !$mph.equals(""))
+			      				and dz.mph like #[mph]||'%'
+			      			#end
+			      			#if ($xqz && !$xqz.equals(""))
+			      				and xqz like '%'||#[xqz]||'%'
+			      			#end
+			      			#if($ldxz && !$ldxz.equals(""))
+			      				and ldxz like '%'||#[ldxz]||'%'
+			      			#end
+			      			#if($dyh && !$dyh.equals(""))
+			      				and dyh=#[dyh]
+			      			#end
+			      			#if($lch && !$lch.equals(""))
+			      				and lch like '%'||#[lch]||'%'
+		      					#if($lchz && !$lchz.equals(""))
+									and lchz = #[lchz]			      					
+		      					#end		
+			      			#end
+			      			#if($fjh && !$fjh.equals(""))
+			      				and fjh =#[fjh]
+			      				#if($shhz && !$shhz.equals(""))
+									and shhz = #[shhz]			      					
+		      					#end
+			      			#end
+			      )
+					        
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateCzfwJbxxZhxcsjForCurrentDate">
+ 		<![CDATA[
+ 			update t_lsgl_czfw_jbxx
+ 			set ZHXCSJ=sysdate
+ 			where fwbh=?
+ 		]]>
+ 	</property>
+ 	
+</properties>

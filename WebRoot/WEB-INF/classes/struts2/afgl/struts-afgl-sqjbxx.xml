@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="afglsqqk" namespace="/afgl/sqgl" extends="default">
+		  	<action name="*" class="com.chinacreator.afgl.action.SqJbxxAction" method="{1}">
+		  		<result name="toSqJbxxPage">/jsp/afgl/pages/sqgl/sqjbqk.jsp</result>
+		  		<result name="sqjbqkpage">/jsp/afgl/pages/sqgl/sqqkcount.jsp</result>
+		  	</action>
+	  </package>
+	  <package name="sqjbgl" namespace="/afgl/sqjbgl" extends="default">
+	  		<action name="*" class="com.chinacreator.afgl.action.SqJbxxglAction" method="{1}">
+		  		<result name="toSqJbxxListPage">/jsp/afgl/pages/sqgl/sqjbxxlist.jsp</result>
+		  		<result name="toSqJbxxBeanInfoPage">/jsp/afgl/pages/sqgl/sqjbxxinfo.jsp</result>
+		  		<result name="toOpenSqListSelectWin">/jsp/afgl/pages/sqgl/sqselectwin.jsp</result>
+		  		<result name="toXtglSqJbxxInfoPage">/jsp/xtgl/pages/xzqh/sqjbxx.jsp</result>
+		  	</action>
+	  </package>
+	  
+	   <package name="sqjwhgl" namespace="/afgl/jwhgl" extends="default">
+		  	<action name="*" class="com.chinacreator.afgl.action.SqjwhxxAction" method="{1}">
+		  		<result name="toSqJwhListPage">/jsp/afgl/pages/jwhxx/jwhlist.jsp</result>
+		  		<result name="toSqJwhInfoPage">/jsp/afgl/pages/jwhxx/jwhinfo.jsp</result>
+		  		<result name="toSelectJwhxx">/jsp/afgl/pages/jwhxx/selectJwhxx.jsp</result>
+		  	</action>
+	  </package>
+	  
+	   <package name="sqgbgl" namespace="/afgl/sqgbgl" extends="default">
+		  	<action name="*" class="com.chinacreator.afgl.action.SqgbxxglAction" method="{1}">
+		  		<result name="toSqgbListPage">/jsp/afgl/pages/sqgl/sqgblist.jsp</result>
+		  		<result name="toSqgbInfoPage">/jsp/afgl/pages/sqgl/sqglinfo.jsp</result>
+		  		<result name="toXqzgbInfoPage">/jsp/afgl/pages/sqgl/xqzglinfo.jsp</result>
+		  		<result name="showSqgbxxList">/jsp/afgl/pages/jwhxx/sqgbshowlist.jsp</result>
+		  		<result name="toSqgbDetailPage">/jsp/xtgl/pages/xzqh/sqgbinfo.jsp</result>
+		  		<result name="toSqddbListPage">/jsp/afgl/pages/sqddb/sqddblist.jsp</result>
+		  		<result name="toSqddbInfoPage">/jsp/afgl/pages/sqddb/sqddbinfo.jsp</result>
+		  		<result name="exportSqgbxx">/jsp/afgl/pages/sqgl/sqgbexport.jsp</result>
+		  		<result name="toJdgbInfoPage">/jsp/afgl/pages/sqgl/jdxzgb.jsp</result>
+		  		
+		  	</action>
+	  </package>
+	  <package name="sqldzgl" namespace="/afgl/sqldzgl" extends="default">
+		  	<action name="*" class="com.chinacreator.afgl.action.SqldzxxglAction" method="{1}">
+				<result name="toSqldzListPage">/jsp/afgl/pages/sqldz/sqldzlist.jsp</result>
+				<result name="toSqLdzInfoPage">/jsp/afgl/pages/sqldz/sqldzinfo.jsp</result>
+				<result name="toOpenStListSelect">/jsp/afgl/pages/sqldz/selectStxxlist.jsp</result>
+				<result name="toSqwyhListPage">/jsp/afgl/pages/sqwyh/sqwyhlist.jsp</result>
+				<result name="toSqYwhInfoPage">/jsp/afgl/pages/sqwyh/sqwyhinfo.jsp</result>
+				<result name="toOpenWyhcyxxInfo">/jsp/afgl/pages/sqwyh/sqwyhcyinfo.jsp</result>
+				<result name="toOpenWyxqListSelect">/jsp/afgl/pages/sqwyh/selectWyxqxxlist.jsp</result>
+		  	</action>
+	  </package>
+</struts>

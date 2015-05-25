@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	 <package name="gzjws" extends="default" namespace="/gzgl/gzjwsgl">
+	 	<action name="*" class="com.chinacreator.gzgl.action.OrgJwsAction" method="{1}">
+	 		<result name="toJwsList">/jsp/gzgl/pages/gzpcs/pcsList.jsp</result>
+	 		<result name="toJwsPage">/jsp/gzgl/pages/gzpcs/jwsPage.jsp</result>
+	 		<result name="toPcsPageInfo">/jsp/xtgl/pages/pcsgl/updatepcsinfo.jsp</result>
+	 		<result name="toFjPageInfo">/jsp/gzgl/pages/gzuserlxfs/fjPage.jsp</result>
+	 		<result name="toExportPcsPage">/jsp/xtgl/pages/pcsgl/jwrkdc.jsp</result>
+	 		<result name="toLkXgyglPage">/jsp/xtgl/pages/pcsgl/lkxgy.jsp</result>
+	 		<result name="toXfjglPage">/jsp/xtgl/pages/pcsgl/xfjlist.jsp</result>
+	 		<result name="toXfdyglPage">/jsp/xtgl/pages/pcsgl/xfdygllist.jsp</result>
+	 		<result name="toFzryglPage">/jsp/xtgl/pages/pcsgl/fzrygllist.jsp</result>
+	 		<result name="toExportExcelFjxxInfoPage">/jsp/gzgl/pages/gzuserlxfs/downLoadExcel_fjxx.jsp</result>
+	 	</action>
+	 </package>
+</struts>

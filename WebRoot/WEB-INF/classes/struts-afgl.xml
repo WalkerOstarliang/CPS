@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	 <include file="struts2/afgl/struts-afgl-kkxx.xml" />
+	 <include file="struts2/afgl/struts-afgl-kkxlxx.xml" />
+	 <include file="struts2/afgl/struts-afgl-kkpcxx.xml" />
+	 <include file="struts2/afgl/struts-afgl-kywpxx.xml" />
+	 <include file="struts2/afgl/struts-afgl-index.xml" />
+	 <include file="struts2/afgl/struts-afgl-xldxx.xml" />
+	 <include file="struts2/afgl/struts-afgl-sqjbxx.xml" />
+	 <include file="struts2/afgl/struts-afgl-zbhxx.xml" />
+	 <include file="struts2/afgl/struts-afgl-xqxx.xml" />
+	 <include file="struts2/afgl/struts-afgl-zbhcyxx.xml" />
+	 <include file="struts2/afgl/struts-afgl-xqjfwfssxx.xml" />
+	 <include file="struts2/afgl/struts-afgl-sqjwsxx.xml" />
+	 <include file="struts2/afgl/struts-afgl-xgdyxx.xml" />
+	 <include file="struts2/afgl/struts-afgl-home.xml" />
+	 <include file="struts2/afgl/struts-afgl-lmpc.xml"></include>
+	 
+	 <include file="struts2/afgl/struts-afgl-zaxl.xml"></include>
+	 <include file="struts2/afgl/struts-afgl-rhzf.xml"></include>
+</struts>

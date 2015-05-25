@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<!-- 获取辖区概况的全部信息项 -->
+	<property name="getAllXqgkQuery">
+		<![CDATA[
+			select 
+				id,
+				code,
+				name,
+				typeOrder,
+				iconName,
+				linkUrl
+			from TD_SQJW_XQGKQUERY
+			order by TYPEORDER
+		]]>
+	</property>	
+		
+	<!-- 获取辖区概况的全部信息数据项 -->
+	<property name="getAllXqgkQueryDetail">
+		<![CDATA[
+			select 
+				id,
+				code,
+				typeName,
+				unit,
+				inLine,
+				dbSource,
+				countSql,
+				typeOrder,
+				needTime,
+				timeFormat,
+				isLikeParam
+			from TD_SQJW_XQGKQUERYDETAIL
+			order by code,TYPEORDER
+		]]>
+	</property>	
+	
+	<!-- 获取辖区内所有警务区数量 -->
+	<property name="getNumOfAllChildJWQ">
+		<![CDATA[
+			select F_GET_JWSQCOUNT(?) from dual
+		]]>
+	</property>	
+		
+	<!-- 获取辖区内所有社区数量 -->
+	<property name="getNumOfAllChildSQ">
+		<![CDATA[
+			select F_GET_GXXZSQCCOUNT(?) from dual
+		]]>
+	</property>
+
+	<!-- 按年获取辖区治安信息 -->
+	<property name="queryYearXqzaInfoOfDept">
+		<![CDATA[
+		select /*+index(aj I_AJJBXXB_10)*/ count(id)
+          from t_ajjbxxb aj
+         where aj.actflag < '4'
+           and aj.shouliriqi >= #[startTime]
+           and aj.shouliriqi <= #[endTime]
+           and aj.anjianbiaozhi = '1'
+           and aj.banandanweiid in
+               (select code dwbm
+                  from cs_jz_ptgl.td_sm_organization a
+                 start with parent_id in (#[queryCode])
+                connect by prior a.org_id = parent_id)			 
+		]]>
+	</property>	
+	
+	<!-- 获取辖区内时间区间内的多发性侵财发案 -->
+	<property name="getLatestAJInfo">
+		<![CDATA[
+	SELECT A.ANJIANBIANHAO AJBH,
+	       A.ANJIANMINGCHENG AJMC,
+	       A.Farq,
+	       A.Farq_Sq, 
+	       C.ZIDIANMIAOSHU AJLBMC,
+	       ANJIANLEIBIE AJLBDM,
+	       B.FAXIANDIDIAN FADQMC,
+	       NVL(B.FAANXIANGZHI, B.FAXIANDIDIAN) FADXZ,
+	       TO_CHAR(TO_DATE(B.JIEJINGSHIJIAN, 'yyyyMMddhh24miss'),
+	               'yyyy-MM-dd hh24:mi') JJSJ,
+	       B.FAXIANDIDIANDM FADQH,
+	       B.JIANYAOANQING JYAQ
+	  FROM T_AJJBXXB A
+	  LEFT JOIN T_JJCJXX B
+	    ON B.ANJIANBIANHAO = A.ANJIANBIANHAO
+	  LEFT JOIN T_ZDDMXXB C
+	    ON C.ZIDIANBIANHAO = A.ANJIANLEIBIE
+	 WHERE 1 = 1
+	   AND C.LEIBIEBIANHAO = '0056'
+	   AND B.JIEJINGSHIJIAN is not null
+	   AND A.FARQ >= #[startTime]
+	   AND A.FARQ <= #[endTime]
+	   AND A.FAANSHEQU IN
+	       (SELECT CODE
+	          FROM CS_JZ_PTGL.V_TD_SM_ORGANIZATION O
+	         START WITH O.CODE = RPAD(#[queryCode], 12, 0)
+	        CONNECT BY PRIOR O.ORG_ID = O.PARENT_ID)
+	 ORDER BY B.JIEJINGSHIJIAN DESC
+		]]>
+	</property>
+
+	<!-- 获取辖区内时间区间内的重点人员轨迹数量 -->
+	<property name="getGjCountOfYear">
+		<![CDATA[
+		SELECT /*+index(a IDX_T_COMPAREINFO_HDSJ)*/ count(1)
+	  	FROM T_COMPAREINFO A
+	 	WHERE A.HAPPENSTARTTIME >= ?
+	   	AND A.HAPPENSTARTTIME <= ?
+	   	AND A.PLACEUNITCODE LIKE ?
+		]]>
+	</property>
+	
+	<!-- 获取辖区内时间区间内的重点人员轨迹 -->
+	<property name="getLatestRYInfo">
+		<![CDATA[
+		select * from (      
+		  select A.MEMONAME,
+		           A.REGNAME RYNAME,
+		           A.REMARK,
+		           A.REGCARDCODE RYCODE,
+		           A.HAPPENSTARTTIME OPTIME,
+		           b.jz_org_code as PLACEUNITCODE,
+		           A.HAPPENADDRESS OPAREA,
+		           A.PLACENAME,
+		           A.HAPPENSTARTTIME from 
+		  T_COMPAREINFO_DYSJ a
+		  left join 
+		  cs_jgdm_jz_jgdm_real b
+		  on  RPAD(a.placeunitcode, 12, 0) = b.cs_org_code
+		) where HAPPENSTARTTIME >= #[startTime]
+	   		AND HAPPENSTARTTIME <= #[endTime]
+		   	AND PLACEUNITCODE like #[queryCode]||'%'
+			ORDER BY HAPPENSTARTTIME DESC
+	 	 
+		]]>
+	</property>
+	
+	<!-- 获取本身机构信息 -->
+	<property name="getOrgBeanByCode">
+		<![CDATA[
+		select  
+			ORGID,
+			ORGCODE,
+			ORGNAME,
+			PARENT_ORGID,
+			PARENT_CODE,
+			ORGJC,
+			LEVE,
+			CREATEDATE,
+			SN,
+			ISYX,
+			ISPCS
+		from V_COMMON_ORGANIZATION 
+		where orgcode = ?
+		]]>
+	</property>
+	
+	<!-- 获取辖区内所有社区 -->
+	<property name="getAllSQOfDept">
+		<![CDATA[
+		SELECT  
+		   	DM,
+		   	MC,
+		   	PARENT_DM,
+		   	LEVE,
+		   	JC,
+		   	ISVALID,
+		   	LEN,
+		   	SSPCSDM,
+		   	SSJWSDM,
+		   	CXFL
+		FROM T_COMMON_HNXZQH 
+		WHERE LEVE='5' 
+		AND DM LIKE  ? 
+		order by DM
+		]]>
+	</property>
+	
+	<!-- 获取辖区内取保候审人员 -->
+	<property name="getQbhsOfDept">
+		<![CDATA[
+			select  Distinct
+			   /* t.xingming as xm,
+			    t.shexianzuiming as zm, 
+			    t.wenshuwenhao as wsh, 
+			    t.qubaoyuanyin as yy,
+			    t.zhixingriqi as rq,
+	            s.jyflag,
+	            s.jiyabianhao as rybh,
+	            t.anjianbianhao as ajbh */
+	            
+	             s.renyuanbianhao,
+                 s.xingming,
+                 xingbie,
+                 shenfenzhenghao,
+                 s.rylxflag,
+                 s.anjianmingcheng
+			 from (select * from (
+                    SELECT s.*,
+                            ROW_NUMBER() OVER(PARTITION BY RENYUANBIANHAO ORDER BY ACTTIME DESC) AS SN
+                       FROM T_FJY_QBRY  s) 
+                       where sn = 1
+                      )  s, T_XSQBHSJDS t 
+			 where s.renyuanbianhao = t.renyuanbianhao
+			 and t.shenfenzhenghao is not null 
+			 AND NOT EXISTS (select 1 from t_zdry_zfbafk fk where s.renyuanbianhao = fk.rybh)
+			 AND (s.jyflag = '1' OR s.jyflag = '2')
+			 and rylxflag = '1'
+			 and s.jiyadw like ?
+			
+		]]>
+	</property>
+			
+	<!-- 获取辖区内监视居住人员 -->
+	<property name="getJsjzOfDept">
+		<![CDATA[
+			select Distinct
+		     	/*t.xingming as xm,
+		        t.shexianzuiming as zm, 
+		        t.jianshidizhi as dz, 
+		        t.jianshiyuanyin as yy,
+		        t.kaishiriqi as rq,
+	            s.jyflag,
+	            s.jiyabianhao as rybh,
+	            t.anjianbianhao as ajbh*/
+	            
+	             s.renyuanbianhao,
+                 s.xingming,
+                 xingbie,
+                 shenfenzhenghao,
+                 s.rylxflag,
+                 s.anjianmingcheng
+			 from (select * from (
+                    SELECT s.*,
+                            ROW_NUMBER() OVER(PARTITION BY RENYUANBIANHAO ORDER BY ACTTIME DESC) AS SN
+                       FROM T_FJY_QBRY  s) 
+                       where sn = 1
+                      )  s, t_xsjsjzjds t 
+			 where s.renyuanbianhao = t.renyuanbianhao 
+			 and t.shenfenzhenghao is not null 
+			 AND NOT EXISTS (select 1 from t_zdry_zfbafk fk where s.renyuanbianhao = fk.rybh)
+			 AND (s.jyflag = '1' OR s.jyflag = '2')
+			 and rylxflag = '2'
+			 and s.jiyadw like ?
+			 
+		]]>
+	</property>
+	
+	<!-- 获取辖区内社区戒毒人员 -->
+	<property name="getSqjdOfDept">
+		<![CDATA[
+			select Distinct
+	           /* t.xingming as xm,
+	            t.anjianmingcheng as aj, 
+	            t.wenshuwenhao as wsh, 
+	            t.xianzhuzhi as zz,
+	            t.zhixingshequ as sq,
+	            s.jyflag,
+	            s.jiyabianhao as rybh,
+	            t.anjianbianhao as ajbh */
+	            
+	             s.renyuanbianhao,
+                 s.xingming,
+                 xingbie,
+                 zhengjianhaoma,
+                 s.rylxflag,
+                 s.anjianmingcheng
+			from (select * from (
+                    SELECT s.*,
+                            ROW_NUMBER() OVER(PARTITION BY RENYUANBIANHAO ORDER BY ACTTIME DESC) AS SN
+                       FROM T_FJY_QBRY  s) 
+                       where sn = 1
+                      ) s, t_xzzlsqjdjds t
+	       	where s.renyuanbianhao = t.renyuanbianhao 
+	       	and t.zhengjianhaoma is not null
+	        AND NOT EXISTS (select 1 from t_zdry_zfbafk fk where s.renyuanbianhao = fk.rybh)
+			AND (s.jyflag = '1' OR s.jyflag = '2')
+			and rylxflag = '3'
+	       	and s.jiyadw like ?
+	       
+		]]>
+	</property>
+			
+	<!-- 获取辖区内社区康复人员 -->
+	<property name="getSqkfOfDept">
+		<![CDATA[
+			select Distinct
+	              /*t.xingming as xm,
+	              t.anjianmingcheng as aj, 
+	              t.wenshuwenhao as wsh, 
+	              t.xianzhuzhi as zz,
+	              t.zhixingshequ as sq,
+	              s.jyflag,
+	              s.jiyabianhao as rybh,
+	              t.anjianbianhao as ajbh */ 
+	              
+	               s.renyuanbianhao,
+                 s.xingming,
+                 xingbie,
+                 zhengjianhaoma,
+                 s.rylxflag,
+                 s.anjianmingcheng
+			from (select * from (
+                    SELECT s.*,
+                            ROW_NUMBER() OVER(PARTITION BY RENYUANBIANHAO ORDER BY ACTTIME DESC) AS SN
+                       FROM T_FJY_QBRY  s) 
+                       where sn = 1
+                      )  s, t_xzzlsqkfjds t
+	       	where s.renyuanbianhao = t.renyuanbianhao 
+	       	and t.zhengjianhaoma is not null
+	       	AND NOT EXISTS (select 1 from t_zdry_zfbafk fk where s.renyuanbianhao = fk.rybh)
+			AND (s.jyflag = '1' OR s.jyflag = '2')
+			and rylxflag = '4'
+			and s.jiyadw like ?
+	       	
+		]]>
+	</property>	
+			
+	<!-- 获取辖区内待处理取保候审人员 -->
+	<property name="getDclQbhsOfDept">
+		<![CDATA[
+			select xm,zm,wsh,yy,rq,jyflag,rybh,ajbh from 
+			    (select 
+				        t.xingming as xm,
+				        t.shexianzuiming as zm, 
+				        t.wenshuwenhao as wsh, 
+				        t.qubaoyuanyin as yy,
+				        t.zhixingriqi as rq,
+				        s.jyflag,
+				        s.jiyabianhao as rybh,
+	              		t.anjianbianhao as ajbh
+			       from GAWLZF.t_fjy_qbry s, GAWLZF.T_XSQBHSJDS t 
+			       where s.renyuanbianhao = t.renyuanbianhao and s.rylxflag=1 and s.jyflag=2 and s.actflag < 4
+	           and s.jiyadw like ?) t1
+	        left join
+	        (select b.renyuanbianhao, max(b.kaochashijian) as sj from GAWLZF.t_jdkcbg b group by b.renyuanbianhao) t2
+	         on t1.rybh = t2.renyuanbianhao
+	        left join
+	        (select b.renyuanbianhao, max(b.kaochashijian) as sj from GAWLZF.t_jdkcb b group by b.renyuanbianhao) t3
+	         on t1.rybh = t3.renyuanbianhao     
+	        where ((t2.sj is null or t2.sj < ?) or (t3.sj is null or t3.sj < ?))
+		]]>
+	</property>	
+	
+	<!-- 获取辖区内待处理监视居住人员 -->
+	<property name="getDclJsjzOfDept">
+		<![CDATA[
+			select xm,zm,dz,yy,rq,jyflag,rybh,ajbh from 
+			    (select 
+			        t.xingming as xm,
+			        t.shexianzuiming as zm, 
+			        t.jianshidizhi as dz, 
+			        t.jianshiyuanyin as yy,
+			        t.kaishiriqi as rq,
+			        s.jyflag,
+	                s.jiyabianhao as rybh,
+	            	t.anjianbianhao as ajbh
+	           from GAWLZF.t_fjy_qbry s, GAWLZF.t_xsjsjzjds t 
+	           where s.renyuanbianhao = t.renyuanbianhao and s.rylxflag=1 and s.jyflag=2 and s.actflag < 4
+	           and s.jiyadw like ?) t1
+	        left join
+	        (select b.renyuanbianhao, max(b.kaochashijian) as sj from GAWLZF.t_jdkcbg b group by b.renyuanbianhao) t2
+	         on t1.rybh = t2.renyuanbianhao
+	        left join
+	        (select b.renyuanbianhao, max(b.kaochashijian) as sj from GAWLZF.t_jdkcb b group by b.renyuanbianhao) t3
+	         on t1.rybh = t3.renyuanbianhao     
+	        where ((t2.sj is null or t2.sj < ?) or (t3.sj is null or t3.sj < ?))
+		]]>
+	</property>
+	
+	<!-- 获取辖区内待处理社区戒毒人员 -->
+	<property name="getDclSqjdOfDept">
+		<![CDATA[
+			select xm,aj,wsh,zz,sq,jyflag,rybh,ajbh from 
+		        (select 
+		              t.xingming as xm,
+		              t.anjianmingcheng as aj, 
+		              t.wenshuwenhao as wsh, 
+		              t.xianzhuzhi as zz,
+		              t.zhixingshequ as sq,
+		              s.jyflag,
+	                  s.jiyabianhao as rybh,
+	                  t.anjianbianhao as ajbh
+	             from GAWLZF.t_fjy_qbry s, GAWLZF.t_xzzlsqjdjds t 
+	             where s.renyuanbianhao = t.renyuanbianhao and s.rylxflag=4 and s.jyflag=2 and s.actflag < 4
+	             and s.jiyadw like ?) t1
+	          left join
+	          (select b.renyuanbianhao, max(b.tianbiaoshijian) as sj from GAWLZF.t_njtzs b group by b.renyuanbianhao) t2
+	           on t1.rybh = t2.renyuanbianhao
+	          left join
+	          (select b.renyuanbianhao, max(b.bangjiaoshijian) as sj from GAWLZF.t_fjybj b group by b.renyuanbianhao) t3
+	           on t1.rybh = t3.renyuanbianhao     
+	          where ((t2.sj is null or t2.sj < ?) or (t3.sj is null or t3.sj < ?))		    
+		]]>
+	</property>	
+	
+	<!-- 获取辖区内待处理社区康复人员 -->
+	<property name="getDclSqkfOfDept">
+		<![CDATA[
+			select xm,aj,wsh,zz,sq,jyflag,rybh,ajbh from 
+		        (select 
+		              t.xingming as xm,
+		              t.anjianmingcheng as aj, 
+		              t.wenshuwenhao as wsh, 
+		              t.xianzhuzhi as zz,
+		              t.zhixingshequ as sq,
+		              s.jyflag,
+		              s.jiyabianhao as rybh,
+			          t.anjianbianhao as ajbh
+		           from GAWLZF.t_fjy_qbry s, GAWLZF.t_xzzlsqkfjds t 
+		           where s.renyuanbianhao = t.renyuanbianhao and s.rylxflag=4 and s.jyflag=2 and s.actflag < 4
+	             and s.jiyadw like ?) t1
+	          left join
+	          (select b.renyuanbianhao, max(b.tianbiaoshijian) as sj from GAWLZF.t_njtzs b group by b.renyuanbianhao) t2
+	           on t1.rybh = t2.renyuanbianhao
+	          left join
+	          (select b.renyuanbianhao, max(b.bangjiaoshijian) as sj from GAWLZF.t_fjybj b group by b.renyuanbianhao) t3
+	           on t1.rybh = t3.renyuanbianhao     
+	          where ((t2.sj is null or t2.sj < ?) or (t3.sj is null or t3.sj < ?))
+		]]>
+	</property>	
+</properties>

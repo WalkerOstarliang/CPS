@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryByIdCrimeDetailsSQL">
+		<![CDATA[
+			SELECT BH,
+		       XM,
+		       SFZH,
+		       CSRQ,
+		       XB,
+		       MZ,
+		       ZZMM,
+		       WWCD,
+		       ZY,
+		       HJDQH,
+		       HJDXZ,
+		       SSPCSDM,
+		       SSPCSMC,
+		       AJMC,
+		       AJLB,
+		       JYAQ,
+		       TO_CHAR(JDSJ,'YYYY-MM-DD') AS JDSJ,
+		       SXZM,
+		       BZRXM,
+		       BZJ,
+		       FKJE,
+		       BARXM,
+		       BADWDM,
+		       BADWMC,
+		       SJLY,
+		       RKSJ,
+		       ISRL,
+		       RLRXM,
+		       RLDWDM,
+		       RLDWMC,
+		       JDJG,
+		       JDJGDM,
+		       RYLX
+		  FROM T_ZDRY_FZRYRLXX
+		  WHERE bh = ?
+		]]>
+	</property>
+	
+	<!-- 查询犯罪人员SQL -->
+	<property name="queryFzryObj">
+		<![CDATA[
+			SELECT BH,
+		       XM,
+		       SFZH,
+		       CSRQ,
+		       XB,
+		       MZ,
+		       ZZMM,
+		       WWCD,
+		       ZY,
+		       HJDQH,
+		       HJDXZ,
+		       SSPCSDM,
+		       SSPCSMC,
+		       AJMC,
+		       AJLB,
+		       JYAQ,
+		       TO_CHAR(JDSJ,'YYYY-MM-DD') AS JDSJ,
+		       SXZM,
+		       BZRXM,
+		       BZJ,
+		       FKJE,
+		       BARXM,
+		       BADWDM,
+		       BADWMC,
+		       SJLY,
+		       RKSJ,
+		       ISRL,
+		       RLRXM,
+		       RLDWDM,
+		       RLDWMC,
+		       JDJG,
+		       JDJGDM,
+		       RYLX
+		  FROM T_ZDRY_FZRYRLXX
+		  WHERE 1=1
+		  --精确到派出所
+		  #if($pcsdm and !$pcsdm.equals(""))
+		  	and SSPCSDM=#[pcsdm]
+		  #else
+		  	  --精确到县区
+			  #if($countrydm and !$countrydm.equals(""))
+			  	and substr(SSPCSDM,1,6)=#[countrydm]
+			  #else
+			     --精确到市州
+			  	 #if($citydm and !$citydm.equals(""))
+			  		and substr(SSPCSDM,1,4)=substr(#[citydm],1,4)
+			  	 #end
+			  #end
+		  #end
+		  #if($sfzh and !$sfzh.equals(""))
+          	AND SFZH LIKE '%'||#[sfzh]||'%'
+          #end
+          #if($xm and !$xm.equals(""))
+          	AND XM LIKE '%'||#[xm]||'%'
+          #end
+          #if($xb and !$xb.equals(""))
+          	AND XB = #[xb]
+          #end
+          #if($startJdsj and !$startJdsj.equals(""))
+          	AND JDSJ >= TO_DATE(#[startJdsj],'YYYY-MM-DD')
+          #end
+          #if($endJdsj and !$endJdsj.equals(""))
+          	AND JDSJ <= TO_DATE(#[endJdsj],'YYYY-MM-DD')
+          #end
+          #if($ajmc and !$ajmc.equals(""))
+          	AND AJMC LIKE '%'||#[ajmc]||'%'
+          #end
+          #if($jdjgdm and !$jdjgdm.equals(""))
+          	AND JDJGDM = #[jdjgdm]
+          #end
+		]]>
+	</property>
+	
+	<property name="updateCrimeInfoSQL">
+		<![CDATA[
+			update t_zdry_fzryrlxx
+			   set isrl   = #[isrl],
+			       rlrxm  = #[rlrxm],
+			       rldwdm = #[rldwdm],
+			       rldwmc = #[rldwmc]
+			 where bh = #[bh]
+		]]>
+	</property>
+</properties>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+<!-- 新增巡逻队奖励 -->
+	<property name="addXunldJL">
+		<![CDATA[
+			insert into t_gzgl_xldjlqk(bh,xldbh,ry,jlsj,jlyy,djrxm,djsj,djdwdm,djdwmc,czbs,gxsj,jlpzrxm,jlpzrjh,jlpzdwmc,jlpzdwdm,jlpzrq,djrsfzh) 
+			values(#[bh],#[xldbh],#[ry],to_date(#[jlsj],'yyyy-mm-dd'),#[jlyy],#[djrxm],to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'),
+				#[djdwdm],#[djdwmc],#[czbs],to_date(#[gxsj],'yyyy-mm-dd HH24:mi:ss'),#[jlpzrxm],#[jlpzrjh],#[jlpzdwmc],#[jlpzdwdm],
+				to_date(#[jlpzrq],'yyyy-mm-dd'),#[djrsfzh])
+		]]>
+	</property>
+	
+<!-- 修改巡逻队奖励 -->
+	<property name="updateXunldJL">
+		<![CDATA[
+			update t_gzgl_xldjlqk set
+				xldbh = #[xldbh], ry = #[ry], jlsj = to_date(#[jlsj],'yyyy-mm-dd'), jlyy = #[jlyy], djrxm = #[djrxm], 
+				czbs = #[czbs], gxsj = to_date(#[gxsj],'yyyy-mm-dd HH24:mi:ss'), jlpzrxm = #[jlpzrxm],
+				jlpzrjh = #[jlpzrjh], jlpzdwmc = #[jlpzdwmc], 
+				jlpzdwdm = #[jlpzdwdm], jlpzrq = to_date(#[jlpzrq],'yyyy-mm-dd') 
+			where bh = #[bh]
+		]]>
+	</property>
+	
+<!-- 删除巡逻队奖励 -->	
+	<property name="delXunldJL">
+		<![CDATA[
+			update t_gzgl_xldjlqk set gxsj = to_date(#[gxsj],'yyyy-mm-dd HH24:mi:ss'), czbs = #[czbs] where bh = #[bh]
+		]]>
+	</property>
+	
+<!-- 分页查询巡逻队奖励 -->	
+	<property name="queryXunldJLList">
+		<![CDATA[
+			select jl.bh,xld.xldmc, jl.ry, to_char(jl.jlsj,'yyyy-mm-dd') as jlsj, jl.djrxm, 
+				to_char(jl.djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,jl.djdwmc,jl.djdwdm
+  			from t_gzgl_xldjlqk jl, t_af_xldxx xld
+ 			where jl.xldbh = xld.xldbh
+   				and jl.czbs != '0'
+   				and xld.cxbs != '0'
+   				
+   			#if($jwsqdm && !$jwsqdm.equals(""))
+	    		and jl.djdwdm = #[jwsqdm]
+    		#elseif ($pcsdm && !$pcsdm.equals(""))
+			 	and jl.djdwdm like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and jl.djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and jl.djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+		   	#end	
+   				
+   				
+   			#if($xldbh && !$xldbh.equals(""))
+   				and jl.xldbh = #[xldbh]
+   			#end
+   			#if($jlsj && !$jlsj.equals(""))
+   				and jl.jlsj >= to_date(#[jlsj],'yyyy-mm-dd')	
+   			#end
+   			#if($jlsj_end && !$jlsj_end.equals(""))
+   				and jl.jlsj <= to_date(#[jlsj_end],'yyyy-mm-dd')
+   			#end		
+		]]>
+	</property>
+	
+<!-- 根据主键查询巡逻队奖励 -->	
+	<property name="queryXunldJLByPK">
+		<![CDATA[
+			select t.bh bh, t.xldbh xldbh, a.xldmc xldmc,t.ry ry , to_char(t.jlsj,'yyyy-mm-dd') as jlsj, t.jlyy, t.djrxm, to_char(t.djsj,'yyyy-mm-dd HH24:mi:ss') as djsj, 
+				t.djdwdm, t.djdwmc, t.czbs, to_char(t.gxsj,'yyyy-mm-dd HH24:mi:ss') as gxsj, t.jlpzrxm, t.jlpzrjh, t.jlpzdwmc, t.jlpzdwdm, 
+				to_char(t.jlpzrq,'yyyy-mm-dd') as  jlpzrq
+			from t_gzgl_xldjlqk t,t_af_xldxx a
+    where  a.xldbh = t.xldbh
+    	and bh = #[bh]
+			
+		]]>
+	</property>
+</properties>

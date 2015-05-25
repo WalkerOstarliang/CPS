@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<property name="addZbhcyxx">
+		<![CDATA[
+			insert into t_af_zbhcyxx
+			  (zbhcybh, zbhbh, xm, xb, sfzh, csrq, lxdh, hjdqh, xzdxz, whcd, hyzk, gzbx,
+			   jccs, gzdw, cjrq, tcrq, bcqk, ryjl, shgx, djrxm, djrjh, djdwdm, djdwmc, djsj, zbhzw, tcyy,tcbs,djrsfzh,sssqdm)
+			values
+			  (#[zbhcybh], #[zbhbh], #[xm], #[xb], #[sfzh], to_date(#[csrq],'yyyy-MM-dd'), 
+			  	#[lxdh], #[hjdqh], #[xzdxz], #[whcd], #[hyzk], #[gzbx], #[jccs], #[gzdw], 
+			  	to_date(#[cjrq],'yyyy-MM-dd hh24:mi:ss'),to_date(#[tcrq],'yyyy-MM-dd hh24:mi:ss') ,
+			  	#[bcqk], #[ryjl], #[shgx], #[djrxm], #[djrjh], #[djdwdm], #[djdwmc], 
+			  	sysdate, #[zbhzw], #[tcyy], #[tcbs],#[djrsfzh],#[sssqdm])
+		]]>
+	</property>
+	
+	<property name="updateZbhcyxxByZbhcybh">
+		<![CDATA[
+			update t_af_zbhcyxx
+			   set zbhcybh = #[zbhcybh],
+			       zbhbh = #[zbhbh],
+			       xm = #[xm],
+			       xb = #[xb],
+			       sfzh = #[sfzh],
+			       csrq = to_date(#[csrq],'yyyy-MM-dd'),
+			       lxdh = #[lxdh],
+			       hjdqh = #[hjdqh],
+			       xzdxz = #[xzdxz],
+			       whcd = #[whcd],
+			       hyzk = #[hyzk],
+			       gzbx = #[gzbx],
+			       jccs = #[jccs],
+			       gzdw = #[gzdw],
+			       cjrq = to_date(#[cjrq],'yyyy-MM-dd hh24:mi:ss'),
+			       bcqk = #[bcqk],
+			       ryjl = #[ryjl],
+			       shgx = #[shgx],
+			       zbhzw = #[zbhzw],
+			       sssqdm = #[sssqdm]
+			 where zbhcybh = #[zbhcybh]
+
+		]]>
+	</property>
+	
+	<property name="deleteZbhcyxxByZbhcybh">
+		<![CDATA[
+			update t_af_zbhcyxx
+			   set 	tcrq = to_date(#[tcrq],'yyyy-MM-dd hh24:mi:ss'),
+       				tcyy = #[tcyy],
+			       	tcbs = #[tcbs]
+			 where zbhcybh = #[zbhcybh]
+		]]>
+	</property>
+	
+	<property name="zbhcyxxList">
+		<![CDATA[
+			select cy.zbhcybh,
+			       cy.xm,
+			       cy.xb,
+			       cy.sfzh,
+			       to_char(cy.csrq,'yyyy-MM-dd') csrq,
+			       cy.lxdh,
+			       cy.hjdqh,
+			       cy.xzdxz,
+			       cy.whcd,
+			       cy.hyzk,
+			       cy.gzbx,
+			       cy.jccs,
+			       cy.gzdw,
+			       to_char(cy.cjrq,'yyyy-mm-dd') as cjrq,
+			       cy.tcrq,
+			       cy.bcqk,
+			       cy.ryjl,
+			       cy.shgx,
+			       cy.djrxm,
+			       cy.djrjh,
+			       cy.djdwdm,
+			       cy.djdwmc,
+			       cy.djsj,
+			       cy.zbhzw,
+			       cy.tcyy,
+			       cy.tcbs,
+			       cy.sssqdm,
+			       (select mc from t_common_hnxzqh where dm = cy.sssqdm) as sssqmc
+			  from t_af_zbhcyxx cy
+			 where 1=1 
+			  --单位选择查询
+			  --精确到派出所
+			  #if($zbhcybh and !$zbhcybh.equals(""))
+			  	and cy.zbhcybh = #[zbhcybh]
+			  #end
+			  #if($xm and !$xm.equals(""))
+			  	and cy.xm like '%'||#[xm]||'%'
+			  #end
+			  #if($sfzh and !$sfzh.equals(""))
+			  	and cy.sfzh like '%'||#[sfzh]||'%'
+			  #end
+		 #if ($pcsdm && !$pcsdm.equals(""))
+			 	and cy.djdwdm like substr(#[pcsdm],1,8)||'%'
+			 #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and cy.djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			 #elseif($citygajgjgdm && !$citygajgjgdm.equals("")) 
+			 	and cy.djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			 #end
+			  order by cy.djsj desc
+		]]>
+	</property>
+	
+	
+	
+	<property name="getZbhcyxxBySfzh">
+		<![CDATA[
+		select cy.zbhcybh,
+			       cy.xm,
+			       cy.xb,
+			       cy.sfzh,
+			       to_char(cy.csrq,'yyyy-MM-dd') csrq,
+			       cy.lxdh,
+			       cy.hjdqh,
+			       cy.xzdxz,
+			       cy.whcd,
+			       cy.hyzk,
+			       cy.gzbx,
+			       cy.jccs,
+			       cy.gzdw,
+			       to_char(cy.cjrq,'yyyy-mm-dd') as cjrq,
+			       cy.tcrq,
+			       cy.bcqk,
+			       cy.ryjl,
+			       cy.shgx,
+			       cy.djrxm,
+			       cy.djrjh,
+			       cy.djdwdm,
+			       cy.djdwmc,
+			       cy.djsj,
+			       cy.zbhzw,
+			       cy.tcyy,
+			       cy.tcbs,
+			        cy.sssqdm,
+			       (select mc from t_common_hnxzqh where dm = cy.sssqdm) as sssqmc
+			  from t_af_zbhcyxx cy
+			 where 1=1
+			 and cy.sfzh=?
+		]]>
+	</property>
+	<property name="getZbhcyxxBySfzhAndZbhbh">
+		<![CDATA[
+			select *
+			  from t_af_zbhcyxx
+			where sfzh=? and tcbs = '0'
+		]]>
+	</property>
+</properties>

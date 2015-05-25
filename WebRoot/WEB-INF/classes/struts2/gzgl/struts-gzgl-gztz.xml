@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	 <package name="gztz" extends="default" namespace="/gzgl/gztzgl">
+	 	<action name="*" class="com.chinacreator.gzgl.action.GztzAction" method="{1}">
+	 		<result name="togztzmbxzPage">/jsp/gzgl/pages/gztz/tzmbxzList.jsp</result>
+	 		<result name="toScmbPage">/jsp/gzgl/pages/gztz/sctzmbPage.jsp</result>
+	 	</action>
+	 </package>
+</struts>

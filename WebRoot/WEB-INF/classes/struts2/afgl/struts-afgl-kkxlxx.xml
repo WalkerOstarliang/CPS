@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="kkxlxx" namespace="/kkxlxx" extends="default"> 
+	  		<action name="*" class="com.chinacreator.afgl.action.KkxlxxAction" method="{1}">
+	  			<result name="toKkxlxxList">/jsp/afgl/pages/kkxlxx/kkxlxxList.jsp</result>
+	  			<result name="toUpdateKkxlxxByKkxx">/jsp/afgl/pages/kkxlxx/addKkxlxx.jsp</result>
+	  			<result name="toAddKkxlxx">/jsp/afgl/pages/kkxlxx/addKkxlxx.jsp</result>
+	  			<result name="viewKkxlxxByXlbh">/jsp/afgl/pages/kkxlxx/viewKkxlxx.jsp</result>
+	  			<result name="toGjQueryKkxlxx">/jsp/afgl/pages/kkxlxx/kkxlxxGjQuery.jsp</result>
+	  		</action>
+	  </package>
+</struts>

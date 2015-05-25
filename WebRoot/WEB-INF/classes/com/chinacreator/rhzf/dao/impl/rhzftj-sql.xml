@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryRhzfTj">
+		<![CDATA[
+		  SELECT *
+		  FROM (SELECT dwdm,
+					   dwmc,
+					   dwLeve,
+					   SUM(sqgb) AS sqgb,
+					   SUM(xqgb) AS xqgb,
+					   SUM(dwfr) AS dwfr,
+					   SUM(zbry) AS zbry,
+					   SUM(rddb) AS rddb,
+					   SUM(zxwy) AS zxwy,
+					   SUM(wgfzr) AS wgfzr,
+					   SUM(ywhcy) AS ywhcy,
+					   SUM(ldz) AS ldz,
+					   SUM(rsdqhf) AS rsdqhf,
+					   SUM(ybzf) AS ybzf,
+					   SUM(jdgb) AS jdgb,
+					   SUM(bgszr) AS bgszr,
+		               (SUM(bgszr) + SUM(sqgb) + SUM(xqgb) + SUM(dwfr) +  SUM(zbry) +  SUM(rddb) + SUM(zxwy) + SUM(wgfzr) + SUM(ywhcy) + SUM(ldz) + SUM(rsdqhf) + SUM(ybzf) + SUM(jdgb)) as hj
+				  FROM (SELECT orgcode AS dwdm,
+							   orgjc AS dwmc,
+							   leve AS dwLeve,
+							   sqjw_rhzf_tj.f_get_sqcgbcount(orgcode, #[tjsj_start], #[tjsj_end], '') AS sqgb,
+							   sqjw_rhzf_tj.f_get_xqzgbcount(orgcode, #[tjsj_start], #[tjsj_end], '') AS xqgb,
+							   sqjw_rhzf_tj.f_get_dwfrcount(orgcode,  #[tjsj_start], #[tjsj_end], '') AS dwfr,
+							   sqjw_rhzf_tj.f_get_dwzbrycount(orgcode,#[tjsj_start], #[tjsj_end], '') AS zbry,
+							   sqjw_rhzf_tj.f_get_rddbcount(orgcode,  #[tjsj_start], #[tjsj_end], '') AS rddb,
+							   sqjw_rhzf_tj.f_get_zxwycount(orgcode,  #[tjsj_start], #[tjsj_end], '') AS zxwy,
+							   sqjw_rhzf_tj.f_get_wgfzrcount(orgcode, #[tjsj_start], #[tjsj_end], '') AS wgfzr,
+							   sqjw_rhzf_tj.f_get_yzwyhcycount(orgcode, #[tjsj_start], #[tjsj_end], '') AS ywhcy,
+							   sqjw_rhzf_tj.f_get_ldzgbcount(orgcode, #[tjsj_start], #[tjsj_end], '') AS ldz,
+							   sqjw_rhzf_tj.f_get_rsdqhfcount(orgcode, #[tjsj_start], #[tjsj_end], '') AS rsdqhf,
+							   sqjw_rhzf_tj.f_get_ybzfcount(orgcode, #[tjsj_start], #[tjsj_end], '') AS ybzf,
+						       sqjw_rhzf_tj.f_get_jdxzgbcount(orgcode, #[tjsj_start], #[tjsj_end], '') AS jdgb,
+						       sqjw_rhzf_tj.f_get_bgszrcount(orgcode, #[tjsj_start], #[tjsj_end], '') AS bgszr
+						  FROM t_common_organization_sjjs
+						 WHERE leve = #[orgleve] and parent_code = #[parent_dm])
+				 GROUP BY ROLLUP(dwdm, dwmc, dwLeve))
+		 WHERE (dwdm IS NOT NULL AND dwmc IS NOT NULL AND dwLeve IS NOT NULL)
+			OR (dwdm IS NULL AND dwmc IS NULL AND dwLeve IS NULL)
+		 ORDER BY dwdm
+		]]>
+	</property>
+	
+		<property name="queryRhzfTjsq">
+		<![CDATA[
+			
+		  
+		  SELECT tj.*, 6 AS dwLeve
+  FROM (SELECT dwdm,
+			   dwmc,
+			   jwsdm,
+			   SUM(sqgb) AS sqgb,
+			   SUM(xqgb) AS xqgb,
+			   SUM(dwfr) AS dwfr,
+			   SUM(zbry) AS zbry,
+			   SUM(rddb) AS rddb,
+			   SUM(zxwy) AS zxwy,
+			   SUM(wgfzr) AS wgfzr,
+			   SUM(ywhcy) AS ywhcy,
+			   SUM(ldz) AS ldz,
+			   SUM(rsdqhf) AS rsdqhf,
+			   SUM(ybzf) AS ybzf,
+			   SUM(jdgb) AS jdgb,
+			   SUM(bgszr) AS bgszr,
+			   (SUM(sqgb) + SUM(xqgb) + SUM(dwfr) + SUM(zbry) + SUM(rddb) +
+			   SUM(zxwy) + SUM(wgfzr) + SUM(ywhcy) + SUM(ldz) + SUM(rsdqhf) +
+			   SUM(ybzf) + SUM(jdgb)) AS hj
+		  FROM (SELECT xz.dm AS dwdm,
+					   xz.jc AS dwmc,
+					   org.orgcode AS jwsdm,
+					   sqjw_rhzf_tj.f_get_sqcgbcount(xz.dm, '', '', 6) AS sqgb,
+					   sqjw_rhzf_tj.f_get_xqzgbcount(xz.dm, '', '', 6) AS xqgb,
+					   sqjw_rhzf_tj.f_get_dwfrcount(xz.dm, '', '', 6) AS dwfr,
+					   sqjw_rhzf_tj.f_get_dwzbrycount(xz.dm, '', '', 6) AS zbry,
+					   sqjw_rhzf_tj.f_get_rddbcount(xz.dm, '', '', 6) AS rddb,
+					   sqjw_rhzf_tj.f_get_zxwycount(xz.dm, '', '', 6) AS zxwy,
+					   sqjw_rhzf_tj.f_get_wgfzrcount(xz.dm, '', '', 6) AS wgfzr,
+					   sqjw_rhzf_tj.f_get_yzwyhcycount(xz.dm, '', '', 6) AS ywhcy,
+					   sqjw_rhzf_tj.f_get_ldzgbcount(xz.dm, '', '', 6) AS ldz,
+					   sqjw_rhzf_tj.f_get_rsdqhfcount(xz.dm, '', '', 6) AS rsdqhf,
+					   sqjw_rhzf_tj.f_get_ybzfcount(xz.dm, '', '', 6) AS ybzf,
+					   sqjw_rhzf_tj.f_get_jdxzgbcount(xz.dm, '', '', 6) AS jdgb,
+					   sqjw_rhzf_tj.f_get_bgszrcount(orgcode, #[tjsj_start], #[tjsj_end], '') AS bgszr
+				  FROM t_common_organization_sjjs org, t_common_hnxzqh xz
+				 WHERE org.leve = 5
+				   AND org.orgcode = #[parent_dm]
+				   AND xz.ssjwsdm = org.orgcode
+				   AND xz.leve = 5)
+		 GROUP BY ROLLUP(dwdm, dwmc, jwsdm)) tj
+ WHERE (dwdm IS NOT NULL AND dwmc IS NOT NULL AND jwsdm IS NOT NULL)
+	OR (dwdm IS NULL AND dwmc IS NULL AND jwsdm IS NULL)
+ ORDER BY dwdm      
+		]]>
+	</property>
+</properties>	

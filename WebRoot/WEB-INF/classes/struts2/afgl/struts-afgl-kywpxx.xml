@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="kywpxx" namespace="/kywpxx" extends="default"> 
+	  		<action name="*" class="com.chinacreator.afgl.action.KywpxxAction" method="{1}">
+	  			<result name="toKywpxxList">/jsp/afgl/pages/kywpxx/kywpxxList.jsp</result>
+	  			<result name="toAddKywpxx">/jsp/afgl/pages/kywpxx/addKywpxx.jsp</result>
+	  			<result name="toUpdateKywpxxByKywpbh">/jsp/afgl/pages/kywpxx/addKywpxx.jsp</result>
+	  			<result name="viewKywpxxByKywpbh">/jsp/afgl/pages/kywpxx/viewKywpxx.jsp</result>
+	  			<result name="toGjQueryKywpxx">/jsp/afgl/pages/kywpxx/kywpxxGjQuery.jsp</result>
+	  			<result name="toKywpxxListByPcbh">/jsp/afgl/pages/kywpxx/kywpxxListByPcbh.jsp</result>
+	  			
+	  		</action>
+	  </package>
+</struts>

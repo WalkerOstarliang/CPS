@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="zdrydx" namespace="/lsgl/zdry" extends="default"> 
+	  		<action name="*" class="com.chinacreator.lsgl.action.LsglZdryJbxxAction" method="{1}">
+	  			<result name="toZdryListPage">/jsp/lsgl/pages/zdry/zdrylist.jsp</result>
+	  			<result name="toWrlZdryListPage">/jsp/lsgl/pages/zdry/zdryList_wrl.jsp</result>
+	  			<result name="toZdryDetailInfoPage">/jsp/lsgl/pages/zdry/zdrydetailinfo.jsp</result>
+	  			<result name="toSFZHInfoPage">/jsp/lsgl/pages/zdry/zdryinfowin.jsp</result>
+	  			<result name="toZdryInfoPage">/jsp/lsgl/pages/zdry/zdryinfo.jsp</result>
+	  			<result name="zdryjbxx">/jsp/lsgl/pages/zdry/zdryjbxx.jsp</result>
+	  			<result name="zdryzpxx">/jsp/lsgl/pages/zdry/zdryzpxx.jsp</result>
+	  			<result name="wfjlxx">/jsp/lsgl/pages/zdry/zdrywffzjl.jsp</result>
+	  			<result name="tmtzxx">/jsp/lsgl/pages/zdry/zdrytmtzms.jsp</result>
+	  			<result name="xsbx">/jsp/lsgl/pages/zdry/xsbx.jsp</result>
+	  			<result name="shgxxx">/jsp/lsgl/pages/rk/shgxxx.jsp</result>
+	  			<result name="jzdx">/jsp/lsgl/pages/zdry/jzdx/jzdx.jsp</result>
+	  			<result name="gzry">/jsp/lsgl/pages/zdry/gzry/gzry.jsp</result>
+	  			<result name="xdry">/jsp/lsgl/pages/zdry/xdryxx/xdry.jsp</result>
+	  			<result name="xdxhnjxx">/jsp/lsgl/pages/zdry/xdryxx/xdchnjxx.jsp</result>	
+	  			<result name="zdryjsbrxx">/jsp/lsgl/pages/zdry/jsbrxx/zdryjsbr.jsp</result>
+	  			<result name="zdryjsbrzsxx">/jsp/lsgl/pages/zdry/jsbrxx/zdryjsbrzsxx.jsp</result>
+	  			<result name="zdryswry">/jsp/lsgl/pages/zdry/swryxx/zdryswry.jsp</result>
+	  			<result name="zdryswrysfjl">/jsp/lsgl/pages/zdry/swryxx/zdryswrysfjl.jsp</result>
+	  			<result name="toSfzhValidate">/jsp/lsgl/pages/zdry/xsbxinfowin.jsp</result>
+	  			<result name="toRkInfoPage">/jsp/lsgl/pages/zdry/zdryinfo.jsp</result>
+	  			<result name="toZdryPfPage">/jsp/lsgl/pages/zdry/zdrypf.jsp</result>
+	  			<result name="toZdrythpage">/jsp/lsgl/pages/zdry/zdryth.jsp</result>
+	  			<result name="toZdryJgPage">/jsp/lsgl/pages/zdry/zdryjgxx.jsp</result>
+	  			<result name="toZdryTgPage">/jsp/lsgl/pages/zdry/zdrytgxx.jsp</result>
+	  			<result name="toZdryJgListPage">/jsp/lsgl/pages/zdry/zdryjglist.jsp</result>
+	  			<result name="toQGQLZdryInfoPage">/jsp/lsgl/pages/zdry/qgzdryinfo.jsp</result>
+	  			
+	  			<!-- 导出现实表现 -->
+	  			<result name="downloadZkdj">/jsp/lsgl/pages/zdry/downloadModel/zkdjModel.jsp</result>
+	  			
+	  			<result name="downloadZdry">/jsp/lsgl/pages/zdry/zdryDownloadExcelMode.jsp</result>
+	  			
+	  		</action>
+	  </package>
+	  <package name="zdryzkdjtj" namespace="/lsgl/zdryzkdjtj" extends="default">
+	  	<action name="*" class="com.chinacreator.lsgl.action.LsglZdryZkDjTjAction" method="{1}">
+	  		<result name="toZdryZkDjTjPage">/jsp/lsgl/pages/zdry/zdryzkdjtjlist.jsp</result>
+	  		<result name="toZdryZkDjTjInfoPage">/jsp/lsgl/pages/zdry/zdryzkdjtjlistinfo.jsp</result>
+	  		<result name="toZdryZkDjTjDJSInfoPage">/jsp/lsgl/pages/zdry/zdryzkdjtjdjslistinfo.jsp</result>
+	  		<result name="toZdryZkDjTjZKSInfoPage">/jsp/lsgl/pages/zdry/zdryzkdjtjzkslistinfo.jsp</result>
+	  		<result name="toZdryZkDjTjSKSInfoPage">/jsp/lsgl/pages/zdry/zdryzkdjtjskslistinfo.jsp</result>
+	  		<result name="downloadZdryZkDjTj">/jsp/lsgl/pages/zdry/zdryZkDjTjDownloadExcel.jsp</result>	  		
+	  	</action>
+	  </package>
+	  
+	   <!-- 重点人员签收 -->
+	   <package name="zdryqs" namespace="/zdry/zdryqs" extends="default">
+	  	<action name="*" class="com.chinacreator.lsgl.action.ZdryQsAction" method="{1}">
+	  		<!-- 重点人员签收 -->
+	  		<result name="toZdryqsListPage">/jsp/lsgl/pages/zdry/zdryqs/zdryqsList.jsp</result>
+	  		
+	  		<result name="toZdryQsPage">/jsp/lsgl/pages/zdry/zdryqs/zdryqs.jsp</result>
+	  	</action>
+	  </package>
+</struts>

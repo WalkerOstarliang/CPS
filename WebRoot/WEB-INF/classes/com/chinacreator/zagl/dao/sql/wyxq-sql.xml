@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 新增物业小区 -->
+	<property name="insertWyxq">
+		<![CDATA[
+			insert into t_za_wyxq
+			  (id, xqmc, sssqmc, sssqdm, ssjwqdm, ssjwqmc, dzmc, wygs, wygsfzr, lds,
+			   jcks, sfyjztcc, tcws, dwfzr, abfzr, dwfzrlxdh, abfzrlxdh, dwdh, dwbz, 
+			   cyrs, bwll, bas, wssysbas, fhzbs, jgs, gws, zbrs, gwwzjrs, fbsxq, wq, 
+			   dymj, wfqt, wfbz, spjks, dzwl, mjxt, jkzx, jfqt, sfzxzpba, pqbafwgs, 
+			   sfba, pqbas, bazh, bafwqy, bajgbz, ssfxsjdm, ssfxsjmc, sspcsdm, 
+			   sspcsmc, sqmjxm, sqmjjh, djrxm, djrjh, djrsfzh, djsj, djdwdm, 
+			   djdwmc, czrxm, czrjh, czrsfzh, czdwdm, czdwmc, czsj, czbs, zxbs, zxyy,zxsj,xqmj,jlrq,ywwygs,dwfzrsfzh)
+			values
+			  (#[id],  #[xqmc],  #[sssqmc],  #[sssqdm],  #[ssjwqdm],  #[ssjwqmc],  #[dzmc], 
+			   #[wygs],  #[wygsfzr],  #[lds],  #[jcks],  #[sfyjztcc],  #[tcws],  #[dwfzr], 
+			   #[abfzr],  #[dwfzrlxdh],  #[abfzrlxdh],  #[dwdh],  #[dwbz],  #[cyrs],  #[bwll],  
+			   #[bas],  #[wssysbas],  #[fhzbs],  #[jgs],  #[gws],  #[zbrs],  #[gwwzjrs],  
+			   #[fbsxq],  #[wq],  #[dymj],  #[wfqt],  #[wfbz],  #[spjks],  #[dzwl],  #[mjxt],  
+			   #[jkzx],  #[jfqt],  #[sfzxzpba],  #[pqbafwgs],  #[sfba],  #[pqbas],  #[bazh],  
+			   #[bafwqy],  #[bajgbz],  #[ssfxsjdm],  #[ssfxsjmc],  #[sspcsdm],  #[sspcsmc],  
+			   #[sqmjxm],  #[sqmjjh],  #[djrxm],  #[djrjh],  #[djrsfzh],  to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),  
+			   #[djdwdm],  #[djdwmc],  #[czrxm],  #[czrjh],  #[czrsfzh],  #[czdwdm],  #[czdwmc],  
+			   to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'), #[czbs],  #[zxbs],  #[zxyy],
+			   to_date(#[zxsj],'yyyy-mm-dd'),#[xqmj],to_date(#[jlrq],'yyyy-mm-dd'),#[ywwygs],#[dwfzrsfzh])
+		]]>
+	</property>
+	
+	<!-- 修改物业小区 -->
+	<property name="updateWyxq">
+		<![CDATA[
+			update t_za_wyxq
+		       set xqmc = #[xqmc],
+		       sssqmc = #[sssqmc],
+		       sssqdm = #[sssqdm],
+		       ssjwqdm = #[ssjwqdm],
+		       ssjwqmc = #[ssjwqmc],
+		       dzmc = #[dzmc],
+		       wygs = #[wygs],
+		       wygsfzr = #[wygsfzr],
+		       lds = #[lds],
+		       jcks = #[jcks],
+		       sfyjztcc = #[sfyjztcc],
+		       tcws = #[tcws],
+		       dwfzr = #[dwfzr],
+		       abfzr = #[abfzr],
+		       dwfzrlxdh = #[dwfzrlxdh],
+		       abfzrlxdh = #[abfzrlxdh],
+		       dwdh = #[dwdh],
+		       dwbz = #[dwbz],
+		       cyrs = #[cyrs],
+		       bwll = #[bwll],
+		       bas = #[bas],
+		       wssysbas = #[wssysbas],
+		       fhzbs = #[fhzbs],
+		       jgs = #[jgs],
+		       gws = #[gws],
+		       zbrs = #[zbrs],
+		       gwwzjrs = #[gwwzjrs],
+		       fbsxq = #[fbsxq],
+		       wq = #[wq],
+		       dymj = #[dymj],
+		       wfqt = #[wfqt],
+		       wfbz = #[wfbz],
+		       spjks = #[spjks],
+		       dzwl = #[dzwl],
+		       mjxt = #[mjxt],
+		       jkzx = #[jkzx],
+		       jfqt = #[jfqt],
+		       sfzxzpba = #[sfzxzpba],
+		       pqbafwgs = #[pqbafwgs],
+		       sfba = #[sfba],
+		       pqbas = #[pqbas],
+		       bazh = #[bazh],
+		       bafwqy = #[bafwqy],
+		       bajgbz = #[bajgbz],
+		       ssfxsjdm = #[ssfxsjdm],
+		       ssfxsjmc = #[ssfxsjmc],
+		       sspcsdm = #[sspcsdm],
+		       sspcsmc = #[sspcsmc],
+		       sqmjxm = #[sqmjxm],
+		       sqmjjh = #[sqmjjh],
+		       czrxm = #[czrxm],
+		       czrjh = #[czrjh],
+		       czrsfzh = #[czrsfzh],
+		       czdwdm = #[czdwdm],
+		       czdwmc = #[czdwmc],
+		       czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+		       czbs = #[czbs],
+		       zxbs = #[zxbs],
+		       zxyy = #[zxyy],
+		       zxsj = to_date(#[zxsj],'yyyy-mm-dd'),
+		       xqmj = #[xqmj],
+		       jlrq = to_date(#[jlrq],'yyyy-mm-dd'),
+		       ywwygs = #[ywwygs],
+		       dwfzrsfzh = #[dwfzrsfzh]
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<!-- 注销物业小区 -->
+	<property name="zxWyxq">
+		<![CDATA[
+			update t_za_wyxq
+		       set czrxm = #[czrxm],
+		       czrjh = #[czrjh],
+		       czrsfzh = #[czrsfzh],
+		       czdwdm = #[czdwdm],
+		       czdwmc = #[czdwmc],
+		       czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+		       czbs = #[czbs],
+		       zxbs = #[zxbs],
+		       zxyy = #[zxyy],
+		       zxsj = to_date(#[zxsj],'yyyy-mm-dd')
+			 where id = #[id]
+		]]>
+	</property>
+	
+	
+	<!-- 根据ID查询物业小区 -->
+	<property name="queryWyxqById">
+		<![CDATA[
+			select id,
+		       xqmc,
+		       sssqmc,
+		       sssqdm,
+		       ssjwqdm,
+		       ssjwqmc,
+		       dzmc,
+		       wygs,
+		       wygsfzr,
+		       lds,
+		       jcks,
+		       sfyjztcc,
+		       tcws,
+		       dwfzr,
+		       abfzr,
+		       dwfzrlxdh,
+		       abfzrlxdh,
+		       dwdh,
+		       dwbz,
+		       cyrs,
+		       bwll,
+		       bas,
+		       wssysbas,
+		       fhzbs,
+		       jgs,
+		       gws,
+		       zbrs,
+		       gwwzjrs,
+		       fbsxq,
+		       wq,
+		       dymj,
+		       wfqt,
+		       wfbz,
+		       spjks,
+		       dzwl,
+		       mjxt,
+		       jkzx,
+		       jfqt,
+		       sfzxzpba,
+		       pqbafwgs,
+		       sfba,
+		       pqbas,
+		       bazh,
+		       bafwqy,
+		       bajgbz,
+		       ssfxsjdm,
+		       ssfxsjmc,
+		       sspcsdm,
+		       sspcsmc,
+		       sqmjxm,
+		       sqmjjh,
+		       djrxm,
+		       djrjh,
+		       djrsfzh,
+		       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+		       djdwdm,
+		       djdwmc,
+		       czrxm,
+		       czrjh,
+		       czrsfzh,
+		       czdwdm,
+		       czdwmc,
+		       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+		       czbs,
+		       zxbs,
+		       zxyy,
+		       to_char(zxsj,'yyyy-mm-dd') as zxsj,
+		       xqmj,
+		       to_char(jlrq,'yyyy-mm-dd') as jlrq,
+		       ywwygs,dwfzrsfzh
+		  from t_za_wyxq
+		  where id = ?
+		]]>
+	</property>
+	
+	<!-- 分页查询物业小区 -->
+	<property name="queryWyxqPageResultInfo">
+		<![CDATA[
+			select id,
+		       xqmc,
+		       sssqmc,
+		       sssqdm,
+		       ssjwqdm,
+		       ssjwqmc,
+		       dzmc,
+		       wygs,
+		       wygsfzr,
+		       lds,
+		       jcks,
+		       sfyjztcc,
+		       tcws,
+		       dwfzr,
+		       abfzr,
+		       dwfzrlxdh,
+		       abfzrlxdh,
+		       dwdh,
+		       dwbz,
+		       cyrs,
+		       bwll,
+		       bas,
+		       wssysbas,
+		       fhzbs,
+		       jgs,
+		       gws,
+		       zbrs,
+		       gwwzjrs,
+		       fbsxq,
+		       wq,
+		       dymj,
+		       wfqt,
+		       wfbz,
+		       spjks,
+		       dzwl,
+		       mjxt,
+		       jkzx,
+		       jfqt,
+		       sfzxzpba,
+		       pqbafwgs,
+		       sfba,
+		       pqbas,
+		       bazh,
+		       bafwqy,
+		       bajgbz,
+		       ssfxsjdm,
+		       ssfxsjmc,
+		       sspcsdm,
+		       sspcsmc,
+		       sqmjxm,
+		       sqmjjh,
+		       djrxm,
+		       djrjh,
+		       djrsfzh,
+		       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+		       djdwdm,
+		       djdwmc,
+		       czrxm,
+		       czrjh,
+		       czrsfzh,
+		       czdwdm,
+		       czdwmc,
+		       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+		       czbs,
+		       zxbs,
+		       zxyy,
+		       to_char(zxsj,'yyyy-mm-dd') as zxsj,
+		       xqmj,
+		       to_char(jlrq,'yyyy-mm-dd') as jlrq,
+		       ywwygs,dwfzrsfzh
+		  from t_za_wyxq
+		  where 1 = 1
+		  #if($xqmc && !$xqmc.equals(""))
+		  	and xqmc like #[xqmc] || '%'
+		  #end
+		  #if($djsjstart && !$djsjstart.equals(""))
+		  	and djsj >= to_date(#[djsjstart]|| '00:00:00','yyyy-mm-dd hh24:mi:ss')
+		 #end
+		 #if($djsjend && !$djsjend.equals(""))
+		  	and djsj <= to_date(#[djsjend]|| '23:59:59','yyyy-mm-dd hh24:mi:ss')
+		 #end
+		 #if($zxbs && !$zxbs.equals(""))
+		 	and zxbs = #[zxbs]
+		 #end
+		 #if ($ywwygs && !$ywwygs.equals(""))
+		 	and YWWYGS = #[ywwygs]
+		 #end
+		#if($sqdm && !$sqdm.equals(""))
+			and sssqdm = #[sqdm] 
+		#elseif($jwsqdm && !$jwsqdm.equals(""))
+				and  djdwdm = #[jwsqdm]
+		#elseif($pcsdm && !$pcsdm.equals(""))
+			and (djdwdm like substr(#[pcsdm],1,8)||'%')
+		#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+		#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+		#end
+		 
+		]]>
+	</property>
+	<!-- insertWyxqaJ 新增物业小区安全检查信息-->
+	  
+	<property name="insertWyxqaJ">
+		<![CDATA[
+	insert into t_za_wyxq_aqjc
+  (id,
+   xqmc,
+   sspcsdm,
+   sspcsmc,
+   jcmjjh,
+   jcmjxm,
+   jcrq,
+   qkms,
+   zdlsnbzabwzd,
+   lsnbzabwzr,
+   lsygaqffpx,
+   lfrywpdjsx,
+   dymjxt,
+   spbjxtyz,
+   sfjztcc,
+   yhbwfdcfdm,
+   wqsfwh,
+   sfzgabry,
+   sfgqpx,
+   sffwqxbj,
+   sfcsgz,
+   sfdqjy,
+   sfybafz,
+   sfrzlz,
+   sfzzabdw,
+   sfblzzba,
+   wyxdwqid,
+   aqyhms,
+   mjclyj,
+   aqcl,
+   aqzgqx,
+   sldspyj,
+   sldjh,
+   sldxm,
+   sldspsj)
+values
+  (#[id],
+   #[xqmc],
+   #[sspcsdm],
+   #[sspcsmc],
+   #[jcmjjh],
+   #[jcmjxm],
+   to_date(#[jcrq],'yyyy-mm-dd'),
+   #[qkms],
+   #[zdlsnbzabwzd],
+   #[lsnbzabwzr],
+   #[lsygaqffpx],
+   #[lfrywpdjsx],
+   #[dymjxt],
+   #[spbjxtyz],
+   #[sfjztcc],
+   #[yhbwfdcfdm],
+   #[wqsfwh],
+   #[sfzgabry],
+   #[sfgqpx],
+   #[sffwqxbj],
+   #[sfcsgz],
+   #[sfdqjy],
+   #[sfybafz],
+   #[sfrzlz],
+   #[sfzzabdw],
+   #[sfblzzba],
+   #[wyxdwqid],
+   #[aqyhms],
+   #[mjclyj],
+   #[aqcl],
+   #[aqzgqx],
+   #[sldspyj],
+   #[sldjh],
+   #[sldxm],
+    to_date(#[sldspsj],'yyyy-mm-dd'))
+		]]>
+	</property>
+	<!-- updateWyxqaJ  更新物业小区安全检查 -->
+	<property name="updateWyxqaJ">
+		<![CDATA[
+	update t_za_wyxq_aqjc
+   set xqmc = #[xqmc],
+       sspcsdm = #[sspcsdm],
+       sspcsmc = #[sspcsmc],
+       jcmjjh = #[jcmjjh],
+       jcmjxm = #[jcmjxm],
+       jcrq = to_date(#[jcrq],'yyyy-mm-dd'),
+       qkms = #[qkms],
+       zdlsnbzabwzd = #[zdlsnbzabwzd],
+       lsnbzabwzr = #[lsnbzabwzr],
+       lsygaqffpx = #[lsygaqffpx],
+       lfrywpdjsx = #[lfrywpdjsx],
+       dymjxt = #[dymjxt],
+       spbjxtyz = #[spbjxtyz],
+       sfjztcc = #[sfjztcc],
+       yhbwfdcfdm = #[yhbwfdcfdm],
+       wqsfwh = #[wqsfwh],
+       sfzgabry = #[sfzgabry],
+       sfgqpx = #[sfgqpx],
+       sffwqxbj = #[sffwqxbj],
+       sfcsgz = #[sfcsgz],
+       sfdqjy = #[sfdqjy],
+       sfybafz = #[sfybafz],
+       sfrzlz = #[sfrzlz],
+       sfzzabdw = #[sfzzabdw],
+       sfblzzba = #[sfblzzba],
+       wyxdwqid = #[wyxdwqid],
+       aqyhms = #[aqyhms],
+       mjclyj = #[mjclyj],
+       aqcl = #[aqcl],
+       aqzgqx = #[aqzgqx],
+       sldspyj = #[sldspyj],
+       sldjh = #[sldjh],
+       sldxm = #[sldxm],
+       sldspsj = to_date(#[sldspsj],'yyyy-mm-dd')
+ where id = #[id]
+]]>
+	</property>
+	<!-- queryWyxqaJResultPageInfo 分页查询物业小区安全检查信息 -->
+	<property name="queryWyxqaJResultPageInfo">
+		<![CDATA[
+			select id,
+       xqmc,
+       sspcsdm,
+       sspcsmc,
+       jcmjjh,
+       jcmjxm,
+       to_char(jcrq,'yyyy-mm-dd') as jcrq,
+       qkms,
+       zdlsnbzabwzd,
+       lsnbzabwzr,
+       lsygaqffpx,
+       lfrywpdjsx,
+       dymjxt,
+       spbjxtyz,
+       sfjztcc,
+       yhbwfdcfdm,
+       wqsfwh,
+       sfzgabry,
+       sfgqpx,
+       sffwqxbj,
+       sfcsgz,
+       sfdqjy,
+       sfybafz,
+       sfrzlz,
+       sfzzabdw,
+       sfblzzba,
+       wyxdwqid,
+       aqyhms,
+       mjclyj,
+       aqcl,
+       aqzgqx,
+       sldspyj,
+       sldjh,
+       sldxm,
+       to_char(sldspsj,'yyyy-mm-dd') as sldspsj
+  from t_za_wyxq_aqjc
+    where wyxdwqid=?			
+		]]>
+	</property>
+</properties>
