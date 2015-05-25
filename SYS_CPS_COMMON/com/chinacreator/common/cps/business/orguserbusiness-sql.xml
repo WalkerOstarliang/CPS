@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<property name="queryOrganizationByOrgCode">
+		<![CDATA[
+			select orgcode as id, orgname as name, parent_code as parentId, 
+				   orgjc as jc,'true' as isParent,nvl(ispcs,'0') as ispcs,f_get_dwleve(orgcode) as leve
+			from v_common_organization
+			where orgcode=? and isyx='1'
+		]]>
+	</property>
+
+	<property name="queryOrganizationListByParentCode">
+		<![CDATA[
+			select orgcode as id, orgname as name, parent_code as parentId, 
+				   orgjc as jc,'true' as isParent,nvl(ispcs,'0') as ispcs,f_get_dwleve(orgcode) as leve
+			from v_common_organization
+			where parent_code=?
+			and isyx='1'
+			order by orgcode
+		]]>
+	</property>
+	
+	<property name="queryOrganizationListByParentCode2">
+		<![CDATA[
+			select orgcode as id, orgname as name, parent_code as parentId, 
+               	   orgjc as jc,'true' as isParent,decode(leve,4,'1','0') as ispcs,leve
+       		from t_common_organization_sjjs 
+			where 1 = 1
+			#if($leve && !$leve.equals(""))
+				#if($parentId && !$parentId.equals(""))
+					#if($leve.equals("4"))
+						and parent_code = substr(#[parentId],1,8) || '3100'
+					#else
+						and parent_code = #[parentId]
+					#end
+				#end	
+			#end
+			order by orgcode
+		]]>
+	</property>
+	
+	<property name="queryOrganizationListByParentCode3">
+		<![CDATA[
+			select orgcode as id, orgname as name, parent_code as parentId, 
+               	   orgjc as jc,'true' as isParent,decode(leve,4,'1','0') as ispcs,leve
+       		from t_common_organization_sjjs 
+			where 1 = 1
+			#if($leve && !$leve.equals(""))
+				#if($parentId && !$parentId.equals(""))
+					#if($leve.equals("4"))
+						and parent_code = substr(#[parentId],1,8) || '3100'
+					#else
+						and parent_code = #[parentId]
+					#end
+				#end	
+			#end
+			order by orgcode
+		]]>
+	</property>
+	
+	<property name="queryOrgChildOrgListByParentCode">
+		<![CDATA[
+			 select orgcode, orgname, parent_code,orgjc ,leve 
+		      from (
+		        select o.orgcode, o.orgname, o.parent_code,o.orgjc ,level as leve
+		        from v_common_organization o
+		        start with o.orgcode=? connect by prior o.orgcode=o.parent_code 
+		      ) d
+		      where d.leve<=?
+		]]>
+	</property>
+	
+	<property name="queryOrganizationListBySearchName">
+		<![CDATA[
+			select orgcode as id, orgname as name, parent_code as parentId, 
+				   orgjc as jc,'true' as isParent,f_get_dwleve(orgcode) as leve
+			from v_common_organization
+			where orgname like '%'||?||'%'
+			and isyx='1' 
+		]]>
+	</property>
+	
+	<property name="queryUserListByOrgCode">
+		<![CDATA[
+		    select userid,username,realname,realnamepy,mobile,telephone,sfzh,orgcode,orgname
+		    from (
+				select u.userid as userid,u.username as username,
+					   u.realname as realname,
+				       u.realnamepy as realnamepy,u.mobile as mobile,
+			           u.telephone as telephone,u.sfzh as sfzh,o.orgcode as orgcode,
+			           o.orgname as orgname,rownum as sn
+				from  v_common_organization o inner join v_common_orguser ou on o.orgid=ou.orgid
+				      inner join v_common_user u on u.userid=ou.userid
+				where o.orgcode=?
+			)
+			where sn>=? and sn<=?
+		]]>
+	</property>
+	
+	
+	<property name="queryUserListPageInfoByOrgCode">
+		<![CDATA[
+		   select l.id  id,
+		          u.userid  userid,
+		          u.username username,
+		          u.sfzh sfzh, 
+		          l.mobile mobile,
+		          l.telephone  telephone,
+		          u.realname as xm,
+		          o.orgcode as orgdwdm,
+		          o.orgname as orgdwmc,
+		          l.mz mz,
+		          l.whcd whcd,
+		          l.gzgw gzgw,
+		          l.zw zw,
+		          l.xzjb xzjb,
+		          l.gzsj gzsj,
+		          l.cjsj cjsj,
+		          l.pcsgzsj pcsgzsj,
+		          l.sfzzsqmj sfzzsqmj,
+		          l.sqmjsfcwhjz sqmjsfcwhjz,
+		          l.cssqjwsj cssqjwsj,
+		          l.dnjlcs dnjlcs,
+		          l.dncccs dncccs,
+		          l.dnjzywpxcs dnjzyepxcs 
+		from v_common_user u left join t_common_user_lxfs l on l.userid=u.userid
+     		inner join v_common_orguser ou on ou.userid=u.userid
+     		inner join v_common_organization o on o.orgid=ou.orgid
+     		and u.isvalid = '1'
+		where o.orgcode=?
+		]]>
+	</property>
+	
+	<property name="queryUserListOfPcsPageInfoByOrgCode">
+		<![CDATA[
+		   select l.id  id,
+		          u.userid  userid,
+		          u.username username,
+		          u.sfzh sfzh, 
+		          l.mobile mobile,
+		          l.telephone  telephone,
+		          u.realname as xm,
+		          o.orgcode as orgdwdm,
+		          o.orgjc as orgdwmc,
+		          l.mz mz,
+		          l.whcd whcd,
+		          l.gzgw gzgw,
+		          l.zw zw,
+		          l.xzjb xzjb,
+		          l.gzsj gzsj,
+		          l.cjsj cjsj,
+		          l.pcsgzsj pcsgzsj,
+		          l.sfzzsqmj sfzzsqmj,
+		          l.sqmjsfcwhjz sqmjsfcwhjz,
+		          l.cssqjwsj cssqjwsj,
+		          l.dnjlcs dnjlcs,
+		          l.dncccs dncccs,
+		          l.dnjzywpxcs dnjzyepxcs 
+		from v_common_user u left join t_common_user_lxfs l on l.userid=u.userid
+     		inner join v_common_orguser ou on ou.userid=u.userid
+     		inner join v_common_organization o on o.orgid=ou.orgid
+     		and u.isvalid = '1'
+		where o.orgcode like substr(?,1,8)||'%'
+		]]>
+	</property>
+	
+	<property name="seachUserBeanListBySearchName">
+		<![CDATA[
+			 select u.userid, u.username,u.realname, u.realnamepy, u.mobile, 
+			 		u.telephone, u.sfzh, o.orgcode,o.orgname 
+  			 from v_common_user u inner join v_common_orguser ou on u.userid=ou.userid
+                  inner join v_common_organization o on ou.orgid=o.orgid
+  			 where (u.username=? 
+  			 	   or upper(u.realnamepy) like '%'||upper(?)||'%' 
+  			 	   or u.realname like '%'||?||'%')
+  			 	   and rownum<=30
+		]]>
+	</property>
+	
+	<property name="queryChildXzqhListByParentDm">
+		<![CDATA[
+			select d.dm as id, d.mc as name, d.parent_dm as parentId, 
+             		d.jc as jc
+  			from t_common_dictionary d
+  			where zdlb='GB_XZQH'
+  			start with parent_dm=? connect by prior d.dm=d.parent_dm
+  			order by dm
+		]]>
+	</property>
+	
+	<property name="queryChildXzqhByParentDm">
+		<![CDATA[
+			select d.dm as id, d.mc as name, d.parent_dm as parentId, 
+             		d.jc as jc
+  			from t_common_dictionary d
+  			where zdlb='GB_XZQH' and parent_dm=?
+  			order by dm
+		]]>
+	</property>
+	
+	<property name="queryLeafXzqhListByParentDm">
+		<![CDATA[
+			select id, zdlb, zdmc, dm, mc, parent_dm, jc, isyx, sn
+  			from t_common_dictionary
+  			where zdlb='GB_XZQH' and parent_dm=?
+  			order by dm
+		]]>
+	</property>
+	
+	<property name="queryAllXzqhList">
+		<![CDATA[
+			select d.dm as id, d.mc as name, d.parent_dm as parentId, 
+             		d.jc as jc
+  			from t_common_dictionary d
+  			where zdlb='GB_XZQH'
+  			order by dm
+		]]>
+	</property>
+	
+	<property name="queryPcsOrgListByParentDm">
+		<![CDATA[
+			select orgid, orgcode, orgname, parent_code, orgjc, leve, createdate, sn, isyx  
+			from v_common_organization 
+			where isyx='1' 
+			and parent_code= ?
+			and substr(orgcode,7,2) > '40'
+			and substr(orgcode,7,2) <= '85'
+		]]>
+	</property>
+	
+	<property name="queryRyxxBean">
+		<![CDATA[
+			select xm, cym, xb, mz, csrq, zzssxq, zzxz, qtzzxq, qtzzxz, csd, sfzh, whcd, hyzk, 
+			sg, zy, fwcs, bdrq, bdyy, hsqr, hdqr, sspcsjgdm, sspcsmc, ssgajgjgdm, ssgajgmc, hlx, 
+			hh, yhzgx 
+			from v_ry_czrk
+  			where sfzh = ?
+		]]>
+	</property>
+	
+	<property name="queryCzrkBean">
+		<![CDATA[
+			select rybh,
+			       xm,
+			       xmpy,
+			       sfzh,
+			       xb,
+			       gj,
+			       mz,
+			       csrq,
+			       bmch,
+			       byzk,
+			       ywm,
+			       whcd,
+			       zjzl,
+			       zjhm,
+			       zzmm,
+			       hyzk,
+			       sg,
+			       xx,
+			       zzxy,
+			       zc,
+			       lxdh,
+			       fwcs,
+			       zydm,
+			       zw,
+			       sf,
+			       jg,
+			       jwrylx,
+			       hjdqh,
+			       hjdxz,
+			       hjddzbh,
+			       sjjzdqh,
+			       sjjzdxz,
+			       sjjzdzbh,
+			       hh,
+			       hklb,
+			       yhzgx,
+			       hkxz,
+			       ryzt,
+			       bdyy,
+			       bdsj,
+			       bdqh,
+			       bdxz,
+			       qryy,
+			       qrsj,
+			       hdqr,
+			       hdqrxz,
+			       jhryxm,
+			       jyhrygx,
+			       jhrexm,
+			       yjhregx,
+			       shgx,
+			       bz,
+			       hjsxpcs,
+			       hjsxsqjws,
+			       hjsssq,
+			       czbs,
+			       czdwdm,
+			       czdwmc,
+			       czsj,
+			       czrxm,
+			       djdwdm,
+			       djdwmc,
+			       djrxm,
+			       djsj
+			  from t_lsgl_rk_czrk
+			 where sfzh = ?
+		]]>
+	</property>
+	
+	<property name="findSqBeanByPcsdm">
+		<![CDATA[
+			select h.dm as sqbh,
+			       h.jc as sqmc
+			  from t_common_hnxzqh h
+			  where h.isvalid='1' and leve='5'
+		  		#if($leve == 5)
+		  			 and h.ssjwsdm=#[orgcode]
+		  		#else
+		  			and h.sspcsdm = #[pcsdm]
+		  		#end
+		]]>
+	</property>
+	
+	<property name="findXqxxBeanListBySqbh">
+		<![CDATA[
+			select xqbh,
+			       xqmc,
+			       xqdz,
+			       xqfzrxm,
+			       xqfzrlxdh,
+			       wygsmc,
+			       wygsfzr,
+			       wygsfzrlxdh,
+			       gllx,
+			       glms,
+			       dms,
+			       lds,
+			       xqmj,
+			       to_char(jlrq,'yyyy-mm-dd hh24:mi:ss') as jlrq,
+			       to_char(cxrq,'yyyy-mm-dd hh24:mi:ss') as cxrq,
+			       cxyy,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       cxbs,
+			       to_char(gxsj,'yyyy-mm-dd hh24:mi:ss') as gxsj,
+			       sssqbh,
+			       (select sqmc from t_af_sqjbxx a where a.sqbh= t.sssqbh) as sssqmc
+			  from t_af_xqjbxx t
+			  where sssqbh=?
+		]]>
+	</property>
+	
+	<property name="findRkJbxxBySfzh">
+		<![CDATA[
+			  select *
+			  from v_lsgl_rk_jbxx
+			  where sfzh=?
+		]]>
+	</property>
+	
+	<property name="findJwrkxxByQueryCondition">
+		<![CDATA[
+			select 
+			   jw.jwbh,
+			   jb.rybh,
+		       jb.gj,
+		       jb.zjzl,
+		       jb.zjhm,
+		       jb.xm,
+		       jb.xb,
+		       jb.csrq,
+		       jb.LXDH,
+		       jb.fwcs,
+		       zw,
+		       jw.ywx,
+		       jw.ywm
+		  from v_lsgl_rk_jbxx jb
+		 inner join t_lsgl_rk_jwrkxx jw on jw.rybh = jb.rybh
+		 where jb.gj = ?
+		   and jb.zjzl = ?
+		   and jb.zjhm = ?
+
+		]]>
+	</property>
+	
+	<property name="queryXzsqDicBeanByJdxzdmAndJwqdm">
+		<![CDATA[
+			select dm as id, 'HN_XZQH' as zdlb,'湖南行政区划' AS zdmc, dm as dm, mc as mc, parent_dm as parent_dm, leve as leve, jc as jc, isvalid as isyx,'' as sn  
+			from t_common_hnxzqh 
+			where isvalid='1' 
+			      and leve='5' 
+			      and PARENT_DM=?
+			      and SSJWSDM=?
+			order by dm
+		]]>
+	</property>
+	
+	<property name="querySqxxByJdxzdmAndPcsdm">
+		<![CDATA[
+			select dm as id, 'HN_XZQH' as zdlb,'湖南行政区划' AS zdmc, dm as dm, mc as mc, parent_dm as parent_dm, leve as leve, jc as jc, isvalid as isyx,'' as sn  
+			from t_common_hnxzqh 
+			where isvalid='1' 
+			      and leve='5' 
+			      and PARENT_DM=?
+			      and sspcsdm=?
+			order by dm
+		]]>
+	</property>.
+	
+	
+	<property name="queryRjOrg">
+		<![CDATA[
+			select orgcode as id, orgname as name, parent_code as parentId, 
+				   orgjc as jc,'true' as isParent,nvl(ispcs,'0') as ispcs,f_get_dwleve(orgcode) as leve
+			 from v_common_organization where substr(orgcode,7,2) = '06' and substr(orgcode,9,4)='0000' and orgcode like '4301%' and substr(orgcode,5,2)<>'00'
+			
+		]]>
+	</property>
+	
+	<property name="queryOrgByUser">
+		<![CDATA[
+			SELECT ORG.*
+			  FROM V_COMMON_USER U, V_COMMON_ORGUSER OU, V_COMMON_ORGANIZATION ORG
+			 WHERE U.USERID = OU.USERID
+			   AND ORG.ORGID = OU.ORGID
+			   AND U.ISVALID = '1'
+			   AND U.USERNAME = ?
+		]]>
+	</property>
+	
+	<property name="queryUserByUserName">
+		<![CDATA[
+			SELECT U.*
+			  FROM V_COMMON_USER U
+			 WHERE U.ISVALID = '1'
+			   AND U.USERNAME = ?
+		]]>
+	</property>
+</properties>

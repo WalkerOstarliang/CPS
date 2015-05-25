@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="zbhcyxx" namespace="/zbhcyxx" extends="default"> 
+	  		<action name="*" class="com.chinacreator.afgl.action.ZbhcyxxAction" method="{1}">
+	  			<result name="toZbhcyxxList">/jsp/afgl/pages/zbhcy/zbhcyxxList.jsp</result>
+	  			<result name="toAddZbhcyxx">/jsp/afgl/pages/zbhcy/addZbhcyxx.jsp</result>
+	  			<result name="toUpdateZbhcyxxByZbhcybh">/jsp/afgl/pages/zbhcy/addZbhcyxx.jsp</result>
+	  			<result name="toDeleteZbhcyxxByZbhcybh">/jsp/afgl/pages/zbhcy/deleteZbhcyxx.jsp</result>
+	  			<result name="viewZbhcyxxByZbhcybh">/jsp/afgl/pages/zbhcy/viewZbhcyxx.jsp</result>
+	  			<result name="toBatchDeleteZbhcyxxByZbhcybhs">/jsp/afgl/pages/zbhcy/batchDeleteZbhcyxx.jsp</result>
+	  			<result name="toGjQueryZbhcyxx">/jsp/afgl/pages/zbhcy/zbhcyxxGjQuery.jsp</result>
+	  			<result name="toZbhcyxxListByZbhbh">/jsp/afgl/pages/zbhcy/zbhcyxxListByzbhbh.jsp</result>
+	  		</action>
+	  </package>
+</struts>

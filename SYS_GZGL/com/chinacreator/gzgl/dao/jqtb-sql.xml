@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="insertJqtbBean">
+		<![CDATA[
+			insert into t_gzgl_jqtb
+			  (id, xsaj, zaaj, tcjf, zhsg, qjqdaj, rsdqaj, dqjdclaj, 
+			  qtaj, dqffzd, djrxm, djsj, zrdwdm, zrdwmc,ny,dxaj,
+			  djdwdm,djdwmc)
+			values
+			  (#[id], #[xsaj], #[zaaj], #[tcjf], #[zhsg], #[qjqdaj], #[rsdqaj], 
+			  #[dqjdclaj], #[qtaj], #[dqffzd], #[djrxm], sysdate, 
+			  #[zrdwdm], #[zrdwmc],#[ny],#[dxaj],#[djdwdm],#[djdwmc])
+		]]>
+	</property>
+	
+	<property name="updateJqtbBean">
+		<![CDATA[
+			update t_gzgl_jqtb
+			   set id = #[id],
+			       xsaj = #[xsaj],
+			       zaaj = #[zaaj],
+			       tcjf = #[tcjf],
+			       zhsg = #[zhsg],
+			       qjqdaj = #[qjqdaj],
+			       rsdqaj = #[rsdqaj],
+			       dqjdclaj = #[dqjdclaj],
+			       qtaj = #[qtaj],
+			       dqffzd = #[dqffzd],
+			       djrxm = #[djrxm],
+			       djsj = sysdate,
+			       zrdwdm = #[zrdwdm],
+			       zrdwmc = #[zrdwmc],
+			       ny= #[ny],
+			       dxaj = #[dxaj],
+			       djdwdm=#[djdwdm],
+			       djdwmc=#[djdwmc]
+			 where id = #[id]
+		]]>
+	</property>
+	
+		<property name="queryJqtbPage">
+		<![CDATA[
+			  select j.id,
+		           f.xsajs xsaj,
+		           f.zaajs  zaaj,
+		           f.jftjs  tcjf,
+		           nvl(j.ZHSG,0) zhsg,
+		           (f.qjajs + f.qdajs)  qjqdaj,
+		           f.rsdqajs rsdqaj,
+		           f.dqjdcajs dqjdclaj,
+		           nvl(j.qtaj,f.qtajs) qtaj,
+		           j.dqffzd,
+		           j.djrxm,
+		           to_char(j.djsj,'yyyy-mm-dd') djsj,
+		           f.orgcode zrdwdm,
+		           f.orgname zrdwmc,
+		           f.tjyf ny,
+		           j.dxaj,
+		           f.leve
+		       from t_tjfx_faqktj f left join t_gzgl_jqtb j on f.orgcode=j.zrdwdm and f.tjyf=j.ny
+		  where 1=1
+			#if($month && !$month.equals(""))
+			  and f.tjyf = #[month]
+			#end
+		 	#if($jwsqdm && !$jwsqdm.equals(""))
+	    		and  f.orgcode = #[jwsqdm]
+    		#elseif ($pcsdm && !$pcsdm.equals(""))
+			 	and  f.orgcode=#[pcsdm]
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and f.orgcode=#[countrygajgjgdm]
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and f.orgcode=#[citygajgjgdm]
+		   	#end
+		    
+		   order by f.tjyf asc
+		]]>
+	</property>
+	
+	<property name="queryJqtbBeanByid">
+		<![CDATA[
+			 select j.id,
+		           f.xsajs xsaj,
+		           f.zaajs  zaaj,
+		           f.jftjs  tcjf,
+		           nvl(j.ZHSG,0) zhsg,
+		           (f.qjajs + f.qdajs)  qjqdaj,
+		           f.rsdqajs rsdqaj,
+		           f.dqjdcajs dqjdclaj,
+		           nvl(j.qtaj,f.qtajs) qtaj,
+		           j.dqffzd,
+		           j.djrxm,
+		           to_char(j.djsj,'yyyy-mm-dd') djsj,
+		           f.orgcode zrdwdm,
+		           f.orgname zrdwmc,
+		           f.tjyf ny,
+		           j.dxaj,
+		           f.leve
+		  from t_tjfx_faqktj f left join t_gzgl_jqtb j on f.orgcode=j.zrdwdm and f.tjyf=j.ny
+		  where 1=1
+		  	#if ($id && !$id.equals(""))
+		  		and id=#[id]
+		  	#else
+		  		and f.orgcode=#[orgcode] and f.tjyf=#[tjyf] 
+		  	#end
+		]]>
+	</property>
+	<property name="queryJqtbBeanByny">
+		<![CDATA[
+			select j.id,
+		           f.xsajs xsaj,
+		           f.zaajs  zaaj,
+		           f.jftjs  tcjf,
+		           nvl(j.ZHSG,0) zhsg,
+		           (f.qjajs + f.qdajs)  qjqdaj,
+		           f.rsdqajs rsdqaj,
+		           f.dqjdcajs dqjdclaj,
+		           nvl(j.qtaj,f.qtajs) qtaj,
+		           j.dqffzd,
+		           j.djrxm,
+		           to_char(j.djsj,'yyyy-mm-dd') djsj,
+		           f.orgcode zrdwdm,
+		           f.orgname zrdwmc,
+		           f.tjyf ny,
+		           j.dxaj,
+		           f.leve
+		  from t_tjfx_faqktj f left join t_gzgl_jqtb j on f.orgcode=j.zrdwdm and f.tjyf=j.ny
+			  where j.ny=?
+			   and j.zrdwdm=?
+		]]>
+	</property>
+	
+</properties>

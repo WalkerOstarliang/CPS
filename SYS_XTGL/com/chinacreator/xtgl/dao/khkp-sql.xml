@@ -1,0 +1,798 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryKhkp">
+		<![CDATA[
+			select tjzzsj from t_khkp_jfz where to_char(tjzzsj,'yyyy-mm') = #[tjsj]  group by tjzzsj
+		]]>
+	</property>
+
+	<!-- 查询大类 -->
+	<property name="queryKhkpDl">
+		<![CDATA[
+		   select org.orgname as orgname,org.orgcode,
+		       nvl2(kh.zfz,kh.zfz,0) as zfz,pm,
+		       nvl2(a00000,to_char(a00000,'9990.99'),0) as lszf,              --两实数据采集
+	           nvl2(b00000,to_char(b00000,'9990.99'),0) as zdryzf,            --重点人员动态管控
+	           nvl2(c00000,to_char(c00000,'9990.99'),0) as xgjzzf,            --“八进”社区工作20分
+	           nvl2(G00000,to_char(G00000,'9990.99'),0) as qzzfzf,             --群众工作入户走访10分
+	           nvl2(d00000,to_char(d00000,'9990.99'),0) as qbzf,              --情报信息收集报送5分             
+	           nvl2(e00000,to_char(e00000,'9990.99'),0) as aqffzf,            --安全防范日常管理5分
+	           nvl2(H00000,to_char(H00000,'9990.99'),0) as fkxszaajzf         --防控刑事治安案件
+		  from T_COMMON_ORGANIZATION_SJJS org , t_khkp_jfz kh where org.orgcode = kh.orgcode
+	  	  #if($tjsj && !$tjsj.equals(""))
+  			and to_char(tjzzsj,'yyyy-mm') = #[tjsj]
+	  	  #end
+	  	  #if($tjsjfw && !$tjsjfw.equals(""))
+		  	and jsjd = #[tjsjfw]
+		  #end
+		  #if($tjjb && !$tjjb.equals(""))
+		  	and org.leve = #[tjjb]
+		  	#if($tjjb.equals("5") && $jwqfl && !$jwqfl.equals(""))
+		  		and kh.jwqfl = #[jwqfl]
+		  	#end	
+		  	#if($tjjb.equals("4") && $pcsdj && !$pcsdj.equals(""))
+		  		and kh.jwqfl = #[pcsdj]
+		  	#end	
+		  #end
+		  #if($khdwdm && !$khdwdm.equals(""))
+		  	and org.orgcode like substr(#[khdwdm],1,2*f_get_dwleve(#[khdwdm]))||'%'
+		  #end
+		  order by pm
+		]]>
+	</property>
+
+	<!-- 查询细类 -->
+	<property name="queryKhkpXl">
+		<![CDATA[
+			select org.orgname as orgname,org.orgcode,
+	           nvl2(kh.zfz,kh.zfz,0) as zfz,pm,
+	             nvl2(a10000,to_char(a10000,'9990.99'),0) as jcxxcjslfz,
+	             nvl2(a20000,to_char(a20000,'9990.99'),0) as xxwffz,
+	             nvl2(a30000,to_char(a30000,'9990.99'),0) as xxzlfz,
+	             nvl2(a40000,to_char(a40000,'9990.99'),0) as jwrygl,
+	             
+	             nvl2(b10000,to_char(b10000,'9990.99'),0) as xfsjwffz,
+	             nvl2(b20000,to_char(b20000,'9990.99'),0) as wtqsglfz,
+	             nvl2(b30000,to_char(b30000,'9990.99'),0) as zkdjzlfz,
+	             nvl2(b40000,to_char(b40000,'9990.99'),0) as zdrycxwffz,
+	             nvl2(b50000,to_char(b50000,'9990.99'),0) as qbhsjsjzgl,
+	             
+	             nvl2(c10000,to_char(c10000,'9990.99'),0) as xfjcgzfz,
+	             nvl2(c20000,to_char(c20000,'9990.99'),0) as zajcgzfz,
+	             nvl2(c30000,to_char(c30000,'9990.99'),0) as gbjcgzfz,
+	             nvl2(c40000,to_char(c40000,'9990.99'),0) as xzjcgzfz,
+	             nvl2(c50000,to_char(c50000,'9990.99'),0) as wjjcgzfz,
+	             nvl2(c60000,to_char(c60000,'9990.99'),0) as nbjcgzfz,
+	             nvl2(c70000,to_char(c70000,'9990.99'),0) as jdjcgzfz,
+	             
+	             nvl2(d10000,to_char(d10000,'9990.99'),0) as qbsjfz,
+	             nvl2(d20000,to_char(d20000,'9990.99'),0) as qbyyfz,
+	             
+	             nvl2(e00000,to_char(e00000,'9990.99'),0) as aqffzf,
+	             nvl2(e10001,to_char(e10001,'9990.99'),0) as dypcxqkyryfz,
+	             nvl2(e10002,to_char(e10002,'9990.99'),0) as lrpcxxbzqfz,
+	             nvl2(e20001,to_char(e20001,'9990.99'),0) as dypczhwsztryfz,
+	             nvl2(e20002,to_char(e20002,'9990.99'),0) as jpcfxfbdzdryfz,
+	             nvl2(e30001,to_char(e30001,'9990.99'),0) as gkzdrybzacffz,
+	             nvl2(e30002,to_char(e30002,'9990.99'),0) as gkzdrybxscffz,
+	             nvl2(e40001,to_char(e40001,'9990.99'),0) as lsrkcjbzacffz,
+	             nvl2(e40002,to_char(e40002,'9990.99'),0) as lsrkcjbxscffz,
+	             
+	             nvl2(H00000,to_char(H00000,'9990.99'),0) as fkxszaajzf,
+	             
+	             nvl2(G00001,to_char(G00001,'9990.99'),0) as ybxzf,
+	             nvl2(G00002,to_char(G00002,'9990.99'),0) as rsdqhf,
+	             nvl2(B60000,to_char(B60000,'9990.99'),0) as sqjzdxgl,
+	             nvl2(B70000,to_char(B70000,'9990.99'),0) as wkdxgl
+    
+	      from T_COMMON_ORGANIZATION_SJJS org , t_khkp_jfz kh where org.orgcode = kh.orgcode
+         #if($tjsj && !$tjsj.equals(""))
+  			and to_char(tjzzsj,'yyyy-mm') = #[tjsj]
+	  	  #end
+	  	  #if($tjsjfw && !$tjsjfw.equals(""))
+		  	and jsjd = #[tjsjfw]
+		  #end
+	      #if($tjjb && !$tjjb.equals(""))
+	        and org.leve = #[tjjb]
+	        #if($tjjb.equals("5") && $jwqfl && !$jwqfl.equals(""))
+		  		and kh.jwqfl = #[jwqfl]
+		  	#end	
+		  	#if($tjjb.equals("4") && $pcsdj && !$pcsdj.equals(""))
+		  		and kh.jwqfl = #[pcsdj]
+		  	#end
+	      #end
+	      #if($khdwdm && !$khdwdm.equals(""))
+	        and org.orgcode like substr(#[khdwdm],1,2*f_get_dwleve(#[khdwdm]))||'%'
+	      #end
+	      order by pm
+		]]>
+	</property>
+
+	<!-- 社区统计 -->
+	<property name="querySqkhtj">
+		<![CDATA[
+			select org.orgname as orgname,org.orgcode,tjqssj, tjzzsj, jssj, jsjd, nvl2(zfz,zfz,0) as zfz,
+				#if($tjlb.equals('03'))
+					pm,
+				#elseif($tjlb.equals('04'))
+					rank() over(order by a00000 desc nulls last) as pm,
+				#elseif($tjlb.equals('05'))
+					rank() over(order by b00000 desc nulls last) as pm,	
+				#end			
+			    nvl2(a00000,to_char(a00000,'9990.99'),0) as a00000, nvl2(a10000,to_char(a10000,'9990.99'),0) as a10000, 
+			    nvl2(a20000,to_char(a20000,'9990.99'),0) as a20000, nvl2(a20001,to_char(a20001,'9990.99'),0) as a20001, nvl2(a20002,to_char(a20002,'9990.99'),0) as a20002,
+			    nvl2(a20003,to_char(a20003,'9990.99'),0) as a20003, nvl2(a20004,to_char(a20004,'9990.99'),0) as a20004, nvl2(a20005,to_char(a20005,'9990.99'),0) as a20005, 
+			    nvl2(a20006,to_char(a20006,'9990.99'),0) as a20006, nvl2(a20007,to_char(a20007,'9990.99'),0) as a20007, nvl2(a30000,to_char(a30000,'9990.99'),0) as a30000, 
+			    nvl2(a30001,to_char(a30001,'9990.99'),0) as a30001, nvl2(a30002,to_char(a30002,'9990.99'),0) as a30002, nvl2(a30003,to_char(a30003,'9990.99'),0) as a30003, 
+			    nvl2(a30004,to_char(a30004,'9990.99'),0) as a30004, nvl2(a30005,to_char(a30005,'9990.99'),0) as a30005, nvl2(a30006,to_char(a30006,'9990.99'),0) as a30006,
+			    nvl2(a30007,to_char(a30007,'9990.99'),0) as a30007, nvl2(b00000,to_char(b00000,'9990.99'),0) as b00000, nvl2(b10000,to_char(b10000,'9990.99'),0) as b10000,
+			    nvl2(b10001,to_char(b10001,'9990.99'),0) as b10001, nvl2(b10002,to_char(b10002,'9990.99'),0) as b10002, nvl2(b20000,to_char(b20000,'9990.99'),0) as b20000, 
+			    nvl2(b20001,to_char(b20001,'9990.99'),0) as b20001, nvl2(b20002,to_char(b20002,'9990.99'),0) as b20002, nvl2(b30000,to_char(b30000,'9990.99'),0) as b30000, 
+			    nvl2(b30001,to_char(b30001,'9990.99'),0) as b30001, nvl2(b30002,to_char(b30002,'9990.99'),0) as b30002, nvl2(c00000,to_char(c00000,'9990.99'),0) as c00000, 
+			    nvl2(c10000,to_char(c10000,'9990.99'),0) as c10000, nvl2(c20000,to_char(c20000,'9990.99'),0) as c20000, nvl2(c30000,to_char(c30000,'9990.99'),0) as c30000, 
+			    nvl2(c40000,to_char(c40000,'9990.99'),0) as c40000, nvl2(c50000,to_char(c50000,'9990.99'),0) as c50000, nvl2(c60000,to_char(c60000,'9990.99'),0) as c60000, 
+			    nvl2(c70000,to_char(c70000,'9990.99'),0) as c70000, nvl2(d00000,to_char(d00000,'9990.99'),0) as d00000, nvl2(d10000,to_char(d10000,'9990.99'),0) as d10000, 
+			    nvl2(d10001,to_char(d10001,'9990.99'),0) as d10001, nvl2(d10002,to_char(d10002,'9990.99'),0) as d10002, nvl2(d20000,to_char(d20000,'9990.99'),0) as d20000,
+			    nvl2(d20001,to_char(d20001,'9990.99'),0) as d20001, nvl2(d20002,to_char(d20002,'9990.99'),0) as d20002, nvl2(d20003,to_char(d20003,'9990.99'),0) as d20003, 
+			    nvl2(d20004,to_char(d20004,'9990.99'),0) as d20004, nvl2(e00000,to_char(e00000,'9990.99'),0) as e00000, nvl2(e10001,to_char(e10001,'9990.99'),0) as e10001, 
+			    nvl2(e10002,to_char(e10002,'9990.99'),0) as e10002, nvl2(e20001,to_char(e20001,'9990.99'),0) as e20001, nvl2(e20002,to_char(e20002,'9990.99'),0) as e20002, 
+			    nvl2(e30001,to_char(e30001,'9990.99'),0) as e30001, nvl2(e30002,to_char(e30002,'9990.99'),0) as e30002, nvl2(e40001,to_char(e40001,'9990.99'),0) as e40001, 
+			    nvl2(e40002,to_char(e40002,'9990.99'),0) as e40002, nvl2(f00000,to_char(f00000,'9990.99'),0) as f00000,
+			    nvl2(b40000,to_char(b40000,'9990.99'),0) as b40000,
+	            nvl2(b50000,to_char(b50000,'9990.99'),0) as b50000
+			    
+			     #if($tjjb == '5')
+	             	,f_getmjbycode(org.orgcode) as mjxm
+	             #end	
+			from T_COMMON_ORGANIZATION_SJJS org , t_khkp_jfz kh where org.orgcode = kh.orgcode
+			  #if($tjsj && !$tjsj.equals(""))
+	  			and to_char(tjzzsj,'yyyy-mm') = #[tjsj]
+		  	  #end
+		  	  #if($tjsjfw && !$tjsjfw.equals(""))
+			  	and jsjd = #[tjsjfw]
+			  #end
+			  #if($tjjb && !$tjjb.equals(""))
+		        and org.leve = #[tjjb]
+		        #if($tjjb.equals("5") && $jwqfl && !$jwqfl.equals(""))
+		  			and kh.jwqfl = #[jwqfl]
+			  	#end	
+			  	#if($tjjb.equals("4") && $pcsdj && !$pcsdj.equals(""))
+			  		and kh.jwqfl = #[pcsdj]
+			  	#end
+		      #end
+		      #if($khdwdm && !$khdwdm.equals(""))
+		        and org.orgcode like substr(#[khdwdm],1,2*f_get_dwleve(#[khdwdm]))||'%'
+		      #end
+		      order by pm
+		]]>
+	</property>
+
+	<!-- 查询本月数据采集量 -->
+	<property name="querySjcjList">
+		<![CDATA[
+			#if($tjjb && $tjjb.equals("5"))
+				select orgcode,
+				     jcsjzs,
+				     czrkzs, 
+				     jzrkzs,
+				     ldrkzs,
+				     ldrkyqs,
+				     wlhrks,
+				     fwxxs,
+				     stxxs,
+				     czfwxcs,
+				     dwxxs,
+				     cyrys,
+				     czfws
+				from (  
+						select j.jwqdm as orgcode,
+					           nvl(sum(j.jcsjzs),0) jcsjzs,
+					           nvl(sum(j.czrkzs),0) czrkzs, 
+					           nvl(sum(j.jzrkzs),0) jzrkzs,
+					           nvl(sum(j.ldrkzs),0) ldrkzs,
+					           nvl(sum(j.ldrkyqs),0) ldrkyqs,
+					           nvl(sum(j.wlhrks),0) wlhrks,
+					           nvl(sum(j.fwxxs),0) fwxxs,
+					           nvl(sum(j.stxxs),0) stxxs,
+					           nvl(sum(j.czfwxcs),0) czfwxcs,
+					           nvl(sum(j.dwxxs),0) dwxxs,
+					           nvl(sum(j.cyrys),0) cyrys,
+					           nvl(sum(j.czfws),0) czfws 
+						from t_common_organization_sjjs s
+							 inner join t_khkp_jcsjcjsltj j on s.orgcode=j.jwqdm
+						where s.leve=5 
+							  and j.tjyf=replace(#[tjsj],'-')
+							  and j.jsjd=#[tjsjfw]
+							  and jwqdm like substr(#[khdwdm],0,to_number(f_get_dwleve(#[khdwdm])) * 2)||'%'
+							  #if($jwqfl && !$jwqfl.equals(""))
+							  	 and j.jwqfl=#[jwqfl]
+							  #end
+							  group by rollup(j.jwqdm)
+			   )
+			   order by jcsjzs desc
+			#elseif($tjjb && $tjjb.equals("4"))
+				 select decode(orgcode||'0000','0000','',orgcode||'0000') as orgcode,
+				         jcsjzs,
+				   		   czrkzs, 
+				   		   jzrkzs,
+					       ldrkzs,
+					       ldrkyqs,
+					       wlhrks,
+					       fwxxs,
+					       stxxs,
+					       czfwxcs,
+					       dwxxs,
+					       cyrys,
+					       czfws
+			       from (     
+				          select substr(j.jwqdm,1,8) as orgcode,
+						         nvl(sum(j.jcsjzs),0) jcsjzs,
+						   		   nvl(sum(j.czrkzs),0) czrkzs, 
+						   		   nvl(sum(j.jzrkzs),0) jzrkzs,
+							       nvl(sum(j.ldrkzs),0) ldrkzs,
+							       nvl(sum(j.ldrkyqs),0) ldrkyqs,
+							       nvl(sum(j.wlhrks),0) wlhrks,
+							       nvl(sum(j.fwxxs),0) fwxxs,
+							       nvl(sum(j.stxxs),0) stxxs,
+							       nvl(sum(j.czfwxcs),0) czfwxcs,
+							       nvl(sum(j.dwxxs),0) dwxxs,
+							       nvl(sum(j.cyrys),0) cyrys,
+							       nvl(sum(j.czfws),0) czfws 
+				          from t_khkp_jcsjcjsltj j
+				          where j.jwqdm like substr(#[khdwdm],0,to_number(f_get_dwleve(#[khdwdm])) * 2)||'%'
+				                and j.tjyf=replace(#[tjsj],'-')
+				                and j.jsjd=#[tjsjfw]
+				                 #if($pcsdj && !$pcsdj.equals(""))
+						         	and j.jwqfl = #[pcsdj]
+						         #end
+				                group by rollup(substr(j.jwqdm,1,8))
+	          
+	                  )
+	                  order by jcsjzs desc
+			#elseif($tjjb && $tjjb.equals("3"))
+			    select decode(orgcode||'000000','000000','',orgcode||'000000') as orgcode,
+					         jcsjzs,
+					   		   czrkzs, 
+					   		   jzrkzs,
+						       ldrkzs,
+						       ldrkyqs,
+						       wlhrks,
+						       fwxxs,
+						       stxxs,
+						       czfwxcs,
+						       dwxxs,
+						       cyrys,
+						       czfws
+				       from (     
+					          select substr(j.jwqdm,1,6) as orgcode,
+										         nvl(sum(j.jcsjzs),0) jcsjzs,
+										   		   nvl(sum(j.czrkzs),0) czrkzs, 
+										   		   nvl(sum(j.jzrkzs),0) jzrkzs,
+											       nvl(sum(j.ldrkzs),0) ldrkzs,
+											       nvl(sum(j.ldrkyqs),0) ldrkyqs,
+											       nvl(sum(j.wlhrks),0) wlhrks,
+											       nvl(sum(j.fwxxs),0) fwxxs,
+											       nvl(sum(j.stxxs),0) stxxs,
+											       nvl(sum(j.czfwxcs),0) czfwxcs,
+											       nvl(sum(j.dwxxs),0) dwxxs,
+											       nvl(sum(j.cyrys),0) cyrys,
+											       nvl(sum(j.czfws),0) czfws 
+					          from t_khkp_jcsjcjsltj j
+					          where j.jwqdm like substr(#[khdwdm],0,to_number(f_get_dwleve(#[khdwdm])) * 2)||'%'
+					                and j.tjyf=replace(#[tjsj],'-')
+					                and j.jsjd=#[tjsjfw]
+					                group by rollup(substr(j.jwqdm,1,6))
+		          
+		                   )
+		                   order by jcsjzs desc
+			#elseif($tjjb && $tjjb.equals("2"))
+			      select decode(orgcode||'00000000','00000000','',orgcode||'00000000') as orgcode,
+					         jcsjzs,
+					   		   czrkzs, 
+					   		   jzrkzs,
+						       ldrkzs,
+						       ldrkyqs,
+						       wlhrks,
+						       fwxxs,
+						       stxxs,
+						       czfwxcs,
+						       dwxxs,
+						       cyrys,
+						       czfws
+				       from (     
+					          select substr(j.jwqdm,1,4) as orgcode,
+										         nvl(sum(j.jcsjzs),0) jcsjzs,
+										   		   nvl(sum(j.czrkzs),0) czrkzs, 
+										   		   nvl(sum(j.jzrkzs),0) jzrkzs,
+											       nvl(sum(j.ldrkzs),0) ldrkzs,
+											       nvl(sum(j.ldrkyqs),0) ldrkyqs,
+											       nvl(sum(j.wlhrks),0) wlhrks,
+											       nvl(sum(j.fwxxs),0) fwxxs,
+											       nvl(sum(j.stxxs),0) stxxs,
+											       nvl(sum(j.czfwxcs),0) czfwxcs,
+											       nvl(sum(j.dwxxs),0) dwxxs,
+											       nvl(sum(j.cyrys),0) cyrys,
+											       nvl(sum(j.czfws),0) czfws 
+					          from t_khkp_jcsjcjsltj j
+					          where j.jwqdm like substr(#[khdwdm],0,to_number(f_get_dwleve(#[khdwdm])) * 2)||'%'
+					                and j.tjyf=replace(#[tjsj],'-')
+					                and j.jsjd=#[tjsjfw]
+					                group by rollup(substr(j.jwqdm,1,4))
+		          )
+		          order by jcsjzs desc
+			#end
+		]]>
+	</property>
+	
+	<property name="queryJwtBeansPageResult">
+		<![CDATA[
+			select j.id,
+				   j.kc_jwqdm,
+			       s.orgname as kc_jwqmc,
+			       j.jcpt_jwqdm,
+			       j.jcpt_jwqmc,
+			       j.jh,
+			       j.xm,
+			       j.yxx,
+			       to_char(j.zxrq,'yyyy-mm-dd') as zxrq,
+			       j.zxyy,
+			       j.jwthm,
+			       to_char(j.gxsj,'yyyy-mm-dd') as gxsj,
+			       j.czdwdm,
+			       j.czdwmc,
+			       j.czrxm,
+			       j.czrjh,
+			       j.czrsfzh,
+			       to_char(j.czsj,'yyyy-mm-dd') as czsj,
+			       j.cjrdwdm,
+			       j.cjrdwmc 
+			from t_common_organization_sjjs s inner join t_lmpc_jwqrybd j on s.orgcode=j.kc_jwqdm
+			where 1=1 and j.yxx='0' 
+				#if($jh && !$jh.equals(""))
+					and j.jh=#[jh]
+				#end
+				#if($xm && !$xm.equals(""))
+					and j.xm like '%'||#[xm]||'%'
+				#end
+				#if($jwsqdm && !$jwsqdm.equals(""))
+					and s.orgcode=#[jwsqdm]
+				#elseif($pcsdm && !$pcsdm.equals(""))
+					and s.orgcode like substr(#[pcsdm],1,8)||'%'
+				#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+					and s.orgcode like substr(#[countrygajgjgdm],1,6)||'%'
+				#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+					and s.orgcode like substr(#[citygajgjgdm],1,4)||'%'
+				#end
+				order by s.orgcode asc nulls last
+		]]>
+	</property>
+	
+	<property name="inserJwtBean">
+		<![CDATA[
+			insert into t_lmpc_jwqrybd
+			  (kc_jwqdm,
+			   kc_jwqmc,
+			   jcpt_jwqdm,
+			   jcpt_jwqmc,
+			   jh,
+			   xm,
+			   yxx,
+			   zxrq,
+			   zxyy,
+			   jwthm,
+			   gxsj,
+			   czdwdm,
+			   czdwmc,
+			   czrxm,
+			   czrjh,
+			   czrsfzh,
+			   czsj,
+			   cjrdwdm,
+			   cjrdwmc,
+			   id)
+			values
+			  (#[kc_jwqdm],
+			   #[kc_jwqmc],
+			   #[jcpt_jwqdm],
+			   #[jcpt_jwqmc],
+			   #[jh],
+			   #[xm],
+			   '0',
+			   #[zxrq],
+			   #[zxyy],
+			   #[jwthm],
+			   sysdate,
+			   #[czdwdm],
+			   #[czdwmc],
+			   #[czrxm],
+			   #[czrjh],
+			   #[czrsfzh],
+			   sysdate,
+			   #[cjrdwdm],
+			   #[cjrdwmc],
+			   #[id])
+		]]>
+	</property>
+	
+	<property name="updateJwtBean">
+		<![CDATA[
+			update t_lmpc_jwqrybd
+			   set kc_jwqdm = #[kc_jwqdm],
+			       kc_jwqmc = #[kc_jwqmc],
+			       jcpt_jwqdm = #[jcpt_jwqdm],
+			       jcpt_jwqmc = #[jcpt_jwqmc],
+			       jh = #[jh],
+			       xm = #[xm],
+			       yxx = #[yxx],
+			       zxrq = #[zxrq],
+			       zxyy = #[zxyy],
+			       jwthm = #[jwthm],
+			       gxsj = sysdate,
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh],
+			       czsj = sysdate,
+			       cjrdwdm = #[cjrdwdm],
+			       cjrdwmc = #[cjrdwmc]
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<property name="queryJwtBean">
+		<![CDATA[
+			select kc_jwqdm,
+			       kc_jwqmc,
+			       jcpt_jwqdm,
+			       jcpt_jwqmc,
+			       jh,
+			       xm,
+			       yxx,
+			       to_char(zxrq,'yyyy-mm-dd') as zxrq,
+			       zxyy,
+			       jwthm,
+			       to_char(gxsj,'yyyy-mm-dd hh24:mi:ss') as gxsj,
+			       czdwdm,
+			       czdwmc,
+			       czrxm,
+			       czrjh,
+			       czrsfzh,
+			       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+			       cjrdwdm,
+			       cjrdwmc,
+			       id
+			  from t_lmpc_jwqrybd
+			  where id=#[id]
+		]]>
+	</property>
+	
+	<property name="zxhfJwtBean">
+		<![CDATA[
+			update t_lmpc_jwqrybd
+			set yxx=#[yxx],
+				czdwdm=#[czdwdm],
+				czdwmc=#[czdwmc],
+				czrxm=#[czrxm],
+				czrjh=#[czrjh],
+				czrsfzh=#[czrsfzh],
+				czsj=sysdate
+			where id=#[id]
+		]]>
+	</property>
+	
+	<property name="getExistJwtPz">
+		<![CDATA[
+			select KC_JWQDM from t_lmpc_jwqrybd where jh=#[jh] and yxx='0'
+		]]>
+	</property>
+	
+	<property name="queryWtsjtjfxBakBeanList">
+		<![CDATA[
+			select orgcode,orgname,orgleve,zwts,czrks,ldrks,jzrks,wlhrks,stxxs,fwxxs,sydws,cyrys,czfwxxs,rank() over(order by zwts desc) as pm
+			from (
+			      select orgcode,orgname,#[wtdwleve] as orgleve,
+			             (select sum(w.zwts) from T_COMMON_WTSJTJFX_Week w 
+			             	where w.tjrq=#[tjrq]
+			             	#if($wtdwleve.equals("5"))
+			             		and w.orgcode = s.orgcode
+			             	#else
+				             	and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%' 
+			             	#end
+			             ) as zwts,
+			             (select sum(w.czrks) from T_COMMON_WTSJTJFX_Week w 
+			             	where w.tjrq=#[tjrq]
+			             	#if($wtdwleve.equals("5"))
+			             		and w.orgcode = s.orgcode
+			             	#else
+				             	and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%' 
+			             	#end
+			             ) as czrks,
+			             (select sum(w.ldrks) from T_COMMON_WTSJTJFX_Week w 
+			             	where w.tjrq=#[tjrq]
+			             	#if($wtdwleve.equals("5"))
+			             		and w.orgcode = s.orgcode
+			             	#else
+				             	and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%' 
+			             	#end
+			             ) as ldrks,
+			             (select sum(w.jzrks) from T_COMMON_WTSJTJFX_Week w 
+			             	where w.tjrq=#[tjrq]
+			             	#if($wtdwleve.equals("5"))
+			             		and w.orgcode = s.orgcode
+			             	#else
+				             	and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%' 
+			             	#end
+			             ) as jzrks,
+			             (select sum(w.wlhrks) from T_COMMON_WTSJTJFX_Week w 
+			             	where w.tjrq=#[tjrq]
+			             	#if($wtdwleve.equals("5"))
+			             		and w.orgcode = s.orgcode
+			             	#else
+				             	and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%'
+			             	#end
+			             ) as wlhrks,
+			             (select sum(w.stxxs) from T_COMMON_WTSJTJFX_Week w 
+			             	where w.tjrq=#[tjrq]
+			             	#if($wtdwleve.equals("5"))
+			             		and w.orgcode = s.orgcode
+			             	#else
+				             	and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%' 
+			             	#end
+			             ) as stxxs,
+			             (select sum(w.fwxxs) from T_COMMON_WTSJTJFX_Week w 
+			             	where w.tjrq=#[tjrq]
+			             	#if($wtdwleve.equals("5"))
+			             		and w.orgcode = s.orgcode
+			             	#else
+				             	and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%' 
+			             	#end
+			             ) as fwxxs,
+			             (select sum(w.sydws) from T_COMMON_WTSJTJFX_Week w 
+			             	where w.tjrq=#[tjrq]
+			             	#if($wtdwleve.equals("5"))
+			             		and w.orgcode = s.orgcode
+			             	#else
+				             	and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%' 
+			             	#end
+			             ) as sydws,
+			             (select sum(w.cyrys) from T_COMMON_WTSJTJFX_Week w 
+			             	where  w.tjrq=#[tjrq]
+			             	#if($wtdwleve.equals("5"))
+			             		and w.orgcode = s.orgcode
+			             	#else
+				             	and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%'
+			             	#end
+			             ) as cyrys,
+			             (select sum(w.czfwxxs) from T_COMMON_WTSJTJFX_Week w 
+			             	where w.tjrq=#[tjrq] 
+			             	#if($wtdwleve.equals("5"))
+			             		and w.orgcode = s.orgcode
+			             	#else
+				             	and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%'
+			             	#end
+			             ) as czfwxxs,
+			             #[tjrq] as tjrq
+			      from t_common_organization_sjjs s
+			      where s.leve=#[wtdwleve]
+			      and s.orgcode like substr(#[wtdwdm] , 1 , (to_number(f_get_dwleve(#[wtdwdm])) * 2) ) || '%'
+      			  order by zwts desc
+      		)
+	       ]]>
+	</property>
+	
+	<property name="queryWtsjtjfxBeanList">
+		<![CDATA[
+			select orgcode,orgname,orgleve,zwts,czrks,ldrks,jzrks,wlhrks,stxxs,fwxxs,sydws,cyrys,czfwxxs,rank() over(order by zwts desc) as pm
+	         	from (
+	            select orgcode,orgname,#[wtdwleve] as orgleve,
+	                   (select sum(w.zwts) from t_common_wtsjtjfx w 
+	                   			where w.tjrq=#[tjrq]
+	                   			#if($wtdwleve.equals("5"))
+	                   				and w.orgcode = s.orgcode
+	                   			#else
+		                   			and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%'
+	                   			#end 
+	                   	) as zwts,		
+	                   (select sum(w.czrks) from t_common_wtsjtjfx w 
+	                   			where w.tjrq=#[tjrq]
+	                   			#if($wtdwleve.equals("5"))
+	                   				and w.orgcode = s.orgcode
+	                   			#else
+		                   			and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%'
+	                   			#end
+	                   	) as czrks	,	
+	                   (select sum(w.ldrks) from t_common_wtsjtjfx w
+	                   			where w.tjrq=#[tjrq]
+	                   			#if($wtdwleve.equals("5"))
+	                   				and w.orgcode = s.orgcode
+	                   			#else
+	                   				and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%' 
+	                   			#end
+	                   	) as ldrks,
+	                   (select sum(w.jzrks) from t_common_wtsjtjfx w 
+	                   			where w.tjrq=#[tjrq]
+	                   			#if($wtdwleve.equals("5"))
+	                   				and w.orgcode = s.orgcode
+	                   			#else
+	                   				and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%' 
+	                   			#end
+	                   	) as jzrks,
+	                   (select sum(w.wlhrks) from t_common_wtsjtjfx w 
+	                   			where  w.tjrq=#[tjrq]
+	                   			#if($wtdwleve.equals("5"))
+	                   				and w.orgcode = s.orgcode
+	                   			#else
+	                   				and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%' 
+	                   			#end
+	                   	) as wlhrks,
+	                   (select sum(w.stxxs) from t_common_wtsjtjfx w 
+	                   			where w.tjrq=#[tjrq]  
+	                   			#if($wtdwleve.equals("5"))
+	                   				and w.orgcode = s.orgcode
+	                   			#else
+		                   			and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%' 
+	                   			#end
+	                   	) as stxxs,
+	                   (select sum(w.fwxxs) from t_common_wtsjtjfx w 
+	                   			where w.tjrq=#[tjrq] 
+	                   			#if($wtdwleve.equals("5"))
+	                   				and w.orgcode = s.orgcode
+	                   			#else
+	                   				and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%'  
+	                   			#end
+	                   	) as fwxxs,
+	                   (select sum(w.sydws) from t_common_wtsjtjfx w 
+	                   			where  w.tjrq=#[tjrq]
+	                   			#if($wtdwleve.equals("5"))
+	                   				and w.orgcode = s.orgcode
+	                   			#else
+	                   				and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%' 
+	                   			#end
+	                   	) as sydws,
+	                   (select sum(w.cyrys) from t_common_wtsjtjfx w 
+	                   			where w.tjrq=#[tjrq] 
+	                   			#if($wtdwleve.equals("5"))
+	                   				and w.orgcode = s.orgcode
+	                   			#else
+	                   				and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%' 
+	                   			#end
+	                   	) as cyrys,
+	                   (select sum(w.czfwxxs) from T_COMMON_WTSJTJFX w 
+	                   			where  w.tjrq=#[tjrq] 
+	                   			#if($wtdwleve.equals("5"))
+	                   				and w.orgcode = s.orgcode
+	                   			#else
+	                   				and w.orgcode like substr(s.orgcode,1,to_number(#[wtdwleve]) * 2)||'%' 
+	                   			#end
+	                   	) as czfwxxs,
+	                   #[tjrq] as tjrq
+	            from t_common_organization_sjjs s
+	            where s.leve=#[wtdwleve]
+	            and s.orgcode like substr(#[wtdwdm],1,to_number(f_get_dwleve(#[wtdwdm])) * 2) ||'%'
+              order by zwts desc
+            )
+		]]>
+	</property>
+	
+	<property name="queryWtsjtjfxpzBean">
+		<![CDATA[
+			select id, sjtype, querysql, showfields, showfieldnames
+  			from t_common_wtsjtjfx_pz
+			where sjtype=?
+		]]>
+	</property>
+	
+	<property name="queryMjDetailInfoList">
+		<![CDATA[
+			#if($wtdwleve && $wtdwleve.equals("1"))
+				select w.orgcode,w.orgname,w.zwts,w.czrks,w.ldrks,w.jzrks,w.wlhrks,w.sydws,w.cyrys, f_getmjbycode(w.orgcode) as djmjdetail
+				from t_common_wtsjtjfx w
+				where orgcode like substr(#[wtdwdm],1,2)||'%' and tjrq=#[tjrq]
+				order by zwts desc
+			#elseif($wtdwleve && $wtdwleve.equals("2"))
+			    select w.orgcode,w.orgname,w.zwts,w.czrks,w.ldrks,w.jzrks,w.wlhrks,w.sydws,w.cyrys, f_getmjbycode(w.orgcode) as djmjdetail
+				from t_common_wtsjtjfx w
+				where orgcode like substr(#[wtdwdm],1,4)||'%' and tjrq=#[tjrq]
+				order by zwts desc
+			#elseif($wtdwleve && $wtdwleve.equals("3"))
+			    select w.orgcode,w.orgname,w.zwts,w.czrks,w.ldrks,w.jzrks,w.wlhrks,w.sydws,w.cyrys, f_getmjbycode(w.orgcode) as djmjdetail
+				from t_common_wtsjtjfx w
+				where orgcode like substr(#[wtdwdm],1,6)||'%' and tjrq=#[tjrq]
+				order by zwts desc
+			#elseif($wtdwleve && $wtdwleve.equals("4"))
+			    select w.orgcode,w.orgname,w.zwts,w.czrks,w.ldrks,w.jzrks,w.wlhrks,w.sydws,w.cyrys, f_getmjbycode(w.orgcode) as djmjdetail
+				from t_common_wtsjtjfx w
+				where orgcode like substr(#[wtdwdm],1,8)||'%' and tjrq=#[tjrq]
+				order by zwts desc
+			#else
+			   select w.orgcode,w.orgname,w.zwts,w.czrks,w.ldrks,w.jzrks,w.wlhrks,w.sydws,w.cyrys, f_getmjbycode(w.orgcode) as djmjdetail
+				from t_common_wtsjtjfx w
+				where orgcode=#[wtdwdm] and tjrq=#[tjrq]
+				order by zwts desc
+			#end
+		]]>
+	</property>
+	
+	<property name="queryWtsjtjfxBeanByOrgcodeAndTjrq">
+		<![CDATA[
+			select id, orgcode, orgname, tjyf, jssj, 
+				to_char(tjqssj,'yyyy-mm-dd hh24:mi:ss') as tjqssj, 
+				to_char(tjjzsj,'yyyy-mm-dd hh24:mi:ss') as tjjzsj, 
+				tjrq
+			from t_common_wtsjtjfx 
+			where orgcode=? 
+				  and tjrq=?
+		]]>
+	</property>
+	
+	<property name="queryBywcltj">
+		<![CDATA[
+				select org.orgcode,
+				       org.orgname,
+				       nvl(ldrkyq, 0) as ldrkyq,
+				       nvl(cyryhs, 0) as cyryhs,
+				       nvl(cyrypf, 0) as cyrypf,
+				       nvl(zdrytg, 0) as zdrytg,
+				       nvl(zdryzkdj, 0) as zdryzkdj,
+				       nvl(czwxc, 0) as czwxc,
+				       nvl(czfdj, 0) as czfdj,
+				       nvl(stxxbz, 0) as stxxbz
+				from t_common_organization_sjjs org,
+				       (select 
+				       		   #if($tjjb && !$tjjb.equals(""))
+				       		   		#if($tjjb.equals("5"))
+					       		   			orgcode as code,
+				       		   		#elseif($tjjb.equals("4"))
+				       		   			substr(orgcode,0,8) as code,
+				       		   		#elseif($tjjb.equals("3"))
+				       		   			substr(orgcode,0,6) as code,
+				       		   		#elseif($tjjb.equals("2"))
+				       		   			substr(orgcode,0,4) as code,
+				       		   		#elseif($tjjb.equals("1"))
+				       		   			substr(orgcode,0,2) as code,		
+				       		   		#end
+				       		   #end
+				               sum(ldrkyq) as ldrkyq,
+				               sum(cyryhs) as cyryhs,
+				               sum(cyrypf) as cyrypf,
+				               sum(zdrytg) as zdrytg,
+				               sum(zdryzkdj) as zdryzkdj,
+				               sum(czwxc) as czwxc,
+				               sum(czfdj) as czfdj,
+				               sum(stxxbz) as stxxbz
+				          from t_common_dywclsjtj
+				          where   orgcode like substr(#[khdwdm] ,0, f_get_dwleve(#[khdwdm]) * 2)||'%'
+				           #if($tjjb && !$tjjb.equals(""))
+				       		   		#if($tjjb.equals("5"))
+					       		   			group by orgcode
+				       		   		#elseif($tjjb.equals("4"))
+				       		   			group by substr(orgcode, 0, 8)
+				       		   		#elseif($tjjb.equals("3"))
+				       		   			group by substr(orgcode, 0, 6)
+				       		   		#elseif($tjjb.equals("2"))
+				       		   			group by substr(orgcode, 0, 4)
+				       		   		#elseif($tjjb.equals("1"))
+				       		   			group by substr(orgcode, 0, 2)		
+				       		   		#end
+				       	   #end
+				      ) bywcl
+				 where 1 = 1
+				 	#if($tjjb.equals("5"))
+						   and org.orgcode = bywcl.code(+)
+				 	#else
+				 			and substr( org.orgcode, 1, to_number(#[tjjb]) * 2) = bywcl.code(+)
+				 	#end
+				   and org.leve = #[tjjb]
+				   and org.orgcode like substr(#[khdwdm] ,0, f_get_dwleve(#[khdwdm]) * 2)||'%'
+				   #if($jwqfl && !$jwqfl.equals(""))
+				   		and org.jwqfl = #[jwqfl]
+				   #end
+				   #if($pcsdj && !$pcsdj.equals(""))
+				   		and org.jwqfl = #[jwqfl]
+				   #end
+				   order by orgcode
+		]]>
+	</property>
+	
+</properties>

@@ -1,0 +1,1 @@
+alter table T_LSGL_RK_GXR modify rybh VARCHAR2(27);

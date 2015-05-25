@@ -1,0 +1,60 @@
+-- Add/modify columns 
+alter table T_LSGL_RK_JBXX add CSD VARCHAR2(6);
+-- Add comments to the columns 
+comment on column T_LSGL_RK_JBXX.CSD
+  is '出生地';
+
+  
+CREATE OR REPLACE VIEW V_LSGL_RK_JBXX AS
+SELECT /*+index(JBXX T_LSGL_RK_JBXX_SFZH)*/ JBXX.RYBH,
+       JBXX.XM,
+       JBXX.XMPY,
+       JBXX.SFZH,
+       JBXX.XB,
+       JBXX.GJ,
+       JBXX.MZ,
+       TO_CHAR(JBXX.CSRQ,'yyyy-MM-dd') AS CSRQ,
+       JBXX.BMCH,
+       JBXX.BYZK,
+       JBXX.YWM,
+       JBXX.WHCD,
+       JBXX.ZJZL,
+       JBXX.ZJHM,
+       JBXX.ZZMM,
+       JBXX.HYZK,
+       JBXX.SG,
+       JBXX.XX,
+       JBXX.ZZXY,
+       JBXX.ZC,
+       JBXX.LXDH,
+       JBXX.FWCS,
+       JBXX.ZYDM,
+       JBXX.ZW,
+       JBXX.SF,
+       JBXX.JG,
+       JBXX.RYSX,
+       JBXX.RYLB,
+       JBXX.HJDQH,
+       JBXX.HJDXZ,
+       JBXX.SSGAJGJGDM,
+       JBXX.SSGAJGJGMC,
+       JBXX.SSPCSDM,
+       JBXX.SSPCSMC,
+       JBXX.XZZQH,
+       JBXX.XZZQHMC,
+       JBXX.XZZXZ,
+       JBXX.XZZZRQ,
+       JBXX.CZSJ,
+       JBXX.CZDWDM,
+       JBXX.CZDWMC,
+       JBXX.CZRJH,
+       JBXX.CZRXM,
+       JBXX.CZBS,
+       JBXX.SWRQ,
+       JBXX.RYTSSX,
+       JBXX.SWZMBH,
+       JBXX.LXDHBZ,
+       JBXX.CSD,
+       '1'  AS RN
+  FROM T_LSGL_RK_JBXX JBXX;
+  

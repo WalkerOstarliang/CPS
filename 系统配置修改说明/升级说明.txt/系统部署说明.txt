@@ -1,0 +1,182 @@
+============================系统初始化数据库需要做的事情：================================================
+1、初始化数据库脚本为最新脚本；
+2、检查数据字典是否初始化表t_common_dictionary；
+3、修改系统参数配置文件的信息，根据各地市不通修改不一样（表t_common_parameter）；
+4、查看警综机构代码与人口的机构代码映射表是否存在数据，并且使用省厅最新数据（表cs_jgdm_rk_jgdm_real）；
+5、初始化数据表t_lsgl_rk_czrk_st 表 ，需要从省厅同步，创建dblink如下,执行过程 p_syn_czrk_st_sqjw;
+   注意在初始化化全省人口t_lsgl_rk_czrk_st表的时候先把p_syn_czrk_st_sqjw的时间同步条件注释掉，把更新的判断注释点；
+   在一次性初始化插入
+   
+6、需要创建执行任务的jobs ，见系统部署初始化执行jobs.sql（注意必须放在命令行中执行）；
+
+7、初始化重点人员类别表 t_common_zdrylb；
+
+8、初始化人口人员类别判断表，用于判断是寄住人口还是流动人口的配置表 （表t_lsgl_rk_rylb）用省厅标准数据
+
+9、初始化系统提醒配置表 t_common_xttx_pz；
+
+==============================================================================================
+
+增量升级步骤：
+1. 同步svn服务器最新版本
+
+2. 编译CPS
+
+3. 打包CPS
+
+4. 删除配置文件 /WEB-INF/web.xml;
+			 /WEB-INF/weblogic.xml;
+			 /classes/aop.properties;
+			 /classes/config.properties;
+			 /classes/default_zp.png;
+			 /classes/default.png;
+			 /classes/ldrkzzxxb.ftl;
+			 /classes/system-mapping.xml;
+			 /classes/velocity.properties;
+			 /classes/log4j.properties;
+			 /classes/poolman.xml;
+			 /WEB-INF/config/application-task.xml
+以上需要删除的文件都是在增量没有修改这些文件的基础上才能删除	 
+			 
+===========================长沙环境部署目录=========================================================
+http://10.143.1.198:800/csjz
+CPS部署说明：
+CPS目录：/root/app/CPS
+tomcat服务有两台：/home/sqjw/sqjw/tomcat87, /home/sqjw/sqjw/tomcat88
+部署机器：10.143.1.200  root/1111111
+
+10.142.55.89 密码：111111
+
+CAS部署说明：
+部署机器：10.143.1.200  root/1111111
+CAS目录：/root/app2/cas/
+tomcat服务有两台: /home/cas/home/cas/PKI-tomcat6.0.18_8889
+
+PGIS地图部署：
+PGIS部署机器： 10.143.1.121  root/linux6
+部署目录： /root/app/   /home/pgis/tomcat_6.0.35_800,
+/home/pgis/tomcat_6.0.35_801,/home/pgis/tomcat_6.0.35_802,/home/pgis/tomcat_6.0.35_803
+
+
+
+==========================省厅环境部署目录===========================================================
+http://10.142.55.67/
+CAS部署说明：
+apache部署：10.142.55.67/usr/apache_new/apahce   abc123
+cas部署：10.142.56.151  /home/sqjw/cas-tomcat6.0.18 creator_kc
+
+CPS部署：
+CPS目录：/home/app/CPS
+tomcat服务有两台：/home/sqjw/tomcat8180,/home/sqjw/tomcat8181
+部署机器：10.142.56.156 root/abc123
+数据库：10.142.56.151  数据库用户密码: sqjw/sqjw_kc
+
+PGIS地图部署：
+PGIS部署机器：10.142.55.67
+部署目录：/home/sqjw/pgis-Tomcat-6.0.35 
+端口：800
+
+论坛：
+部署机器：10.142.56.157
+目录：/opt/lampp/htdocs
+访问地址：http://10.142.56.157:81/upload/forum.php
+用户名：admin/admin
+
+==================================常德环境部署================
+http://10.144.87.62/cdjz
+数据库:
+		用户:sqjw
+		密码：cdga_2014
+		连接串：(DESCRIPTION =
+				    (ADDRESS_LIST =
+				      (ADDRESS = (PROTOCOL = TCP)(HOST = 10.144.87.24)(PORT = 1521))
+				      (ADDRESS = (PROTOCOL = TCP)(HOST = 10.144.87.25)(PORT = 1521))
+				    )
+				    (CONNECT_DATA =
+				      (SERVICE_NAME = CDJZ)
+				    )
+				) 
+CPS应用目录：
+		iP：10.144.87.62 密码：cdga_2014   应用目录：/root/app/CPS
+
+CPSService应用目录：
+		iP：10.144.87.62 密码：cdga_2014   应用目录：/root/app/CPSService
+		
+应用服务器目录(两台机器)：
+		ip:10.144.87.66   密码：cdga_2014   tomcat目录：/home/sqjw/tomcat_6.0.26_85
+		ip:10.144.87.67   密码：cdga_2014   tomcat目录：/home/sqjw/tomcat_6.0.26_85
+
+==========================永州环境==================================================
+应用服务器：
+	ip:10.147.100.83	yzjzpt2015	 应用部署目录：/home/sqjw/tomcat_85
+	ip:10.147.100.84    yzjzpt2015	 应用部署目录：暂时没有部署
+
+数据库：
+	用户：sqjw
+	密码：CS_JZ_sqjw_20140128
+	连接串：(DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = 10.147.100.89)(PORT = 1521))
+      (ADDRESS = (PROTOCOL = TCP)(HOST = 10.147.100.90)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SERVICE_NAME = SQJW)
+    )
+  )
+===========================================================
+
+==========================怀化环境==========================
+CPS应用服务器：
+10.146.13.48	pw:zaq1!xsw2@	 
+应用部署目录：/home/app/CPS
+
+Tomcat服务器：10.146.13.48,10.146.13.49
+/home/sqjw/tomcat8180
+
+CAS部署：
+10.146.13.48:8888/zaq1!xsw2@
+应用部署目录：/home/server/tomcat_cas_8888/bin
+
+数据库：
+	用户：sqjw
+	密码：CS_JZ_sqjw_20140128
+	连接串：(DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = TCP)(HOST = 10.146.13.52)(PORT = 1521))
+      (ADDRESS = (PROTOCOL = TCP)(HOST = 10.146.13.53)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SERVICE_NAME = HHGA)
+    )
+  )
+===========================================================
+
+
+7.覆盖更新对应服务器用的CPS目录
+
+8. 找准要升级的地方，然后进入对应的tomcat服务器bin目录，重新启动服务器
+	如：
+	a.长沙进入85 tomcat bin目录 命令
+	[root@localhost ~]# cd /home/sqjw/sqjw/tomcat_6.0.26_85/bin
+	
+	b.查找对应进程号(通过tomcat端口号找进程号)
+	[root@csgajzbb bin]# netstat -nltp|grep 87
+	tcp        0      0 :::87                       :::*                        LISTEN      17809/java          
+	tcp        0      0 :::49851                    :::*                        LISTEN      2260/rpc.statd    
+	
+	c.通过tomcat 85 端口 可以知道对应的 进程为 17809
+	
+	d.杀死进程号,结束服务
+	kill -9 17809
+	
+	e.清空上一期日志
+	[root@csgajzbb bin]# 1>../logs/catalina.out
+	
+	f.重新运行tomcat服务
+	[root@csgajzbb bin]#./startup.sh
+	
+	g.查看启动日志是否保错
+	[root@csgajzbb bin]# tail -300f ../logs/catalina.out
+
+注意：每个地方都有两个tomat服务器，这些tomcat都需要重新启动
+

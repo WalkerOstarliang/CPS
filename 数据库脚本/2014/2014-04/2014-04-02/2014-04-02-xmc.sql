@@ -1,0 +1,1 @@
+alter table t_khkp_jfz add  a10000_js number;

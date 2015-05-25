@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns="http://www.springframework.org/schema/beans" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:p="http://www.springframework.org/schema/p" 
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	
+	<!-- 从业人员任务处理 -->
+	<bean id="cyryScheduler" class="com.chinacreator.sydw.scheduler.CyryImportCheckJobScheduler"></bean>
+	<bean id="cyryCheckJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="cyryScheduler"/>
+		</property>
+		<property name="targetMethod">
+			<value>doSchedulerHander</value>
+		</property>
+		<property name="concurrent" value="false"/>
+	</bean>
+	<bean id="cyryCheckTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail">
+			<ref bean="cyryCheckJob"/>
+		</property>
+		<property name="startDelay">
+			<value>30000</value>
+		</property>
+		<property name="repeatInterval">
+			<value>120000</value>
+		</property>
+	</bean>
+	
+	<!-- 实有人口定时任务处理 -->
+	<bean id="syrkScheduler" class="com.chinacreator.lsgl.scheduler.SyrkImportCheckJobScheduler"></bean>
+	<bean id="syrkCheckJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="syrkScheduler"/>
+		</property>
+		<property name="targetMethod">
+			<value>doSchedulerHander</value>
+		</property>
+		<property name="concurrent" value="false"/>
+	</bean>
+	<bean id="syrkCheckTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail">
+			<ref bean="syrkCheckJob"/>
+		</property>
+		<property name="startDelay">
+			<value>60000</value>
+		</property>
+		<property name="repeatInterval">
+			<value>180000</value>
+		</property>
+	</bean>
+	
+	<bean id="doscheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<!--  
+				<ref local="cyryCheckTrigger"/>
+				<ref local="syrkCheckTrigger"/>
+				-->
+			</list>
+		</property>
+		<property name="autoStartup" value="false"></property>
+	</bean>
+	 
+</beans>

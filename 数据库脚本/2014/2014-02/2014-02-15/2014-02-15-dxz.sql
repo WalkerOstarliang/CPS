@@ -1,0 +1,1 @@
+alter table T_ZA_JG_JBXX modify YYZZBH VARCHAR2(50);

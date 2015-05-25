@@ -1,0 +1,40 @@
+1、 实体 t_common_stxx
+2、 地址 t_common_dzxx
+3、 房屋基本信息 t_lsgl_fw_jbxx
+4、 出租屋基本信息  t_lsgl_czfw_jbxx
+5、 行政区划 t_common_hnxzqh
+6、 街路巷 t_common_dzjlx
+============================
+
+7、 人员基本信息 t_lsgl_rk_jbxx 人房管理
+8、 常住人口 t_lsgl_rk_czrk
+9、 流动人口 t_lsgl_rk_ldrkzzxx
+10、寄住人口 t_lsgl_rk_jzrkxx
+11、未落户人口 t_lsgl_rk_wlhczhk
+12、境外人口 t_lsgl_rk_jwrkxx
+13、居住证信息 t_lsgl_ldrk_jzzxx
+14、人口房屋关联 t_lsgl_rkfw_gl
+============================
+
+
+14、单位基本信息 t_za_jg_jbxx
+15、特种行业表 t_za_dw_tzhy
+16、旅馆业表 t_za_dw_thlgy
+17、开锁业表 t_za_dw_thksy
+18、公共场所表 t_za_dw_ggcs
+19、内保单位表 t_za_dw_nbdw
+20、危险品单位表 t_za_dw_wxwpdw
+21、上网服务表 t_za_jg_swfwcs
+22、涉外单位表 t_za_dw_swdw
+23、从业人员表 t_za_ry_cyry
+24、单位房屋管理 t_lsgl_dwfw_gl
+============================
+
+
+24、巡防队表 t_af_xldxx
+25、警务通表 t_lmpc_jwqrybd
+26、辅助人员表（流口协管员、政法协辅警、巡防队员） t_common_organization_fj
+27、机构信息表 t_common_organization_other
+28、警员信息表 t_common_user_lxfs
+
+

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryzfdwdjlist">
+		<![CDATA[
+			select bh,
+       zfdwmc,
+       zfdwfrxm,
+       zfdwlxdh,
+       dwszdz,
+       dwsx,
+       dwsx as dwsxmc,
+       jdrxm,
+       jdrzw,
+       to_char(zfsj,'yyyy-MM-dd') zfsj,
+       zfsy,
+       zfsy as zfsymc,
+       zfdcnr,
+       zfdcjg,
+       zfmjjh,
+       zfmjxm,
+       zfmjdwdm,
+       zfmjdwmc,
+       sfjwdc,
+       sfjwdc as sfjwdcmc,
+       xxsfss,
+       xxsfss as xxsfssmc,
+       dcjgms,
+       dcrxm,
+       dcrdwdm,
+       dcrdwmc,
+       djrxm,
+       to_char(djsj,'yyyy-MM-dd') djsj,
+       djdwdm,
+       djdwmc,
+       jdrlxdh
+  from t_fwqz_zfdwdjxx
+  where 1=1
+ 		    #if($jwsqdm and !$jwsqdm.equals(""))
+      		and djdwdm=#[jwsqdm]
+	      	#else
+		      	#if($pcsdm and !$pcsdm.equals(""))
+					and substr(djdwdm,1,8)=substr(#[pcsdm],1,8)
+				#else
+					--精确到县区
+					#if($countrydm and !$countrydm.equals(""))
+						and substr(djdwdm,1,6)=substr(#[countrydm],1,6)
+					#else
+					   --精确到市州
+						 #if($citydm and !$citydm.equals(""))
+							and substr(djdwdm,1,4)=substr(#[citydm],1,4)
+						 #end
+					#end
+				#end
+			#end
+			#if($sfjwdc and !$sfjwdc.equals(""))
+				and sfjwdc=#[sfjwdc]
+			#end 
+			#if($xxsfss and !$xxsfss.equals(""))
+				and xxsfss=#[xxsfss]
+			#end 
+			
+			#if($zfdwmc and !$zfdwmc.equals(""))
+				and zfdwmc=#[zfdwmc]
+			#end
+			#if($zfmjjh and !$zfmjjh.equals(""))
+				and zfmjjh=#[zfmjjh]
+			#end 
+			#if($zfsj_from and !$zfsj_from.equals(""))
+			and zfsj >= to_date(#[zfsj_from],'yyyy-MM-dd')
+			#end
+      		#if($zfsj_to && !$zfsj_to.equals(""))
+			and zfsj <= to_date(#[zfsj_to],'yyyy-MM-dd')
+			#end	
+			order by zfsj desc
+		]]>
+	</property>
+	
+	<property name="queryObjectWithDBName">
+		<![CDATA[
+			select bh,
+		       zfdwmc,
+		       zfdwfrxm,
+		       zfdwlxdh,
+		       dwszdz,
+		       dwsx,
+		       dwsx as dwsxmc,
+		       jdrxm,
+		       jdrzw,
+		       to_char(zfsj,'yyyy-MM-dd') zfsj,
+		       zfsy,
+		       zfsy as zfsymc,
+		       zfdcnr,
+		       zfdcjg,
+		       zfmjjh,
+		       zfmjxm,
+		       zfmjdwdm,
+		       zfmjdwmc,
+		       sfjwdc,
+		       xxsfss,
+		       dcjgms,
+		       dcrxm,
+		       dcrdwdm,
+		       dcrdwmc,
+		       djrxm,
+		       to_char(djsj,'yyyy-MM-dd') djsj,
+		       djdwdm,
+		       djdwmc,
+		       jdrlxdh
+  			from t_fwqz_zfdwdjxx 
+  			where bh=?
+  		    
+			
+		]]>
+	</property>
+	
+	<property name="insertZfdwdjInfo">
+		<![CDATA[
+			insert into t_fwqz_zfdwdjxx
+			  (bh,
+			   zfdwmc,
+			   zfdwfrxm,
+			   zfdwlxdh,
+			   dwszdz,
+			   dwsx,
+			   jdrxm,
+			   jdrzw,
+			   zfsj,
+			   zfsy,
+			   zfdcnr,
+			   zfdcjg,
+			   zfmjjh,
+			   zfmjxm,
+			   zfmjdwdm,
+			   zfmjdwmc,
+			   sfjwdc,
+			   xxsfss,
+			   dcjgms,
+			   dcrxm,
+			   dcrdwdm,
+			   dcrdwmc,
+			   djrxm,
+			   djsj,
+			   djdwdm,
+			   djdwmc,
+			   jdrlxdh)
+			values
+			  (#[bh],
+			   #[zfdwmc],
+			   #[zfdwfrxm],
+			   #[zfdwlxdh],
+			   #[dwszdz],
+			   #[dwsx],
+			   #[jdrxm],
+			   #[jdrzw],
+			   to_date(#[zfsj],'yyyy-MM-dd'),
+			   #[zfsy],
+			   #[zfdcnr],
+			   #[zfdcjg],
+			   #[zfmjjh],
+			   #[zfmjxm],
+			   #[zfmjdwdm],
+			   #[zfmjdwmc],
+			   '0',
+			   #[xxsfss],
+			   #[dcjgms],
+			   #[dcrxm],
+			   #[dcrdwdm],
+			   #[dcrdwmc],
+			   #[djrxm],
+			   to_date(#[djsj],'yyyy-MM-dd'),
+			   #[djdwdm],
+			   #[djdwmc],
+			   #[jdrlxdh]
+			   )
+			
+		]]>
+	</property>
+	
+	<property name="updateZfdwdjInfo">
+		<![CDATA[
+			update t_fwqz_zfdwdjxx
+			   set bh = #[bh],
+			       zfdwmc = #[zfdwmc],
+			       zfdwfrxm =#[zfdwfrxm],
+			       zfdwlxdh = #[zfdwlxdh],
+			       dwszdz = #[dwszdz],
+			       dwsx = #[dwsx],
+			       jdrxm = #[jdrxm],
+			       jdrzw = #[jdrzw],
+			       zfsj = to_date(#[zfsj],'yyyy-MM-dd'),
+			       zfsy = #[zfsy],
+			       zfdcnr = #[zfdcnr],
+			       zfdcjg = #[zfdcjg],
+			       zfmjjh = #[zfmjjh],
+			       zfmjxm = #[zfmjxm],
+			       zfmjdwdm = #[zfmjdwdm],
+			       zfmjdwmc = #[zfmjdwmc],
+			       sfjwdc = '0',
+			       xxsfss = #[xxsfss],
+			       dcjgms = #[dcjgms],
+			       dcrxm = #[dcrxm],
+			       dcrdwdm = #[dcrdwdm],
+			       dcrdwmc = #[dcrdwmc],
+			       djrxm = #[djrxm],
+			       djsj = to_date(#[djsj],'yyyy-MM-dd'),
+			       djdwdm = #[djdwdm],
+			       djdwmc = #[djdwmc],
+			       jdrlxdh = #[jdrlxdh]
+			 where bh = #[bh]
+			
+		]]>
+	</property>
+	
+	<property name="updateZfdwdcInfo">
+		<![CDATA[
+			update t_fwqz_zfdwdjxx
+			   set 
+			       sfjwdc = '1',             
+			       xxsfss = #[xxsfss],
+			       dcjgms = #[dcjgms]
+			 where bh = #[bh]
+			
+		]]>
+	</property>
+	
+	<property name="deleteZfdwdjInfo">
+		<![CDATA[
+			delete  t_fwqz_zfdwdjxx 
+			where bh = ?
+		]]>
+	</property>
+	<property name="batchDeleteZfdwdjInfo">
+		<![CDATA[
+			delete  t_fwqz_zfdwdjxx 
+			where bh = #[bh]
+		]]>
+	</property>
+</properties>

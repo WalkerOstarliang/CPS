@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryMenuFunctionBeanByMenuid">
+		<![CDATA[
+			select function_id as functionid,name,parent_id as parentid,path,type,function_sn as functionsn,target,function_sn as menuindex 
+			from v_td_sm_function
+			where parent_id=? 
+				 and function_id in (
+			  		select res_id from v_td_sm_roleresop 
+			  		where role_id in (
+			        	select role_id from v_td_sm_userrole where user_id=?
+			    	)
+			  )
+			  order by function_sn
+		]]>
+	</property>
+</properties>

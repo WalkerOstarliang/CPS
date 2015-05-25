@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="zbhxx" namespace="/zbhxx" extends="default"> 
+	  		<action name="*" class="com.chinacreator.afgl.action.ZbhxxAction" method="{1}">
+	  			<result name="toZbhxxList">/jsp/afgl/pages/zbhgl/zbhxxList.jsp</result>
+	  			<result name="toAddZbhxx">/jsp/afgl/pages/zbhgl/addZbhxx.jsp</result>
+	  			<result name="toUpdateZbhxxByZbhbh">/jsp/afgl/pages/zbhgl/addZbhxx.jsp</result>
+	  			<result name="toDeleteZbhxxByZbhbh">/jsp/afgl/pages/zbhgl/deleteZbhxx.jsp</result>
+	  			<result name="viewZbhxxByZbhbh">/jsp/afgl/pages/zbhgl/viewZbhxx.jsp</result>
+	  			<result name="toSelectZbhxx">/jsp/afgl/pages/zbhgl/selectZbhxx.jsp</result>
+	  			<result name="toBatchDeleteZbhxxByZbhbhs">/jsp/afgl/pages/zbhgl/batchDeleteZbhxx.jsp</result>
+	  			<result name="toGjQueryZbhxx">/jsp/afgl/pages/zbhgl/zbhxxGjQuery.jsp</result>
+	  			<result name="toAddZbhcyxx">/jsp/afgl/pages/zbhcy/addZbhcyxx.jsp</result>
+	  			
+	  			<result name="toZbhCyListPage">/jsp/afgl/pages/zbhgl/zbycyList.jsp</result>
+	  		</action>
+	  </package>
+</struts>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 社区网络信息 -->
+<properties>
+	<!-- 新增网络社区 -->
+	<property name="insertWlsq">
+		<![CDATA[
+			insert into t_za_wlsqxx
+			  (wlsqbh,
+			   sssqbh,
+			   sssqmc,
+			   djrxm,
+			   djrjh,
+			   djdwdm,
+			   djdwmc,
+			   djsj,
+			   ssxzqh,
+			   ssjdxz,
+			   ssxzqhmc,
+			   ssjdxzmc,
+			   czrxm,
+			   czdwmc,
+			   czdwdm,
+			   czsj,
+			   czbs,czrjh)
+			values
+			  (#[wlsqbh],
+			   #[sssqbh],
+			   #[sssqmc],
+			   #[djrxm],
+			   #[djrjh],
+			   #[djdwdm],
+			   #[djdwmc],
+			   to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[ssxzqh],
+			   #[ssjdxz],
+			   #[ssxzqhmc],
+			   #[ssjdxzmc],
+			   #[czrxm],
+			   #[czdwmc],
+			   #[czdwdm],
+			   to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[czbs],#[czrjh])
+		]]>
+	</property>
+	
+	<!-- 修改网络社区 -->
+	<property name="updateWlsq">
+		<![CDATA[
+		    update t_za_wlsqxx
+		    set sssqbh = #[sssqbh],
+		       sssqmc = #[sssqmc],
+		       ssxzqh = #[ssxzqh],
+		       ssjdxz = #[ssjdxz],
+		       ssxzqhmc = #[ssxzqhmc],
+		       ssjdxzmc = #[ssjdxzmc],
+		       czrxm = #[czrxm],
+		       czdwmc = #[czdwmc],
+		       czdwdm = #[czdwdm],
+		       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+		       czbs = #[czbs],
+		       czrjh = #[czrjh]
+		 	where wlsqbh = #[wlsqbh]
+		]]>
+	</property>
+	
+	<!-- 删除网络社区 -->
+	<property name="deleteWlsqByWlsqbh">
+		<![CDATA[
+			update t_za_wlsqxx
+		    set czrxm = #[czrxm],
+		       czdwmc = #[czdwmc],
+		       czdwdm = #[czdwdm],
+		       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+		       czbs = #[czbs],
+		       czrjh = #[czrjh]
+		 	where wlsqbh = #[wlsqbh]
+		]]>
+	</property>
+	
+	<!-- 新增社区网站 -->
+	<property name="insertSqwz">
+		<![CDATA[
+			insert into t_za_wlsq_wz
+			  (id, wlsqbh, wzmc, wz, wzjsdw, wzglrxm, glrlxdh)
+			values
+			  (#[id], #[wlsqbh], #[wzmc], #[wz], #[wzjsdw], #[wzglrxm], #[glrlxdh])
+		]]>
+	</property>
+	
+	<!-- 根据网络社区编号查询网络社区 -->
+	<property name="queryWlsqByWlsqbh">
+		<![CDATA[
+			select wlsqbh,
+		       sssqbh,
+		       sssqmc,
+		       djrxm,
+		       djrjh,
+		       djdwdm,
+		       djdwmc,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       ssxzqh,
+		       ssjdxz,
+		       ssxzqhmc,
+		       ssjdxzmc,
+		       czrxm,
+		       czdwmc,
+		       czdwdm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czbs,
+		       czrjh
+		  from t_za_wlsqxx
+		  where wlsqbh = ?
+		]]>
+	</property>
+	
+	<!-- 分页查询网络社区 -->
+	<property name="queryWlsqByPageResultInfo">
+		<![CDATA[
+			select wlsq.wlsqbh,
+		       wlsq.sssqbh,
+		       wlsq.sssqmc,
+		       wlsq.djrxm,
+		       wlsq.djrjh,
+		       wlsq.djdwdm,
+		       wlsq.djdwmc,
+		       to_char(wlsq.djsj, 'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       wlsq.ssxzqh,
+		       wlsq.ssjdxz,
+		       wlsq.ssxzqhmc,
+		       wlsq.ssjdxzmc,
+		       wlsq.czrxm,
+		       wlsq.czdwmc,
+		       wlsq.czdwdm,
+		       to_char(wlsq.czsj, 'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       wlsq.czbs,
+		       wlsq.czrjh,
+		        (select count(1)
+		                    from t_za_wlsq_lt lt
+		                   where lt.wlsqbh = wlsq.wlsqbh) as lts,
+		       (select count(1)
+		          from t_za_wlsq_qqq qqq
+		         where qqq.wlsqbh = wlsq.wlsqbh) as qqqs,
+		       (select count(1) from t_za_wlsq_wz wz where wz.wlsqbh = wlsq.wlsqbh) as wzs
+		  from t_za_wlsqxx wlsq
+		  where wlsq.czbs != '3'
+		  #if($sssqbh && !$sssqbh.equals(""))
+			  and wlsq.sssqbh = #[sssqbh]
+		  #else
+		  	#if($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	 and substr(wlsq.sssqbh,1,6)=#[countrygajgjgdm]
+		  	#else
+			  	#if($citygajgjgdm && !$citygajgjgdm.equals(""))
+			  	  	and substr(wlsq.sssqbh,1,4)=substr(#[citygajgjgdm],1,4)
+		      	#end
+		  	#end
+		 #end	
+		  order by czsj desc
+		]]>
+	</property>
+	
+	<!-- 根据网络社区编号查询社区网站 -->
+	<property name="querySqwzByWlsqbh">
+		<![CDATA[
+			select * from t_za_wlsq_wz where wlsqbh = ?
+		]]>
+	</property>
+	
+	<!-- 新增社区论坛 -->
+	<property name="insertSqlt">
+		<![CDATA[
+			insert into t_za_wlsq_lt
+			  (id, wlsqbh, ltbzid, ltbzxm, bzlxdh, ltmc, ltwz)
+			values
+			  (#[id], #[wlsqbh], #[ltbzid], #[ltbzxm], #[bzlxdh], #[ltmc], #[ltwz])
+		]]>
+	</property>
+	
+	<!-- 根据网络社区编号查询社区论坛 -->
+	<property name="querySqltByWlsqbh">
+		<![CDATA[
+			select * from t_za_wlsq_lt where wlsqbh = ?
+		]]>
+	</property>
+	
+	<!-- 新增社区QQ群 -->
+	<property name="insertSqQQq">
+		<![CDATA[
+			insert into t_za_wlsq_qqq
+			  (id, wlsqbh, qqqh, qzhm, qqqms, qqqmc)
+			values
+			  (#[id], #[wlsqbh], #[qqqh], #[qzhm], #[qqqms], #[qqqmc])
+		]]>
+	</property>
+	
+	<!-- 根据网络社区编号查询社区QQ群 -->
+	<property name="querySqQQqByWlsqbh">
+		<![CDATA[
+			select * from t_za_wlsq_qqq where wlsqbh = ?
+		]]>
+	</property>
+	
+	<!-- 根据网络社区编号删除社区网站 -->
+	<property name="deleteSqwzByWlsqbh">
+		<![CDATA[
+			delete t_za_wlsq_wz where wlsqbh = ?
+		]]>
+	</property>
+	
+	<!-- 根据网络社区编号删除社区论坛 -->
+	<property name="deleteSqltByWlsqbh">
+		<![CDATA[
+			delete t_za_wlsq_lt where wlsqbh = ?
+		]]>
+	</property>
+	
+	<!-- 根据网络社区编号删除社区QQ群  -->
+	<property name="deleteSqQQqByWlsqbh">
+		<![CDATA[
+			delete t_za_wlsq_qqq where wlsqbh = ?
+		]]>
+	</property>
+</properties>

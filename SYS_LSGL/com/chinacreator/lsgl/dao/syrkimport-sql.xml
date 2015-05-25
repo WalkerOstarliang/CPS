@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+ 	
+ 	<property name="insertImportSyrkxx">
+ 		<![CDATA[
+ 			 insert into t_import_syrks
+			  (bh, fwid, xm, sfzh, mz, lxdh, jzsj, jzsy, jzcs, 
+			   yhzgx, njzqx, bz, drsj, djdwdm, djdwmc, djrxm, 
+			   djrsfzh, djrjh, errorbs, errorinfo, execbs,batchno,
+			   wwusername,wwusersfzh)
+			values
+			  (#[bh], #[fwid], #[xm], #[sfzh], #[mz], #[lxdh], #[jzsj], 
+			   #[jzsy], #[jzcs], #[yhzgx], #[njzqx], #[bz], sysdate, 
+			   #[djdwdm], #[djdwmc], #[djrxm], #[djrsfzh], #[djrjh], 
+			   #[errorbs], #[errorInfo], '0',#[batchno],
+			   #[wwusername],#[wwusersfzh])
+ 			 
+ 		]]>
+ 	</property>
+	
+	<property name="updateImportSyrkxx">
+		<![CDATA[
+			 update t_import_syrks
+			    set bh = #[bh],
+			        xm = #[xm],
+			        mz = #[mz],
+			        lxdh = #[lxdh],
+			        jzsj = #[jzsj],
+			        jzsy = #[jzsy],
+			        jzcs = #[jzcs],
+			        yhzgx = #[yhzgx],
+			        njzqx = #[njzqx],
+			        bz = #[bz],
+			        drsj = sysdate,
+			        djdwdm = #[djdwdm],
+			        djdwmc = #[djdwmc],
+			        djrxm = #[djrxm],
+			        djrsfzh = #[djrsfzh],
+			        djrjh = #[djrjh],
+			        errorbs = #[errorbs],
+			        errorinfo = #[errorInfo],
+			        execbs = '0',
+			        batchno = #[batchno],
+			        lockbs = '0',
+			        wwusername = #[wwusername],
+			        wwusersfzh = #[wwusersfzh]
+			  where fwid=#[fwid] and sfzh=#[sfzh]
+		]]>
+	</property>
+ 	
+ 	<property name="queryImportSyrkZdryPageResult">
+ 		<![CDATA[
+ 			select c.*,(select f_get_zdrylbbjmc(t.zdrylbbj) from T_ZDRY_QGQLZDRY t  where sfzh=c.sfzh) as zdrylbms
+      		from t_import_syrks c 
+      		where batchno=#[batchno] 
+              	and exists (select 1 from t_zdry_qgqlzdry q where q.sfzh=c.sfzh and (yxx='1' or yxx is null))
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryImportSyrkPageResult">
+ 		<![CDATA[
+ 			select * 
+ 			from (
+	 			select c.*,(select f_get_zdrylbbjmc(t.zdrylbbj) from T_ZDRY_QGQLZDRY t  where sfzh=c.sfzh) as zdrylbms
+	      		from t_import_syrks c 
+	      		where batchno=#[batchno]
+            )
+            order by zdrylbms asc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="getImportSyrkBean">
+ 		<![CDATA[
+ 			select *
+ 			from t_import_syrks
+ 			where sfzh=? and fwid=?
+ 		]]>
+ 	</property>
+  
+  	<property name="querySyrkImportHcPageResult">
+  		<![CDATA[
+  			select c.*,f_get_dzmc_byfwid(c.fwid) as dzmc
+	      		from t_import_syrks c 
+	      		where 1=1
+	      			#if ($fwid && !$fwid.equals(""))
+	      				and fwid = #[fwid]
+	      			#end
+	      			#if($errorbs && !$errorbs.equals(""))
+						and ERRORBS = #[errorbs]
+					#end
+					#if($execbs && !$execbs.equals(""))
+						and EXECBS = #[execbs]
+					#end
+					#if($drsjstart && !$drsjstart.equals(""))
+						and drsj >= to_date(#[drsjstart],'yyyy-MM-dd')
+					#end
+					#if($drsjend && !$drsjend.equals(""))
+						and drsj <= to_date(#[drsjend]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+					#end
+					#if($djdwdm && !$djdwdm.equals(""))
+						and djdwdm=#[djdwdm]
+					#end
+					order by fwid
+  		]]>
+  	</property>
+  	
+  	<property name="querySyrkImportBeans">
+  		<![CDATA[
+  			select c.*
+    		from t_import_syrks c
+    		where ERRORBS='0' 
+    			and execbs='0' 
+    			and (LOCKBS is null or LOCKBS='0')
+    			and rownum<=50 
+    		for update nowait
+  		]]>
+  	</property>
+  	
+  	<property name="updateLockBs">
+  		<![CDATA[
+  			update t_import_syrks
+  			set LOCKBS='1'
+  			where BH=#[bh]
+  		]]>
+  	</property>
+  	
+  	<property name="updateSyrkImportBean">
+ 		<![CDATA[
+ 			update t_import_syrks
+ 			set 
+ 				#if($field && $field.equals("errorbs"))
+ 					errorbs = #[value],
+ 				#else
+ 				    errorbs = '2',
+ 					execbs = #[value],
+ 				#end
+ 				errorInfo = #[errorInfo],
+ 				rylb = #[rylb],
+ 				rkid = #[rkid]
+ 			where bh=#[bh]
+ 			
+ 		]]>
+ 	</property>
+  
+  	<property name="updateSyrkbWwUserInfo">
+  		<![CDATA[
+  			#if($rylb && $rylb.equals("1"))
+  				update t_lsgl_rk_czrk
+				set wwzh=#[wwusername],wwsfzh=#[wwusersfzh]
+				where czrkbh=#[rkid]
+  			#elseif($rylb && $rylb.equals("2"))
+  				update t_lsgl_rk_ldrkzzxx
+				set wwzh=#[wwusername],wwsfzh=#[wwusersfzh]
+				where zzbh=#[rkid] 
+  			#elseif($rylb && $rylb.equals("3"))
+  				update T_LSGL_RK_WLHCZHK
+				set wwzh=#[wwusername],wwsfzh=#[wwusersfzh]
+				where WLHRKBH=#[rkid] 
+  			#elseif($rylb && $rylb.equals("5"))
+  				update t_lsgl_rk_jzrkxx
+				set wwzh=#[wwusername],wwsfzh=#[wwusersfzh]
+				where JZBH=#[rkid]
+  			#end
+  		]]>
+  	</property>
+  
+</properties>

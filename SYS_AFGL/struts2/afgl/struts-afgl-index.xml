@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="afglindex" namespace="/afgl/index" extends="default">
+	  	<action name="*" class="com.chinacreator.afgl.action.IndexAction" method="{1}">
+	  		<result name="toHomePage">/jsp/afgl/main/home.jsp</result>
+	  		<result name="toPcglPage">/jsp/afgl/main/pcgl/index.jsp</result>
+	  		<result name="toJcxxglPage">/jsp/afgl/main/jcxxgl/index.jsp</result>
+	  		<result name="toTjfxPage">/jsp/afgl/main/tjfx/index.jsp</result>
+	  		<result name="toPcglLeftPage">/jsp/afgl/main/pcgl/left.jsp</result>
+	  		<result name="toJcxxglLeftPage">/jsp/afgl/main/jcxxgl/left.jsp</result>
+	  		<result name="toTjfxLeftPage">/jsp/afgl/main/tjfx/left.jsp</result>
+	  	</action>
+	  </package>
+</struts>

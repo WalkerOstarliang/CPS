@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="addgyhdxx">
+		<![CDATA[
+			insert into t_fwqz_gyhddjxx
+			  (bh, hdzt, hdsj, hddz, cydwjry, cyry, hdnr, bz, djrxm, djrjh, djsj, djdwdm, djdwmc,djrsfzh)
+			values
+			  (#[bh], #[hdzt], to_date(#[hdsj],'yyyy-MM-dd'), #[hddz], #[cydwjry], #[cyry], #[hdnr], #[bz], #[djrxm], #[djrjh], to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss'), #[djdwdm], #[djdwmc],#[djrsfzh])
+		]]>
+	</property>
+	<property name="deletegyhdxx">
+		<![CDATA[
+			delete t_fwqz_gyhddjxx
+			 where bh = ?
+		]]>
+	</property>
+	<property name="updategyhdxx">
+		<![CDATA[
+			update t_fwqz_gyhddjxx
+			set   hdzt = #[hdzt],
+			      hdsj = to_date(#[hdsj],'yyyy-MM-dd'),
+			      hddz = #[hddz],
+			      cydwjry = #[cydwjry],
+			      cyry = #[cyry],
+			      hdnr = #[hdnr],
+			      bz = #[bz],
+			      djsj = to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss')
+			where bh = #[bh]
+			
+		]]>
+	</property>
+	<property name="querygyhdxx">
+		<![CDATA[
+			select bh, hdzt, to_char(hdsj,'yyyy-MM-dd') hdsj, hddz, cydwjry, cyry, hdnr, bz, djrxm, djrjh, to_char(djsj,'yyyy-MM-dd') djsj, djdwdm, djdwmc, (select count(*) from t_fwqz_fjxx a where a.djbh=t.bh and a.fjlx='2') fj from t_fwqz_gyhddjxx t
+			where 1=1
+			#if($hddz and !$hddz.equals(""))
+	      		and hddz like '%'||#[hddz]||'%' 
+	      	#end
+	      	#if($hdsj_from && !$hdsj_from.equals(""))
+				and hdsj >= to_date(#[hdsj_from],'yyyy-MM-dd')
+			#end
+	      	#if($hdsj_to && !$hdsj_to.equals(""))
+				and hdsj <= to_date(#[hdsj_to],'yyyy-MM-dd')
+			#end
+			
+		 	#if($jwsqdm && !$jwsqdm.equals(""))
+    			and djdwdm = #[jwsqdm]
+    		#elseif ($pcsdm && !$pcsdm.equals(""))
+			 	and djdwdm like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+		   	#end
+				
+			order by djsj desc
+		]]>
+	</property>
+	<property name="querygyhdxxbybh">
+		<![CDATA[
+			select bh, hdzt, to_char(hdsj,'yyyy-MM-dd') hdsj, hddz, cydwjry, cyry, hdnr, bz, djrxm, djrjh, djsj, djdwdm, djdwmc, (select count(*) from t_fwqz_fjxx a where a.djbh=b.bh and a.fjlx='2') fj from t_fwqz_gyhddjxx b
+			where bh=?
+		]]>
+	</property>
+	<property name="getFjxxByHdbh">
+		<![CDATA[
+			select bh, fjlx, fjmc, fj, djbh from t_fwqz_fjxx
+			where fjlx='2' and djbh=?
+		]]>
+	</property>
+	<property name="getFjxxByBh">
+		<![CDATA[
+			select fjmc,fj from t_fwqz_fjxx
+			where fjlx='2' and bh=?
+		]]>
+	</property>
+	<property name="deleteOldFjxx">
+		<![CDATA[
+			delete t_fwqz_fjxx
+ 			where fjlx='2' and djbh = ?
+		]]>
+	</property>
+	<property name="deleteFjxxByBh">
+		<![CDATA[
+			delete t_fwqz_fjxx
+ 			where bh = ? 
+		]]>
+	</property>
+	<property name="insertFjxx">
+		<![CDATA[
+			insert into t_fwqz_fjxx
+  (bh, fjlx, fjmc, djbh)
+values
+  (#[bh], #[fjlx], #[fjmc], #[djbh])
+		]]>
+	</property>
+</properties>

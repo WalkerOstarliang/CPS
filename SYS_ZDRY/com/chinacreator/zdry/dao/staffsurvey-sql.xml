@@ -1,0 +1,931 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="insertShgxSQL">
+		<![CDATA[
+			insert into t_zdry_gxr
+			  (bh,
+			   sfzh,
+			   gxrxm,
+			   gxrsfzh,
+			   gxrlxdh,
+			   gxrxzdxz,
+			   ydsrgx,
+			   isgdzy,
+			   djrxm,
+			   djsj,
+			   djdwdm,
+			   djdwmc,
+			   czrxm,
+			   czdwdm,
+			   czdwmc,
+			   czsj,
+			   czbs,
+			   lgzt,
+			   xb)
+			values
+			  (SEQ_ZDRY_GXR.Nextval,
+			   #[sfzh],
+			   #[gxrxm],
+			   #[gxrsfzh],
+			   #[gxrlxdh],
+			   #[gxrxzdxz],
+			   #[ydsrgx],
+			   #[isgdzy],
+			   #[djrxm],
+			   sysdate,
+			   #[djdwdm],
+			   #[djdwmc],
+			   #[czrxm],
+			   #[czdwdm],
+			   #[czdwmc],
+			   sysdate,
+			   #[czbs],
+			   #[lgzt],
+			   #[xb])
+		]]>
+	</property>
+	
+	<property name="insertGzxxSQL">
+		<![CDATA[
+			insert into t_zdry_gzxx
+				  (id,
+				   sfzh,
+				   dah,
+				   gllb,
+				   glff,
+				   gzdxfl,
+				   bmch,
+				   jzdz,
+				   glpcs,
+				   jwh,
+				   xfsp,
+				   tbsh,
+				   ztbs,
+				   xxcjyj,
+				   zwcjqk,
+				   bjcjqk,
+				   jdbabm,
+				   xszk,
+				   gqmj,
+				   gljb,
+				   flwsbh,
+				   flwsmc,
+				   qfjg,
+				   qfsj,
+				   cjry,
+				   cjsj,
+				   xxcjjs)
+				values
+				  (SEQ_ZDRY_GZXX.Nextval,
+				   #[sfzh],
+				   #[dah],
+				   #[gllb],
+				   #[glff],
+				   #[gzdxfl],
+				   #[bmch],
+				   #[jzdz],
+				   #[glpcs],
+				   #[jwh],
+				   #[xfsp],
+				   #[tbsh],
+				   #[ztbs],
+				   #[xxcjyj],
+				   #[zwcjqk],
+				   #[bjcjqk],
+				   #[jdbabm],
+				   #[xszk],
+				   #[gqmj],
+				   #[gljb],
+				   #[flwsbh],
+				   #[flwsmc],
+				   #[qfjg],
+				   #[qfsj],
+				   #[cjry],
+				   #[cjsj],
+				   #[xxcjjs])
+		]]>
+	</property>
+	
+	<property name="queryShgxListSQL">
+		<![CDATA[
+			select bh,
+		       sfzh,
+		       gxrxm,
+		       gxrsfzh,
+		       gxrlxdh,
+		       gxrxzdxz,
+		       ydsrgx,
+		       isgdzy,
+		       djrxm,
+		       djsj,
+		       djdwdm,
+		       djdwmc,
+		       czrxm,
+		       czdwdm,
+		       czdwmc,
+		       czsj,
+		       czbs,
+		       lgzt,
+		       xb
+		  from t_zdry_gxr
+		  where 1=1
+		  #if($sfzh && !$sfzh.equals(""))
+		  	and sfzh=#[sfzh]
+		  #end
+		  #if($bh && !$bh.equals(""))
+		  	and bh=#[bh]
+		  #end
+		]]>
+	</property>
+	<property name="queryWfjlListSQL">
+		<![CDATA[
+			select id,
+		       sfzh,
+		       ajbh,
+		       ajlb,
+		       xzcs,
+		       xzdx,
+		       xzwp,
+		       zasd,
+		       ybsd,
+		       qrsd,
+		       blxpsd,
+		       qqsd,
+		       qzsd,
+		       fhsd,
+		       wzmjsd,
+		       lyjsjsd,
+		       qtsd,
+		       zatd,
+		       zzfs,
+		       gjxs,
+		       zafw,
+		       stfs,
+		       xwtd,
+		       zagj,
+		       xzfs,
+		       fyfs,
+		       cdfs,
+		       hddq,
+		       tlfs,
+		       rqfs,
+		       gjly,
+		       sytxgjtd,
+		       zadj,
+		       hdfwfx,
+		       zarsxx,
+		       zarssx,
+		       sfwdrza,
+		       sflcza,
+		       afdyxpd,
+		       lcfwfx,
+		       zcyzagcfx,
+		       zasj,
+		       zadd,
+		       wtxz,
+		       cldw,
+		       clsj,
+		       whdw,
+		       whrxm,
+		       zatq,
+		       bz,
+		       xzzashj,
+		       djrxm,
+		       djdwdm,
+		       djdwmc,
+		       czrxm,
+		       czdwdm,
+		       czdwmc,
+		       czbs,
+		       cljg
+		  from t_zdry_wffzjl
+		  where 1=1
+		  #if($sfzh && !$sfzh.equals(""))
+		  	and sfzh=#[sfzh]
+		  #end
+		]]>
+	</property>
+	
+	<property name="queryBySfzhGzxxSQL">
+		<![CDATA[
+			select id,
+			       sfzh,
+			       dah,
+			       gllb,
+			       glff,
+			       gzdxfl,
+			       bmch,
+			       jzdz,
+			       glpcs,
+			       jwh,
+			       xfsp,
+			       tbsh,
+			       ztbs,
+			       xxcjyj,
+			       zwcjqk,
+			       bjcjqk,
+			       jdbabm,
+			       xszk,
+			       gqmj,
+			       gljb,
+			       flwsbh,
+			       flwsmc,
+			       qfjg,
+			       qfsj,
+			       cjry,
+			       cjsj,
+			       xxcjjs
+			  from t_zdry_gzxx
+			  where sfzh=?
+		]]>
+	</property>
+	
+	<property name="queryBySfzhJjqkSQL">
+		<![CDATA[
+			select id,
+		       sfzh,
+		       isgdgz,
+		       hphm,
+		       xfysrqk,
+		       isjjjj,
+		       isygzc,
+		       cljz,
+		       isygzf,
+		       fwjz,
+		       gfdz,
+		       gfsj,
+		       nsr,
+		       czr,
+		       gcsj,
+		       czdwdm,
+		       czsj,
+		       czdwmc
+		  from t_zdry_jjqk
+		  where sfzh=?
+		]]>
+	</property>
+	
+	<property name="queryBySfzhXsbxListSQL">
+		<![CDATA[
+			select id,
+		         sfzh,
+		         iszyry,
+		         gydd,
+		         badwdm,
+		         badwmc,
+		         gysj,
+		         gyyy,
+		         gydwlxdh,
+		         iscqhjyfzcs,
+		         csmc,
+		         csxz,
+		         iscqyjbg,
+		         jzqssj,
+		         zzxz,
+		         isygdzy,
+		         dwmc,
+		         dwxz,
+		         ysr,
+		         isrcxfmxdysr,
+		         rcxfdysrpdyj,
+		         isgzsjc,
+		         sjcjz,
+		         gcsj,
+		         cph,
+		         isgzfc,
+		         fcjz,
+		         gfrq,
+		         fcxz,
+		         isjjjj,
+		         jjjjpdyj,
+		         isdjcsywgdsy,
+		         djtcywgdsypdyj,
+		         jqsfywffzkn,
+		         jqsfywffzknpdyj,
+		         iszyhjsn,
+		         lkbssj,
+		         qwss,
+		         zkzt,
+		         xsqkms,
+		         hszrmjxm,
+		         hszrmjsfzh,
+		         hszrmjgajgdm,
+		         hszrmjgajgmc,
+		         hssj,
+		         djsj,
+		         djmjxm,
+		         djmjssgajgdm,
+		         djmjssgajgmc,
+		         czrxm,
+		         czdwdm,
+		         czdwmc,
+		         czsj,
+		         czbs,
+		         jlsj
+		    from t_zdry_xsbxxx
+		    where sfzh=?
+		]]>
+	</property>
+	
+	<property name="queryLlfsSQL">
+		<![CDATA[
+			select id,
+		       sfzh,
+		       sjhm,
+		       jtdh,
+		       gsdh,
+		       gzdh,
+		       czhm,
+		       qqhm,
+		       dzyjhm,
+		       wwid,
+		       msn,
+		       djsj,
+		       djrxm,
+		       djdwdm,
+		       djdwmc,
+		       czrxm,
+		       czdwdm,
+		       czdwmc,
+		       czbs,
+		       czsj
+		  from t_zdry_lxfs
+		  where sfzh=?
+		]]>
+	</property>
+	<property name="queryBySfzhZpListSQL">
+		<![CDATA[
+		  select id, sfzh, pzrq, zpms, zp from t_zdry_zpxx
+		  where sfzh=?
+		]]>
+	</property>
+	
+	<property name="queryByIdZpListSQL">
+		<![CDATA[
+		  select id, sfzh, pzrq, zpms, zp from t_zdry_zpxx
+		  where id=?
+		]]>
+	</property>
+	
+	<!-- 插入语句开始 -->
+	<property name="insertLlfsSQL">
+		<![CDATA[
+			insert into t_zdry_lxfs
+				  (id,
+				   sfzh,
+				   sjhm,
+				   jtdh,
+				   gsdh,
+				   gzdh,
+				   czhm,
+				   qqhm,
+				   dzyjhm,
+				   wwid,
+				   msn,
+				   djsj,
+				   djrxm,
+				   djdwdm,
+				   djdwmc,
+				   czrxm,
+				   czdwdm,
+				   czdwmc,
+				   czbs,
+				   czsj)
+				values
+				  (SEQ_ZDRY_LXFS.Nextval,
+				   #[sfzh],
+				   #[sjhm],
+				   #[jtdh],
+				   #[gsdh],
+				   #[gzdh],
+				   #[czhm],
+				   #[qqhm],
+				   #[dzyjhm],
+				   #[wwid],
+				   #[msn],
+				   sysdate,
+				   #[djrxm],
+				   #[djdwdm],
+				   #[djdwmc],
+				   #[czrxm],
+				   #[czdwdm],
+				   #[czdwmc],
+				   #[czbs],
+				   sysdate)
+		]]>
+	</property>
+	
+	<property name="insertXsbxSQL">
+		<![CDATA[
+			insert into t_zdry_xsbxxx
+				  (id,
+				   sfzh,
+				   iszyry,
+				   gydd,
+				   badwdm,
+				   badwmc,
+				   gysj,
+				   gyyy,
+				   gydwlxdh,
+				   iscqhjyfzcs,
+				   csmc,
+				   csxz,
+				   iscqyjbg,
+				   jzqssj,
+				   zzxz,
+				   isygdzy,
+				   dwmc,
+				   dwxz,
+				   ysr,
+				   isrcxfmxdysr,
+				   rcxfdysrpdyj,
+				   isgzsjc,
+				   sjcjz,
+				   gcsj,
+				   cph,
+				   isgzfc,
+				   fcjz,
+				   gfrq,
+				   fcxz,
+				   isjjjj,
+				   jjjjpdyj,
+				   isdjcsywgdsy,
+				   djtcywgdsypdyj,
+				   jqsfywffzkn,
+				   jqsfywffzknpdyj,
+				   iszyhjsn,
+				   lkbssj,
+				   qwss,
+				   zkzt,
+				   xsqkms,
+				   hszrmjxm,
+				   hszrmjsfzh,
+				   hszrmjgajgdm,
+				   hszrmjgajgmc,
+				   hssj,
+				   djsj,
+				   djmjxm,
+				   djmjssgajgdm,
+				   djmjssgajgmc,
+				   czrxm,
+				   czdwdm,
+				   czdwmc,
+				   czsj,
+				   czbs,
+				   jlsj)
+				values
+				  (seq_zdry_xsbxxx.nextval,
+				   #[sfzh],
+				   #[iszyry],
+				   #[gydd],
+				   #[badwdm],
+				   #[badwmc],
+				   #[gysj],
+				   #[gyyy],
+				   #[gydwlxdh],
+				   #[iscqhjyfzcs],
+				   #[csmc],
+				   #[csxz],
+				   #[iscqyjbg],
+				   #[jzqssj],
+				   #[zzxz],
+				   #[isygdzy],
+				   #[dwmc],
+				   #[dwxz],
+				   #[ysr],
+				   #[isrcxfmxdysr],
+				   #[rcxfdysrpdyj],
+				   #[isgzsjc],
+				   #[sjcjz],
+				   #[gcsj],
+				   #[cph],
+				   #[isgzfc],
+				   #[fcjz],
+				   #[gfrq],
+				   #[fcxz],
+				   #[isjjjj],
+				   #[jjjjpdyj],
+				   #[isdjcsywgdsy],
+				   #[djtcywgdsypdyj],
+				   #[jqsfywffzkn],
+				   #[jqsfywffzknpdyj],
+				   #[iszyhjsn],
+				   #[lkbssj],
+				   #[qwss],
+				   #[zkzt],
+				   #[xsqkms],
+				   #[hszrmjxm],
+				   #[hszrmjsfzh],
+				   #[hszrmjgajgdm],
+				   #[hszrmjgajgmc],
+				   #[hssj],
+				   sysdate,
+				   #[djmjxm],
+				   #[djmjssgajgdm],
+				   #[djmjssgajgmc],
+				   #[czrxm],
+				   #[czdwdm],
+				   #[czdwmc],
+				   sysdate,
+				   #[czbs],
+				   #[jlsj])
+		]]>
+	</property>
+	
+	<property name="insertWfjlSQL">
+		<![CDATA[
+			insert into t_zdry_wffzjl
+				  (id,
+				   sfzh,
+				   ajbh,
+				   ajlb,
+				   xzcs,
+				   xzdx,
+				   xzwp,
+				   zasd,
+				   ybsd,
+				   qrsd,
+				   blxpsd,
+				   qqsd,
+				   qzsd,
+				   fhsd,
+				   wzmjsd,
+				   lyjsjsd,
+				   qtsd,
+				   zatd,
+				   zzfs,
+				   gjxs,
+				   zafw,
+				   stfs,
+				   xwtd,
+				   zagj,
+				   xzfs,
+				   fyfs,
+				   cdfs,
+				   hddq,
+				   tlfs,
+				   rqfs,
+				   gjly,
+				   sytxgjtd,
+				   zadj,
+				   hdfwfx,
+				   zarsxx,
+				   zarssx,
+				   sfwdrza,
+				   sflcza,
+				   afdyxpd,
+				   lcfwfx,
+				   zcyzagcfx,
+				   zasj,
+				   zadd,
+				   wtxz,
+				   cldw,
+				   clsj,
+				   whdw,
+				   whrxm,
+				   zatq,
+				   bz,
+				   xzzashj,
+				   djrxm,
+				   djdwdm,
+				   djdwmc,
+				   czrxm,
+				   czdwdm,
+				   czdwmc,
+				   czbs,
+				   cljg)
+				values
+				  (SEQ_ZDRY_WFFZJL.Nextval,
+				   #[sfzh],
+				   #[ajbh],
+				   #[ajlb],
+				   #[xzcs],
+				   #[xzdx],
+				   #[xzwp],
+				   #[zasd],
+				   #[ybsd],
+				   #[qrsd],
+				   #[blxpsd],
+				   #[qqsd],
+				   #[qzsd],
+				   #[fhsd],
+				   #[wzmjsd],
+				   #[lyjsjsd],
+				   #[qtsd],
+				   #[zatd],
+				   #[zzfs],
+				   #[gjxs],
+				   #[zafw],
+				   #[stfs],
+				   #[xwtd],
+				   #[zagj],
+				   #[xzfs],
+				   #[fyfs],
+				   #[cdfs],
+				   #[hddq],
+				   #[tlfs],
+				   #[rqfs],
+				   #[gjly],
+				   #[sytxgjtd],
+				   #[zadj],
+				   #[hdfwfx],
+				   #[zarsxx],
+				   #[zarssx],
+				   #[sfwdrza],
+				   #[sflcza],
+				   #[afdyxpd],
+				   #[lcfwfx],
+				   #[zcyzagcfx],
+				   #[zasj],
+				   #[zadd],
+				   #[wtxz],
+				   #[cldw],
+				   #[clsj],
+				   #[whdw],
+				   #[whrxm],
+				   #[zatq],
+				   #[bz],
+				   #[xzzashj],
+				   #[djrxm],
+				   #[djdwdm],
+				   #[djdwmc],
+				   #[czrxm],
+				   #[czdwdm],
+				   #[czdwmc],
+				   #[czbs],
+				   #[cljg])
+		]]>
+	</property>
+	<property name="insertJjqkSQL">
+		<![CDATA[
+			insert into t_zdry_jjqk
+				  (id,
+				   sfzh,
+				   isgdgz,
+				   hphm,
+				   xfysrqk,
+				   isjjjj,
+				   isygzc,
+				   cljz,
+				   isygzf,
+				   fwjz,
+				   gfdz,
+				   gfsj,
+				   nsr,
+				   czr,
+				   gcsj,
+				   czdwdm,
+				   czdwmc,
+				   czsj)
+				values
+				  (SEQ_ZDRY_JJQK.Nextval,
+				   #[sfzh],
+				   #[isgdgz],
+				   #[hphm],
+				   #[xfysrqk],
+				   #[isjjjj],
+				   #[isygzc],
+				   #[cljz],
+				   #[isygzf],
+				   #[fwjz],
+				   #[gfdz],
+				   #[gfsj],
+				   #[nsr],
+				   #[czr],
+				   #[gcsj],
+				   #[czdwdm],
+				   #[czdwmc],
+				   sysdate)
+		]]>
+	</property>
+	
+	<!-- 插入语句结束 -->
+	
+	<property name="updateLlfsSQL">
+		<![CDATA[
+			update t_zdry_lxfs
+			   set sjhm   = #[sjhm],
+			       jtdh   = #[jtdh],
+			       gsdh   = #[gsdh],
+			       gzdh   = #[gzdh],
+			       czhm   = #[czhm],
+			       qqhm   = #[qqhm],
+			       dzyjhm = #[dzyjhm],
+			       wwid   = #[wwid],
+			       msn    = #[msn],
+			       czrxm  = #[czrxm],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czsj   = sysdate
+			 where sfzh = #[sfzh]
+		]]>
+	</property>
+	<property name="updateXsbxSQL">
+		<![CDATA[
+			update t_zdry_xsbxxx
+			   set iszyry          = #[iszyry],
+			       gydd            = #[gydd],
+			       badwdm          = #[badwdm],
+			       badwmc          = #[badwmc],
+			       gysj            = #[gysj],
+			       gyyy            = #[gyyy],
+			       gydwlxdh        = #[gydwlxdh],
+			       iscqhjyfzcs     = #[iscqhjyfzcs],
+			       csmc            = #[csmc],
+			       csxz            = #[csxz],
+			       iscqyjbg        = #[iscqyjbg],
+			       jzqssj          = #[jzqssj],
+			       zzxz            = #[zzxz],
+			       isygdzy         = #[isygdzy],
+			       dwmc            = #[dwmc],
+			       dwxz            = #[dwxz],
+			       ysr             = #[ysr],
+			       isrcxfmxdysr    = #[isrcxfmxdysr],
+			       rcxfdysrpdyj    = #[rcxfdysrpdyj],
+			       isgzsjc         = #[isgzsjc],
+			       sjcjz           = #[sjcjz],
+			       gcsj            = #[gcsj],
+			       cph             = #[cph],
+			       isgzfc          = #[isgzfc],
+			       fcjz            = #[fcjz],
+			       gfrq            = #[gfrq],
+			       fcxz            = #[fcxz],
+			       isjjjj          = #[isjjjj],
+			       jjjjpdyj        = #[jjjjpdyj],
+			       isdjcsywgdsy    = #[isdjcsywgdsy],
+			       djtcywgdsypdyj  = #[djtcywgdsypdyj],
+			       jqsfywffzkn     = #[jqsfywffzkn],
+			       jqsfywffzknpdyj = #[jqsfywffzknpdyj],
+			       iszyhjsn        = #[iszyhjsn],
+			       lkbssj          = #[lkbssj],
+			       qwss            = #[qwss],
+			       zkzt            = #[zkzt],
+			       xsqkms          = #[xsqkms],
+			       hssj            = #[hssj],
+			       czrxm           = #[czrxm],
+			       czdwdm          = #[czdwdm],
+			       czdwmc          = #[czdwmc],
+			       czsj            = sysdate,
+			       jlsj            = #[jlsj]
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<property name="updateWfjlSQL">
+		<![CDATA[
+			update t_zdry_wffzjl
+			   set ajbh      = #[ajbh],
+			       ajlb      = #[ajlb],
+			       xzcs      = #[xzcs],
+			       xzdx      = #[xzdx],
+			       xzwp      = #[xzwp],
+			       zasd      = #[zasd],
+			       ybsd      = #[ybsd],
+			       qrsd      = #[qrsd],
+			       blxpsd    = #[blxpsd],
+			       qqsd      = #[qqsd],
+			       qzsd      = #[qzsd],
+			       fhsd      = #[fhsd],
+			       wzmjsd    = #[wzmjsd],
+			       lyjsjsd   = #[lyjsjsd],
+			       qtsd      = #[qtsd],
+			       zatd      = #[zatd],
+			       zzfs      = #[zzfs],
+			       gjxs      = #[gjxs],
+			       zafw      = #[zafw],
+			       stfs      = #[stfs],
+			       xwtd      = #[xwtd],
+			       zagj      = #[zagj],
+			       xzfs      = #[xzfs],
+			       fyfs      = #[fyfs],
+			       cdfs      = #[cdfs],
+			       hddq      = #[hddq],
+			       tlfs      = #[tlfs],
+			       rqfs      = #[rqfs],
+			       gjly      = #[gjly],
+			       sytxgjtd  = #[sytxgjtd],
+			       zadj      = #[zadj],
+			       hdfwfx    = #[hdfwfx],
+			       zarsxx    = #[zarsxx],
+			       zarssx    = #[zarssx],
+			       sfwdrza   = #[sfwdrza],
+			       sflcza    = #[sflcza],
+			       afdyxpd   = #[afdyxpd],
+			       lcfwfx    = #[lcfwfx],
+			       zcyzagcfx = #[zcyzagcfx],
+			       zasj      = #[zasj],
+			       zadd      = #[zadd],
+			       wtxz      = #[wtxz],
+			       cldw      = #[cldw],
+			       clsj      = #[clsj],
+			       whdw      = #[whdw],
+			       whrxm     = #[whrxm],
+			       zatq      = #[zatq],
+			       bz        = #[bz],
+			       xzzashj   = #[xzzashj],
+			       czrxm     = #[czrxm],
+			       czdwdm    = #[czdwdm],
+			       czdwmc    = #[czdwmc],
+			       czbs      = #[czbs],
+			       cljg		 = #[cljg]
+			 where id = #[id]
+		]]>
+	</property>
+	<property name="updateShgxsSQL">
+		<![CDATA[
+			update t_zdry_gxr
+			   set 
+			       gxrxm    = #[gxrxm],
+			       gxrsfzh  = #[gxrsfzh],
+			       gxrlxdh  = #[gxrlxdh],
+			       gxrxzdxz = #[gxrxzdxz],
+			       ydsrgx   = #[ydsrgx],
+			       czrxm    = #[czrxm],
+			       czdwdm   = #[czdwdm],
+			       czdwmc   = #[czdwmc],
+			       czsj     = sysdate,
+			       xb       = #[xb]
+			 where bh = #[bh]
+		]]>
+	</property>
+	
+	<property name="updateJbxxSQL">
+		<![CDATA[
+			update t_zdry_jbxx
+			   set 
+		   	     bm       = #[bm],
+		   	     jg       = #[jg],
+		   	     gj       = #[gj],
+		   	     zylb     = #[zylb],
+		   	     zw       = #[zw],
+		   	     fwcs     = #[fwcs],
+		   	     qtzjlx   = #[qtzjlx],
+		  	     qtzjhm   = #[qtzjhm],
+		   	     byzk     = #[byzk],
+		   	     sg       = #[sg],
+		   	     zjxy     = #[zjxy],
+		   	     zzmh     = #[zzmh],
+		   	     jkzk     = #[jkzk],
+		  	     mz       = #[mz],
+		  	     whcd     = #[whcd],
+		  	     xx       = #[xx],
+		  	     hyzk     = #[hyzk],
+		  	     lxfs 	  = #[lxfs],
+		  	     gxsj     = sysdate
+			 where sfzh = #[sfzh]
+		]]>
+	</property>
+	<property name="updateTmtzSQL">
+		<![CDATA[
+			update t_zdry_jbxx
+			   set 
+		  	    lx       = #[lx],
+		  	    tx       = #[tx],
+		  	    ywsb     = #[ywsb],
+		  	    sbwz     = #[sbwz],
+		  	    ky       = #[ky],
+		  	    xh       = #[xh],
+		  	    zc       = #[zc],
+		  	    tc       = #[tc],
+		  	    ms  	 = #[ms],
+		        gxsj     = sysdate
+			 where sfzh  = #[sfzh]
+		]]>
+	</property>
+	<property name="delShgxsSQL">
+		<![CDATA[
+			delete t_zdry_gxr where sfzh  = ?
+		]]>
+	</property>
+	<property name="delZpxxSQL">
+		<![CDATA[
+			delete t_zdry_zpxx where sfzh  = ?
+		]]>
+	</property>
+	<property name="delJjqkSQL">
+		<![CDATA[
+			delete t_zdry_jjqk where sfzh  = ?
+		]]>
+	</property>
+	<property name="delGzxxSQL">
+		<![CDATA[
+			delete t_zdry_gzxx where sfzh  = ?
+		]]>
+	</property>
+	<property name="delWffzjlSQL">
+		<![CDATA[
+			delete t_zdry_wffzjl where id  = ?
+		]]>
+	</property>
+	<property name="delByIdXsbxSQL">
+		<![CDATA[
+			delete t_zdry_xsbxxx where id  = ?
+		]]>
+	</property>
+	<property name="delByIdZpxxSQL">
+		<![CDATA[
+			delete t_zdry_zpxx where id  = ?
+		]]>
+	</property>
+	
+</properties>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<property name="queryWtxxBeansPageResult">
+		<![CDATA[
+			 select wtid,
+			      title,
+			      content,
+			      djrxm,
+			      djrsfzh,
+			      djdwdm,
+			      djdwmc,
+			      djrlxfs,
+			      (select decode(count(1),0,'0','1')  from t_yjcj_wthdb where wtid=t.wtid) sffk,
+			      djsj
+			 from t_yjcj_wtxxb t
+			 where 1=1
+			 	#if($title && !$title.equals(""))
+			 	 	and title like '%'||#[title]||'%'
+			 	#end
+			 	#if($djsjstart && !$djsjstart.equals(""))
+			 		and djsj>=to_date(#[djsjstart],'yyyy-mm-dd')
+			 	#end
+			 	#if($djsjend && !$djsjend.equals(""))
+			 		and djsj<to_date(#[djsjend]||' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+			 	#end
+			 	
+			 	#if ($sffk && $sffk.equals("1"))
+			 		and exists (select 1 from t_yjcj_wthdb a where a.wtid=t.wtid)
+			 	#elseif($sffk && $sffk.equals("0"))
+			 		and not exists (select 1 from t_yjcj_wthdb a where a.wtid=t.wtid)
+			 	#end
+			 	order by djsj desc
+ 		]]>
+	</property> 
+	
+	<property name="insertWtxxBean">
+		<![CDATA[
+			insert into t_yjcj_wtxxb
+			  (wtid, title, content, djrxm, djrsfzh, djdwdm, djdwmc, djrlxfs, sffk, djsj)
+			values
+			  (#[wtid],#[title],#[content],#[djrxm],#[djrsfzh],#[djdwdm],#[djdwmc],#[djrlxfs],#[sffk],to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'))
+		]]>
+	</property>
+	
+	<property name="queryWtxxBeanByWtid">
+		<![CDATA[
+			select wtid,
+		       title,
+		       content,
+		       djrxm,
+		       (select username from v_common_user where SFZH=t.djrsfzh and ISVALID='1') as djrjh,
+		       djrsfzh,
+		       djdwdm,
+		       djdwmc,
+		       djrlxfs,
+		       sffk,
+		       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj
+		  from t_yjcj_wtxxb t
+		  where wtid=#[wtid]
+		]]>
+	</property>
+	
+	<property name="queryWtfjBeansBywtid">
+		<![CDATA[
+			select fjid, wtid, type, wthdid 
+			from t_yjcj_wtfjb
+			where wtid=#[wtid] and type='1'
+		]]>
+	</property>
+	
+	<property name="updateWtxxBean">
+		<![CDATA[
+			 update t_yjcj_wtxxb
+			    set 
+			        title = #[title],
+			        content = #[content],
+			        djrxm = #[djrxm],
+			        djrsfzh = #[djrsfzh],
+			        djdwdm = #[djdwdm],
+			        djdwmc = #[djdwmc],
+			        djrlxfs = #[djrlxfs]
+			  where wtid = #[wtid]
+ 
+		]]>
+	</property>
+	
+	<property name="insertWtfjBean">
+		<![CDATA[
+			 insert into t_yjcj_wtfjb
+			   (fjid, wtid, upload, type, wthdid)
+			 values
+			   (?, ?, ?, ?, ?)
+		]]>
+	</property>
+	
+	<property name="insertWthfBean">
+		<![CDATA[
+			 insert into t_yjcj_wthdb
+			   (wthdid, wtid, hdcontent, djrxm, djrsfzh, djdwdm, djdwmc, djrlxfs, djdj)
+			 values
+			   (#[wthdid],#[wtid],#[hdcontent],#[djrxm],#[djrsfzh],#[djdwdm],#[djdwmc],#[djrlxfs],sysdate)
+		]]>
+	</property>
+	
+	<property name="queryWthdxxBeansByWtid">
+		<![CDATA[
+			select wthdid, wtid, hdcontent, djrxm, djrsfzh, djdwdm, djdwmc, djrlxfs, to_char(djdj,'yyyy-mm-dd hh24:mi:ss') djdj 
+			from t_yjcj_wthdb
+			where wtid=#[wtid]
+			order by djdj asc
+		]]>
+	</property>
+	
+	<property name="queryWtfjBeansByWthdid">
+		<![CDATA[
+			select fjid, wtid, type, wthdid 
+			from t_yjcj_wtfjb
+			where wthdid=#[wthdid] and type='2'
+		]]>
+	</property>
+	
+	<property name="insertXxfbBean">
+		<![CDATA[
+		insert into t_yjcj_xxfb
+		  (xxid, title,content, djrxm, djrsfzh, djdwdm, djdwmc, djsj)
+		values
+		  (#[xxid],#[title],#[content], #[djrxm], #[djrsfzh], #[djdwdm], #[djdwmc], sysdate)
+					
+		]]>
+	</property> 
+	
+	<property name="updateXxfbBean">
+		<![CDATA[
+			 update t_yjcj_xxfb
+		    set title = #[title],
+		        content = #[content],
+		        djrxm = #[djrxm],
+		        djrsfzh = #[djrsfzh],
+		        djdwdm = #[djdwdm],
+		        djdwmc = #[djdwmc],
+		        djsj = sysdate
+		  where xxid = #[xxid]
+		]]>
+	</property>
+	
+	<property name="insertXxfbfjBean">
+		<![CDATA[
+			 insert into t_yjcj_xxfj
+			   (fjid, xxid, upload, uploadfilename)
+			 values
+			   (?, ?, ?, ?)
+		]]>
+	</property>
+	
+	<property name="queryXxfbfjBeansPageResult">
+		<![CDATA[
+			 select fjid, xxid,uploadfilename 
+			 from t_yjcj_xxfj
+			 where xxid=#[xxid]
+		]]>
+	</property>
+	
+	<property name="queryXxfbBeansPageResult">
+		<![CDATA[
+			select * 
+			from t_yjcj_xxfb
+			order by djsj desc
+		]]>
+	</property>
+	
+	<property name="deleteXxfbfjBean">
+		<![CDATA[
+			delete from t_yjcj_xxfj where fjid=#[fjid]
+		]]>
+	</property>
+	
+	<property name="queryCommonXxfbBeanByXxid">
+		<![CDATA[
+			select * from t_yjcj_xxfb where xxid=?
+		]]>
+	</property>
+	
+	<property name="queryXxfbBeanOfLastTimeToSm">
+		<![CDATA[
+			select * from t_yjcj_xxfb t where djsj=(select max(djsj) from t_yjcj_xxfb)
+		]]>
+	</property>
+	
+</properties>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="wyxq" extends="default" namespace="/zagl/wyxq">
+		<action name="*"  class="com.chinacreator.zagl.action.ZaWyxqAction" method="{1}" >
+			<result name="toWyxqPage">/jsp/zagl/pages/wyxq/wyxqInfo.jsp</result>
+			<result name="toWyxqListPage">/jsp/zagl/pages/wyxq/wyxqList.jsp</result>
+			<result name="toWyxqZxPage">/jsp/zagl/pages/wyxq/wyxqZxPage.jsp</result>
+			<result name="toWyxqAjPage">/jsp/zagl/pages/wyxq/wyxqAjInfo.jsp</result>
+		</action>
+	</package>
+</struts>

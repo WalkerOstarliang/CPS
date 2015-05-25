@@ -1,0 +1,21 @@
+-- Create sequence 
+create sequence SEQ_ZA_LGBH
+minvalue 100000000000001
+maxvalue 999999999999999
+start with 100000000000001
+increment by 1;
+
+CREATE OR REPLACE FUNCTION F_GET_LGBH
+RETURN VARCHAR2
+-- 获取旅馆编号
+ AS
+  V_LGBH VARCHAR2(27);
+BEGIN
+  SELECT PROVALUE || TO_CHAR(TRUNC(SYSDATE), 'yyyymmdd') ||
+         SEQ_ZA_LGBH.NEXTVAL
+    INTO V_LGBH
+    FROM T_COMMON_PARAMETER
+   WHERE PROKEY = 'current.xzdm';
+  RETURN V_LGBH;
+END;
+/

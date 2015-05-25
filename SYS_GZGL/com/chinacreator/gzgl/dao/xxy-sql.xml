@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+
+	<property name="queryxxyxx">
+		<![CDATA[
+		select rk.*,emxx.zaembh,
+			emxx.qkqk,
+			emxx.grjl,
+			emxx.jtjsh,
+			emxx.sxzzqk,
+			to_char(emxx.qysj,'yyyy-mm-dd') as qysj,
+			emxx.qyzt,
+			to_char(emxx.tysj,'yyyy-mm-dd') as tysj,
+			emxx.glsymj,
+			emxx.tzsyszyj,
+			emxx.tzsyyy,
+			emxx.xsbx,
+			emxx.wjrxm,
+			to_char(emxx.wjsj,'yyyy-mm-dd') as wjsj,
+			emxx.wjryj,
+			emxx.ldxm,
+			emxx.ldszdwdm,
+			emxx.ldszdwmc,
+			emxx.ldshsj,
+			emxx.ldyj,
+			emxx.djrxm,
+			emxx.djsj,
+			emxx.djdwdm,
+			emxx.djdwmc,
+			emxx.djrsfzh,
+			emxx.jljz,
+			emxx.fyqkjyjz,
+			emxx.bz,
+			emxx.ssdwdm,
+			emxx.ssdwmc	
+		  from t_gzgl_ermxxy emxx,v_lsgl_rk_jbxx rk
+		  where rk.rybh = emxx.rybh 
+		  	and emxx.qyzt <> '0'
+		 #if($xm &&!$xm.equals(""))
+		  	and rk.xm like #[xm] || '%'
+		  #end
+		  #if($sfzh &&!$sfzh.equals(""))
+		  	and rk.SFZH = #[sfzh]
+		  #end
+		  #if($djsj_from && !$djsj_from.equals(""))
+		    and emxx.DJSJ >= to_date(#[djsj_from],'yyyy-MM-dd HH24:mi:ss')
+		  #end 
+		  #if($djsj_to && !$djsj_to.equals(""))
+		     and emxx.DJSJ <= to_date(#[djsj_to],'yyyy-MM-dd HH24:mi:ss')
+		  #end 
+		  #if($jwsqdm && !$jwsqdm.equals(""))
+		   	 and emxx.djdwdm = #[jwsqdm]
+		  #elseif ($pcsdm && !$pcsdm.equals(""))
+			 and emxx.djdwdm like substr(#[pcsdm],1,8)||'%'
+		  #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 and emxx.djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+		  #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 and emxx.djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+		  #end
+		order by emxx.DJSJ desc 
+		]]>
+	</property>
+	
+	<!-- 新增信息员 -->
+	<property name="insertEmxxBean">
+		<![CDATA[
+		insert into t_gzgl_ermxxy
+		  (zaembh, rybh, rylb, sfzh, gzdw, zy, qkqk, grjl, jtjsh, sxzzqk, 
+		   qysj, qyzt, tysj, glsymj, tzsyszyj, tzsyyy, xsbx, wjrxm, wjsj, 
+		   wjryj, ldxm, ldszdwdm, ldszdwmc, ldshsj, ldyj, djrxm, djsj, djdwdm, 
+		   djdwmc, xm, xb, csrq, djrsfzh, czrxm, czrjh, czsj, czdwdm, czdwmc, 
+		   czrsfzh, jljz, fyqkjyjz, bz, czbs, ssdwdm, ssdwmc)
+		values
+		  (#[zaembh], #[rybh], #[rylb], #[sfzh], #[gzdw], #[zy], #[qkqk], #[grjl], 
+		   #[jtjsh], #[sxzzqk], to_date(#[qysj],'yyyy-mm-dd'), #[qyzt], to_date(#[tysj],'yyyy-mm-dd'), 
+		   #[glsymj], #[tzsyszyj], #[tzsyyy], #[xsbx], #[wjrxm], 
+		   to_date(#[wjsj],'yyyy-mm-dd'), #[wjryj], #[ldxm], #[ldszdwdm], 
+		   #[ldszdwmc], #[ldshsj], #[ldyj], #[djrxm], sysdate, #[djdwdm], #[djdwmc], 
+		   #[xm], #[xb], to_date(#[csrq],'yyyy-mm-dd'), #[djrsfzh], #[czrxm], #[czrjh], sysdate, #[czdwdm], 
+		   #[czdwmc], #[czrsfzh], #[jljz], #[fyqkjyjz], #[bz], #[czbs], #[ssdwdm], 
+		   #[ssdwmc])
+		]]>
+	</property>
+	
+	<!-- 根据主键编号查询信息员 -->
+	<property name="getEmxxBean">
+		<![CDATA[
+		  select rk.*,emxx.zaembh,
+			emxx.qkqk,
+			emxx.grjl,
+			emxx.jtjsh,
+			emxx.sxzzqk,
+			to_char(emxx.qysj,'yyyy-mm-dd') as qysj,
+			emxx.qyzt,
+			to_char(emxx.tysj,'yyyy-mm-dd') as tysj,
+			emxx.glsymj,
+			emxx.tzsyszyj,
+			emxx.tzsyyy,
+			emxx.xsbx,
+			emxx.wjrxm,
+			to_char(emxx.wjsj,'yyyy-mm-dd') as wjsj,
+			emxx.wjryj,
+			emxx.ldxm,
+			emxx.ldszdwdm,
+			emxx.ldszdwmc,
+			emxx.ldshsj,
+			emxx.ldyj,
+			emxx.djrxm,
+			emxx.djsj,
+			emxx.djdwdm,
+			emxx.djdwmc,
+			emxx.djrsfzh,
+			emxx.czrxm,
+			emxx.czrjh,
+			emxx.czsj,
+			emxx.czdwdm,
+			emxx.czdwmc,
+			emxx.czrsfzh,
+			emxx.jljz,
+			emxx.fyqkjyjz,
+			emxx.bz,
+			emxx.czbs,
+			emxx.ssdwdm,
+			emxx.ssdwmc	
+		  from t_gzgl_ermxxy emxx,v_lsgl_rk_jbxx rk
+		  where rk.rybh = emxx.rybh 
+			and ZAEMBH =? 
+	]]>
+	
+	</property>
+	
+	<property name="insertEmfyqkxxBean">
+		<![CDATA[
+			insert into t_gzgl_ermfkxx
+			  (id, xxtgsj, fyqkxx, djrxm, djsj, djdwdm, djdwmc, zaembh,djrsfzh)
+			values
+			  (#[id], to_date(#[xxtgsj],'yyyy-mm-dd'), #[fyqkxx], #[djrxm], sysdate, #[djdwdm], #[djdwmc], #[zaembh],#[djrsfzh])
+		]]>
+	</property>
+	
+	<property name="updateEmfyqkxxBean">
+		<![CDATA[
+			update t_gzgl_ermfkxx
+			   set 
+			       xxtgsj = to_date(#[xxtgsj],'yyyy-mm-dd'),
+			       fyqkxx = #[fyqkxx],
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<property name="getEmFyqkxxBeanByZaembh">
+		<![CDATA[
+		select id, zaembh, to_char(xxtgsj,'yyyy-MM-dd') xxtgsj, fyqkxx, djrxm, to_char(djsj,'yyyy-MM-dd HH24:mi:ss') djsj, djdwdm, djdwmc from t_gzgl_ermfkxx
+		where zaembh =?
+	]]>
+	</property>
+	
+	<property name="updateEmxxBean">
+		<![CDATA[
+			update t_gzgl_ermxxy
+			   set 
+			       sfzh = #[sfzh],
+			       qkqk = #[qkqk],
+			       grjl = #[grjl],
+			       jtjsh = #[jtjsh],
+			       sxzzqk = #[sxzzqk],
+			       qysj = to_date(#[qysj],'yyyy-mm-dd'),
+			       qyzt = #[qyzt],
+			       tysj = to_date(#[tysj],'yyyy-mm-dd'),
+			       glsymj = #[glsymj],
+			       tzsyszyj = #[tzsyszyj],
+			       tzsyyy = #[tzsyyy],
+			       xsbx = #[xsbx],
+			       wjrxm = #[wjrxm],
+			       wjsj = to_date(#[wjsj],'yyyy-mm-dd'),
+			       wjryj = #[wjryj],
+			       ldxm = #[ldxm],
+			       ldszdwdm = #[ldszdwdm],
+			       ldszdwmc = #[ldszdwmc],
+			       ldshsj = to_date(#[ldshsj],'yyyy-mm-dd'),
+			       ldyj = #[ldyj],
+			       xm = #[xm],
+			       xb = #[xb],
+			       czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czsj = sysdate,
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czrsfzh = #[czrsfzh],
+			       jljz = #[jljz],
+			       fyqkjyjz = #[fyqkjyjz],
+			       bz = #[bz],
+			       czbs = #[czbs],
+			       ssdwdm = #[ssdwdm],
+			       ssdwmc = #[ssdwmc]
+			 where zaembh = #[zaembh]
+			
+		]]>
+	</property>
+	
+	<!-- 根据身份证号和单位代码查询信息员 -->
+	<property name="queryEmxxBeanBySfzhAndOrgCode">
+		<![CDATA[
+			select rk.*,emxx.zaembh,
+				emxx.qkqk,
+				emxx.grjl,
+				emxx.jtjsh,
+				emxx.sxzzqk,
+				to_char(emxx.qysj,'yyyy-mm-dd') as qysj,
+				emxx.qyzt,
+				to_char(emxx.tysj,'yyyy-mm-dd') as tysj,
+				emxx.glsymj,
+				emxx.tzsyszyj,
+				emxx.tzsyyy,
+				emxx.xsbx,
+				emxx.wjrxm,
+				to_char(emxx.wjsj,'yyyy-mm-dd') as wjsj,
+				emxx.wjryj,
+				emxx.ldxm,
+				emxx.ldszdwdm,
+				emxx.ldszdwmc,
+				emxx.ldshsj,
+				emxx.ldyj,
+				emxx.djrxm,
+				emxx.djsj,
+				emxx.djdwdm,
+				emxx.djdwmc,
+				emxx.djrsfzh,
+				emxx.czrxm,
+				emxx.czrjh,
+				emxx.czsj,
+				emxx.czdwdm,
+				emxx.czdwmc,
+				emxx.czrsfzh,
+				emxx.jljz,
+				emxx.fyqkjyjz,
+				emxx.bz,
+				emxx.czbs,
+				emxx.ssdwdm,
+				emxx.ssdwmc	
+		  	from t_gzgl_ermxxy emxx,v_lsgl_rk_jbxx rk
+			where emxx.rybh = rk.rybh 
+				and emxx.qyzt = '1' and  emxx.sfzh =?  and ssdwdm = ?
+		]]>
+	</property>
+	
+	<property name="queryEmxxBeanBySfzhAndOrg">
+		<![CDATA[
+			select zaembh,
+				rybh,
+				rylb xxyrylb,
+				sfzh,
+				gzdw,
+				zy,
+				qkqk,
+				grjl,
+				jtjsh,
+				sxzzqk,
+				to_char(qysj,'yyyy-MM-dd') qysj,
+				qyzt,
+				to_char(tysj,'yyyy-MM-dd') tysj,
+				glsymj,
+				tzsyszyj,
+				tzsyyy,
+				xsbx,
+				wjrxm,
+				to_char(wjsj,'yyyy-MM-dd') wjsj,
+				wjryj,
+				ldxm,
+				ldszdwdm,
+				ldszdwmc,
+				to_char(ldshsj,'yyyy-MM-dd') ldshsj,
+				ldyj,
+				djrxm,
+				to_char(djsj,'yyyy-MM-dd HH24:mi:ss') djsj,
+				djdwdm,
+				djdwmc,
+				xm,
+				xb,
+				to_char(csrq,'yyyy-MM-dd') csrq
+			from t_gzgl_ermxxy
+			where sfzh =? 
+				and qyzt='1'
+				and djdwdm=?
+		]]>
+	</property>
+	
+	<property name="queryEmfyqkxxBeanById">
+		<![CDATA[
+			select id, to_char(xxtgsj,'yyyy-mm-dd') as xxtgsj, fyqkxx, djrxm, to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj, djdwdm, djdwmc, zaembh from t_gzgl_ermfkxx where id = ?
+		]]>
+	</property>
+	
+	<property name="zxZaemxxBean">
+		<![CDATA[
+			update t_gzgl_ermxxy
+			set QYZT='0',
+				TYSJ=sysdate,
+			    CZSJ=sysdate,
+			    CZDWDM=#[czdwdm],
+			    CZDWMC=#[czdwmc],
+			    CZRSFZH=#[czrsfzh],
+			    CZRJH=#[czrjh],
+			    CZBS='3'
+			where ZAEMBH=#[zaembh]
+		]]>
+	</property>
+</properties>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryLgdqtx">
+		<![CDATA[
+			SELECT ID, SSPCSDM, TXLXDM, XM, SFZH, XZDXZ, TO_CHAR(SCKCSJ,'YYYY-MM-DD') AS SCKCSJ, TO_CHAR(KCDQSJ,'YYYY-MM-DD') AS KCDQSJ, XXLBDM,SQXXBH
+  			FROM T_ZDRY_LGDQTX
+          WHERE 1=1 
+          #if($sspcsdm and !$sspcsdm.equals(""))
+          	AND SSPCSDM = #[sspcsdm]
+          #end
+		]]>
+	</property>
+</properties>

@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 从业人员 -->
+	<property name="queryCyry">
+		<![CDATA[
+			select c.*,to_char(to_date(c.djsj,'yyyy-mm-dd hh24:mi:ss')+5,'yyyy-mm-dd') as blqx from v_za_ry_cyry c
+		 	where 1 = 1 
+		 	#if($jwsqdm && !$jwsqdm.equals(""))
+		 		and xzdjwq = #[jwsqdm]
+		 	#elseif($pcsdm && !$pcsdm.equals(""))
+				and djdwdm like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			#end
+		    and fksj is null
+		    and czbs != '3'
+		    and zxbs != '1'
+		    and 
+		   ( not exists (select 1 from t_lsgl_rk_czrk  cz where cz.rybh = c.rybh  
+		   	#if($jwsqdm && !$jwsqdm.equals(""))
+		 	 	and cz.djdwdm=#[jwsqdm]
+		 	#elseif($pcsdm && !$pcsdm.equals(""))
+				and cz.djdwdm like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				and cz.djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				and cz.djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			#end	
+		   		 ) 
+		     and not exists (select 1 from t_lsgl_rk_ldrkzzxx   cz where cz.rybh = c.rybh  
+		     #if($jwsqdm && !$jwsqdm.equals(""))
+		 		and cz.djdwdm=#[jwsqdm]
+		 	#elseif($pcsdm && !$pcsdm.equals(""))
+				and cz.djdwdm like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				and cz.djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				and cz.djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			#end
+		     
+		     ) 
+		     and not exists (select 1 from t_lsgl_rk_jzrkxx   cz where cz.rybh = c.rybh   
+		     #if($jwsqdm && !$jwsqdm.equals(""))
+		 		and cz.djdwdm=#[jwsqdm]
+		 	#elseif($pcsdm && !$pcsdm.equals(""))
+				and cz.djdwdm like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				and cz.djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				and cz.djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			#end) 
+		   )
+		   #if($startTime && !$startTime.equals(""))
+			   and to_date(c.djsj,'yyyy-mm-dd hh24:mi:ss')+5 >= to_date(#[startTime]||' 00:00:00','yyyy-mm-dd hh24:mi:ss') 
+		   #end
+		   #if($endTime && !$endTime.equals(""))
+		   		and to_date(c.djsj,'yyyy-mm-dd hh24:mi:ss') +5 <= to_date(#[endTime]||' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+		   #end	
+		]]>
+	</property>
+	
+	<!-- 出租房屋巡查登记 -->
+	<property name="queryCzfwxcdj">
+		<![CDATA[
+		select fwtx.*,to_char(fwtx.last_time + 122,'yyyy-mm-dd') as blqx
+		  from (select fw.fwid,
+		               fw.hzxm,
+		               fw.hzsfzh,
+		               f_get_dzmc(fw.dzid) dzmc,
+		               cz.czfwbpbm,
+		               cz.djsj,
+		               cz.djrxm,
+		               nvl((select max(xcdj.djsj)
+		                     from t_lsgl_fw_czwxcdj xcdj
+		                    where xcdj.fwid = fw.fwid),
+		                   (select max(czfw.djsj)
+		                      from t_lsgl_czfw_jbxx czfw
+		                     where czfw.FWBH = fw.fwid)) last_time
+		          from t_lsgl_fw_jbxx fw, t_lsgl_czfw_jbxx cz
+		         where fw.fwid = cz.fwbh
+		           and cz.fwzt = '0'
+		           and fw.SFCZW = '1'
+		           and fw.cqlx = '2'
+		           and fw.zxbs = '0'
+		           #if($jwsqdm && !$jwsqdm.equals(""))
+		 				and fw.djdwdm = #[jwsqdm]
+				 	#elseif($pcsdm && !$pcsdm.equals(""))
+						and fw.djdwdm like substr(#[pcsdm],1,8)||'%'
+					#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+						and fw.djdwdm  like substr(#[countrygajgjgdm],1,6)||'%'
+					#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+						and fw.djdwdm  like substr(#[citygajgjgdm],1,4)||'%'
+					#end
+		           ) fwtx
+		 where 1 = 1
+		 #if($startTime && !$startTime.equals(""))
+			 and (fwtx.last_time + 112) >= to_date(#[startTime]||' 00:00:00', 'yyyy-mm-dd hh24:mi:ss')
+		 #end 
+		 #if($endTime && !$endTime.equals(""))
+			 and (fwtx.last_time + 112) <= to_date(#[endTime]||' 23:59:59', 'yyyy-mm-dd hh24:mi:ss')
+		 #end
+		]]>
+	</property>
+	
+	<!-- 查询流动人口延期或注销 -->
+	<property name="queryLdrk">
+		<![CDATA[
+			select ld.zzbh,
+		       jb.rybh,
+		       jb.sfzh,
+		       jb.xm,
+		       jb.xb,
+		       jb.lxdh,
+		       ld.zzdxz,
+		       jb.hjdxz,
+		       ld.djsj,
+		       ld.zrmjxm,
+		       to_char(ld.njzrq,'yyyy-mm-dd') as blqx
+			from t_lsgl_rk_ldrkzzxx ld
+			inner join t_lsgl_rk_jbxx jb on ld.rybh = jb.rybh
+			where 1=1
+			 #if($endTime && !$endTime.equals(""))
+				and NJZRQ < (to_date(#[endTime]||' 23:59:59','yyyy-mm-dd hh24:mi:ss') + 31) 
+			 #end 
+			 #if($startTime && !$startTime.equals(""))
+				and NJZRQ >( to_date(#[startTime]||' 23:59:59','yyyy-mm-dd hh24:mi:ss') - 10) 
+			 #end
+			
+			and ld.zxsj is null 
+			#if($jwsqdm && !$jwsqdm.equals(""))
+ 				and zrdwdm = #[jwsqdm]
+		 	#elseif($pcsdm && !$pcsdm.equals(""))
+				and zrdwdm like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				and zrdwdm  like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				and zrdwdm  like substr(#[citygajgjgdm],1,4)||'%'
+			#end
+			
+		]]>
+	</property>
+	
+	<!-- 查询未在PGIS地图标注的实体 -->
+	<property name="querySt">
+		<![CDATA[
+			select stmc,jdxzmc,sqmc,jlxmc,mph,xqz,djsj,djrxm,id,to_char(sysdate,'yyyy-mm-dd') as blqx,
+					replace(JDXZMC,'湖南省长沙市','')||sqmc||jlxmc||mph||xqz||ldxz stdz
+			from t_common_stxx
+			where (zxbs = '1' or  zxbs is null)
+			#if($jwsqdm && !$jwsqdm.equals(""))
+ 				and djdwdm = #[jwsqdm]
+		 	#elseif($pcsdm && !$pcsdm.equals(""))
+				and djdwdm like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				and djdwdm  like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				and djdwdm  like substr(#[citygajgjgdm],1,4)||'%'
+			#end
+			and x is null
+			and y is null 
+			#if($startTime && !$startTime.equals(""))
+				and djsj > to_date(#[startTime]||' 00:00:00','yyyy-mm-dd hh24:mi:ss') 
+			#end 
+			#if($endTime && !$endTime.equals(""))
+				and djsj<to_date(#[endTime]||' 23:59:59','yyyy-mm-dd hh24:mi:ss') 
+			#end
+		]]>
+	</property>
+	
+	<!-- 查询重点人员下发数据维护 -->
+	<property name="queryXfsjwh">
+		<![CDATA[
+			select rk.xm,rk.sfzh,rk.lxdh,(select max(djsj) from t_zdry_xsbx where sfzh = rk.sfzh) as last_time,rk.xzzxz,'月底' as blqx
+			from t_zdry_gzdx zdry,t_lsgl_rk_jbxx rk
+			where zdry.rybh = rk.rybh
+			and (zdry.yxx='1' or zdry.yxx is null)
+			and (zdry.sfzh in 
+			        (select sfzh
+			         from (select rybh,sfzh,djsj,row_number() over(partition by sfzh order by djsj desc) as sn
+			               from t_zdry_xsbx
+			               where djdwdm = #[jwsqdm] and sfzh is not null)
+			         where sn = '1'
+			         and to_char(djsj, 'yyyymm') != to_char(sysdate, 'yyyymm')) 
+			     or 
+			     zdry.sfzh not in
+			     (select sfzh from t_zdry_xsbx where djdwdm = #[jwsqdm] and sfzh is not null)) 
+			 
+			#if($jwsqdm && !$jwsqdm.equals(""))
+ 				and zdry.sszrdwdm =  #[jwsqdm]
+		 	#elseif($pcsdm && !$pcsdm.equals(""))
+				and zdry.sszrdwdm like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				and zdry.sszrdwdm  like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				and zdry.sszrdwdm  like substr(#[citygajgjgdm],1,4)||'%'
+			#end       
+			
+		]]>
+	</property>
+	
+	<!-- 查询缺失关系人的重点人员 -->
+	<property name="queryZdryGxrqs">
+		<![CDATA[
+			select jb.xm,
+	               jb.xb,
+	               zd.sfzh,
+	               jb.hjdxz,
+	               jb.xzzxz,
+	               jb.lxdh,
+	               zd.sszrdwdm,
+	               zd.sszrdwmc,
+	               zd.rybh,
+	               zd.zdrybh,
+	               zd.zdryxl,
+	               '月底' as blqx
+	        from t_zdry_gzdx zd, t_lsgl_rk_jbxx jb 
+	        where zd.sfzh in (
+				SELECT sfzh
+				    FROM t_zdry_xsbx a
+				   WHERE NOT EXISTS (
+				      SELECT 1 FROM t_lsgl_rk_gxr b
+				      WHERE b.rybh = a.rybh
+				     )
+				     AND NOT EXISTS (
+				      SELECT 1 FROM t_zdry_wffzjl c
+				      WHERE c.rybh = a.rybh
+				     )
+				     AND EXISTS(
+				      SELECT 1 FROM t_zdry_gzdx d
+				      WHERE d.zdrylbbj IS NULL
+				        AND d.rybh = a.rybh
+				     )
+				     AND NOT EXISTS (
+				      SELECT 1 FROM t_lsgl_ry_lxfs e
+				      WHERE e.rybh = a.rybh
+				     )
+				     AND a.zkzt = '1'
+				     AND a.DJDWDM = #[jwsqdm]
+				      #if($startTime && !$startTime.equals(""))
+					     AND a.djsj > to_date(#[startTime]||' 00:00:00','yyyy-mm-dd hh24:mi:ss')
+					 #end 
+					 #if($endTime && !$endTime.equals(""))
+					     AND a.djsj < to_date(#[endTime]||' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+					 #end
+			)
+			#if($jwsqdm && !$jwsqdm.equals(""))
+ 				and sszrdwdm = #[jwsqdm]
+		 	#elseif($pcsdm && !$pcsdm.equals(""))
+				and sszrdwdm like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				and sszrdwdm  like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				and sszrdwdm  like substr(#[citygajgjgdm],1,4)||'%'
+			#end
+			
+		]]>
+	</property>
+	
+	<!-- 查询重点人员委托信息 -->
+	<property name="queryZdryTgxx">
+		<![CDATA[
+			select t.id tgxxId,
+		       a.rybh,
+		       c.xm,
+		       to_char(t.wtsj, 'yyyy-mm-dd hh24:mi:ss') wtsj,
+               c.xb,
+               c.sfzh,
+               c.hjdxz,
+               c.xzzxz,
+               c.lxdh,
+               a.sszrdwdm,
+               a.sszrdwmc,
+               a.zdrybh,
+               a.zdryxl,
+               to_char(t.wtsj+5,'yyyy-mm-dd') as blqx
+		  from T_ZDRY_WTXX t, t_zdry_gzdx a, t_lsgl_rk_jbxx c
+		 where a.sfzh = t.sfzh
+		   and a.rybh = c.rybh
+		   and t.jgzt = '0'
+		    #if($startTime && !$startTime.equals(""))
+			   and t.wtsj+5 <= to_date(#[endTime]||' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+			 #end 
+			 #if($endTime && !$endTime.equals(""))
+			   and t.wtsj+5 >= to_date(#[startTime]||' 00:00:00','yyyy-mm-dd hh24:mi:ss')
+			 #end
+		   #if($jwsqdm && !$jwsqdm.equals(""))
+ 				and t.jgdwdm = #[jwsqdm]
+		 	#elseif($pcsdm && !$pcsdm.equals(""))
+				and t.jgdwdm like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				and t.jgdwdm  like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				and t.jgdwdm  like substr(#[citygajgjgdm],1,4)||'%'
+			#end
+		]]>
+	</property>
+	
+	<!-- 查询需要登记为出租房屋的房屋 -->
+	<property name="queryFw">
+		<![CDATA[
+			SELECT fwid, f_get_dzmc(dzid) as dzmc,a.hzxm,a.hzsfzh,a.djrxm,a.djsj,to_char(sysdate,'yyyy-mm-dd') as blqx
+			  FROM T_LSGL_FW_JBXX A
+			 WHERE A.SFCZW = '0'
+			   AND (A.ZXBS = '0' OR A.ZXBS IS NULL)
+			   AND EXISTS
+			 (SELECT 1
+			          FROM T_COMMON_DZXX DZ
+			         WHERE A.DZID = DZ.DZID
+			           AND EXISTS
+			         (SELECT 1 FROM T_COMMON_STXX ST WHERE ST.ID = DZ.STID))
+			   AND FWID IN
+			       (SELECT FWID
+			          FROM T_LSGL_RKFW_GL
+			         WHERE RKFWGLID IN (SELECT RKFWGLID
+			                              FROM T_LSGL_RK_LDRKZZXX
+			                             WHERE ZZCS = '34'
+			                               AND (ZXBS = '0' OR ZXBS IS NULL)
+			                               AND DJSJ < TRUNC(ADD_MONTHS(SYSDATE, 1), 'MM')
+			                               AND DJSJ >= TRUNC(SYSDATE - 1, 'MM')
+			                               #if($jwsqdm && !$jwsqdm.equals(""))
+								 				and zrdwdm = #[jwsqdm]
+										 	#elseif($pcsdm && !$pcsdm.equals(""))
+												and zrdwdm like substr(#[pcsdm],1,8)||'%'
+											#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+												and zrdwdm  like substr(#[countrygajgjgdm],1,6)||'%'
+											#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+												and zrdwdm  like substr(#[citygajgjgdm],1,4)||'%'
+											#end
+										)
+					)
+			 ORDER BY DZMC
+		]]>
+	</property>
+	
+	<!-- 路面盘查信息质量 -->
+	<property name="queryLmpc">
+		<![CDATA[
+			SELECT * FROM T_AF_LMPCXX T
+		    WHERE ( EXISTS (
+		     SELECT 1 FROM T_LSGL_RK_JBXX A
+		      WHERE A.XM <> T.PCDXXM
+		        AND A.SFZH = T.PCDXSFZH
+		    ) OR LENGTH(LXFS) < 8 )
+		    #if($jwsqdm && !$jwsqdm.equals(""))
+ 				AND T.DJRDWDM =  #[jwsqdm]
+		 	#elseif($pcsdm && !$pcsdm.equals(""))
+				AND T.DJRDWDM like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				AND T.DJRDWDM  like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				AND T.DJRDWDM  like substr(#[citygajgjgdm],1,4)||'%'
+			#end
+			 #if($startTime && !$startTime.equals(""))
+			    AND T.DJSJ >= to_date(#[startTime]||' 00:00:00','yyyy-mm-dd hh24:mi:ss') 
+			 #end 
+			 #if($endTime && !$endTime.equals(""))
+			    and T.DJSJ<=to_date(#[endTime]||' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+			 #end
+		]]>
+	</property>
+</properties>

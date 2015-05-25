@@ -1,0 +1,15 @@
+省厅
+serviceId.hn=S10-00001150
+serviceId.gab=S10-00000298
+request.ip=10.142.1.117
+request.port=8585
+request.senderId=C00-00001537
+
+长沙
+serviceId.hn=S10-00001150
+serviceId.gab=S10-00000298
+request.ip=10.143.1.72
+request.port=8585
+request.senderId=C00-00001919
+
+

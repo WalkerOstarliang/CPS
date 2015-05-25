@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="khkp" namespace="/xtgl/khkp" extends="default"> 
+	  		<action name="*" class="com.chinacreator.xtgl.action.KhkpAction" method="{1}">
+	  			<!-- 考核排名页面 -->
+	  			<result name="toKhkpPage">/jsp/xtgl/pages/khkp/khkp.jsp</result>
+	  			<!-- 考核统计报表页面 -->
+	  			<result name="toSqkhtjPage">/jsp/xtgl/pages/khkp/sqkhtj.jsp</result>
+	  			
+	  			<!-- 本月未处理统计页面 -->
+	  			<result name="toBywclTj">/jsp/xtgl/pages/khkp/bywcltj.jsp</result>
+	  			<result name="downlaodBywcltj">/jsp/xtgl/pages/khkp/excelmode/bywclexcelmode.jsp</result>
+	  			
+	  			<!-- 网上考核 -->
+	  			<result name="sqkhtj_03">/jsp/xtgl/pages/khkp/wskh.jsp</result>
+	  			<!-- 两实采集 -->
+	  			<result name="sqkhtj_04">/jsp/xtgl/pages/khkp/lscj.jsp</result>
+	  			<!-- 动态管控 -->
+	  			<result name="sqkhtj_05">/jsp/xtgl/pages/khkp/dtgk.jsp</result>
+	  			
+	  			<!-- 考核排名大类 -->
+	  			<result name="queryKhkpDl">/jsp/xtgl/pages/khkp/dltj.jsp</result>
+	  			<!-- 考核排名细类 -->
+	  			<result name="queryKhkpXl">/jsp/xtgl/pages/khkp/xltj.jsp</result>
+	  			<!-- 数据采集数量 -->
+	  			<result name="toSjcjsl">/jsp/xtgl/pages/khkp/sjcjslList.jsp</result>
+	  			
+	  			<!-- 问题数据 -->
+	  			<result name="toWtsjflListPage">/jsp/khkp/pages/wtsjfllist.jsp</result>
+	  			<result name="exportWtsjtjPage">/jsp/khkp/pages/wtsjexportxls.jsp</result>
+	  			<result name="exportWtsjtjBakPage">/jsp/khkp/pages/wtsjbakexportxls.jsp</result>
+	  			<result name="toOpenWtsjPage">/jsp/khkp/pages/wtsjdetailinfo.jsp</result>
+	  			<result name="toExportWtsjPage">/jsp/khkp/pages/wtsjdetailexport.jsp</result>
+	  			<result name="toExportMjDetailWin">/jsp/khkp/pages/wtsjmjdetaillist.jsp</result>
+	  			
+	  			<!-- 导出考核排名 -->
+	  			<result name="downloadKhtjpm_01">/jsp/xtgl/pages/khkp/excelmode/dlexcelmode.jsp</result>
+	  			<result name="downloadKhtjpm_02">/jsp/xtgl/pages/khkp/excelmode/xlexcelmode.jsp</result>
+	  		</action>
+	  </package>
+	  
+	  <package name="khkpkfx" namespace="/xtgl/khkpkfx" extends="default"> 
+	  		<action name="*" class="com.chinacreator.xtgl.action.KhkpKfxAction" method="{1}">
+	  			<result name="createMs">/jsp/xtgl/pages/khkp/kfxq.jsp</result>
+	  		</action>
+	  </package>
+	  
+	  <package name="sjhc" namespace="/xtgl/sjhc" extends="default">
+	  		<action name="*" class="com.chinacreator.xtgl.action.SjhcAction" method="{1}">
+	  			<result name="toSjhcPage">/jsp/xtgl/pages/khkp/sjhc.jsp</result>
+	  			<result name="dataPage_101">/jsp/xtgl/pages/sjhc/ldrkList.jsp</result>
+	  			<result name="dataPage_102">/jsp/xtgl/pages/sjhc/cyryList.jsp</result>
+	  			<result name="dataPage_103">/jsp/xtgl/pages/sjhc/czfwList.jsp</result>
+	  			<result name="dataPage_104">/jsp/xtgl/pages/sjhc/fwList.jsp</result>
+	  			<result name="dataPage_105">/jsp/xtgl/pages/sjhc/stList.jsp</result>
+	  			<result name="dataPage_201">/jsp/xtgl/pages/sjhc/zdryList.jsp</result>
+	  			<result name="dataPage_202">/jsp/xtgl/pages/sjhc/zdryList.jsp</result>
+	  			<result name="dataPage_203">/jsp/xtgl/pages/sjhc/zdryList.jsp</result>
+	  			<result name="dataPage_301">/jsp/xtgl/pages/sjhc/lmpcList.jsp</result>
+	  		</action>
+	  </package>
+</struts>

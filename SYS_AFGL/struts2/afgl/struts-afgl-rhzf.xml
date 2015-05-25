@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="rhzf" namespace="/rhzf" extends="default"> 
+	  		<action name="*" class="com.chinacreator.rhzf.action.RhzfManageAction" method="{1}">
+	  			<result name="toRhzfListPage">/jsp/afgl/pages/rhzf/page/rhzfList.jsp</result>
+	  			<result name="toRhzfInfoPage">/jsp/afgl/pages/rhzf/page/rhzfinfo.jsp</result>
+	  			<result name="expRgzf">/jsp/afgl/pages/rhzf/page/exprhzf.jsp</result>
+	  		</action>
+	  </package>
+	  
+	  <package name="rhzftj" namespace="/rhzftj" extends="default">
+	  		<action name="*" class="com.chinacreator.rhzf.action.RhzfTjAction" method="{1}">
+	  			<result name="toRhzfTjPage">/jsp/afgl/pages/rhzf/page/rhzftj.jsp</result>
+	  			<result name="toRhzfTjData">/jsp/afgl/pages/rhzf/page/rhzftjdata.jsp</result>
+	  			<result name="toExpRhzfPage">/jsp/afgl/pages/rhzf/page/exprhzftj.jsp</result>
+	  			
+	  		</action>
+	  </package>
+</struts>

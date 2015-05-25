@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="qbxs" namespace="/qbxs" extends="default"> 
+	  		<action name="*" class="com.chinacreator.qbxs.action.QbxsAction" method="{1}">
+				<result name="toQbxsSjxxListPage">/jsp/qbxs/pages/qbxslist.jsp</result>
+				<result name="toQbxsxx">/jsp/qbxs/pages/qbxs.jsp</result>
+				<result name="toQbxxGgxxPage">/jsp/qbxs/pages/qbxsggxx.jsp</result>
+	  		</action>
+	  </package>
+</struts>

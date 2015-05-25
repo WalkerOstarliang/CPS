@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="xsbx" namespace="/lsgl/xsbx" extends="default"> 
+	  		<action name="*" class="com.chinacreator.lsgl.action.LsglXsbxAction" method="{1}">
+	  			<result name="toSfhsPage">/jsp/lsgl/pages/zdry/toSfhs.jsp</result>
+	  			<result name="toZdryloadinfo">/jsp/lsgl/pages/zdry/xsbxdetailinfo.jsp</result>
+	  			<result name="toZdryInfoPage">/jsp/lsgl/pages/zdry/zdryinfo.jsp</result>
+	  			<result name="zdryjbxx">/jsp/lsgl/pages/zdry/zdryjbxx.jsp</result>
+	  			<result name="xsbx">/jsp/lsgl/pages/zdry/xsbx.jsp</result>
+	  			<result name="shgxxx">/jsp/lsgl/pages/rk/shgxxx.jsp</result>
+	  		</action>
+	  </package>
+</struts>

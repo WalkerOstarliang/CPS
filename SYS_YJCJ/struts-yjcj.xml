@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="yjcj" namespace="/yjcj" extends="default"> 
+	  		<action name="*" class="com.chinacreator.yjcj.action.CommonYjcjAction" method="{1}">
+	  			<result name="toYjcjIndexPage">/jsp/yjcj/pages/index.jsp</result>
+				<result name="toYjcjList">/jsp/yjcj/pages/yjcjlist.jsp</result>
+				<result name="toAddWtyjPage">/jsp/yjcj/pages/yjcjadd.jsp</result>
+				<result name="toWtyjDetailPage">/jsp/yjcj/pages/yjcjhf.jsp</result>
+				
+				<result name="toXxfbPage">/jsp/yjcj/pages/xxfb.jsp</result>
+				<result name="toXxfbList">/jsp/yjcj/pages/xxfblist.jsp</result>
+				<result name="toXxfbInfo">/jsp/yjcj/pages/xxfbinfo.jsp</result>
+				<result name="toSmPage">/main/sm.jsp</result>
+	  		</action>
+	  </package>
+</struts>

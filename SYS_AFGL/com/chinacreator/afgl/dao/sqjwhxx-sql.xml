@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="querySqJwhPageResultInfoByQueryBean">
+		<![CDATA[
+			 select jwhbh,
+			       jwhmc,
+			       jwhfzrxm,
+			       jwhfzrlxdh,
+			       ssjdxz,
+			       ssjdxzfzrxm,
+			       ssjdfzrlxdh,
+			       jwhdz,
+			       to_char(cjrq,'yyyy-mm-dd') as cjrq,
+			       to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+			       zxyy,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       zxbs,
+			       sssqbh,
+			       sssqmc,
+			       ssxzqh,
+			       jwhlx,
+			       (select count(1) from t_af_sqgbxx a where a.sssqbh=t.sssqbh) as jwhgbrs
+			  from t_af_jwhxx t
+			  where 1=1
+			  
+			  --单位选择查询
+			  --精确到警务室
+			  #if($jwsqdm && !$jwsqdm.equals(""))
+			  	and sssqbh in (select sqbh from t_af_sqjbxx where gxsqjwsdm=#[jwsqdm])
+			  #else
+			      --精确到派出所
+				  #if($pcsdm && !$pcsdm.equals(""))
+				  	and sssqbh in (select sqbh from t_af_sqjbxx where sspcsdm=#[pcsdm])
+				  #else
+				  	  --精确到县区
+					  #if($countrydm and !$countrydm.equals(""))
+					  	and ssxzqh=#[countrydm]
+					  #else
+					     --精确到市州
+					  	 #if($citydm and !$citydm.equals(""))
+					  		and substr(ssxzqh,1,4)=substr(#[citydm],1,4)
+					  	 #end
+					  #end
+				  #end
+			  #end
+			  
+			  --社区选择
+			  #if($sssqbh && !$sssqbh.equals(""))
+			  	and sssqbh=#[sssqbh]
+			  #end
+			  
+			  --社区名称
+			  #if($sssqmc && !$sssqmc.equals(""))
+			  	and sssqmc like '%'||#[sssqmc]||'%'
+			  #end
+			  --居委会类型
+			  #if($jwhlx && !$jwhlx.equals(""))
+			  	and jwhlx=#[jwhlx]
+			  #end
+			  order by djsj desc
+		]]>
+	</property>
+	 
+	<property name="querySqjwhBeanByJwhbh">
+		<![CDATA[
+			 select jwhbh,
+			       jwhmc,
+			       jwhfzrxm,
+			       jwhfzrlxdh,
+			       ssjdxz,
+			       ssjdxzfzrxm,
+			       ssjdfzrlxdh,
+			       jwhdz,
+			       to_char(cjrq,'yyyy-mm-dd') as cjrq,
+			       to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+			       zxyy,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			       zxbs,
+			       sssqbh,
+			       sssqmc,
+			       ssxzqh,
+			       jwhlx,
+			       (select count(1) from t_af_sqgbxx where jwhbh=t.jwhbh) as jwhgbrs
+			  from t_af_jwhxx t
+			  where jwhbh=?
+		]]>
+	</property>
+	
+	<property name="insertJwhBean">
+		<![CDATA[
+		 	insert into t_af_jwhxx
+			  (jwhbh,
+			   jwhmc,
+			   jwhfzrxm,
+			   jwhfzrlxdh,
+			   ssjdxz,
+			   ssjdxzfzrxm,
+			   ssjdfzrlxdh,
+			   jwhdz,
+			   cjrq,
+			   djrxm,
+			   djrjh,
+			   djdwdm,
+			   djdwmc,
+			   djsj,
+			   sssqbh,
+			   sssqmc,
+			   ssxzqh,
+			   jwhlx
+			   )
+			values
+			  (#[jwhbh],
+			   #[jwhmc],
+			   #[jwhfzrxm],
+			   #[jwhfzrlxdh],
+			   #[ssjdxz],
+			   #[ssjdxzfzrxm],
+			   #[ssjdfzrlxdh],
+			   #[jwhdz],
+			   to_date(#[cjrq],'yyyy-mm-dd'),
+			   #[djrxm],
+			   #[djrjh],
+			   #[djdwdm],
+			   #[djdwmc],
+			   to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+			   #[sssqbh],
+			   #[sssqmc],
+			   #[ssxzqh],
+			   #[jwhlx]
+			   )
+		]]>
+	</property>
+	
+	<property name="updateJwhBean">
+		<![CDATA[
+			 update t_af_jwhxx
+			   set 
+			   	   jwhlx = #[jwhlx],
+			       jwhmc = #[jwhmc],
+			       jwhfzrxm = #[jwhfzrxm],
+			       jwhfzrlxdh = #[jwhfzrlxdh],
+			       ssjdxz = #[ssjdxz],
+			       ssjdxzfzrxm = #[ssjdxzfzrxm],
+			       ssjdfzrlxdh = #[ssjdfzrlxdh],
+			       jwhdz = #[jwhdz],
+			       cjrq = to_date(#[cjrq],'yyyy-mm-dd'),
+			       zxbs = #[zxbs],
+			       zxsj = to_date(#[zxsj],'yyyy-mm-dd hh24:mi:ss'),
+			       zxyy = #[zxyy],
+			       sssqbh = #[sssqbh],
+			       sssqmc = #[sssqmc],
+			       ssxzqh = #[ssxzqh]
+			 where jwhbh = #[jwhbh]
+						 
+		]]>
+	</property>
+	
+	<property name="deleteJwhBeanByJwhbh">
+		<![CDATA[
+			 delete t_af_jwhxx
+ 			 where jwhbh = ?
+		]]>
+	</property>
+</properties>

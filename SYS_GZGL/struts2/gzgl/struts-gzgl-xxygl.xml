@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	 <package name="xxygl" extends="default" namespace="/gzgl/tzgl">
+	 	<action name="*" class="com.chinacreator.gzgl.action.XxyglAction" method="{1}">
+	 		<result name="toXxyglList">/jsp/gzgl/pages/gzxxy/xxyList.jsp</result>
+	 		<result name="toAddXxyPage">/jsp/gzgl/pages/gzxxy/addXxyPage.jsp</result>
+	 		<result name="toxxyFyPage">/jsp/gzgl/pages/gzxxy/xxyFyqk.jsp</result>
+	 		<result name="toDetailXxyPage">/jsp/gzgl/pages/gzxxy/detailXxyPage.jsp</result>
+	 	</action>
+	 </package>
+</struts>

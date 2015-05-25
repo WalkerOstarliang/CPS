@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Struts2Diagram version="2.0">
+  <package name="zdrydx" location="615,165" size="4305,1680">
+    <action name="*" location="65,274" size="150,587">
+      <result name="toZdryListPage">
+        <resourceEdge source="toZdryListPage" routing="0" target="zdrylist.jsp" />
+      </result>
+      <result name="toWrlZdryListPage">
+        <resourceEdge source="toWrlZdryListPage" routing="0" target="zdryList_wrl.jsp" />
+      </result>
+      <result name="toZdryDetailInfoPage">
+        <resourceEdge source="toZdryDetailInfoPage" routing="0" target="zdrydetailinfo.jsp" />
+      </result>
+      <result name="toSFZHInfoPage">
+        <resourceEdge source="toSFZHInfoPage" routing="0" target="zdryinfowin.jsp" />
+      </result>
+      <result name="toZdryInfoPage">
+        <resourceEdge source="toZdryInfoPage" routing="0" target="zdryinfo.jsp" />
+      </result>
+      <result name="zdryjbxx">
+        <resourceEdge source="zdryjbxx" routing="0" target="zdryjbxx.jsp" />
+      </result>
+      <result name="zdryzpxx">
+        <resourceEdge source="zdryzpxx" routing="0" target="zdryzpxx.jsp" />
+      </result>
+      <result name="wfjlxx">
+        <resourceEdge source="wfjlxx" routing="0" target="zdrywffzjl.jsp" />
+      </result>
+      <result name="tmtzxx">
+        <resourceEdge source="tmtzxx" routing="0" target="zdrytmtzms.jsp" />
+      </result>
+      <result name="xsbx">
+        <resourceEdge source="xsbx" routing="0" target="xsbx.jsp" />
+      </result>
+      <result name="shgxxx">
+        <resourceEdge source="shgxxx" routing="0" target="shgxxx.jsp" />
+      </result>
+      <result name="jzdx">
+        <resourceEdge source="jzdx" routing="0" target="jzdx.jsp" />
+      </result>
+      <result name="gzry">
+        <resourceEdge source="gzry" routing="0" target="gzry.jsp" />
+      </result>
+      <result name="xdry">
+        <resourceEdge source="xdry" routing="0" target="xdry.jsp" />
+      </result>
+      <result name="xdxhnjxx">
+        <resourceEdge source="xdxhnjxx" routing="0" target="xdchnjxx.jsp" />
+      </result>
+      <result name="zdryjsbrxx">
+        <resourceEdge source="zdryjsbrxx" routing="0" target="zdryjsbr.jsp" />
+      </result>
+      <result name="zdryjsbrzsxx">
+        <resourceEdge source="zdryjsbrzsxx" routing="0" target="zdryjsbrzsxx.jsp" />
+      </result>
+      <result name="zdryswry">
+        <resourceEdge source="zdryswry" routing="0" target="zdryswry.jsp" />
+      </result>
+      <result name="zdryswrysfjl">
+        <resourceEdge source="zdryswrysfjl" routing="0" target="zdryswrysfjl.jsp" />
+      </result>
+      <result name="toSfzhValidate">
+        <resourceEdge source="toSfzhValidate" routing="0" target="xsbxinfowin.jsp" />
+      </result>
+      <result name="toRkInfoPage">
+        <resourceEdge source="toRkInfoPage" routing="0" target="zdryinfo.jsp" />
+      </result>
+      <result name="toZdryPfPage">
+        <resourceEdge source="toZdryPfPage" routing="0" target="zdrypf.jsp" />
+      </result>
+      <result name="toZdrythpage">
+        <resourceEdge source="toZdrythpage" routing="0" target="zdryth.jsp" />
+      </result>
+      <result name="toZdryJgPage">
+        <resourceEdge source="toZdryJgPage" routing="0" target="zdryjgxx.jsp" />
+      </result>
+      <result name="toZdryTgPage">
+        <resourceEdge source="toZdryTgPage" routing="0" target="zdrytgxx.jsp" />
+      </result>
+      <result name="toZdryJgListPage">
+        <resourceEdge source="toZdryJgListPage" routing="0" target="zdryjglist.jsp" />
+      </result>
+      <result name="toQGQLZdryInfoPage">
+        <resourceEdge source="toQGQLZdryInfoPage" routing="0" target="qgzdryinfo.jsp" />
+      </result>
+      <result name="downloadZkdj">
+        <resourceEdge source="downloadZkdj" routing="0" target="zkdjModel.jsp" />
+      </result>
+    </action>
+  </package>
+  <webResource name="zdrylist.jsp" path="/jsp/lsgl/pages/zdry/zdrylist.jsp" location="325,1235" size="150,55" />
+  <webResource name="zdryList_wrl.jsp" path="/jsp/lsgl/pages/zdry/zdryList_wrl.jsp" location="313,1025" size="150,55" />
+  <webResource name="zdrydetailinfo.jsp" path="/jsp/lsgl/pages/zdry/zdrydetailinfo.jsp" location="307,675" size="150,55" />
+  <webResource name="zdryinfowin.jsp" path="/jsp/lsgl/pages/zdry/zdryinfowin.jsp" location="316,325" size="150,55" />
+  <webResource name="zdryinfo.jsp" path="/jsp/lsgl/pages/zdry/zdryinfo.jsp" location="10,220" size="150,55" />
+  <webResource name="zdryjbxx.jsp" path="/jsp/lsgl/pages/zdry/zdryjbxx.jsp" location="640,10" size="150,55" />
+  <webResource name="zdryzpxx.jsp" path="/jsp/lsgl/pages/zdry/zdryzpxx.jsp" location="4980,150" size="150,55" />
+  <webResource name="zdrywffzjl.jsp" path="/jsp/lsgl/pages/zdry/zdrywffzjl.jsp" location="4974,325" size="150,55" />
+  <webResource name="zdrytmtzms.jsp" path="/jsp/lsgl/pages/zdry/zdrytmtzms.jsp" location="4974,675" size="150,55" />
+  <webResource name="xsbx.jsp" path="/jsp/lsgl/pages/zdry/xsbx.jsp" location="4782,1900" size="150,55" />
+  <webResource name="shgxxx.jsp" path="/jsp/lsgl/pages/rk/shgxxx.jsp" location="4537,1900" size="150,55" />
+  <webResource name="jzdx.jsp" path="/jsp/lsgl/pages/zdry/jzdx/jzdx.jsp" location="4242,1900" size="150,55" />
+  <webResource name="gzry.jsp" path="/jsp/lsgl/pages/zdry/gzry/gzry.jsp" location="3927,1900" size="150,55" />
+  <webResource name="xdry.jsp" path="/jsp/lsgl/pages/zdry/xdryxx/xdry.jsp" location="3606,1900" size="150,55" />
+  <webResource name="xdchnjxx.jsp" path="/jsp/lsgl/pages/zdry/xdryxx/xdchnjxx.jsp" location="3279,1900" size="150,55" />
+  <webResource name="zdryjsbr.jsp" path="/jsp/lsgl/pages/zdry/jsbrxx/zdryjsbr.jsp" location="2964,1900" size="150,55" />
+  <webResource name="zdryjsbrzsxx.jsp" path="/jsp/lsgl/pages/zdry/jsbrxx/zdryjsbrzsxx.jsp" location="2602,1900" size="150,55" />
+  <webResource name="zdryswry.jsp" path="/jsp/lsgl/pages/zdry/swryxx/zdryswry.jsp" location="2264,1900" size="150,55" />
+  <webResource name="zdryswrysfjl.jsp" path="/jsp/lsgl/pages/zdry/swryxx/zdryswrysfjl.jsp" location="1902,1900" size="150,55" />
+  <webResource name="xsbxinfowin.jsp" path="/jsp/lsgl/pages/zdry/xsbxinfowin.jsp" location="1576,1900" size="150,55" />
+  <webResource name="zdrypf.jsp" path="/jsp/lsgl/pages/zdry/zdrypf.jsp" location="1276,1900" size="150,55" />
+  <webResource name="zdryth.jsp" path="/jsp/lsgl/pages/zdry/zdryth.jsp" location="961,1900" size="150,55" />
+  <webResource name="zdryjgxx.jsp" path="/jsp/lsgl/pages/zdry/zdryjgxx.jsp" location="640,1900" size="150,55" />
+  <webResource name="zdrytgxx.jsp" path="/jsp/lsgl/pages/zdry/zdrytgxx.jsp" location="325,1760" size="150,55" />
+  <webResource name="zdryjglist.jsp" path="/jsp/lsgl/pages/zdry/zdryjglist.jsp" location="319,1585" size="150,55" />
+  <webResource name="qgzdryinfo.jsp" path="/jsp/lsgl/pages/zdry/qgzdryinfo.jsp" location="319,1410" size="150,55" />
+  <webResource name="zkdjModel.jsp" path="/jsp/lsgl/pages/zdry/downloadModel/zkdjModel.jsp" location="0,0" size="0,0" />
+</Struts2Diagram>
+

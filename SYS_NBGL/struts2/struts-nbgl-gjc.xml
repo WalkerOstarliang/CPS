@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="nbgl_gjc" namespace="/nbgl/gjc" extends="default"> 
+	  		<action name="*" class="com.chinacreator.nbgl.action.GjcManageAction" method="{1}">
+	  			<result name="toGjcListPage">/jsp/nbgl/pages/gjclist.jsp</result>
+	  		</action>
+	  </package>
+	  
+	  <package name="nbgl_ajhs" namespace="/nbgl/ajhs" extends="default"> 
+	  		<action name="*" class="com.chinacreator.nbgl.action.ZddwAjHsAction" method="{1}">
+	  			<result name="toAjListPage">/jsp/nbgl/pages/ajlist.jsp</result>
+	  			<result name="toAjDetailPage">/jsp/nbgl/pages/ajxxinfo.jsp</result>
+	  			<result name="toNbdwSelectPage">/jsp/nbgl/pages/nbdwselect.jsp</result>
+	  			<result name="expAjList">/jsp/nbgl/pages/expAjList.jsp</result>
+	  		</action>
+	  </package>
+</struts>

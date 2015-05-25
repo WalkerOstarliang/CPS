@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+IMG { border:0;}
+.fw_box {width:995px; border:1px solid #1264b1; background-color:#FFF; font-family: "宋体";}
+.fw_title {height:35px; background-image:url(../images/fw_tbg.jpg); background-repeat:repeat-x; font-size:14px; font-weight:bold; color:#FFF; padding-left:10px; line-height:35px;}
+.fw_nr_a {padding:15px; font-size:12px; color:#333;}
+.fw_input {width:300px; height:26px; line-height:26px; padding:0 4px; border:1px solid #CCC;}
+.fw_nr_b {padding:2px 2px; background-color:#EFEFEF; font-size:12px; color:#333;}
+.fw_submit_a { width:80px; height:26px; font-size:12px; color:#FFF; background-image:url(../images/fw_btn01.jpg); background-repeat:no-repeat; padding:0; border:0; cursor:pointer;}
+.fw_submit_b { width:80px; height:26px; font-size:12px; color:#FFF; background-image:url(../images/fw_btn02.jpg); background-repeat:no-repeat; padding:0; border:0; cursor:pointer;}
+.fw_nr_c { width:985px; height:545px; margin:0px 0; padding:5px;overflow-x:hidden; overflow-y:scroll;}
+.fw_lc {border:1px solid #00afe3; width:970px; margin-bottom:5px;}
+.fw_lc_a {width:34px; text-align:center; font-size:12px; color:#FFF; font-weight:bold; background-color:#00afe3; line-height:normal;}
+.fw_list { padding:10px 0 0 10px;}
+.fw_list_a { width:100px; height:80px; margin:0 10px 10px 0; padding:0; float:left; display:block;}
+a.fw_house:link { width:80px; height:20px;  background-image:url(../images/fw_house.jpg); background-repeat:no-repeat; display:block; font-size:14px; font-weight:bold; color:#FFF; text-align:center; padding-top:60px; text-decoration:none;}
+a.fw_house:visited { width:80px; height:20px;  background-image:url(../images/fw_house.jpg); background-repeat:no-repeat; display:block; font-size:14px; font-weight:bold; color:#FFF; text-align:center; padding-top:60px; text-decoration:none;}
+a.fw_house:hover { width:80px; height:20px; background-image:url(../images/fw_house.jpg); background-repeat:no-repeat; display:block; font-size:14px; font-weight:bold; color: #FFF; text-align:center; padding-top:60px; text-decoration: underline;}
+.fw_zt { padding-top:2px; margin:0; border:0; float:left;}
+.fw_list_add { width:80px; height:80px; float:left; margin-bottom:10px;}
+
+.fw_drop {width:120px; border:1px solid #CCC; background-color:#FFF; padding:2px;}
+a.fw_drop_a:link { padding:5px 10px; font-size:12px; color:#333; text-decoration:none; display:block;}
+a.fw_drop_a:visited { padding:5px 10px; font-size:12px; color:#333; text-decoration:none; display:block;}
+a.fw_drop_a:hover { padding:5px 10px; font-size:12px; color:#FFF; text-decoration:none; background-color:#ff5a00; display:block;}

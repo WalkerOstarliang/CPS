@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+ 	<property name="queryTzryPageInfoByRybh">
+ 		<![CDATA[
+ 		      select distinct rk.rybh,rk.xm,rk.csrq,rk.sfzh,rk.xb,rk.fwcs,rk.lxdh,g.fwid,f_get_dzmc(g.dzid)  dzmc,g.zxbs
+	          from t_lsgl_rk_jbxx rk 
+	               inner join (
+	                    select gl.rybh ,gl.fwid,gl.dzid,gl.zxbs
+	                    from t_lsgl_rkfw_gl gl
+	                    where fwid in (
+	                           select x.fwid from t_lsgl_rkfw_gl x where x.rybh=?
+	                    )
+	                ) g on rk.rybh=g.rybh
+	                
+ 		]]>
+ 	</property> 	
+ 	<property name="queryThryByRybh">
+ 		<![CDATA[
+ 			select * from v_lsgl_rk_czrk 
+            where hh in (
+               select hh from t_lsgl_rk_czrk czrk where czrk.rybh=? and hklb <> '3' and hklb <> '4'
+            )
+ 		]]>
+ 	</property> 
+ 	
+ 	<property name="queryTzryPageInfoByFwidWzx">
+ 		<![CDATA[
+		     select rybh,xm,sfzh,xb,rylb,rysx,lxdh,fwcs
+		     from t_lsgl_rk_jbxx jb
+		     where exists (select 1 from t_lsgl_rkfw_gl gl where gl.rybh=jb.rybh and fwid=? and (ZXBS='0' or zxbs is null))
+ 		]]>
+ 	</property> 
+ 	
+ 	<property name="queryTzryPageInfoByFwidByYZx">
+ 		<![CDATA[
+		     select rybh,xm,sfzh,xb,rylb,rysx,lxdh,fwcs
+		     from t_lsgl_rk_jbxx jb
+		    where exists (select 1 from t_lsgl_rkfw_gl gl where gl.rybh=jb.rybh and fwid=? and zxbs='1')
+ 		]]>
+ 	</property> 
+ 	
+ 	<property name="queryXtzryPageInfoByFwidWzx">
+ 		<![CDATA[
+		     select  rybh ,sfzh,zjzl,xm, xb,zxbs,rylb,rkid,lxdh,rkfwglid,fwcs
+				from
+				(
+					select czrk.czrkbh as rkid,czrk.rybh,
+					       (select xm from t_lsgl_rk_jbxx where rybh=czrk.rybh) as xm,
+					       '111' as zjzl,
+					       (select sfzh from t_lsgl_rk_jbxx where rybh = czrk.rybh ) as sfzh,
+					       (select xb from t_lsgl_rk_jbxx where rybh = czrk.rybh ) as xb,
+					       (select lxdh from t_lsgl_rk_jbxx where rybh = czrk.rybh) as lxdh,
+					       (select fwcs from t_lsgl_rk_jbxx where rybh = czrk.rybh) as fwcs,
+					       czrk.zrdwdm,czrk.czdwdm,czrk.djdwdm,czrk.hjdqh,czrk.hjdxz,'1' as rylb,czrk.zxbs,czrk.rkfwglid
+					from t_lsgl_rk_czrk czrk inner join t_lsgl_rkfw_gl gl on czrk.rkfwglid=gl.rkfwglid
+					where (czrk.zxbs is null or czrk.zxbs='0') 
+						   and gl.fwid=?
+					
+					union all
+					
+					select lk.ZZBH as rkid,lk.rybh,
+					        (select xm from t_lsgl_rk_jbxx where rybh=lk.rybh) as xm,
+					        '111' as zjzl,
+					       (select sfzh from t_lsgl_rk_jbxx where rybh = lk.rybh ) as sfzh,
+					       (select xb from t_lsgl_rk_jbxx where rybh = lk.rybh ) as xb,
+					       (select lxdh from t_lsgl_rk_jbxx where rybh = lk.rybh) as lxdh,
+					       (select fwcs from t_lsgl_rk_jbxx where rybh = lk.rybh) as fwcs,
+					       lk.zrdwdm,lk.czdwdm,lk.djdwdm,'' hjdqh,'' hjdxz,'2' as rylb,lk.zxbs,lk.rkfwglid
+					from t_lsgl_rk_ldrkzzxx lk inner join t_lsgl_rkfw_gl gl on lk.rkfwglid=gl.rkfwglid
+					where (lk.zxbs is null or lk.zxbs='0') 
+						   and gl.fwid=?
+					
+					union all
+					
+					select jw.JWBH as rkid,jw.rybh,
+					       ywm||' ' || ywx as xm,
+					       (select ZJZL from t_lsgl_rk_jbxx where rybh = jw.rybh ) as zjzl,
+					       (select ZJHM from t_lsgl_rk_jbxx where rybh = jw.rybh ) as sfzh,
+					       (select xb from t_lsgl_rk_jbxx where rybh = jw.rybh ) as xb,
+					       (select lxdh from t_lsgl_rk_jbxx where rybh = jw.rybh) as lxdh,
+					       (select fwcs from t_lsgl_rk_jbxx where rybh = jw.rybh) as fwcs,
+					       jw.zrdwdm,jw.czdwdm,jw.djdwdm,'' hjdqh,'' hjdxz,'4'  as rylb,jw.zxbs,jw.rkfwglid
+					from t_lsgl_rk_jwrkxx jw inner join t_lsgl_rkfw_gl gl on jw.rkfwglid=gl.rkfwglid
+					where (jw.zxbs is null or jw.zxbs='0') 
+						   and gl.fwid=?
+					union all
+					
+					select jz.JZBH as rkid,jz.rybh,
+					        (select xm from t_lsgl_rk_jbxx where rybh=jz.rybh) as xm,
+					        '111' as zjzl,
+					       (select sfzh from t_lsgl_rk_jbxx where rybh = jz.rybh ) as sfzh,
+					       (select xb from t_lsgl_rk_jbxx where rybh = jz.rybh ) as xb,
+					       (select lxdh from t_lsgl_rk_jbxx where rybh = jz.rybh) as lxdh,
+					        (select fwcs from t_lsgl_rk_jbxx where rybh = jz.rybh) as fwcs,
+					       jz.zrdwdm,jz.czdwdm,jz.djdwdm,'' hjdqh,'' hjdxz,'5'  as rylb,jz.zxbs,jz.rkfwglid
+					from t_lsgl_rk_jzrkxx jz  inner join t_lsgl_rkfw_gl gl on jz.rkfwglid=gl.rkfwglid
+					where (jz.zxbs is null or jz.zxbs='0') 
+						   and gl.fwid=?
+					union all
+					
+					select wlh.wlhrkbh as rkid,wlh.rybh,
+					        (select xm from t_lsgl_rk_jbxx where rybh=wlh.rybh) as xm,
+					        '111' as zjzl,
+					       (select sfzh from t_lsgl_rk_jbxx where rybh = wlh.rybh ) as sfzh,
+					       (select xb from t_lsgl_rk_jbxx where rybh = wlh.rybh ) as xb,
+					       (select lxdh from t_lsgl_rk_jbxx where rybh = wlh.rybh) as lxdh,
+					       (select fwcs from t_lsgl_rk_jbxx where rybh = wlh.rybh) as fwcs,
+					       wlh.zrdwdm,wlh.czdwdm,wlh.djdwdm,'' hjdqh, '' hjdxz,'3' as rylb ,wlh.zxbs,wlh.rkfwglid
+					from t_lsgl_rk_wlhczhk wlh  inner join t_lsgl_rkfw_gl gl on wlh.rkfwglid=gl.rkfwglid
+					where (wlh.zxbs is null or wlh.zxbs='0') 
+						   and gl.fwid=?
+						
+				)
+ 		]]>
+ 	</property>	
+ 	<!-- queryXtzryPageInfoByFwidWzxzlfw 查询当前房屋下面流动人口居住处所是租赁房屋的人 -->
+ 	<property name="queryXtzryPageInfoByFwidWzxzlfw">
+ 		<![CDATA[
+		     select   rybh ,sfzh,zjzl,xm, xb,zxbs,rylb,rkid,lxdh,rkfwglid,fwcs
+				from
+				(										
+					select lk.ZZBH as rkid,lk.rybh,
+					        (select xm from t_lsgl_rk_jbxx where rybh=lk.rybh) as xm,
+					        '111' as zjzl,
+					       (select sfzh from t_lsgl_rk_jbxx where rybh = lk.rybh ) as sfzh,
+					       (select xb from t_lsgl_rk_jbxx where rybh = lk.rybh ) as xb,
+					       (select lxdh from t_lsgl_rk_jbxx where rybh = lk.rybh) as lxdh,
+					       (select fwcs from t_lsgl_rk_jbxx where rybh = lk.rybh) as fwcs,
+					       lk.zrdwdm,lk.czdwdm,lk.djdwdm,'' hjdqh,'' hjdxz,'2' as rylb,lk.zxbs,lk.rkfwglid
+					from t_lsgl_rk_ldrkzzxx lk inner join t_lsgl_rkfw_gl gl on lk.rkfwglid=gl.rkfwglid
+					where (lk.zxbs is null or lk.zxbs='0') 
+						   and lk.zzcs='34' 
+						   and gl.fwid=?																								
+				)
+ 		]]>
+ 	</property>	
+ 	
+ 		<!-- queryXtzryPageInfoByFwidYzxzlfw 查询当前房屋下面流动人口居住处所是租赁房屋的人() -->
+ 	<property name="queryXtzryPageInfoByFwidYzxzlfw">
+ 		<![CDATA[
+ 			select rk.rybh,
+                      rk.xm,
+                      rk.sfzh,
+                      rk.xb,
+                      rk.lxdh,
+                      rk.fwcs,
+                      '2' as rylb,
+                      lk.zxbs
+                 from t_lsgl_rk_jbxx     rk,
+                      t_lsgl_rk_ldrkzzxx lk,
+                      t_lsgl_rkfw_gl     gl
+                where rk.rybh = lk.rybh
+                  and rk.rybh = gl.rybh
+                  and gl.RKFWGLID = lk.RKFWGLID
+                  and (lk.zxbs is null or lk.zxbs = '0')
+                  and lk.zzcs = '34'
+                  and gl.fwid =?		     																																										
+ 		]]>
+ 	</property>	
+ 	
+ 	<property name="queryXtzryPageInfoByFwidYzx">
+ 		<![CDATA[
+		     select  rybh ,sfzh,zjzl,xm, xb,zxbs,rylb,rkid,lxdh,fwcs
+				from
+				(select czrk.czrkbh as rkid,czrk.rybh,
+				       (select xm from t_lsgl_rk_jbxx where rybh=czrk.rybh) as xm,
+				       '111' as zjzl,
+				       (select sfzh from t_lsgl_rk_jbxx where rybh = czrk.rybh ) as sfzh,
+				       (select xb from t_lsgl_rk_jbxx where rybh = czrk.rybh ) as xb,
+				       (select lxdh from t_lsgl_rk_jbxx where rybh = czrk.rybh) as lxdh,
+				        (select fwcs from t_lsgl_rk_jbxx where rybh = czrk.rybh) as fwcs,
+				       czrk.zrdwdm,czrk.czdwdm,czrk.djdwdm,czrk.hjdqh,czrk.hjdxz,'1' as rylb,czrk.zxbs,czrk.rkfwglid
+				from t_lsgl_rk_czrk czrk inner join t_lsgl_rkfw_gl gl on czrk.rkfwglid=gl.rkfwglid
+				where czrk.zxbs='1' and gl.fwid=?
+				 
+				union all
+				
+				select lk.ZZBH as rkid,lk.rybh,
+				        (select xm from t_lsgl_rk_jbxx where rybh=lk.rybh) as xm,
+				        '111' as zjzl,
+				       (select sfzh from t_lsgl_rk_jbxx where rybh = lk.rybh ) as sfzh,
+				       (select xb from t_lsgl_rk_jbxx where rybh = lk.rybh ) as xb,
+				       (select lxdh from t_lsgl_rk_jbxx where rybh = lk.rybh) as lxdh,
+				       (select fwcs from t_lsgl_rk_jbxx where rybh = lk.rybh) as fwcs,
+				       lk.zrdwdm,lk.czdwdm,lk.djdwdm,'' hjdqh,'' hjdxz,'2' as rylb,lk.zxbs,lk.rkfwglid
+				from t_lsgl_rk_ldrkzzxx lk inner join t_lsgl_rkfw_gl gl on lk.rkfwglid=gl.rkfwglid
+				where lk.zxbs='1' and gl.fwid=?
+				
+				union all
+				
+				select jw.JWBH as rkid,jw.rybh,
+				        ywm||' ' || ywx as xm,
+				       (select ZJZL from t_lsgl_rk_jbxx where rybh = jw.rybh ) as zjzl,
+					   (select ZJHM from t_lsgl_rk_jbxx where rybh = jw.rybh ) as sfzh,
+				       (select xb from t_lsgl_rk_jbxx where rybh = jw.rybh ) as xb,
+				       (select lxdh from t_lsgl_rk_jbxx where rybh = jw.rybh) as lxdh,
+				       (select fwcs from t_lsgl_rk_jbxx where rybh = jw.rybh) as fwcs,
+				       jw.zrdwdm,jw.czdwdm,jw.djdwdm,'' hjdqh,'' hjdxz,'4'  as rylb,jw.zxbs,jw.rkfwglid
+				from t_lsgl_rk_jwrkxx jw inner join t_lsgl_rkfw_gl gl on jw.rkfwglid=gl.rkfwglid
+				where jw.zxbs='1' and gl.fwid=?
+				
+				union all
+				
+				select jz.JZBH as rkid,jz.rybh,
+				        (select xm from t_lsgl_rk_jbxx where rybh=jz.rybh) as xm,
+				        '111' as zjzl,
+				       (select sfzh from t_lsgl_rk_jbxx where rybh = jz.rybh ) as sfzh,
+				       (select xb from t_lsgl_rk_jbxx where rybh = jz.rybh ) as xb,
+				       (select lxdh from t_lsgl_rk_jbxx where rybh = jz.rybh) as lxdh,
+				       (select fwcs from t_lsgl_rk_jbxx where rybh = jz.rybh) as fwcs,
+				       jz.zrdwdm,jz.czdwdm,jz.djdwdm,'' hjdqh,'' hjdxz,'5'  as rylb,jz.zxbs,jz.rkfwglid
+				from t_lsgl_rk_jzrkxx jz inner join t_lsgl_rkfw_gl gl on jz.rkfwglid=gl.rkfwglid
+				where jz.zxbs='1' and gl.fwid=?
+				
+				union all
+				
+				select wlh.wlhrkbh as rkid,wlh.rybh,
+				        (select xm from t_lsgl_rk_jbxx where rybh=wlh.rybh) as xm,
+				        '111' as zjzl,
+				       (select sfzh from t_lsgl_rk_jbxx where rybh = wlh.rybh ) as sfzh,
+				       (select xb from t_lsgl_rk_jbxx where rybh = wlh.rybh ) as xb,
+				       (select lxdh from t_lsgl_rk_jbxx where rybh = wlh.rybh) as lxdh,
+				       (select fwcs from t_lsgl_rk_jbxx where rybh = wlh.rybh) as fwcs,
+				       wlh.zrdwdm,wlh.czdwdm,wlh.djdwdm,'' hjdqh, '' hjdxz,'3' as rylb ,wlh.zxbs,wlh.rkfwglid
+				from t_lsgl_rk_wlhczhk wlh inner join t_lsgl_rkfw_gl gl on wlh.rkfwglid=gl.rkfwglid
+				where wlh.zxbs='1' and gl.fwid=?
+			)
+ 		]]>
+ 	</property>
+ 		 	
+</properties>

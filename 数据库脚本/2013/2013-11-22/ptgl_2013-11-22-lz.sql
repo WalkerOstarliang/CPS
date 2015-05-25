@@ -1,0 +1,2 @@
+insert into td_sm_function (FUNCTION_ID, NAME, PARENT_ID, PATH, TYPE, FUNCTION_SN, IMGPATH, FUNCTION_DESC, TARGET)
+values ('SQJW1000001221', '警情通报', 'SQJW1000001108', '/gzgl/rzgl/toJqtbPage.action', '1', 3, '', '', '_self');

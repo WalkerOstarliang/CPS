@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+<!-- 从业人员统计分析(省厅一级，统计各地市) -->
+	<property name="queryCyryTjListA">
+		<![CDATA[
+			select
+			    substr(cyry.djdwdm,1,4)||'00000000' as dwdm,
+			   (select v.orgname from 
+			    v_common_organization v 
+			    where v.isyx='1' 
+			    and v.orgcode = substr(cyry.djdwdm,1,4)||'00000000' ) as dwmc ,
+			    count(*) as sl
+				from t_za_ry_cyry cyry
+				where 1=1 
+				#if ($zjhm && !$zjhm.equals(""))
+					and zjhm = #[zjhm]
+				#end
+				#if($ywx && !$ywx.equals(""))
+					and ywx = #[ywx]
+				#end
+				#if($ywm && !$ywm.equals(""))
+					and ywm = #[ywm]
+				#end
+				#if($xm && !$xm.equals(""))
+					and xm like '%'||#[xm]||'%'
+				#end
+				#if($jgmc && !$jgmc.equals(""))
+					and jgbh in (select jgbh from t_za_jg_jbxx jbxx where dwmc like '%'||#[jgmc]||'%')
+				#end
+				#if($zxbs && !$zxbs.equals(""))
+					and zxbs = #[zxbs]
+				#end
+				#if($djsj_start && !$djsj_start.equals(""))
+					and djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-mm-dd HH24:mi:ss')  
+				#end
+				#if($djsj_end && !$djsj_end.equals(""))
+					and djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-mm-dd HH24:mi:ss')  
+				#end
+			   	#if($jwsqdm && !$jwsqdm.equals(""))
+					and  djdwdm = #[jwsqdm]
+				#elseif($pcsdm && !$pcsdm.equals(""))
+					and (djdwdm like substr(#[pcsdm],1,8)||'%')
+				#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+					and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+					and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+				#end
+				#if($sfjwtdj && !$sfjwtdj.equals(""))
+					and sfjwtdj = #[sfjwtdj]
+				#end
+				group by substr(cyry.djdwdm,1,4)
+		]]>
+	</property>
+	<!-- 从业人员统计分析(市局一级，统计各分县局) -->
+	<property name="queryCyryTjListB">
+		<![CDATA[
+			select
+			    substr(cyry.djdwdm,1,6)||'000000' as dwdm,
+			   (select v.orgname from 
+			    v_common_organization v 
+			    where v.isyx='1' 
+			    and v.orgcode = substr(cyry.djdwdm,1,6)||'000000' ) as dwmc ,
+			    count(*) as sl
+				from t_za_ry_cyry cyry
+				where 1=1 
+				#if ($zjhm && !$zjhm.equals(""))
+					and zjhm = #[zjhm]
+				#end
+				#if($ywx && !$ywx.equals(""))
+					and ywx = #[ywx]
+				#end
+				#if($ywm && !$ywm.equals(""))
+					and ywm = #[ywm]
+				#end
+				#if($xm && !$xm.equals(""))
+					and xm like '%'||#[xm]||'%'
+				#end
+				#if($jgmc && !$jgmc.equals(""))
+					and jgbh in (select jgbh from t_za_jg_jbxx jbxx where dwmc like '%'||#[jgmc]||'%')
+				#end
+				#if($zxbs && !$zxbs.equals(""))
+					and zxbs = #[zxbs]
+				#end
+				#if($djsj_start && !$djsj_start.equals(""))
+					and djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-mm-dd HH24:mi:ss')  
+				#end
+				#if($djsj_end && !$djsj_end.equals(""))
+					and djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-mm-dd HH24:mi:ss')  
+				#end
+			   	#if($jwsqdm && !$jwsqdm.equals(""))
+					and  djdwdm = #[jwsqdm]
+				#elseif($pcsdm && !$pcsdm.equals(""))
+					and (djdwdm like substr(#[pcsdm],1,8)||'%')
+				#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+					and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+					and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+				#end
+				#if($sfjwtdj && !$sfjwtdj.equals(""))
+					and sfjwtdj = #[sfjwtdj]
+				#end
+				group by substr(cyry.djdwdm,1,6)
+		]]>
+	</property>
+	<!-- 从业人员统计分析(分县局一级，统计各派出所) -->
+	<property name="queryCyryTjListC">
+		<![CDATA[
+			select
+			    substr(cyry.djdwdm,1,8)||'0000' as dwdm,
+			   (select v.orgname from 
+			    v_common_organization v 
+			    where v.isyx='1' 
+			    and v.orgcode = substr(cyry.djdwdm,1,8)||'0000' ) as dwmc ,
+			    count(*) as sl
+				from t_za_ry_cyry cyry
+				where 1=1 
+				#if ($zjhm && !$zjhm.equals(""))
+					and zjhm = #[zjhm]
+				#end
+				#if($ywx && !$ywx.equals(""))
+					and ywx = #[ywx]
+				#end
+				#if($ywm && !$ywm.equals(""))
+					and ywm = #[ywm]
+				#end
+				#if($xm && !$xm.equals(""))
+					and xm like '%'||#[xm]||'%'
+				#end
+				#if($jgmc && !$jgmc.equals(""))
+					and jgbh in (select jgbh from t_za_jg_jbxx jbxx where dwmc like '%'||#[jgmc]||'%')
+				#end
+				#if($zxbs && !$zxbs.equals(""))
+					and zxbs = #[zxbs]
+				#end
+				#if($djsj_start && !$djsj_start.equals(""))
+					and djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-mm-dd HH24:mi:ss')  
+				#end
+				#if($djsj_end && !$djsj_end.equals(""))
+					and djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-mm-dd HH24:mi:ss')  
+				#end
+			   	#if($jwsqdm && !$jwsqdm.equals(""))
+					and  djdwdm = #[jwsqdm]
+				#elseif($pcsdm && !$pcsdm.equals(""))
+					and (djdwdm like substr(#[pcsdm],1,8)||'%')
+				#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+					and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+					and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+				#end
+				#if($sfjwtdj && !$sfjwtdj.equals(""))
+					and sfjwtdj = #[sfjwtdj]
+				#end
+				group by substr(cyry.djdwdm,1,8)
+		]]>
+	</property>
+	<!-- 从业人员统计分析(派出所一级，统计各警务区) -->
+	<property name="queryCyryTjListD">
+		<![CDATA[
+			select
+			    cyry.djdwdm as dwdm,
+			   (select v.orgname from 
+			    v_common_organization v 
+			    where v.isyx='1' 
+			    and v.orgcode = cyry.djdwdm ) as dwmc ,
+			    count(*) as sl
+				from t_za_ry_cyry cyry
+				where 1=1 
+				#if ($zjhm && !$zjhm.equals(""))
+					and zjhm = #[zjhm]
+				#end
+				#if($ywx && !$ywx.equals(""))
+					and ywx = #[ywx]
+				#end
+				#if($ywm && !$ywm.equals(""))
+					and ywm = #[ywm]
+				#end
+				#if($xm && !$xm.equals(""))
+					and xm like '%'||#[xm]||'%'
+				#end
+				#if($jgmc && !$jgmc.equals(""))
+					and jgbh in (select jgbh from t_za_jg_jbxx jbxx where dwmc like '%'||#[jgmc]||'%')
+				#end
+				#if($zxbs && !$zxbs.equals(""))
+					and zxbs = #[zxbs]
+				#end
+				#if($djsj_start && !$djsj_start.equals(""))
+					and djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-mm-dd HH24:mi:ss')  
+				#end
+				#if($djsj_end && !$djsj_end.equals(""))
+					and djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-mm-dd HH24:mi:ss')  
+				#end
+			   	#if($jwsqdm && !$jwsqdm.equals(""))
+					and  djdwdm = #[jwsqdm]
+				#elseif($pcsdm && !$pcsdm.equals(""))
+					and (djdwdm like substr(#[pcsdm],1,8)||'%')
+				#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+					and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+					and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+				#end
+				#if($sfjwtdj && !$sfjwtdj.equals(""))
+					and sfjwtdj = #[sfjwtdj]
+				#end
+				group by cyry.djdwdm
+		]]>
+	</property>
+</properties>	

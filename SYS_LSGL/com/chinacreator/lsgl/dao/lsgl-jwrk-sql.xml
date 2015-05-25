@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryLsJzJwrkPageResultInfo">
+		<![CDATA[
+			select jwbh,
+			       rybh,
+			       rjzjzl as zjzl,
+			       rjzjhm as zjhm,
+			       zjyxq,
+			       qzzl,
+			       qzyxq,
+			       tlyxq,
+			       qzjg,
+			       tlsy,
+			       qfrq,
+			       rzsj,
+			       czbs,
+			       czdwdm,
+			       czdwmc,
+			       czsj,
+			       czrxm,
+			       djdwdm,
+			       djdwmc,
+			       djrxm,
+			       djsj,
+			       zrdwdm,
+			       zrdwmc,
+			       zrmjxm,
+			       zrmjjh,
+			       zrmjlxdh,
+			       jwrylx,
+			       zxbs,
+			       zxsj,
+			       zxyy,
+			       bz,
+			       rkfwglid,
+			       sssqbh,
+			       ywx,
+			       ywm,
+			       djrsfzh,
+			       czrsfzh,
+			       sfjwtdj,
+			       gj,
+			       zwm,
+			       xb,
+			       csrq,
+			       lxdh,
+			       fwcs,
+			       zw,
+			       lxdhbz,
+			       f_get_dzmc_byrkfwglid(jw.rkfwglid) as xzzxz
+			  from t_lsgl_rk_jwrkxx jw
+			  where rybh=#[rybh]
+		]]>
+	</property>
+
+ 	<property name="queryJwrkPageResultInfo">
+ 		<![CDATA[
+ 			select jwbh,
+			       rybh,
+			       rjzjzl as zjzl,
+			       rjzjhm as zjhm,
+			       zjyxq,
+			       qzzl,
+			       qzyxq,
+			       tlyxq,
+			       qzjg,
+			       tlsy,
+			       qfrq,
+			       rzsj,
+			       czbs,
+			       czdwdm,
+			       czdwmc,
+			       czsj,
+			       czrxm,
+			       djdwdm,
+			       djdwmc,
+			       djrxm,
+			       djsj,
+			       zrdwdm,
+			       zrdwmc,
+			       zrmjxm,
+			       zrmjjh,
+			       zrmjlxdh,
+			       jwrylx,
+			       zxbs,
+			       zxsj,
+			       zxyy,
+			       bz,
+			       rkfwglid,
+			       sssqbh,
+			       ywx,
+			       ywm,
+			       djrsfzh,
+			       czrsfzh,
+			       sfjwtdj,
+			       gj,
+			       zwm,
+			       xb,
+			       to_char(csrq,'yyyy-mm-dd') as csrq,
+			       lxdh,
+			       fwcs,
+			       zw,
+			       lxdhbz,
+			       f_get_dzmc_byrkfwglid(jw.rkfwglid) as xzzxz
+			  from t_lsgl_rk_jwrkxx jw
+			  where 1=1
+			  		#if ($orgcode && !$orgcode.equals(""))
+			  			and zrdwdm=#[orgcode]
+			  		#end
+			  		
+			  		#if($sqdm && !$sqdm.equals(""))
+				   		and jw.SSSQBH = #[sqdm]
+				   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+		    			and (jw.zrdwdm = #[jwsqdm])
+		    		#elseif ($pcsdm && !$pcsdm.equals(""))
+				 		and jw.zrdwdm like substr(#[pcsdm],1,8)||'%'
+		 			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+		 				and jw.zrdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+		 			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+		 				and jw.zrdwdm like substr(#[citygajgjgdm],1,4)||'%'
+				   	#end
+				   	
+				   	#if($gj && !$gj.equals(""))
+				   		and jw.gj = #[gj]
+				   	#end
+				   	
+				   	#if($zjzl && !$zjzl.equals(""))
+				   		and jw.RJZJZL = #[zjzl]
+				   	#end
+				   	
+				   	#if($zjhm && !$zjhm.equals(""))
+				   		and jw.RJZJHM = #[zjhm]
+				   	#end
+				   	
+				   	#if($xb && !$xb.equals(""))
+				   		and jw.xb = #[xb]
+				   	#end
+ 			
+ 					#if($ywm && !$ywm.equals(""))
+ 						and jw.ywm=#[ywm]
+ 					#end
+ 					
+ 					#if($ywx && !$ywx.equals(""))
+ 						and jw.ywx=#[ywx]
+ 					#end
+ 					
+ 					#if($djsj_start && !$djsj_start.equals(""))
+ 						and jw.djsj >= to_date(#[djsj_start],'yyyy-mm-dd')
+ 					#end
+ 					
+ 					#if($djsj_end && !$djsj_end.equals(""))
+ 						and jw.djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+ 					#end
+ 					
+ 					#if($zxbs && !$zxbs.equals(""))
+ 						and jw.zxbs = #[zxbs]
+ 					#end
+ 					
+ 					#if((($fwid && !$fwid.equals(""))
+ 						|| $stmc && !$stmc.equals("")) 
+ 						|| ($jlxdm && !$jlxdm.equals(""))
+ 						|| ($mph && !$mph.equals(""))
+ 						|| ($xqz && !$xqz.equals(""))
+ 						|| ($ldxz && !$ldxz.equals(""))
+ 						|| ($dyh && !$dyh.equals(""))
+ 						|| ($lch && !$lch.equals(""))
+ 						|| ($fjh && !$fjh.equals(""))
+ 						|| ($fsdz && !$fsdz.equals("")))
+ 					    and	exists (
+						      select 1 from t_lsgl_rkfw_gl gl 
+						      where gl.rkfwglid=jw.rkfwglid
+						      		#if ($fwid && !$fwid.equals(""))
+						            	and gl.fwid=#[fwid]
+						            #end
+					            	and exists (
+					            		select 1 
+					            		from t_common_dzxx dz 
+					            		where dz.dzid=gl.dzid
+					            			#if($dyh && !$dyh.equals(""))
+					            				and dz.dyh=#[dyh]
+					            			#end
+					            			#if($lch && !$lch.equals(""))
+					            				and dz.LCH=#[lch]
+					            			#end
+					            			#if($fjh && !$fjh.equals(""))
+					            				and dz.fjh=#[fjh]
+					            			#end
+					            			#if($fsdz && !$fsdz.equals(""))
+					            				and dz.fsdz=#[fsdz]
+					            			#end
+					            			
+					            			#if(($jlxdm && !$jlxdm.equals(""))
+						 						|| ($mph && !$mph.equals(""))
+						 						|| ($xqz && !$xqz.equals(""))
+						 						|| ($ldxz && !$ldxz.equals("")))
+					            			  and exists (
+					            			  	  select 1 
+					            			  	  from t_common_stxx st
+					            			  	  where dz.stid=st.id
+					            			  	  	  #if($jlxdm && !$jlxdm.equals(""))
+					            			  	  	  	 and st.JLXDM=#[jlxdm]
+					            			  	  	  #end
+					            			  	  	  #if($mph && !$mph.equals(""))
+					            			  	  	  	 and st.mph = #[mph]
+					            			  	  	  #end
+					            			  	  	  #if($xqz && !$xqz.equals(""))
+					            			  	  	  	and st.xqz like '%'||#[xqz]||'%'
+					            			  	  	  #end
+					            			  	  	  #if($ldxz && !$ldxz.equals(""))
+					            			  	  	  	and st.ldxz like '%'||#[ldxz]||'%'
+					            			  	  	  #end
+					            			  )
+					            			 #end
+					            	 )
+						           
+						)
+ 					#end
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryJwrkJbxxBeanByQueryBean">
+ 		<![CDATA[
+ 			select  
+			       rybh,
+			       rjzjzl as zjzl,
+			       rjzjhm as zjhm,
+			       to_char(zjyxq,'yyyy-mm-dd') as zjyxq,
+			       qzzl,
+			       to_char(qzyxq,'yyyy-mm-dd') qzyxq,
+			       to_char(tlyxq,'yyyy-mm-dd') tlyxq,
+			       qzjg,
+			       tlsy,
+			       to_char(qfrq,'yyyy-mm-dd') qfrq,
+ 			       jwrylx,
+			       bz,
+			       ywx,
+			       ywm,
+			       sfjwtdj,
+			       gj,
+			       zwm,
+			       xb,
+			       to_char(csrq,'yyyy-mm-dd') as csrq,
+			       lxdh,
+			       fwcs,
+			       zw,
+			       lxdhbz
+			  from t_lsgl_rk_jwrkxx jw
+			  where 1=1
+			   	#if($gj && !$gj.equals(""))
+			   		and jw.gj = #[gj]
+			   	#end
+			   	
+			   	#if($zjzl && !$zjzl.equals(""))
+			   		and jw.RJZJZL = #[zjzl]
+			   	#end
+			   	
+			   	#if($zjhm && !$zjhm.equals(""))
+			   		and jw.RJZJHM = #[zjhm]
+			   	#end
+			   	
+			   	#if($xb && !$xb.equals(""))
+			   		and jw.xb = #[xb]
+			   	#end
+			
+				#if($ywm && !$ywm.equals(""))
+					and jw.ywm=#[ywm]
+				#end
+				
+				#if($ywx && !$ywx.equals(""))
+					and jw.ywx=#[ywx]
+				#end
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryJwrkInfoByRybhAndDjdwdm">
+ 		<![CDATA[
+ 			select jwbh,
+			       rybh,
+			       rjzjzl as zjzl,
+			       rjzjhm as zjhm,
+			        to_char(zjyxq,'yyyy-mm-dd') as zjyxq,
+			       qzzl,
+			       to_char(qzyxq,'yyyy-mm-dd') qzyxq,
+			        to_char(tlyxq,'yyyy-mm-dd') tlyxq,
+			       qzjg,
+			       tlsy,
+			       to_char(qfrq,'yyyy-mm-dd') qfrq,
+			       czbs,
+			       czdwdm,
+			       czdwmc,
+			       czsj,
+			       czrxm,
+			       djdwdm,
+			       djdwmc,
+			       djrxm,
+			       djsj,
+			       zrdwdm,
+			       zrdwmc,
+			       zrmjxm,
+			       zrmjjh,
+			       zrmjlxdh,
+			       jwrylx,
+			       zxbs,
+			       zxsj,
+			       zxyy,
+			       bz,
+			       rkfwglid,
+			       sssqbh,
+			       ywx,
+			       ywm,
+			       djrsfzh,
+			       czrsfzh,
+			       sfjwtdj,
+			       gj,
+			       zwm,
+			       xb,
+			       to_char(csrq,'yyyy-mm-dd') as csrq,
+			       lxdh,
+			       fwcs,
+			       zw,
+			       lxdhbz
+			  from t_lsgl_rk_jwrkxx jw
+			  where rybh=#[rybh] and djdwdm=#[djdwdm] and (zxbs='0' or zxbs is null)
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryJwrkJbxxBeanByJwbh">
+ 		<![CDATA[
+ 			select jwbh,
+			       rybh,
+			       rjzjzl as zjzl,
+			       rjzjhm as zjhm,
+			       to_char(zjyxq,'yyyy-mm-dd') as zjyxq,
+			       qzzl,
+			       to_char(qzyxq,'yyyy-mm-dd') qzyxq,
+			       to_char(tlyxq,'yyyy-mm-dd') tlyxq,
+			       qzjg,
+			       tlsy,
+			       to_char(qfrq,'yyyy-mm-dd') qfrq,
+			       czbs,
+			       czdwdm,
+			       czdwmc,
+			       czsj,
+			       czrxm,
+			       djdwdm,
+			       djdwmc,
+			       djrxm,
+			       djsj,
+			       zrdwdm,
+			       zrdwmc,
+			       zrmjxm,
+			       zrmjjh,
+			       zrmjlxdh,
+			       jwrylx,
+			       zxbs,
+			       zxsj,
+			       zxyy,
+			       bz,
+			       rkfwglid,
+			       sssqbh,
+			       ywx,
+			       ywm,
+			       djrsfzh,
+			       czrsfzh,
+			       sfjwtdj,
+			       gj,
+			       zwm,
+			       xb,
+			       to_char(csrq,'yyyy-mm-dd') as csrq,
+			       lxdh,
+			       fwcs,
+			       zw,
+			       lxdhbz,
+			       (select fwid from t_lsgl_rkfw_gl where rkfwglid=jw.rkfwglid) as fwid,
+			       f_get_dzmc_byrkfwglid(jw.rkfwglid) as xzzxz
+			  from t_lsgl_rk_jwrkxx jw
+			  where jwbh=#[jwbh]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="insertJwrkBean">
+ 		<![CDATA[
+ 			insert into t_lsgl_rk_jwrkxx
+			  (jwbh,
+			   rybh,
+			   rjzjzl,
+			   rjzjhm,
+			   zjyxq,
+			   qzzl,
+			   qzyxq,
+			   tlyxq,
+			   qzjg,
+			   tlsy,
+			   qfrq,
+			   rzsj,
+			   czbs,
+			   czdwdm,
+			   czdwmc,
+			   czsj,
+			   czrxm,
+			   djdwdm,
+			   djdwmc,
+			   djrxm,
+			   djsj,
+			   zrdwdm,
+			   zrdwmc,
+			   zrmjxm,
+			   zrmjjh,
+			   zrmjlxdh,
+			   jwrylx,
+			   zxbs,
+			   zxsj,
+			   zxyy,
+			   bz,
+			   rkfwglid,
+			   sssqbh,
+			   ywx,
+			   ywm,
+			   djrsfzh,
+			   czrsfzh,
+			   sfjwtdj,
+			   gj,
+			   zwm,
+			   xb,
+			   csrq,
+			   lxdh,
+			   fwcs,
+			   zw,
+			   lxdhbz)
+			values
+			  (#[jwbh],
+			   #[rybh],
+			   #[zjzl],
+			   #[zjhm],
+			   to_date(#[zjyxq],'yyyy-mm-dd'),
+			   #[qzzl],
+			   to_date(#[qzyxq],'yyyy-mm-dd'),
+			   to_date(#[tlyxq],'yyyy-mm-dd'),
+			   #[qzjg],
+			   #[tlsy],
+			   to_date(#[qfrq],'yyyy-mm-dd'),
+			   to_date(#[rzsj],'yyyy-mm-dd'),
+			   '1',
+			   #[czdwdm],
+			   #[czdwmc],
+			   sysdate,
+			   #[czrxm],
+			   #[djdwdm],
+			   #[djdwmc],
+			   #[djrxm],
+			   sysdate,
+			   #[zrdwdm],
+			   #[zrdwmc],
+			   #[zrmjxm],
+			   #[zrmjjh],
+			   #[zrmjlxdh],
+			   #[jwrylx],
+			   '0',
+			   null,
+			   null,
+			   #[bz],
+			   #[rkfwglid],
+			   (select SSSQ from t_lsgl_fw_jbxx where fwid=#[fwid]),
+			   #[ywx],
+			   #[ywm],
+			   #[djrsfzh],
+			   #[czrsfzh],
+			   '0',
+			   #[gj],
+			   #[zwm],
+			   #[xb],
+			   to_date(#[csrq],'yyyy-mm-dd'),
+			   #[lxdh],
+			   #[fwcs],
+			   #[zw],
+			   #[lxdhbz])
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	<property name="updateJwrkBean">
+ 		<![CDATA[
+			 update t_lsgl_rk_jwrkxx
+			   set 
+			       zjyxq = to_date(#[zjyxq],'yyyy-mm-dd'),
+			       qzzl = #[qzzl],
+			       qzyxq = to_date(#[qzyxq],'yyyy-mm-dd'),
+			       tlyxq = to_date(#[tlyxq],'yyyy-mm-dd'),
+			       qzjg = #[qzjg],
+			       tlsy = #[tlsy],
+			       qfrq = to_date(#[qfrq],'yyyy-mm-dd'),
+			       rzsj = to_date(#[rzsj],'yyyy-mm-dd'),
+			       czbs = '2',
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czsj = sysdate,
+			       czrxm = #[czrxm],
+			       jwrylx = #[jwrylx],
+			       bz = #[bz],
+			       rkfwglid = #[rkfwglid],
+			       sssqbh = (select SSSQ from t_lsgl_fw_jbxx where fwid=#[fwid]),
+			       djrsfzh = #[djrsfzh],
+			       czrsfzh = #[czrsfzh],
+			       zwm = #[zwm],
+			       csrq = to_date(#[csrq],'yyyy-mm-dd'),
+			       lxdh = #[lxdh],
+			       fwcs = #[fwcs],
+			       zw = #[zw],
+			       lxdhbz = #[lxdhbz]
+			 where jwbh = #[jwbh]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="getJwrkCurrentRkfwglBean">
+ 		<![CDATA[
+ 			select rkfwglid,fwid,dzid,rybh
+ 			from t_lsgl_rkfw_gl 
+ 			where rybh=? and (zxbs='0' or zxbs is null) order by djsj desc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="zxRkfwglByRybh">
+ 		<![CDATA[
+ 			update t_lsgl_rkfw_gl
+ 			set zxbs='1', ZXSJ=sysdate,ZXMJXM=#[zxmjxm],ZXDWDM=#[zxdwdm],ZXDWMC=#[zxdwmc],zxyy=#[zxyy]
+ 			where rybh=#[rybh]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateJwrkZxbs">
+ 		<![CDATA[
+ 			update t_lsgl_rk_jwrkxx
+ 			set zxbs=#[zxbs],
+ 				#if($zxbs && $zxbs.equals("1"))
+ 					zxsj=sysdate,
+ 				#else
+ 					zxsj=null,
+ 				#end
+ 				zxyy=#[zxyy]
+ 			where jwbh=#[jwbh]
+ 		]]>
+ 	</property>
+ 	
+</properties>

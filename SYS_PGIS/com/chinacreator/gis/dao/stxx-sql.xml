@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 大型活动 -->
+<properties>
+	
+	<property name="queryStxxPage">
+		<![CDATA[
+			SELECT * 
+			FROM (
+			    SELECT ROWNUM RN, B.*
+  				FROM (
+  				    SELECT A.ID, A.STBM, A.STMC, A.XZQHMC, A.JLXMC, A.SQMC, A.MPH,A.LDXZ, A.X, A.Y
+          			FROM T_COMMON_STXX A 
+          			WHERE 1=1 and (zxbs is null or zxbs='1')
+					#if($stmc && !$stmc.equals(""))
+		          		AND (STMC LIKE '%' || #[stmc] || '%' or ldxz like '%'||#[stmc]||'%' or sqmc like '%'||#[stmc]||'%' or jlxmc like '%'||#[stmc]||'%') 
+					#end
+					
+					#if($leve==2)
+						and djdwdm like substr(#[orgcode],1,2*2)||'%' 
+					#end
+					#if($leve==3)
+						and djdwdm like substr(#[orgcode],1,2*3)||'%'
+					#end
+					
+					#if($leve==4)
+						and djdwdm like substr(#[orgcode],1,2*4)||'%'
+					#end
+					
+					#if($leve==5)
+						and djdwdm = #[orgcode]
+					#end
+					ORDER BY djsj DESC
+          		 ) B 
+          		 where rownum<=#[endRow]
+        	) WHERE rn >= #[startRow]
+			 
+ 		]]>
+	</property> 
+	
+	
+</properties>

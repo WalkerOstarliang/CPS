@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="wbdwgl" namespace="/sydw/wbdwgl" extends="default"> 
+	  		<action name="*" class="com.chinacreator.dwdj.action.WbdwManageAction" method="{1}">
+	  			<result name="toAqjcWbdw">/jsp/dwdj/page/aqjc/wbdwqzjcinfo.jsp</result>
+	  			<result name="toJdhxWbdw">/jsp/dwdj/page/aqjc/wbdwjdhxinfo.jsp</result>
+	  			<result name="toWxhxWbdw">/jsp/dwdj/page/aqjc/wbdwwxhxinfo.jsp</result>
+	  			
+	  			<result name="toWbdwShListPage">/jsp/dwdj/page/wbdwsh/wbdwshList.jsp</result>
+	  			<result name="toWbdwShInfoPage">/jsp/dwdj/page/wbdwsh/wbdwshinfo.jsp</result>
+	  		</action>
+	  </package>
+</struts>

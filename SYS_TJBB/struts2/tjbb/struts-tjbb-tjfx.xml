@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="tjbb" namespace="/tjbb" extends="default"> 
+	  		<action name="*" class="com.chinacreator.tjbb.action.TjbbManageAction" method="{1}">
+	  			 <result name="toPcsJbqkTjPage">/jsp/tjbb/pages/pcsjbqktjpage.jsp</result>
+	  			 <result name="exportPcsJbqkTjPage">/jsp/tjbb/pages/exportpcsjbqk.jsp</result>
+	  			 <result name="printPcsJbqk">/jsp/tjbb/pages/pcsjbqkprint.jsp</result>
+	  			 
+	  			 
+	  			 <result name="toJcsjtjtjPage">/jsp/tjbb/pages/jcsjtjpage.jsp</result>
+	  			 <result name="exportJcsjtjPage">/jsp/tjbb/pages/exportjcsjtjpage.jsp</result>
+	  			 
+	  			 <result name="toPcsxxPage">/jsp/tjbb/pages/pcsxxpage.jsp</result>
+	  			 <result name="loadPcsInfoPage">/jsp/tjbb/pages/pcsxxinclude.jsp</result>
+	  			 <result name="exportPcsxxPage">/jsp/tjbb/pages/exportpcsxxpage.jsp</result>
+	  			 
+	  			 <result name="toPcsjbqkhzPage">/jsp/tjbb/pages/pcsjbqkhz.jsp</result>
+	  			 <result name="dowloadPcsjbqkhz">/jsp/tjbb/pages/exportpcsjbqkhz.jsp</result>
+	  			 <result name="toPcsJbqkList">/jsp/tjbb/pages/pcsjbqklist.jsp</result>
+	  			 <result name="exportPcsjbqkList">/jsp/tjbb/pages/exportpcsjbqklist.jsp</result>
+	  			 
+	  			 <result name="toFqfzqkPage">/jsp/tjbb/pages/faqktjpage.jsp</result>
+	  			 <result name="exportFaqkPage">/jsp/tjbb/pages/exportfaqktjpage.jsp</result>
+	  			 
+	  			 <result name="dowloadPcsjbqkhzList">/jsp/tjbb/pages/exportpcsjbqkhzlist.jsp</result>
+	  			 
+	  			 <result name="toCzfwTjbbPage">/jsp/tjbb/pages/czfwtjpage.jsp</result>
+	  			 <result name="exportCzfwTjbbPage">/jsp/tjbb/pages/exportczfwtjbbpage.jsp</result>
+	  			 
+	  			 <result name="toLdrkTjbbPage">/jsp/tjbb/pages/ldrktjbbpage.jsp</result>
+	  			 <result name="exportLdrkTjbbPage">/jsp/tjbb/pages/ldrktjbbexport.jsp</result>
+	  			 
+	  			 <result name="toGabzzrktjbbPage">/jsp/tjbb/pages/gablktjbbpage.jsp</result>
+	  			 <result name="exportGabzzrktjbbPage">/jsp/tjbb/pages/gablktjbbpageexport.jsp</result>
+	  			 
+	  			 <result name="toJzztjbbPage">/jsp/tjbb/pages/jzztjbbpage.jsp</result>
+	  			 <result name="exportJzztjbbPage">/jsp/tjbb/pages/jzztjbbpageexport.jsp</result>
+	  			 
+	  			 <result name="toDatalrTjPage">/jsp/tjbb/pages/sjlhztj.jsp</result>
+	  			 <result name="exportDataLrtjPage">/jsp/tjbb/pages/sjlhztjexport.jsp</result>
+	  			 
+	  			 <result name="toDwAqjctjbbPage">/jsp/tjbb/pages/dwxx/dwaqjctjpage.jsp</result>
+	  			 <result name="exportDwAqjcPage">/jsp/tjbb/pages/dwxx/dwaqjctjexport.jsp</result>
+	  			 
+	  			 <!-- 单位统计 -->
+	  			 <result name="toDwTjPage">/jsp/tjbb/pages/dwtj/dwlist.jsp</result>
+	  			 <result name="toDwListPage">/jsp/tjbb/pages/dwtj/dwinfo.jsp</result>
+	  			 <result name="downloadDwtj">/jsp/tjbb/pages/dwtj/dwtjdc.jsp</result>
+	  			 
+	  			 <result name="toSjlrWeektjPage">/jsp/tjbb/pages/week/weekqkpage.jsp</result>
+	  			 <result name="toExportWeektjqkPage">/jsp/tjbb/pages/week/weekqkexport.jsp</result>
+	  			 <result name="loadWeekTablePage">/jsp/tjbb/pages/week/weektablepage.jsp</result>
+	  			 
+	  			<result name="toJdTbPage">/jsp/tjbb/pages/jdtb.jsp</result> 
+	  			<result name="toJdTbDataPage">/jsp/tjbb/pages/jdtbdata.jsp</result> 
+	  			<result name="exportJdtbDataPage">/jsp/tjbb/pages/jdtbexport.jsp</result> 
+	  		</action>
+	  </package>
+</struts>

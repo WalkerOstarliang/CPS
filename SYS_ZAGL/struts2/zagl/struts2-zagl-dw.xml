@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="dw" extends="default" namespace="/zagl/dw">
+		<action name="*"  class="com.chinacreator.zagl.action.DwAction" method="{1}">
+			<result name="downloadAqjc">/jsp/zagl/pages/dwgl/aqjc/expaqjcmode.jsp</result>
+			<result name="toAqjcListPage">/jsp/zagl/pages/dwgl/aqjc/aqjcList.jsp</result>
+			<result name="toDw">/jsp/zagl/pages/dwgl/dwinfo2.jsp</result>
+			<result name="toDwInfoPage">/jsp/zagl/pages/dwgl/dwinfo2.jsp</result>
+			<!-- 单位基本信息 -->
+			<result name="dwjbxxinfo">/jsp/zagl/pages/dwgl/dwjbxx.jsp</result>
+			<result name="goDwJbxxPage">/jsp/zagl/pages/dwgl/dwjbxx.jsp</result>
+			
+			<!-- 特种行业 -->
+			<result name="hllbinfo_01">/jsp/zagl/pages/dwgl/tzhy.jsp</result>
+			<!-- 公共场所 -->
+			<result name="hllbinfo_02">/jsp/zagl/pages/dwgl/ggcs.jsp</result>
+			<!-- 内保单位 -->
+			<result name="hllbinfo_03">/jsp/zagl/pages/dwgl/nbdw.jsp</result>
+			<!-- 危险品单位 -->
+			<result name="hllbinfo_04">/jsp/zagl/pages/dwgl/wxpdw.jsp</result>
+			<!-- 上网服务场所 -->
+			<result name="hllbinfo_05">/jsp/zagl/pages/dwgl/swfwcs.jsp</result>
+			<!-- 涉外单位 -->
+			<result name="hllbinfo_06">/jsp/zagl/pages/dwgl/swdw.jsp</result>
+			
+			<!-- 旅馆业 -->
+			<result name="tzhy_100">/jsp/zagl/pages/dwgl/thlg.jsp</result>
+			<!-- 印刷业 -->
+			<result name="tzhy_500">/jsp/zagl/pages/dwgl/ysy.jsp</result>
+			<!-- 开锁业 -->
+			<result name="tzhy_900">/jsp/zagl/pages/dwgl/ksy.jsp</result>
+			
+			
+			<result name="toAbry">/jsp/zagl/pages/dwgl/abry.jsp</result>
+			<result name="toAbss">/jsp/zagl/pages/dwgl/abss.jsp</result>
+			<result name="toAqjc">/jsp/zagl/pages/dwgl/aqjc.jsp</result>
+			<result name="toCyry">/jsp/zagl/pages/dwgl/cyry.jsp</result>
+			<result name="toCyryPfListPage">/jsp/zagl/pages/dwgl/cyrypflist.jsp</result>
+			<result name="toZdyhbw">/jsp/zagl/pages/dwgl/zdyhbw.jsp</result>
+			<result name="toDwjc">/jsp/zagl/pages/dwgl/dwjc.jsp</result>
+			<result name="toDwcx">/jsp/zagl/pages/dwgl/dwcx.jsp</result>
+			<result name="toDwzp">/jsp/zagl/pages/dwgl/dwzp.jsp</result>
+			
+			<result name="toSydwcx">/jsp/zagl/pages/dwgl/sydwcx.jsp</result>
+			
+			<result name="toCyryList">/jsp/zagl/pages/dwgl/cyryList.jsp</result>
+			<result name="toCyryDetail">/jsp/zagl/pages/dwgl/cyryDetail.jsp</result>
+			<result name="toCyryDetail_syrk">/jsp/zagl/pages/dwgl/cyryDetail_syrk.jsp</result>
+			<result name="toCyryDetail_jwrk">/jsp/zagl/pages/dwgl/cyryDetail_jwrk.jsp</result>
+			
+			
+			<result name="toCyryfkPage">/jsp/zagl/pages/dwgl/cyryfk.jsp</result>
+			<!-- 单位地址选择 -->
+			<result name="toDwfw">/jsp/zagl/pages/dwgl/dwfwselect.jsp</result>
+			<!-- 安全设备 -->
+			<result name="toDwaqsb">/jsp/zagl/pages/dwgl/aqsb.jsp</result>
+			<!-- 单位选择 -->
+			<result name="toDwselect">/jsp/zagl/pages/dwgl/dwSelect.jsp</result>
+			
+			<!-- 单位详情 -->
+			<result name="toDwDetail">/jsp/zagl/pages/dwgl/detail/dw_detail.jsp</result>
+			<!-- 特种行业 -->
+			<result name="dw_01_detail">/jsp/zagl/pages/dwgl/detail/tzhy_detail.jsp</result>
+			<!-- 企事业单位 -->
+			<result name="dw_03_detail">/jsp/zagl/pages/dwgl/detail/nbdw_detail.jsp</result>
+			<!-- 公共场所 -->
+			<result name="dw_02_detail">/jsp/zagl/pages/dwgl/detail/ggcs_detail.jsp</result>
+			<!-- 危险物品 -->
+			<result name="dw_04_detail">/jsp/zagl/pages/dwgl/detail/wxwpdw_detail.jsp</result>
+			<!-- 涉外单位 -->
+			<result name="dw_06_detail">/jsp/zagl/pages/dwgl/detail/swdw_detail.jsp</result>
+			<!-- 上网服务场所 -->
+			<result name="dw_05_detail">/jsp/zagl/pages/dwgl/detail/swfwcs_detail.jsp</result>
+			<!-- 技防单位 -->
+			<result name="dw_09_detail">/jsp/zagl/pages/dwgl/detail/jfdw_detail.jsp</result>
+			
+			<result name="toDwzpDetail">/jsp/zagl/pages/dwgl/detail/dwzp_detail.jsp</result>
+			<result name="toDwCyryDetail">/jsp/zagl/pages/dwgl/detail/dwcyry_detail.jsp</result>
+			<result name="toAqjcList">/jsp/zagl/pages/dwgl/detail/aqjc_list.jsp</result>
+			<result name="toAqjcDetail">/jsp/zagl/pages/dwgl/detail/aqjc_detail.jsp</result>
+			<result name="toDwjcList">/jsp/zagl/pages/dwgl/detail/dwjc_list.jsp</result>
+			<result name="toDwjcDetail">/jsp/zagl/pages/dwgl/detail/dwjc_detail.jsp</result>
+			<result name="toZdyhbwList">/jsp/zagl/pages/dwgl/detail/zdyhbw_list.jsp</result>
+			<result name="toZdyhbwDetail">/jsp/zagl/pages/dwgl/detail/zdyhbw_detail.jsp</result>
+			<result name="toAqsbDetail">/jsp/zagl/pages/dwgl/detail/aqsb_detail.jsp</result>
+			<result name="toDwjbxxDetail">/jsp/zagl/pages/dwgl/detail/dwjbxx_detail.jsp</result>
+			<result name="toDwMenu">/jsp/zagl/pages/dwgl/detail/dwDetailMenu.jsp</result>
+			<result name="toAbssDetail">/jsp/zagl/pages/dwgl/detail/abss_detail.jsp</result>
+			<result name="toBwjgListDetail">/jsp/zagl/pages/dwgl/detail/bwjgList_detail.jsp</result>
+			<result name="toTfsjyaListDetail">/jsp/zagl/pages/dwgl/detail/tfsjyaList_detail.jsp</result>
+			<result name="toBadysDetail">/jsp/zagl/pages/dwgl/detail/badys_detail.jsp</result>
+			<result name="toZhsgDetail">/jsp/zagl/pages/dwgl/detail/zhsg_detail.jsp</result>
+			<result name="toAqyhDetail">/jsp/zagl/pages/dwgl/detail/aqyh_detail.jsp</result>
+			<result name="toTfsjyaDetail">/jsp/zagl/pages/dwgl/detail/tfsjya_detail.jsp</result>
+			
+			<result name="toBwjgList">/jsp/zagl/pages/dwgl/bwjgList.jsp</result>
+			<result name="toBwjg">/jsp/zagl/pages/dwgl/bwjg.jsp</result>
+			<result name="toBwzd">/jsp/zagl/pages/dwgl/bwzd.jsp</result>
+			<result name="toBwjys">/jsp/zagl/pages/dwgl/bwjys.jsp</result>
+			
+			<result name="toTfsjyaList">/jsp/zagl/pages/dwgl/tfsjyaList.jsp</result>
+			<result name="toTfsjya">/jsp/zagl/pages/dwgl/tfsjya.jsp</result>
+			<result name="toBadys">/jsp/zagl/pages/dwgl/badys.jsp</result>
+			<result name="toZhsg">/jsp/zagl/pages/dwgl/zhsg.jsp</result>
+			<result name="toAqyh">/jsp/zagl/pages/dwgl/aqyh.jsp</result>
+			
+			<result name="toQueryDwxxByDwmc">/jsp/zagl/pages/dwgl/queryDwxxByDwmc.jsp</result>
+			
+			<result name="toZdryyhbwFjxxPage">/jsp/zagl/pages/dwgl/zdyhbwzpxx.jsp</result>
+			
+			<result name="toExportExcelCyryInfoPage">/jsp/zagl/pages/dwgl/cyryExcelTemplate.jsp</result>
+			<result name="toExportExcelSydwInfoPage">/jsp/zagl/pages/dwgl/sydwExcelTemplate.jsp</result>
+			<result name="toCyryTjfxList">/jsp/zagl/pages/dwgl/cyryTjfxPage.jsp</result>
+			<result name="toExportExcelCyrytjInfoPage">/jsp/zagl/pages/dwgl/cyryTjExcelTemplate.jsp</result>
+			
+			<!-- 从业人员派发 -->
+			<result name="toCyrypf">/jsp/zagl/pages/dwgl/cyrypf.jsp</result>
+			
+			
+			<!-- 技防单位 -->
+			<result name="toJfdwPage">/jsp/zagl/pages/dwgl/jfdwgl/jfdwInfo.jsp</result>
+			<result name="toJfdwListPage">/jsp/zagl/pages/dwgl/jfdwgl/jfdwList.jsp</result>
+			<result name="toJfdwNsxxPage">/jsp/zagl/pages/dwgl/jfdwgl/jfdwns.jsp</result>
+			
+			<!-- 导出技防单位年审信息 -->
+			<result name="downloadJfdwnsxx">/jsp/zagl/pages/dwgl/jfdwgl/jfdwnsdownload.jsp</result>
+			
+			<!-- 内保管理 -->
+			<result name="toNbdwcx">/jsp/zagl/pages/nbgl/nbdwcx.jsp</result>
+			<result name="toDwtj">/jsp/zagl/pages/nbgl/dwtj.jsp</result>
+			<result name="toDwfatj">/jsp/zagl/pages/nbgl/fatj.jsp</result>
+			
+			<result name="toStcxPage">/jsp/zagl/pages/nbgl/stcx.jsp</result>
+			<result name="toNbdwdj">/jsp/zagl/pages/nbgl/nbdwdj.jsp</result>
+			
+			<result name="toCyryDjPage">/jsp/sydw/pages/cyry/cyrydjpage.jsp</result>
+		</action>
+	</package>
+	
+	 <package name="aqjc" extends="default" namespace="/zagl/dw/aqjc">
+		<action name="*"  class="com.chinacreator.zagl.action.DwAqjcAction" method="{1}">
+			<result name ="toNbDWAqjcPage">/jsp/zagl/pages/dwgl/aqjc/nbdwaqjc.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 电动车采集 -->
+	<package name="ddccj" extends="default" namespace="/zagl/ddccj">
+		<action name="*"  class="com.chinacreator.zagl.action.DdcAction" method="{1}">
+			<result name ="toDdcPage">/jsp/zagl/pages/ddccj/ddcInfo.jsp</result>
+			<result name ="toListPage">/jsp/zagl/pages/ddccj/ddcList.jsp</result>
+			
+			<result name="dowloadExcel">/jsp/zagl/pages/ddccj/ddcexcelmode.jsp</result>
+		</action>
+	</package>
+	<!-- 电动车查询 -->
+	<package name="ddccx" extends="default" namespace="/zagl/ddccx">
+		<action name="*"  class="com.chinacreator.zagl.action.DdccxAction" method="{1}">
+			<result name ="queryByCarid">/jsp/zagl/pages/ddccx/ddcjjInfo.jsp</result>
+			<result name ="toDdcjjListPage">/jsp/zagl/pages/ddccx/ddccxList.jsp</result>
+			<result name="downloadDdcExcel">/jsp/zagl/pages/ddccx/ddcjjexcelmode.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 内保单位安全检查 -->
+	<package name="nbdwaqjc" extends="default" namespace="/nbdwaqjc">
+		<action name="*"  class="com.chinacreator.zagl.dwjc.action.NbAqjcAction" method="{1}">
+			<result name ="toAqjcPage">/jsp/nbdwjc/page/nbaqjcinfo.jsp</result>
+			<result name ="toYjysPage">/jsp/nbdwjc/page/yjysPage.jsp</result>
+			
+			
+			<!-- 党政机关 -->
+			<result name ="aqjc_001">/jsp/nbdwjc/page/NbDzJgaqjc.jsp</result>
+			<!-- 高校 -->
+			<result name ="aqjc_002">/jsp/nbdwjc/page/NbGxdwaqjc.jsp</result>
+			<!-- 中小学幼儿园 -->
+			<result name ="aqjc_003">/jsp/nbdwjc/page/zxxjc.jsp</result>
+			<!-- 卫生系统 -->
+			<result name ="aqjc_004">/jsp/nbdwjc/page/NbWsXtaqjc.jsp</result>
+			<!-- 大型商场超市 -->
+			<result name ="aqjc_005">/jsp/nbdwjc/page/dxscjc.jsp</result>
+			<!-- 大型企业 -->
+			<result name ="aqjc_006">/jsp/nbdwjc/page/NbZdQsyaqjc.jsp</result>
+			<!-- 银行、金融机构 内保民警（需要手动设置单位分类为098） -->
+			<result name ="aqjc_098">/jsp/nbdwjc/page/jrdw_nbmj.jsp</result>
+			<!-- 银行、金融机构 社区民警 -->
+			<result name ="aqjc_007">/jsp/nbdwjc/page/jrdw_sqmj.jsp</result>
+			<!-- 三电油气  -->
+			<result name ="aqjc_008">/jsp/nbdwjc/page/sdyqjc.jsp</result>
+			<!-- 重点工程  -->
+			<result name ="aqjc_009">/jsp/nbdwjc/page/NbZdQsyaqjc.jsp</result>
+			<!-- 其他  -->
+			<result name ="aqjc_099">/jsp/nbdwjc/page/NbZdQsyaqjc.jsp</result>
+			
+			
+			<!-- 安全检查隐患照片 toShowNbAJZpPagebyAjid -->
+			<result name ="toShowNbAJZpPagebyAjid">/jsp/nbdwjc/page/NbAjZpJSP.jsp</result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="fw" namespace="/lsgl/fw" extends="default"> 
+	  		<action name="*" class="com.chinacreator.lsgl.action.LsglFwJbxxAction" method="{1}">
+	  			<result name="toFwJbxxListPage">/jsp/lsgl/pages/fw/fwlist.jsp</result>
+	  			<result name="toFwInfoPage">/jsp/lsgl/pages/fw/fwjbxxinfo.jsp</result>
+	  			<result name="toSelectFwWin">/jsp/lsgl/pages/fw/fwselectwin.jsp</result>
+	  			<result name="toSyrkDjFwSelectPage">/jsp/lsgl/pages/syrk/syrkfwselect.jsp</result>
+	  			<result name="toSelectFwDzPage">/jsp/lsgl/pages/rk/rkdj/rkdjforfwselect.jsp</result>
+	  			<result name="fwinfo">/jsp/lsgl/pages/fw/fwinfo.jsp</result>
+	  			<result name="fwzpxx">/jsp/lsgl/pages/fw/fwzpxx.jsp</result>
+	  			<result name="fwryxx">/jsp/lsgl/pages/fw/fwryxx.jsp</result>
+	  			<result name="czdjxx">/jsp/lsgl/pages/fw/czdjxx.jsp</result>
+	  			<result name="czfxcdj">/jsp/lsgl/pages/fw/czfxcdj.jsp</result>
+	  			<result name="toFwxcdjPage">/jsp/lsgl/pages/fw/fwxclist.jsp</result>
+	  			<result name="toFwxcInfoPage">/jsp/lsgl/pages/fw/fwjbxxinfoxc.jsp</result>
+	  			<result name="toCzFwJbxxListPage">/jsp/lsgl/pages/fw/czfwlist.jsp</result>
+	  			<result name="czxx" >/jsp/lsgl/pages/fw/czfwczxxInfo.jsp</result>
+	  			<result name="xtzry" >/jsp/lsgl/pages/fw/xtzry.jsp</result>
+	  			<result name="lstzry" >/jsp/lsgl/pages/fw/lstzry.jsp</result>
+	  			<result name="gldwxx" >/jsp/lsgl/pages/fw/gldwxx.jsp</result>
+	  			<result name="toAddCzjlPage">/jsp/lsgl/pages/fw/czjlPage.jsp</result>
+	  			<result name="toExportExcelFwxxInfoPage">/jsp/lsgl/pages/fw/downLoadExcel_fwjbxx.jsp</result>
+	  			<result name="toCzfwInfo">/jsp/lsgl/pages/fw/czfwInfo.jsp</result>
+	  			<result name="fwdzqy">/jsp/lsgl/pages/fw/fwdzqy.jsp</result>
+	  			<result name="czrxx">/jsp/lsgl/pages/fw/czrxx1.jsp</result>
+	  		</action>
+	  </package>
+</struts>

@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<!-- 新增重点人员 -->
+	<property name="insertZdry" >
+		<![CDATA[
+			insert into t_zdry_gzdx
+			  (gzdxbh, rybh, sfzh,zdrybh,ladw,flwsmc, qfjg, qfsj,zdrylbbj, zdryxl,
+				sszrdwdm, sszrdwmc,scxfsj, ssxzsq, ssxzsqmc)
+			values
+			  (#[gzdxbh], #[rybh], #[sfzh],#[zdrybh],#[ladw],
+			   #[flwsmc], #[qfjg], to_date(#[qfsj],'yyyymmdd'), #[zdrylbbj], #[zdryxl], 
+			   #[sszrdwdm], #[sszrdwmc], sysdate, #[ssxzsq], #[ssxzsqmc])
+						
+		]]>
+	</property>
+	
+	<!-- 新增执法办案反馈 -->
+	<property name="insertZfbaFk" >
+		<![CDATA[
+		insert into t_zdry_zfbafk
+		  (rybh, jszt, rksj, thyy, czrxm, czrid, czdwmc, czdwid)
+		values
+		  (#[rybh], #[jszt], sysdate, #[thyy], #[czrxm], #[czrid], #[czdwmc], #[czdwid])
+		]]>
+	</property>
+	
+	<!-- 修改重点人员 -->
+	<property name="updateZdry" >
+		<![CDATA[
+			update t_zdry_gzdx
+			   set
+			       ladw = #[ladw],
+			       flwsmc = #[flwsmc],
+			       qfjg = #[qfjg],
+			       qfsj = to_date(#[qfsj],'yyyymmdd'),
+			       zdrylbbj = #[zdrylbbj],
+			       zdryxl = #[zdryxl],
+			       sszrdwdm = #[sszrdwdm],
+			       sszrdwmc = #[sszrdwmc],
+			       ssxzsq = #[ssxzsq],
+			       ssxzsqmc = #[ssxzsqmc]
+			 where gzdxbh = #[gzdxbh]
+		]]>
+	</property>
+	
+	<!-- 根据人员编号查询重点人员基本信息 -->
+	<property name="queryZdryJbxx" >
+		<![CDATA[
+			select zdry.* from
+				(SELECT renyuanbianhao,
+			       qubaofangshi,
+			       qubaoqixian,
+			       xingming,
+			       lianxidianhua,
+			       rylxflag,
+			       anjianmingcheng,
+			       row_number() over (partition by renyuanbianhao order by acttime desc) sn
+			    FROM t_fjy_qbry
+			    where renyuanbianhao = ?) zdry
+			where sn = 1    
+		]]>
+	</property>
+	
+	<!-- 根据人员编号查询重点人员监视居住信息 -->
+	<property name="queryZdryJsjz" >
+		<![CDATA[
+			SELECT gongzuodanwei,
+			   nianling,
+			   shenfenzhenghao,
+			   zhuzhidizhi,
+			   nianling,
+			   shenfenzhenghao,
+			   chushengriqi,
+			   anjianmingcheng,
+			   anjianbianhao,
+			   shexianzuiming,
+			   falvyiju,
+			   jianshidizhi,
+			   jianshiyuanyin,
+			   kaishiriqi,
+			   zhixingjiguan,
+			   jiashuxingming,
+			   jiashuzhuzhi,xingbie,wenshuwenhao,pizhunriqi,banandanweimc,gonganmingcheng
+		    FROM t_xsjsjzjds
+		    WHERE renyuanbianhao = ?
+		]]>
+	</property>
+	
+	<!-- 根据人员编号查询重点人员取保候审信息 -->
+	<property name="queryZdryQbhs" >
+		<![CDATA[
+			SELECT gongzuodanwei,
+			   zhuzhidizhi,
+			   nianling,
+			   shenfenzhenghao,
+			   chushengriqi,
+			   anjianmingcheng,
+			   anjianbianhao,
+			   shexianzuiming,
+			   falvyiju,
+			   qubaoyuanyin,
+			   bzjshuee,
+			   bzjqixian,
+			   bzjyinhang,
+			   bzrxingming,
+			   bzrxingbie,
+			   bzrnianling,
+			   bzrhaoma,
+			   bzrphone,
+			   bzrguanxi,
+			   bzrdanwei,
+			   bzrzhuzhi,xingbie,wenshuwenhao,pizhunriqi,banandanweimc,gonganmingcheng
+		    FROM t_xsqbhsjds
+		    WHERE renyuanbianhao = ?
+		]]>
+	</property>
+	
+	<!-- 根据人员编号查询重点人员社区戒毒信息 -->
+	<property name="queryZdrySqjd" >
+		<![CDATA[
+			SELECT gongzuodanwei,
+			   xianzhuzhi,
+			   zhengjianhaoma as zhenjianhaoma,
+			   chushengriqi,
+			   anjianmingcheng,
+			   anjianbianhao,
+			   susongjiguan,
+			   fuyijiguan,
+			   zelingyiju,
+			   weifashishi,
+			   jieduqixian,
+			   qishishijian,
+			   zhongzhishijian,
+			   zhixingshequ,
+			   shequdizhi,xingbie,wenshuwenhao
+		    FROM t_xzzlsqjdjds
+		    WHERE renyuanbianhao = ?
+		]]>
+	</property>
+	
+	<!-- 根据人员编号查询重点人员社区康复信息 -->
+	<property name="queryZdrySqkf" >
+		<![CDATA[
+			SELECT gongzuodanwei,
+			   xianzhuzhi,
+			   zhengjianhaoma as zhenjianhaoma,
+			   chushengriqi,
+			   anjianmingcheng,
+			   anjianbianhao,
+			   susongjiguan,
+			   fuyijiguan,
+			   zelingyiju,
+			   weifashishi,
+			   kangfuqixian,
+			   qishishijian,
+			   zhongzhishijian,
+			   zhixingshequ,
+			   shequdizhi,xingbie,wenshuwenhao
+		    FROM t_xzzlsqkfjds
+		    WHERE renyuanbianhao = ?
+		]]>
+	</property>
+	
+	<!-- 查询重点人员签收列表 -->
+	<property name="queryZdryQsList" >
+		<![CDATA[
+			SELECT  *
+			  FROM (
+			        --取保候审
+			        SELECT  Distinct ryxx.renyuanbianhao,
+			                ryxx.xingming,
+			                xingbie,
+			                shenfenzhenghao,
+			                ryxx.rylxflag,
+			                ryxx.anjianmingcheng
+			          FROM t_xsqbhsjds qbhs, 
+			          (select * from (
+			          	SELECT s.*,
+                  				ROW_NUMBER() OVER(PARTITION BY RENYUANBIANHAO ORDER BY ACTTIME DESC) AS SN
+             				FROM T_FJY_QBRY  s) 
+             			  where sn = 1
+             		   ) ryxx
+			         WHERE qbhs.renyuanbianhao = ryxx.renyuanbianhao
+			           AND qbhs.shenfenzhenghao IS NOT NULL
+			           AND (ryxx.jyflag = '1' OR ryxx.jyflag = '2')
+			           AND NOT EXISTS (select 1 from t_zdry_zfbafk fk where ryxx.renyuanbianhao = fk.rybh)
+			           
+			           #if($xm && !$xm.equals(""))
+			           	 AND ryxx.xingming like '%'||#[xm]||'%'
+			           #end
+			           
+			           #if($xb && !$xb.equals(""))
+			           	AND xingbie = #[xb]
+			           #end
+			           
+			           #if($sfzh && !$sfzh.equals(""))
+			           	AND shenfenzhenghao = #[sfzh]
+			           #end
+			           
+			           #if($zdrylb && !$zdrylb.equals(""))
+			           	#if($zdrylb.equals("1"))
+			           		AND ryxx.rylxflag = #[zdrylb]
+			           	#else
+			           		AND ryxx.rylxflag = '999'
+			           	#end		
+			           #end
+			           
+			           #if($ajmc && !$ajmc.equals(""))
+			           	AND ryxx.anjianmingcheng like '%'||#[ajmc]||'%'
+			           #end
+			           
+			           #if($pcsdm && !$pcsdm.equals(""))
+			           		AND ryxx.jiyadw = #[pcsdm]
+					   #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+							AND ryxx.jiyadw like substr(#[countrygajgjgdm],1,6)||'%'
+					   #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+							AND ryxx.jiyadw like substr(#[citygajgjgdm],1,4)||'%'
+				       #end		
+			           )
+			UNION  (
+			           --监视居住
+			           SELECT Distinct ryxx.renyuanbianhao,
+			                   ryxx.xingming,
+			                   xingbie,
+			                   shenfenzhenghao,
+			                   ryxx.rylxflag,
+			                   ryxx.anjianmingcheng
+			             FROM t_xsjsjzjds jsjz, 
+			             (select * from (
+				          	SELECT s.*,
+	                  				ROW_NUMBER() OVER(PARTITION BY RENYUANBIANHAO ORDER BY ACTTIME DESC) AS SN
+	             				FROM T_FJY_QBRY  s) 
+	             			  where sn = 1
+	             		   ) ryxx
+			            WHERE jsjz.renyuanbianhao = ryxx.renyuanbianhao
+			              AND jsjz.shenfenzhenghao IS NOT NULL
+			              AND (ryxx.jyflag = '1' OR ryxx.jyflag = '2')
+			              AND NOT EXISTS (select 1 from t_zdry_zfbafk fk where ryxx.renyuanbianhao = fk.rybh)
+			              
+			           #if($xm && !$xm.equals(""))
+			           	 AND ryxx.xingming like '%'||#[xm]||'%'
+			           #end
+			           
+			           #if($xb && !$xb.equals(""))
+			           	AND xingbie = #[xb]
+			           #end
+			           
+			           #if($sfzh && !$sfzh.equals(""))
+			           	AND shenfenzhenghao = #[sfzh]
+			           #end
+			           
+			           #if($zdrylb && !$zdrylb.equals(""))
+				           #if($zdrylb.equals("2"))
+				           		AND ryxx.rylxflag = #[zdrylb]
+				           #else
+				           		AND ryxx.rylxflag = '999'
+			           	   #end
+			           #end
+			           
+			           #if($ajmc && !$ajmc.equals(""))
+			           	AND ryxx.anjianmingcheng like '%'||#[ajmc]||'%'
+			           #end
+			           
+			           #if($pcsdm && !$pcsdm.equals(""))
+			           		AND ryxx.jiyadw = #[pcsdm]
+					   #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+							AND ryxx.jiyadw like substr(#[countrygajgjgdm],1,6)||'%'
+					   #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+							AND ryxx.jiyadw like substr(#[citygajgjgdm],1,4)||'%'
+				       #end	
+			           )
+			UNION  (
+			           --社区戒毒
+			           SELECT Distinct ryxx.renyuanbianhao,
+			                   ryxx.xingming,
+			                   xingbie,
+			                   zhengjianhaoma AS shenfenzhenghao,
+			                   ryxx.rylxflag,
+			                   ryxx.anjianmingcheng
+			             FROM t_xzzlsqjdjds sqjd, 
+			             (select * from (
+				          	SELECT s.*,
+	                  				ROW_NUMBER() OVER(PARTITION BY RENYUANBIANHAO ORDER BY ACTTIME DESC) AS SN
+	             				FROM T_FJY_QBRY  s) 
+	             			  where sn = 1
+	             		   ) ryxx
+			            WHERE sqjd.renyuanbianhao = ryxx.renyuanbianhao
+			              AND sqjd.zhengjianhaoma IS NOT NULL
+			              AND (ryxx.jyflag = '1' OR ryxx.jyflag = '2')
+			              AND NOT EXISTS (select 1 from t_zdry_zfbafk fk where ryxx.renyuanbianhao = fk.rybh)
+			              
+			           #if($xm && !$xm.equals(""))
+			           	 AND ryxx.xingming like '%'||#[xm]||'%'
+			           #end
+			           
+			           #if($xb && !$xb.equals(""))
+			           	AND xingbie = #[xb]
+			           #end
+			           
+			           #if($sfzh && !$sfzh.equals(""))
+			           	AND zhengjianhaoma = #[sfzh]
+			           #end
+			           
+			           #if($zdrylb && !$zdrylb.equals(""))
+			           	 #if($zdrylb.equals("3"))
+				           		AND ryxx.rylxflag = #[zdrylb]
+				         #else
+				           		AND ryxx.rylxflag = '999'
+			           	 #end
+			           #end
+			           
+			           #if($ajmc && !$ajmc.equals(""))
+			           	AND ryxx.anjianmingcheng like '%'||#[ajmc]||'%'
+			           #end
+			           
+			           #if($pcsdm && !$pcsdm.equals(""))
+			           		AND ryxx.jiyadw = #[pcsdm]
+					   #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+							AND ryxx.jiyadw like substr(#[countrygajgjgdm],1,6)||'%'
+					   #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+							AND ryxx.jiyadw like substr(#[citygajgjgdm],1,4)||'%'
+				       #end	
+			              
+			              )
+			UNION  (
+			           --社区康复
+			           SELECT Distinct ryxx.renyuanbianhao,
+			                   ryxx.xingming,
+			                   xingbie,
+			                   zhengjianhaoma AS shenfenzhenghao,
+			                   ryxx.rylxflag,
+			                   ryxx.anjianmingcheng
+			             FROM t_xzzlsqkfjds sqkf, 
+			             (select * from (
+				          	SELECT s.*,
+	                  				ROW_NUMBER() OVER(PARTITION BY RENYUANBIANHAO ORDER BY ACTTIME DESC) AS SN
+	             				FROM T_FJY_QBRY  s) 
+	             			  where sn = 1
+	             		   ) ryxx
+			            WHERE sqkf.renyuanbianhao = ryxx.renyuanbianhao
+			              AND sqkf.zhengjianhaoma IS NOT NULL
+			              AND (ryxx.jyflag = '1' OR ryxx.jyflag = '2')
+			              AND NOT EXISTS (select 1 from t_zdry_zfbafk fk where ryxx.renyuanbianhao = fk.rybh)
+			              
+			           #if($xm && !$xm.equals(""))
+			           	 AND ryxx.xingming like '%'||#[xm]||'%'
+			           #end
+			           
+			           #if($xb && !$xb.equals(""))
+			           	AND xingbie = #[xb]
+			           #end
+			           
+			           #if($sfzh && !$sfzh.equals(""))
+			           	AND zhengjianhaoma = #[sfzh]
+			           #end
+			           
+			           #if($zdrylb && !$zdrylb.equals(""))
+			           	   #if($zdrylb.equals("4"))
+				           		AND ryxx.rylxflag = #[zdrylb]
+				           #else
+				           		AND ryxx.rylxflag = '999'
+			           	   #end
+			           #end
+			           
+			           #if($ajmc && !$ajmc.equals(""))
+			           	AND ryxx.anjianmingcheng like '%'||#[ajmc]||'%'
+			           #end
+			           
+			           #if($pcsdm && !$pcsdm.equals(""))
+			           		AND ryxx.jiyadw = #[pcsdm]
+					   #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+							AND ryxx.jiyadw like substr(#[countrygajgjgdm],1,6)||'%'
+					   #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+							AND ryxx.jiyadw like substr(#[citygajgjgdm],1,4)||'%'
+				       #end
+			              
+			 		)
+		]]>
+	</property>
+</properties>

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 新增派出所宣传活动 -->
+	<property name="insertPcsXcHd">
+		<![CDATA[
+			INSERT INTO t_gzgl_pcsxchd
+				(id,
+				 hdlx,
+				 hdsj,
+				 hdxz,
+				 hdnr,
+				 hdkzmjjh,
+				 hdkzmjxm,
+				 hdkzdwdm,
+				 hdkzdwmc,
+				 djrxm,
+				 djrjh,
+				 djrsfzh,
+				 djdwdm,
+				 djdwmc,
+				 djsj,
+				 czrxm,
+				 czrjh,
+				 czdwdm,
+				 czdwmc,
+				 czrsfzh,
+				 czsj,
+				 czbs,
+				 zxbs)
+			VALUES
+				(#[id],
+				 #[hdlx],
+				 to_date(#[hdsj],'yyyy-mm-dd'),
+				 #[hdxz],
+				 #[hdnr],
+				 #[hdkzmjjh],
+				 #[hdkzmjxm],
+				 #[hdkzdwdm],
+				 #[hdkzdwmc],
+				 #[djrxm],
+				 #[djrjh],
+				 #[djrsfzh],
+				 #[djdwdm],
+				 #[djdwmc],
+				 sysdate,
+				 #[czrxm],
+				 #[czrjh],
+				 #[czdwdm],
+				 #[czdwmc],
+				 #[czrsfzh],
+				 sysdate,
+				 #[czbs],
+				 '0')
+		]]>
+	</property>
+	
+	<!-- 修改派出所宣传活动 -->
+	<property name="updatePcsXcHd">
+		<![CDATA[
+			update t_gzgl_pcsxchd
+			   set id = #[id],
+			       hdlx = #[hdlx],
+			       hdsj = to_date(#[hdsj],'yyyy-mm-dd'),
+			       hdxz = #[hdxz],
+			       hdnr = #[hdnr],
+			       hdkzmjjh = #[hdkzmjjh],
+			       hdkzmjxm = #[hdkzmjxm],
+			       hdkzdwdm = #[hdkzdwdm],
+			       hdkzdwmc = #[hdkzdwmc],
+			       czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czrsfzh = #[czrsfzh],
+			       czsj = sysdate,
+			       czbs = #[czbs]
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<!-- 注销派出所宣传活动 -->
+	<property name="DeletePcsXcHd">
+		<![CDATA[
+			update t_gzgl_pcsxchd
+			   set 
+			       zxbs = #[zxbs],
+			       zxsj = sysdate,
+			       czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czrsfzh = #[czrsfzh],
+			       czsj = sysdate,
+			       czbs = #[czbs]
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<!-- 根据ID查询派出所宣传活动 -->
+	<property name="queryPcsXcHdById">
+		<![CDATA[
+			SELECT id,
+			   hdlx,
+			   to_char(hdsj,'yyyy-mm-dd') as hdsj,
+			   hdxz,
+			   hdnr,
+			   hdkzmjjh,
+			   hdkzmjxm,
+			   hdkzdwdm,
+			   hdkzdwmc,
+			   zxbs,
+			   to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+			   djrxm,
+			   djrjh,
+			   djrsfzh,
+			   djdwdm,
+			   djdwmc,
+			   to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			   czrxm,
+			   czrjh,
+			   czdwdm,
+			   czdwmc,
+			   czrsfzh,
+			   to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+			   czbs
+		  FROM t_gzgl_pcsxchd
+		  WHERE id = ?
+		]]>
+	</property>
+	
+	<!-- 查询派出所宣传活动列表 -->
+	<property name="queryPcsXcHdList">
+		<![CDATA[
+			SELECT id,
+			   hdlx,
+			   to_char(hdsj,'yyyy-mm-dd') as hdsj,
+			   hdxz,
+			   hdnr,
+			   hdkzmjjh,
+			   hdkzmjxm,
+			   hdkzdwdm,
+			   hdkzdwmc,
+			   zxbs,
+			   to_char(zxsj,'yyyy-mm-dd hh24:mi:ss') as zxsj,
+			   djrxm,
+			   djrjh,
+			   djrsfzh,
+			   djdwdm,
+			   djdwmc,
+			   to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+			   czrxm,
+			   czrjh,
+			   czdwdm,
+			   czdwmc,
+			   czrsfzh,
+			   to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+			   czbs
+		  FROM t_gzgl_pcsxchd
+		  WHERE zxbs = '0'
+		  #if($jwsqdm && !$jwsqdm.equals(""))
+				and (djdwdm = #[jwsqdm] or hdkzdwdm = #[jwsqdm])
+			#elseif($pcsdm && !$pcsdm.equals(""))
+				and (djdwdm like substr(#[pcsdm],1,8)||'%' or hdkzdwdm like substr(#[pcsdm],1,8)||'%')
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				and (djdwdm like substr(#[countrygajgjgdm],1,6)||'%' or hdkzdwdm like substr(#[pcsdm],1,6)||'%')
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				and (djdwdm like substr(#[citygajgjgdm],1,4)||'%' or hdkzdwdm like substr(#[pcsdm],1,4)||'%')
+			#end
+		 #if($hdsj_start && !$hdsj_start.equals(""))
+		 	and trunc(hdsj,'dd') >= to_date(#[hdsj_start],'yyyy-mm-dd')
+		 #end
+		 #if($hdsj_end && !$hdsj_end.equals(""))
+		 	and trunc(hdsj,'dd') <= to_date(#[hdsj_end],'yyyy-mm-dd')
+		 #end
+		 order by djsj desc		  	 
+		]]>
+	</property>
+	
+	<!-- 根据活动ID查询活动照片 -->
+	<property name="queryZpByHdid">
+		<![CDATA[
+			select id, hdid, bt, djdrxm, djrjh, djdwdm, djdwmc, to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj, djdrsfzh 
+			from t_gzgl_pcsxchdzp
+			where hdid = ?
+			order by djsj
+		]]>
+	</property>
+	
+	<!-- 根据照片ID查询照片 -->
+	<property name="queryHdZpById">
+		<![CDATA[
+			select zp from t_gzgl_pcsxchdzp where id = ?
+		]]>
+	</property>
+	
+	<!-- 根据照片ID删除照片 -->
+	<property name="deleteXcHdZpById">
+		<![CDATA[
+			delete t_gzgl_pcsxchdzp where id = ?
+		]]>
+	</property>
+	
+	<!-- 新增照片 -->
+	<property name="insertXcHdZp">
+		<![CDATA[
+			insert into t_gzgl_pcsxchdzp
+			  (id, hdid, zp, bt, djdrxm, djrjh, djdwdm, djdwmc, djsj, djdrsfzh)
+			values
+			  (?, ?, ?, ?, ?, ?, ?, ?, sysdate, ?)
+		]]>
+	</property>
+	
+	<!-- 查询派出所宣传活动统计 -->
+	<property name="queryPcsXcHdTj">
+		<![CDATA[
+			SELECT org.orgcode,
+			   org.orgname,
+			   org.leve AS orgleve,
+			   nvl(tj.xfaq, 0) AS xfaq,
+			   nvl(tj.fdxzp, 0) AS fdxzp,
+			   nvl(tj.frsdq, 0) AS frsdq,
+			   nvl(tj.fjtbl, 0) AS fjtbl,
+			   nvl(tj.fpq, 0) AS fpq,
+			   nvl(tj.qt, 0) AS qt,
+			   (nvl(tj.xfaq, 0) + nvl(tj.fdxzp, 0) + nvl(tj.frsdq, 0) +
+			   nvl(tj.fjtbl, 0) + nvl(tj.fpq, 0) + nvl(tj.qt, 0)) AS hj
+		  FROM t_common_organization_sjjs org
+		  LEFT JOIN (SELECT 
+						  #if($orgleve.equals("5"))
+						  	djdwdm AS orgcode,
+						  #elseif($orgleve.equals("4"))
+						  	substr(djdwdm, 1, 8) AS orgcode,
+						  #elseif($orgleve.equals("3"))
+						  	substr(djdwdm, 1, 6) AS orgcode,
+						  #elseif($orgleve.equals("2"))
+						  	substr(djdwdm, 1, 4) AS orgcode,
+						  #end
+							SUM(decode(dm, '01', sl)) AS xfaq,
+							SUM(decode(dm, '02', sl)) AS fdxzp,
+							SUM(decode(dm, '03', sl)) AS frsdq,
+							SUM(decode(dm, '04', sl)) AS fjtbl,
+							SUM(decode(dm, '05', sl)) AS fpq,
+							SUM(decode(dm, '99', sl)) AS qt
+					   FROM (SELECT COUNT(1) AS sl, dic.dm, xchd.djdwdm
+							   FROM t_common_dictionary dic
+							   LEFT JOIN 
+							   (SELECT *
+								  FROM t_gzgl_pcsxchd
+								 WHERE id IN (SELECT zp.hdid
+												FROM t_gzgl_pcsxchd hd, t_gzgl_pcsxchdzp zp
+											   WHERE zp.hdid = hd.id
+												 AND hd.zxbs = '0'
+											   GROUP BY hdid
+											  HAVING COUNT(1) > 1)
+								) xchd
+								 ON xchd.hdlx = dic.dm
+								 #if($orgleve.equals("5"))
+								  	AND xchd.djdwdm LIKE substr(#[orgcode], 1, 8) ||'%'
+								 #elseif($orgleve.equals("4"))
+								  	AND xchd.djdwdm LIKE substr(#[orgcode], 1, 6) ||'%'
+								 #elseif($orgleve.equals("3"))
+								  	AND xchd.djdwdm LIKE substr(#[orgcode], 1, 4) ||'%'
+								 #elseif($orgleve.equals("2"))
+								  	AND xchd.djdwdm LIKE substr(#[orgcode], 1, 2) ||'%'
+								 #end
+							  WHERE zdlb = 'ZDY_PCS_HDLX'
+							  GROUP BY dm, djdwdm) hd
+							  
+					  #if($orgleve.equals("5"))
+					  	GROUP BY djdwdm
+					 #elseif($orgleve.equals("4"))
+					  	GROUP BY substr(djdwdm, 1, 8)
+					 #elseif($orgleve.equals("3"))
+					  	GROUP BY substr(djdwdm, 1, 6)
+					 #elseif($orgleve.equals("2"))
+					  	GROUP BY substr(djdwdm, 1, 4)
+					 #end	  
+					  ) tj
+			ON 1 = 1 
+			#if($orgleve.equals("5"))
+			  	AND org.orgcode = tj.orgcode
+			 #elseif($orgleve.equals("4"))
+			  	AND substr(org.orgcode, 1, 8) = tj.orgcode
+			 #elseif($orgleve.equals("3"))
+			  	AND substr(org.orgcode, 1, 6) = tj.orgcode
+			 #elseif($orgleve.equals("2"))
+			  	AND substr(org.orgcode, 1, 4) = tj.orgcode
+			 #end
+		 WHERE org.leve = #[orgleve]
+		 	#if($orgleve.equals("5"))
+			  	AND org.orgcode LIKE substr(#[orgcode], 1, 8) ||'%'
+			 #elseif($orgleve.equals("4"))
+			  	AND org.orgcode LIKE substr(#[orgcode], 1, 6) ||'%'
+			 #elseif($orgleve.equals("3"))
+			  	AND org.orgcode LIKE substr(#[orgcode], 1, 4) ||'%'
+			 #elseif($orgleve.equals("2"))
+			  	AND org.orgcode LIKE substr(#[orgcode], 1, 2) ||'%'
+			 #end
+		]]>
+	</property>
+</properties>		

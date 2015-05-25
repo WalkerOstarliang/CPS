@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryLxfsList">
+	<![CDATA[
+		select l.sfzcmj,l.id, u.userid, u.username, u.sfzh, l.mobile, l.telephone,
+			u.realname as xm,o.orgcode as orgdwdm,o.orgname as orgdwmc,to_char(l.lbqxcjsj,'yyyy-mm-dd') as lbqxcjsj
+		from v_common_user u left join t_common_user_lxfs l on l.userid=u.userid
+     		inner join v_common_orguser ou on ou.userid=u.userid
+     		inner join v_common_organization o on o.orgid=ou.orgid
+		where 1=1
+		and u.isvalid = '1'
+		 #if($username && !$username.equals(""))
+			and u.username = #[username]
+		 #end
+		  #if($sfzh && !$sfzh.equals(""))
+			and u.sfzh = #[sfzh]
+		 #end
+		  #if($xm && !$xm.equals(""))
+			and u.realname like  '%'||#[xm]||'%'
+		 #end
+	     
+	   	 #if($jwsqdm && !$jwsqdm.equals(""))
+   			and (o.orgcode = #[jwsqdm])
+	     #elseif ($pcsdm && !$pcsdm.equals(""))
+		 	and o.orgcode like substr(#[pcsdm],1,8)||'%'
+		 #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+		 	and o.orgcode like substr(#[countrygajgjgdm],1,6)||'%'
+		 #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+		 	and o.orgcode like substr(#[citygajgjgdm],1,4)||'%'
+		 #end
+	]]>
+	</property>
+	<property name="queryuserLxfsBeanById">
+		<![CDATA[
+			select l.id  id,
+	              u.userid  userid,
+	              u.username username,
+	              u.sfzh sfzh, 
+	              l.mobile mobile,
+	              l.telephone  telephone,
+	              u.realname as xm,
+	              o.orgcode as orgdwdm,
+	              o.orgname as orgdwmc,
+	              l.mz mz,
+	              l.whcd whcd,
+	              l.gzgw gzgw,
+	              l.zw zw,
+	              l.xzjb xzjb,
+	              to_char(l.gzsj,'yyyy-mm-dd') gzsj,
+	              to_char(l.cjsj,'yyyy-mm-dd') cjsj,
+	              to_char(l.pcsgzsj,'yyyy-mm-dd') pcsgzsj,
+	              l.sfzzsqmj sfzzsqmj,
+	              l.sqmjsfcwhjz sqmjsfcwhjz,
+	              l.cssqjwsj cssqjwsj,
+	              l.dnjlcs dnjlcs,
+	              l.dncccs dncccs,
+	              l.dnjzywpxcs dnjzywpxcs, 
+	              to_char(l.hjsj,'yyyy') as hjsj,
+	              l.hjqk  hjqk,
+	              l.bz  bz,
+	              l.sfzcmj,
+	              to_char(l.lbqxcjsj,'yyyy-mm-dd') as lbqxcjsj,
+	              f_get_dwleve(o.orgcode) as leve
+		    from v_common_user u left join t_common_user_lxfs l on l.userid=u.userid
+		         inner join v_common_orguser ou on ou.userid=u.userid
+		         inner join v_common_organization o on o.orgid=ou.orgid
+		    where u.userid=?
+			
+		]]>
+	</property>
+	<property name="updateUserLxfs">
+		<![CDATA[
+			update t_common_user_lxfs
+			   set id = #[id],
+			       userid = #[userid],
+			       username = #[username],
+			       sfzh = #[sfzh],
+			       mobile = #[mobile],
+			       telephone = #[telephone],
+			       xm = #[xm],
+			       orgdwdm = #[orgdwdm],
+			       orgdwmc = #[orgdwmc],
+			       mz = #[mz],
+			       whcd = #[whcd],
+			       gzgw = #[gzgw],
+			       zw = #[zw],
+			       xzjb = #[xzjb],
+			       gzsj = to_date(#[gzsj],'yyyy-mm-dd'),
+			       cjsj = to_date(#[cjsj],'yyyy-mm-dd'),
+			       pcsgzsj = to_date(#[pcsgzsj],'yyyy-mm-dd'),
+			       sfzzsqmj = #[sfzzsqmj],
+			       sqmjsfcwhjz = #[sqmjsfcwhjz],
+			       cssqjwsj = to_date(#[cssqjwsj],'yyyy-mm-dd'),
+			       dnjlcs = #[dnjlcs],
+			       dncccs = #[dncccs],
+			       dnjzywpxcs = #[dnjzywpxcs],
+			       hjsj = to_date(#[hjsj],'yyyy'),
+				   hjqk = #[hjqk],
+				   bz = #[bz],
+				   sfzcmj = #[sfzcmj],
+				   lbqxcjsj = to_date(#[lbqxcjsj],'yyyy-mm-dd')
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<property name="insertUserLxfs">
+		<![CDATA[
+		insert into t_common_user_lxfs
+			  (id,
+			   userid,
+			   username,
+			   sfzh,
+			   mobile,
+			   telephone,
+			   xm,
+			   orgdwdm,
+			   orgdwmc,
+			   mz,
+			   whcd,
+			   gzgw,
+			   zw,
+			   xzjb,
+			   gzsj,
+			   cjsj,
+			   pcsgzsj,
+			   sfzzsqmj,
+			   sqmjsfcwhjz,
+			   cssqjwsj,
+			   dnjlcs,
+			   dncccs,
+			   dnjzywpxcs,
+			   hjsj,
+			   hjqk,
+			   bz,
+			   sfzcmj,
+			   lbqxcjsj)
+			values
+			  (SEQ_LSGL_LXFSID.nextval,
+			   #[userid],
+			   #[username],
+			   #[sfzh],
+			   #[mobile],
+			   #[telephone],
+			   #[xm],
+			   #[orgdwdm],
+			   #[orgdwmc],
+			   #[mz],
+			   #[whcd],
+			   #[gzgw],
+			   #[zw],
+			   #[xzjb],
+			   to_date(#[gzsj],'yyyy-mm-dd'), 
+			   to_date(#[cjsj],'yyyy-mm-dd'),   
+			   to_date(#[pcsgzsj],'yyyy-mm-dd'),  
+			   #[sfzzsqmj], 
+			   #[sqmjsfcwhjz],
+			   to_date(#[cssqjwsj],'yyyy-mm-dd'),  
+			   #[dnjlcs],
+			   #[dncccs],
+			   #[dnjzywpxcs],
+			   to_date(#[hjsj],'yyyy'),
+			   #[hjqk],
+			   #[bz],
+			   #[sfzcmj],
+			   to_date(#[lbqxcjsj],'yyyy-mm-dd')
+			  )
+		]]>
+	</property>
+	
+	<property name="getSfncjws">
+		<![CDATA[
+			select nvl(sfncjws,'0') from t_common_organization_other where orgcode=#[orgcode]
+		]]>
+	</property>
+
+</properties>

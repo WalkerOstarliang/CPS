@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+ 	<property name="insertDzxxBean">
+ 		<![CDATA[
+ 			insert into t_common_dzxx
+			  (dzid,
+			   dzbm,
+			   dzmc,
+			   ssxqdm,
+			   jdxzdm,
+			   sqdm,
+			   jlxdm,
+			   jlxmc,
+			   mph,
+			   xqz,
+			   ldh,
+			   dyh,
+			   lch,
+			   fjh,
+			   dzxzb,
+			   dzyzb,
+			   djrxm,
+			   djrdwdm,
+			   djrdwmc,
+			   djsj,
+			   stmc,
+			   fsdz)
+			values
+			  (#[dzid],
+			   #[dzbm],
+			   #[dzmc],
+			   #[ssxqdm],
+			   #[jdxzdm],
+			   #[sqdm],
+			   #[jlxdm],
+			   #[jlxmc],
+			   #[mph],
+			   #[xqz],
+			   #[ldh],
+			   #[dyh],
+			   #[lch],
+			   #[fjh],
+			   #[dzxzb],
+			   #[dzyzb],
+			   #[djrxm],
+			   #[djrdwdm],
+			   #[djrdwmc],
+			   sysdate,
+			   #[stmc],
+			   #[fsdz])
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryDzxxByDzId">
+ 		<![CDATA[
+ 			select dzid,
+ 				   dzbm,
+			       dzmc,
+			       substr(ssxqdm,1,4)||'00' as sjxzqh,
+			       ssxqdm,
+			       jdxzdm,
+			       sqdm,
+			       jlxdm,
+			       jlxmc,
+			       mph,
+			       xqz,
+			       ldh,
+			       dyh,
+			       lch,
+			       fjh,
+			       dzxzb,
+			       dzyzb,
+			       djrxm,
+			       djrdwdm,
+			       djrdwmc,
+			       stmc,
+			       fsdz,
+			       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj
+			  from t_common_dzxx
+ 			  where dzid=?
+ 		]]>
+ 	</property>
+ 	
+ 
+ 	<property name="updateDzxxByDzbh">
+ 		<![CDATA[
+ 			update t_common_dzxx
+			   set 
+			       dzmc = #[dzmc],
+			       ssxqdm = #[ssxqdm],
+			       jdxzdm = #[jdxzdm],
+			       sqdm = #[sqdm],
+			       jlxdm = #[jlxdm],
+			       jlxmc = #[jlxmc],
+			       mph = #[mph],
+			       xqz = #[xqz],
+			       ldh = #[ldh],
+			       dyh = #[dyh],
+			       lch = #[lch],
+			       fjh = #[fjh],
+			       dzxzb = #[dzxzb],
+			       dzyzb = #[dzyzb],
+			       stmc = #[stmc],
+			       fsdz = #[fsdz]
+			 where dzid = #[dzid]
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	 <property name="insertCommonDZJlx">
+ 		<![CDATA[
+			insert into t_common_dzjlx
+			  (id, dm, mc, ssxzqh, djrxm, djdwdm, djdwmc, jlxpy,djrjh,djsj,djrsfzh,sfmzmm,jc)
+			values
+			  (#[id],
+			   #[dm],
+			   #[mc],
+			   #[ssxzqh],
+			   #[djrxm],
+			   #[djdwdm],
+			   #[djdwmc],
+			   #[jlxpy],
+			   #[djrjh],
+			   to_date(#[djsj],'yyyy-MM-dd:hh24:mi:ss'),
+			   #[djrsfzh],
+			   #[sfmzmm],
+			   #[jc]
+			   )	
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryDzjlxPageResult">
+ 		<![CDATA[
+ 				select id, dm, mc, ssxzqh,ssxzqh ssxzqhmc, djrxm, djdwdm, djdwmc, isvalid, jlxpy, 
+				djsj,djrjh,sfmzmm,jc
+				from t_common_dzjlx
+				where 1=1
+				and isvalid ='1'
+				
+				 #if($mc && !$mc.equals(""))
+				 	and (mc like '%'||#[mc]||'%' or Lower(jlxpy) like '%'||Lower(#[mc])||'%')
+				 #end
+				 
+				 #if($ssxzqh && !$ssxzqh.equals(""))
+				 	and ssxzqh = #[ssxzqh]
+				 #end
+				
+				 #if($countrydm && !$countrydm.equals(""))
+				 	and ssxzqh = #[countrydm]
+				 #elseif($citydm && !$citydm.equals(""))
+				 	and ssxzqh like substr(#[citydm],0,4)||'%'
+				 #end
+				 
+				 order by djsj desc
+ 		]]>
+ 	
+ 	</property>
+ 	
+ 	<property name="queryCommonDZJlxPageResult">
+ 		<![CDATA[
+			select id, dm, mc, ssxzqh,ssxzqh ssxzqhmc, djrxm, djdwdm, djdwmc, isvalid, jlxpy,
+			djsj,
+			djrjh,
+			sfmzmm,
+			jc
+			from t_common_dzjlx
+			where 1=1
+			and isvalid = '1'
+			 #if($mc && !$mc.equals(""))
+			 	and (mc like '%'||#[mc]||'%' or Lower(jlxpy) like '%'||Lower(#[mc])||'%')
+			 #end
+			 
+			 
+			 #if($ssxzqh && !$ssxzqh.equals(""))
+			 	and ssxzqh = #[ssxzqh]
+			 #end
+			 
+			 #if($leve && !$leve.equals(""))
+			 	#if($leve.equals(1))
+			 		and 1=1
+			 	#else
+			 		and ssxzqh = substr(#[citygajgjgdm],0,6)
+			 	#end
+			 #end
+			 
+			 order by dm desc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="isExistJlxMc">
+ 		<![CDATA[
+		select id, dm, mc, ssxzqh, ssxzqh ssxzqhmc,djrxm, djdwdm, djdwmc, isvalid, jlxpy from t_common_dzjlx
+		where mc=?
+		and ssxzqh=?
+		and isvalid ='1'
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryDzxxWithPageInfoResult">
+ 		<![CDATA[
+ 			select dzbm,
+			       dzmc,
+			       ssxqdm,
+			       jdxzdm,
+			       sqdm,
+			       jlxdm,
+			       jlxmc,
+			       mph,
+			       xqz,
+			       ldh,
+			       dyh,
+			       lch,
+			       fjh,
+			       dzxzb,
+			       dzyzb,
+			       djrxm,
+			       djrdwdm,
+			       djrdwmc,
+			       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+			       dzid,
+			       stmc,
+			       fsdz
+			  from t_common_dzxx
+			  where 1=1
+			  
+			  #if($stmc &&!$stmc.equals(""))
+			  	and stmc like '%'||#[stmc]||'%'
+			  #end
+			  #if($dzmc &&!$dzmc.equals(""))
+			    and dzmc like '%'||#[dzmc]||'%'
+			  #end
+			  #if($djsj_from &&!$djsj_from.equals(""))
+			  	and	djsj>=to_date(djsj_from,'yyyy-mm-dd HH24:mi:ss')
+			  #end
+			  #if($djsj_to &&!$djsj_to.equals(""))
+			  	and	djsj<=to_date(djsj_to,'yyyy-mm-dd HH24:mi:ss')
+			  #end
+		   
+		   	  #if ($pcsdm && !$pcsdm.equals(""))
+			 	    and djrdwdm like substr(#[pcsdm],1,8)||'%'
+				 #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				 	and djrdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				 #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				 	and djrdwdm like substr(#[citygajgjgdm],1,4)||'%'
+				 #end
+			  
+			  order by djsj  desc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryDzJlxInfoById">
+ 		<![CDATA[
+		select id, dm, mc, ssxzqh, ssxzqh ssxzqhmc,djrxm, djdwdm, djdwmc, isvalid, jlxpy, djsj, sfmzmm, djrjh,jc
+		from t_common_dzjlx
+		where id=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateCommonDzjlx">
+ 		<![CDATA[
+		update t_common_dzjlx
+		   set id = #[id],
+		       dm = #[dm],
+		       mc = #[mc],
+		       ssxzqh = #[ssxzqh],
+		       djrxm = #[djrxm],
+		       djdwdm = #[djdwdm],
+		       djdwmc = #[djdwmc],
+		       jlxpy = #[jlxpy],
+		       djsj = sysdate,
+		       djrjh = #[djrjh],
+		       sfmzmm = #[sfmzmm],
+		       jc=#[jc],
+		       gxsj = sysdate
+		 where id = #[id]
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	<property name="deleteCommonDzjlx">
+ 		<![CDATA[
+		update t_common_dzjlx
+		      set isvalid = '0'
+		 where id = #[id]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryDzjlxInfoInStxx">
+ 		<![CDATA[
+		select * 
+		from t_common_dzjlx 
+		where dm in
+		(
+				select distinct jlxdm
+	  			from t_common_stxx 
+	 			where 1=1 
+	 			and (zxbs is null or zxbs = '1')
+			
+				#if ($djdwdm && !$djdwdm.equals(""))
+					and djdwdm = #[djdwdm]
+				#end 
+		  )
+ 		 #if($mc && !$mc.equals(""))
+		 	and (mc like '%'||#[mc]||'%' or Lower(jlxpy) like '%'||Lower(#[mc])||'%')
+		 #end
+		 order by djsj desc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryXzqBeanPageResult">
+ 		<![CDATA[
+ 			select id,xqmc,sssqdm, sssqmc,ssjwqdm,ssjwqmc 
+			from t_za_wyxq
+			where 1=1
+				 #if($xqmc && !$xqmc.equals(""))
+				 	and xqmc like '%'||#[xqmc]||'%'
+				 #end
+				 #if($zxbs && $zxbs.equals("0"))
+				 	and (zxbs is null or zxbs='0')
+				 #end
+				#if($zxbs && $zxbs.equals("1"))
+					and zxbs='1'
+				#end
+				 #if($sqdm && !$sqdm.equals(""))
+				 	and sssqdm = #[sqdm]
+				 #elseif($jwsqdm && !$jwsqdm.equals(""))
+				 	and ssjwqdm = #[jwsqdm]
+				 #elseif ($pcsdm && !$pcsdm.equals(""))
+			 	    and ssjwqdm like substr(#[pcsdm],1,8)||'%'
+				 #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				 	and ssjwqdm like substr(#[countrygajgjgdm],1,6)||'%'
+				 #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				 	and ssjwqdm like substr(#[citygajgjgdm],1,4)||'%'
+				 #end
+			
+ 		]]>
+ 	</property>
+ 	
+</properties>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<property name="addKkxlxx">
+		<![CDATA[
+			insert into t_af_zakkxlxx
+			  (xlbh, kkbh, xlkssj, xljssj, xlmj, xlmjjh, cyxlry, xlqk, pcqk, 
+			   xljbsj, xljbmj, xljbmjjh, djrxm, djrjh, djsj, djdwdm, djdwmc)
+			values
+			  (#[xlbh], #[kkbh], to_date(#[xlkssj],'yyyy-MM-dd hh24:mi:ss'), to_date(#[xljssj],'yyyy-MM-dd hh24:mi:ss'), #[xlmj], #[xlmjjh], #[cyxlry], #[xlqk],
+			   #[pcqk], to_date(#[xljbsj],'yyyy-MM-dd hh24:mi:ss'), #[xljbmj], #[xljbmjjh], #[djrxm], #[djrjh], to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss'), #[djdwdm], #[djdwmc])
+			
+		]]>
+	</property>
+	
+	<property name="updateKkxlxx">
+		<![CDATA[
+			update t_af_zakkxlxx
+			   set kkbh = #[kkbh],
+			       xlkssj = to_date(#[xlkssj],'yyyy-MM-dd hh24:mi:ss'),
+			       xljssj = to_date(#[xljssj],'yyyy-MM-dd hh24:mi:ss'),
+			       xlmj = #[xlmj],
+			       xlmjjh = #[xlmjjh],
+			       cyxlry = #[cyxlry],
+			       xlqk = #[xlqk],
+			       pcqk = #[pcqk],
+			       xljbsj = to_date(#[xljbsj],'yyyy-MM-dd hh24:mi:ss'),
+			       xljbmj = #[xljbmj],
+			       xljbmjjh = #[xljbmjjh],
+			       djrxm = #[djrxm],
+			       djrjh = #[djrjh],
+			       djsj = to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss'),
+			       djdwdm = #[djdwdm],
+			       djdwmc = #[djdwmc]
+			 where xlbh = #[xlbh]
+		]]>
+	</property>
+		
+	<property name="kkxlxxList">
+		<![CDATA[
+			select xl.xlbh,
+			       kk.kkbh,
+			       kk.kkmc,
+			       xl.xlkssj,
+			       xl.xljssj,
+			       xl.xlmj,
+			       xl.xlmjjh,
+			       xl.cyxlry,
+			       xl.xlqk,
+			       xl.pcqk,
+			       xl.xljbsj,
+			       xl.xljbmj,
+			       xl.xljbmjjh,
+			       xl.djrxm,
+			       xl.djrjh,
+			       xl.djsj,
+			       xl.djdwdm,
+			       xl.djdwmc,
+			       kk.kkwz,
+			       kk.kkfw,
+			       kk.sszrqmc
+			  from t_af_zakkxlxx xl,t_af_zakkxx kk 
+			  where 1=1 and xl.kkbh=kk.kkbh
+			  --单位选择查询
+			  --精确到派出所
+			  #if($pcsdm and !$pcsdm.equals(""))
+			  	and xl.djdwdm=#[pcsdm]
+			  #else
+			  	  --精确到县区
+				  #if($countrydm and !$countrydm.equals(""))
+				  	and substr(xl.djdwdm,1,6)=#[countrydm]
+				  #else
+				     --精确到市州
+				  	 #if($citydm and !$citydm.equals(""))
+				  		and substr(xl.djdwdm,1,4)=substr(#[citydm],1,4)
+				  	 #end
+				  #end
+			  #end
+			  #if($xlbh && !$xlbh.equals(""))
+			  	and xl.xlbh = #[xlbh]
+			  #end
+			  #if($kkbh && !$kkbh.equals(""))
+			  	and kk.kkbh = #[kkbh]
+			  #end
+			  #if($kkmc && !$kkmc.equals(""))
+			  	and kk.kkmc like '%'||#[kkmc]||'%'
+			  #end
+			  #if($xlkssj && !$xlkssj.equals(""))
+			  	and xl.xlkssj >= to_date(#[xlkssj],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($xljssj && !$xljssj.equals(""))
+			  	and xl.xljssj <= to_date(#[xljssj],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($xlmj && !$xlmj.equals(""))
+			  	and xl.xlmj like '%'||#[xlmj]||'%'
+			  #end
+			  #if($djrxm && !$djrxm.equals(""))
+			  	and xl.djrxm like '%'||#[djrxm]||'%'
+			  #end
+			  #if($djsj_from && !$djsj_from.equals(""))
+			  	and xl.djsj >= to_date(#[djsj_from],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($djsj_to && !$djsj_to.equals(""))
+			  	and xl.djsj <= to_date(#[djsj_to],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  
+			  order by xl.djsj desc
+		]]>
+	</property>
+	
+</properties>

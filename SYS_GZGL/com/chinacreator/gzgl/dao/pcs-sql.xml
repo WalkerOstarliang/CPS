@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryOrgJwsBean">
+	<![CDATA[
+		select t.orgid			  orgid,
+			   t.orgname          orgname,
+	       	   t.orgcode          orgcode,
+	       	   other.id           id,
+		       other.bgddlx       bgddlx,
+		       other.wljrfs       wljrfs,
+		       other.orgid        orgid,
+		       t.ispcs            ispcs,
+		       other.pcsszxm      pcsszxm,
+		       other.pcsszsfzh    pcsszsfzh,
+		       other.pcsszjh      pcsszjh,
+		       other.pcsfszxm     pcsfszxm,
+		       other.pcsfszsfzh   pcsfszsfzh,
+		       other.pcsfszjh     pcsfszjh,
+		       other.czrxm        czrxm,
+		       other.czrdwdm      czrdwdm,
+		       other.czrdwmc      czrdwmc,
+		       other.czsj         czsj,
+		       other.jls          jls,
+		       other.szjxcjl      szjxcjl,
+		       other.jjjl         jjjl,
+		       other.jgjl         jgjl,
+		       other.xjjl         xjjl,
+		       other.tjjl         tjjl,
+		       other.xjjxcjl      xjjxcjl,
+		       other.jdxldys      jdxldys,
+		       other.fjs          fjs,
+		       other.pcsfjs       pcsfjs,
+		       other.jwspbfjs     jwspbfjs,
+		       other.jb           jb,
+		       other.lb           lb,
+		       other.dj           dj,
+		       other.szjb         szjb,
+		       other.bgdd		  bgdd,
+		       other.YWJWS        ywjws,
+		       other.DNTS	      dnts,
+		       other.JTGJ         jtgj,
+		       other.JRGANW		  jrganw,
+		       other.jrww		  jrww,
+		       other.qtfhzb       qtfhzb,
+		       other.dzid         dzid,
+		       other.dzmc         dzmc,
+		       other.sfncjws,
+		      	to_char(pcsdjpdsj,'yyyy-mm-dd') as pcsdjpdsj
+		  from v_common_organization t
+		  left join t_common_organization_other other on other.orgcode = t.orgcode
+		where 1=1
+		 #if($bgddlx && !$bgddlx.equals(""))
+				   and other.bgddlx = #[bgddlx]
+		 #end
+		  #if($orgname && !$orgname.equals(""))
+				   and t.orgcode like  substr(#[orgcode],1,10)||'%'
+		 #end
+		 #if($ispcs && !$ispcs.equals(""))
+				   and t.ispcs = #[ispcs]
+		 #end
+		  #if ($pcsdm && !$pcsdm.equals(""))
+			 	and t.orgcode like substr(#[pcsdm],1,8)||'%'
+		  #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and t.orgcode like  substr(#[countrygajgjgdm],1,6)||'%'
+		  #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and t.orgcode like  substr(#[citygajgjgdm],1,4)||'%'
+		  #end
+		  order by other.czsj desc
+		 
+	]]>
+	</property>
+	
+	<property name="queryPcsBeanByOrgcode">
+	<![CDATA[
+	 	select  
+		    t.orgid,
+		    t.orgname,
+            t.orgcode,
+            t.ispcs,
+            t.leve dwleve,
+            other.id,
+	        other.bgddlx,              
+			other.wljrfs,     
+			other.pcsszxm,    
+			other.pcsszsfzh,  
+			other.pcsszjh,    
+			other.pcsfszxm,   
+			other.pcsfszsfzh, 
+			other.pcsfszjh,   
+			other.czrxm,      
+			other.czrdwdm,    
+			other.czrdwmc,    
+			to_char(other.czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,       
+			other.szjxcjl,    
+			other.jjjl,       
+			other.jgjl,       
+			other.xjjl,       
+			other.tjjl,       
+			other.xjjxcjl,    
+			other.jdxldys,    
+			other.pcsfjs,     
+			other.jwspbfjs,   
+			other.jb,         
+			other.lb,         
+			other.dj,         
+			other.szjb,       
+			other.bzs,        
+			other.jwmsd,      
+			other.jwmss,      
+			other.dsmc1,      
+			other.dsmc2,      
+			other.dsmc3,      
+			other.dsmc4,      
+			other.zbmsb,      
+			other.zbmsl,      
+			other.zbjc,       
+			other.zbrsjl,     
+			other.zbrslds,    
+			other.zbrsfjs,    
+			other.xzjd,       
+			other.szsfjrxzbz, 
+			other.zzsqmjs,    
+			other.sqmjzjlb,   
+			other.sqmjrjpbfjs,
+			other.xqmj,       
+			other.zdcss,      
+			to_char(other.djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,       
+			other.pcsjwqdj,   
+			other.szzj,       
+			other.drsznx,     
+			other.rjgyjfbz,   
+			other.sjbfdw,     
+			other.fhzb,       
+			other.hjsj,       
+			other.hjry,       
+			other.qtry,       
+			other.jwqs,       
+			other.ywjws,      
+			other.dnts,       
+			other.jtgj,       
+			other.bgdd,       
+			other.jrganw,     
+			other.jrww,       
+			other.qtfhzb,     
+			other.dzid,       
+			other.dzmc,       
+			other.sfncjws,    
+			other.dsmc5,      
+			other.qcs,        
+			other.djzbs,      
+			other.fdtks,      
+			other.fdbxs,      
+			other.fcbxs,      
+			other.syjls, 
+			other.sfstpz, 
+			other.sfjljws, 
+			to_char(pcsdjpdsj,'yyyy-mm-dd') as pcsdjpdsj,   
+			nvl(tj.zjls,(
+				 SELECT COUNT(1) FROM V_COMMON_USER U INNER JOIN V_COMMON_ORGUSER OU ON OU.USERID=U.USERID INNER JOIN V_COMMON_ORGANIZATION O ON O.ORGID=OU.ORGID
+				 WHERE U.ISVALID='1' AND O.ORGCODE=t.orgcode
+			)) jls,       -- 警力数 
+			tj.pcszfjs fjs,    -- 辅警数
+			tj.JSQJWSS sqjwss,     -- 社区警务室数
+			tj.sqmjs ,      -- 社区民警数
+			tj.ncjwss,      -- 农村警务室数
+			tj.zcmjs,       -- 驻村民警数
+			tj.sqjwsfjs sqmjpbfjs,    -- 社区警务室辅警数 
+			F_GET_GXXZSQCCOUNT(t.orgcode) sqs,      --社区数
+            F_GET_XZCSCOUNT(t.orgcode) xzcs,     --行政村数
+			(select czrks from t_common_xqtjqk where orgcode = t.orgcode) hjrks,  --户籍人口数    
+			(select ldrks from t_common_xqtjqk where orgcode = t.orgcode) zzrks,  --暂住人口数
+			(select zddxs from t_common_xqtjqk where orgcode = t.orgcode) zddxs,  --重点对象数
+			(select dwzs from t_common_xqtjqk where orgcode = t.orgcode) zddws  --重点单位数
+      	from v_common_organization t
+     	left  join t_common_organization_other other on other.orgcode = t.orgcode
+     	left  join t_common_pcsjbqktjb tj on tj.orgcode =  t.orgcode
+      	where t.orgcode = ?
+	]]>
+	</property>
+	
+	<property name="updatePcsBean">
+	<![CDATA[
+		update t_common_organization_other
+		   set 
+		       bgddlx = #[bgddlx],
+		       wljrfs = #[wljrfs],
+		       ispcs = #[ispcs],
+		       pcsszxm = #[pcsszxm],
+		       pcsszsfzh = #[pcsszsfzh],
+		       pcsszjh = #[pcsszjh],
+		       pcsfszxm = #[pcsfszxm],
+		       pcsfszsfzh = #[pcsfszsfzh],
+		       pcsfszjh = #[pcsfszjh],
+		       czrxm = #[czrxm],
+		       czrdwdm = #[czrdwdm],
+		       czrdwmc = #[czrdwmc],
+		       czsj = sysdate,
+		       jls = #[jls],
+		       szjxcjl = #[szjxcjl],
+		       jjjl = #[jjjl],
+		       jgjl = #[jgjl],
+		       xjjl = #[xjjl],
+		       tjjl = #[tjjl],
+		       xjjxcjl = #[xjjxcjl],
+		       jdxldys = #[jdxldys],
+		       fjs = #[fjs],
+		       pcsfjs = #[pcsfjs],
+		       jwspbfjs = #[jwspbfjs],
+		       jb = #[jb],
+		       lb = #[lb],
+		       dj = #[dj],
+		       szjb = #[szjb],
+		       bzs = #[bzs],
+		       jwmsd = #[jwmsd],
+		       jwmss = #[jwmss],
+		       dsmc1 = #[dsmc1],
+		       dsmc2 = #[dsmc2],
+		       dsmc3 = #[dsmc3],
+		       dsmc4 = #[dsmc4],
+		       zbmsb = #[zbmsb],
+		       zbmsl = #[zbmsl],
+		       zbjc = #[zbjc],
+		       zbrsjl = #[zbrsjl],
+		       zbrslds = #[zbrslds],
+		       zbrsfjs = #[zbrsfjs],
+		       xzjd = #[xzjd],
+		       szsfjrxzbz = #[szsfjrxzbz],
+		       sqs = #[sqs],
+		       xzcs = #[xzcs],
+		       sqjwss = #[sqjwss],
+		       sqmjs = #[sqmjs],
+		       zzsqmjs = #[zzsqmjs],
+		       sqmjzjlb = #[sqmjzjlb],
+		       sqmjrjpbfjs = #[sqmjrjpbfjs],
+		       xqmj = #[xqmj],
+		       hjrks = #[hjrks],
+		       zzrks = #[zzrks],
+		       zddxs = #[zddxs],
+		       zddws = #[zddws],
+		       zdcss = #[zdcss],
+		       sqmjpbfjs = #[sqmjpbfjs],
+		       pcsjwqdj = #[pcsjwqdj],
+		       szzj = #[szzj],
+		       drsznx = #[drsznx],
+		       ncjwss = #[ncjwss],
+		       rjgyjfbz = #[rjgyjfbz],
+		       sjbfdw = #[sjbfdw],
+		       fhzb = #[fhzb],
+		       hjsj = #[hjsj],
+		       hjry = #[hjry],
+		       qtry = #[qtry],
+		       jwqs = #[jwqs],
+		       ywjws = #[ywjws],
+		       dnts = #[dnts],
+		       jtgj = #[jtgj],
+		       bgdd = #[bgdd],
+		       jrganw = #[jrganw],
+		       jrww = #[jrww],
+		       qtfhzb = #[qtfhzb],
+		       dzid = #[dzid],
+		       dzmc = #[dzmc],
+		       sfncjws = #[sfncjws],
+		       dsmc5 = #[dsmc5],
+		       qcs = #[qcs],
+		       djzbs = #[djzbs],
+		       fdtks = #[fdtks],
+		       fdbxs = #[fdbxs],
+		       fcbxs = #[fcbxs],
+		       syjls = #[syjls],
+		       zcmjs = #[zcmjs],
+		       sfstpz = #[sfstpz],
+		       sfjljws = #[sfjljws],
+		       pcsdjpdsj = to_date(#[pcsdjpdsj],'yyyy-mm-dd')
+		 where orgcode = #[orgcode]
+		
+	]]>
+	</property>
+	
+	<property name="insertPcsBean">
+		<![CDATA[
+			insert into t_common_organization_other
+			  (id, bgddlx, wljrfs, orgcode, orgname, orgid, ispcs, pcsszxm, pcsszsfzh,
+			   pcsszjh, pcsfszxm, pcsfszsfzh, pcsfszjh, czrxm, czrdwdm, czrdwmc, czsj, 
+			   jls, szjxcjl, jjjl, jgjl, xjjl, tjjl, xjjxcjl, jdxldys, fjs, pcsfjs, 
+			   jwspbfjs, jb, lb, dj, szjb, bzs, jwmsd, jwmss, dsmc1, dsmc2, dsmc3, 
+			   dsmc4, zbmsb, zbmsl, zbjc, zbrsjl, zbrslds, zbrsfjs, xzjd, szsfjrxzbz, 
+			   sqs, xzcs, sqjwss, sqmjs, zzsqmjs, sqmjzjlb, sqmjrjpbfjs, xqmj, hjrks, 
+			   zzrks, zddxs, zddws, zdcss, sqmjpbfjs, djsj, pcsjwqdj, szzj, drsznx, ncjwss, 
+			   rjgyjfbz, sjbfdw, fhzb, hjsj, hjry, qtry, jwqs, ywjws, dnts, jtgj, bgdd, jrganw, 
+			   jrww, qtfhzb, dzid, dzmc, sfncjws, dsmc5, qcs, djzbs, fdtks, fdbxs, fcbxs, syjls, 
+			   zcmjs,sfstpz,sfjljws,pcsdjpdsj)
+			values
+			  (#[id], #[bgddlx], #[wljrfs], #[orgcode], #[orgname], #[orgid], #[ispcs], #[pcsszxm], 
+			  #[pcsszsfzh], #[pcsszjh], #[pcsfszxm], #[pcsfszsfzh], #[pcsfszjh], #[czrxm], #[czrdwdm], 
+			  #[czrdwmc], sysdate, #[jls], #[szjxcjl], #[jjjl], #[jgjl], #[xjjl], #[tjjl], #[xjjxcjl], 
+			  #[jdxldys], #[fjs], #[pcsfjs], #[jwspbfjs], #[jb], #[lb], #[dj], #[szjb], #[bzs], #[jwmsd], 
+			  #[jwmss], #[dsmc1], #[dsmc2], #[dsmc3], #[dsmc4], #[zbmsb], #[zbmsl], #[zbjc], #[zbrsjl], 
+			  #[zbrslds], #[zbrsfjs], #[xzjd], #[szsfjrxzbz], #[sqs], #[xzcs], #[sqjwss], #[sqmjs], 
+			  #[zzsqmjs], #[sqmjzjlb], #[sqmjrjpbfjs], #[xqmj], #[hjrks], #[zzrks], #[zddxs], #[zddws], 
+			  #[zdcss], #[sqmjpbfjs], sysdate, #[pcsjwqdj], #[szzj], #[drsznx], #[ncjwss], #[rjgyjfbz], 
+			  #[sjbfdw], #[fhzb], #[hjsj], #[hjry], #[qtry], #[jwqs], #[ywjws], #[dnts], #[jtgj], #[bgdd], 
+			  #[jrganw], #[jrww], #[qtfhzb], #[dzid], #[dzmc], #[sfncjws], #[dsmc5], #[qcs], #[djzbs], 
+			  #[fdtks], #[fdbxs], #[fcbxs], #[syjls], #[zcmjs],#[sfstpz],#[sfjljws],to_date(#[pcsdjpdsj],'yyyy-mm-dd'))
+		]]>
+	</property>
+	
+	<!-- 查询派出所荣誉 -->
+	<property name="queryPcsRyList">
+		<![CDATA[
+			select 
+				id, orgid, orgcode, to_char(hjsj,'yyyy-mm') as hjsj, hjlx, bz 
+			from t_common_pcsry
+			where czbs !='3' and orgid = ?
+		]]>
+	</property>
+	
+	<!-- 新增派出所荣誉 -->
+	<property name="inserPcsRy">
+		<![CDATA[
+			insert into t_common_pcsry
+			  (id, orgid, orgcode, hjsj, hjlx, bz, djrxm, djrjh, djsj, djdwdm, djdwmc, 
+			  czrxm, czrjh, czrsfzh, czdwdm, czdwmc, czbs,czsj)
+			values
+			  (#[id], #[orgid], #[orgcode], to_date(#[hjsj],'yyyy-mm'), #[hjlx], #[bz], #[djrxm], 
+			  #[djrjh], sysdate, #[djdwdm], #[djdwmc], #[czrxm], #[czrjh], #[czrsfzh], 
+			  #[czdwdm], #[czdwmc], #[czbs],sysdate)
+		]]>  
+	</property>	
+	
+	
+	<!-- 修改派出所荣誉 -->
+	<property name="updatePcsRy">
+		<![CDATA[
+			update t_common_pcsry
+			   set 
+			       hjsj = to_date(#[hjsj],'yyyy-mm'),
+			       hjlx = #[hjlx],
+			       bz = #[bz],
+			       czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czbs = #[czbs],
+			       czsj = sysdate
+			 where id = #[id]
+		]]>	 
+	</property>
+	
+	<!-- 删除派出所荣誉 -->
+	<property name="deletePcsRy">
+		<![CDATA[
+			update t_common_pcsry
+			   set 
+			       czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czbs = #[czbs],
+			       czsj = sysdate
+			 where id = #[id]
+		]]>	 
+	</property>
+	
+	<!-- 更新机构数据计算表中的警务区分类 -->
+	<property name="updateSjjsJwqfl">
+		<![CDATA[
+			update t_common_organization_sjjs set jwqfl = ? where orgcode = ?
+		]]>
+	</property>
+</properties>

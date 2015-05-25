@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<property name="addZbhxx">
+		<![CDATA[
+			insert into t_af_zbhjbxx
+			  (zbhbh, zbhmc, sssqjwdm, sspcsdm, zbhfzrxm, zbhfzrlxdh, cjsj, zxsj, zxyy, djrxm, 
+			  	djrjh, djdwdm, djdwmc, djsj, sssqjwmc, sspcsmc, zxbs,djrsfzh,sssqdm,sssqmc)
+			values
+			  (#[zbhbh], #[zbhmc], #[sssqjwdm], #[sspcsdm], #[zbhfzrxm], #[zbhfzrlxdh], to_date(#[cjsj],'yyyy-MM-dd hh24:mi:ss'), 
+			  to_date(#[zxsj],'yyyy-MM-dd hh24:mi:ss'), #[zxyy], #[djrxm], #[djrjh], #[djdwdm], #[djdwmc], 
+			  to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss'), #[sssqjwmc], #[sspcsmc], #[zxbs],#[djrsfzh],#[sssqdm],#[sssqmc])
+			
+		]]>
+	</property>
+	
+	<property name="updateZbhxxByZbhbh">
+		<![CDATA[
+			update t_af_zbhjbxx
+			   set zbhbh = #[zbhbh],
+			       zbhmc = #[zbhmc],
+			       sssqjwdm = #[sssqjwdm],
+			       sspcsdm = #[sspcsdm],
+			       zbhfzrxm = #[zbhfzrxm],
+			       zbhfzrlxdh = #[zbhfzrlxdh],
+			       cjsj = to_date(#[cjsj],'yyyy-MM-dd hh24:mi:ss'),
+			       djrxm = #[djrxm],
+			       djrjh = #[djrjh],
+			       djdwdm = #[djdwdm],
+			       djdwmc = #[djdwmc],
+			       djsj = to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss'),
+			       sssqjwmc = #[sssqjwmc],
+			       sspcsmc = #[sspcsmc],
+			       zxbs = #[zxbs],
+			       sssqdm = #[sssqdm],
+			       sssqmc = #[sssqmc]
+			 where zbhbh = #[zbhbh]
+		]]>
+	</property>
+	
+	<property name="deleteZbhxxByZbhbh">
+		<![CDATA[
+			update t_af_zbhjbxx
+			   set 	zxsj = to_date(#[zxsj],'yyyy-MM-dd hh24:mi:ss'),
+       				zxyy = #[zxyy],
+			       	zxbs = #[zxbs]
+			 where zbhbh = #[zbhbh]
+		]]>
+	</property>
+	
+	<property name="zbhxxList">
+		<![CDATA[
+			select zbhbh,
+			       zbhmc,
+			       sssqjwdm,
+			       sspcsdm,
+			       zbhfzrxm,
+			       zbhfzrlxdh,
+			       cjsj,
+			       zxsj,
+			       zxyy,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       djsj,
+			       sssqjwmc,
+			       sspcsmc,
+			       zxbs,
+			       sssqdm,
+			       sssqmc
+			  from t_af_zbhjbxx where 1=1
+			  --单位选择查询
+			  --精确到派出所
+			 
+			  #if($zbhbh and !$zbhbh.equals(""))
+			  	and zbhbh = #[zbhbh]
+			  #end
+			  #if($zbhmc and !$zbhmc.equals(""))
+			  	and zbhmc like '%'||#[zbhmc]||'%'
+			  #end
+			  #if($zbhfzrxm and !$zbhfzrxm.equals(""))
+			  	and zbhfzrxm like '%'||#[zbhfzrxm]||'%'
+			  #end
+			  #if($djrxm and !$djrxm.equals(""))
+			  	and djrxm like '%'||#[djrxm]||'%'
+			  #end
+			  #if($zxsj_from && !$zxsj_from.equals(""))
+			  	and zxsj >= to_date(#[zxsj_from],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($zxsj_to && !$zxsj_to.equals(""))
+			  	and zxsj <= to_date(#[zxsj_to],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($cjsj_from && !$cjsj_from.equals(""))
+			  	and cjsj >= to_date(#[cjsj_from],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($cjsj_to && !$cjsj_to.equals(""))
+			  	and cjsj <= to_date(#[cjsj_to],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($djsj_from && !$djsj_from.equals(""))
+			  	and djsj >= to_date(#[djsj_from],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($djsj_to && !$djsj_to.equals(""))
+			  	and djsj <= to_date(#[djsj_to],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			 #if($jwsqdm && !$jwsqdm.equals(""))
+		    	and djdwdm = #[jwsqdm]
+	    	 #elseif ($pcsdm && !$pcsdm.equals(""))
+			 	 and djdwdm like substr(#[pcsdm],1,8)||'%'
+			 #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				 and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			 #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				 and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			 #end
+			 #if($zxbs && !$zxbs.equals(""))
+			 	and zxbs = #[zxbs]
+			 #end
+			 
+			  order by djsj desc
+		]]>
+	</property>
+	<property name="queryZbhxxBeanByZbhbh">
+		<![CDATA[
+               select  zbh.zbhbh  zbhbh,
+			       zbh.zbhmc zbhmc,
+			       zbh.sssqjwmc  sssqjwmc,
+			       zbh.sspcsmc sspcsmc,
+			       sssqdm,sssqmc
+             from t_af_zbhjbxx zbh
+			where zbhbh =?
+		]]>
+	</property>
+	<property name="zbhcyxxListByzbhbh">
+		<![CDATA[
+			select cy.zbhcybh,
+			       cy.xm,
+			       cy.xb,
+			       cy.sfzh,
+			       to_char(cy.csrq,'yyyy-MM-dd') csrq,
+			       cy.lxdh,
+			       cy.hjdqh,
+			       cy.xzdxz,
+			       cy.whcd,
+			       cy.hyzk,
+			       cy.gzbx,
+			       cy.jccs,
+			       cy.gzdw,
+			       to_char(cy.cjrq,'yyyy-mm-dd') cjrq,
+			       cy.tcrq,
+			       cy.bcqk,
+			       cy.ryjl,
+			       cy.shgx,
+			       cy.djrxm,
+			       cy.djrjh,
+			       cy.djdwdm,
+			       cy.djdwmc,
+			       cy.djsj,
+			       cy.zbhzw,
+			       cy.tcyy,
+			       cy.tcbs,
+			       cy.sssqdm,
+			       (select mc from t_common_hnxzqh where dm = cy.sssqdm) as sssqmc
+			  from t_af_zbhcyxx cy
+			  where TCBS='0'
+			 #if($sqdm && !$sqdm.equals(""))
+		   		and sssqdm = #[sqdm]
+			 #elseif($jwsqdm && !$jwsqdm.equals(""))
+		    	and djdwdm = #[jwsqdm]
+	    	 #elseif ($pcsdm && !$pcsdm.equals(""))
+			 	 and djdwdm like substr(#[pcsdm],1,8)||'%'
+			 #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				 and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			 #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				 and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			 #end
+			 #if($xm && !$xm.equals(""))
+			 	and xm like '%'||#[xm]||'%'
+			 #end
+			 #if($sfzh && !$sfzh.equals(""))
+			 	and sfzh = #[sfzh]
+			 #end
+			 #if($zbhzw && !$zbhzw.equals(""))
+			 	and zbhzw = #[zbhzw]
+			 #end
+			 #if($cjrq_from && !$cjrq_from.equals(""))	
+			 	and CJRQ >= to_date(#[cjrq_from],'yyyy-mm-dd')
+			 #end
+			 #if($cjrq_to && !$cjrq_to.equals(""))
+			 	and CJRQ <= to_date(#[cjrq_to],'yyyy-mm-dd')
+			 #end		
+		]]>
+	</property>
+	
+	<property name="queryZhbByNameAndOrg">
+		<![CDATA[
+               select zbhbh,
+			       zbhmc,
+			       sssqjwdm,
+			       sspcsdm,
+			       zbhfzrxm,
+			       zbhfzrlxdh,
+			       cjsj,
+			       zxsj,
+			       zxyy,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       djsj,
+			       sssqjwmc,
+			       sspcsmc,
+			       zxbs
+			  from t_af_zbhjbxx where 1=1
+				and zbhmc=?
+				and zxbs='0'
+				and djdwdm=?
+		]]>
+	</property>
+	
+</properties>

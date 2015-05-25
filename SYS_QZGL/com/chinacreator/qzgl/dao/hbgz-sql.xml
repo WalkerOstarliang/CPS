@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="addhbgz">
+		<![CDATA[
+			insert into t_fwqz_xqzbggzxx
+			  (bh, bggzzt, bggzsj, cjrs, bggzzcrxm, bggzzcrlxdh, bggzdd, bggznr, qzjy, djrxm, djrjh, djsj, djdwdm, djdwmc,djrsfzh)
+			values
+			  (#[bh], #[bggzzt], to_date(#[bggzsj],'yyyy-MM-dd'), #[cjrs], #[bggzzcrxm], #[bggzzcrlxdh], #[bggzdd], #[bggznr], #[qzjy], #[djrxm], #[djrjh], to_date(#[djsj],'yyyy-MM-dd'), #[djdwdm], #[djdwmc],#[djrsfzh])
+		]]>
+	</property>
+	<property name="konghbgz">
+		<![CDATA[
+			insert into t_fwqz_xqzbggzxx
+			  (bh)
+			values
+			  (#[bh])
+		]]>
+	</property>
+	<property name="updatehbgz">
+		<![CDATA[
+			update t_fwqz_xqzbggzxx
+			   set bggzzt = #[bggzzt],
+			       bggzsj = to_date(#[bggzsj],'yyyy-MM-dd'),
+			       bggzzcrxm = #[bggzzcrxm],
+			       bggzzcrlxdh = #[bggzzcrlxdh],
+			       bggzdd = #[bggzdd],
+			       bggznr = #[bggznr],
+			       qzjy = #[qzjy]
+			 where bh = #[bh]
+		]]>
+	</property>
+	<property name="deletehbgz">
+		<![CDATA[
+			delete t_fwqz_xqzbggzxx
+ 				where bh = ?	
+		]]>
+	</property>
+	<property name="Listhbgz">
+		<![CDATA[
+		
+			select  bg.*,fj.bh fjbh,fj.fjmc fjmc from  (select t.bh bh,
+       t.bggzzt bggzzt,
+       to_char(t.bggzsj, 'yyyy-MM-dd') bggzsj,
+       (select count(*) from t_fwqz_xqzbggzyhrxx y where y.bgbh = t.bh) cjrs,
+       t.bggzzcrxm bggzzcrxm,
+       t.bggzzcrlxdh bggzzcrlxdh,
+       t.bggzdd bggzdd,
+       t.bggznr bggznr,
+       t.qzjy qzjy,
+       t.djrxm djrxm,
+       t.djrjh djrjh,
+       to_char(t.djsj, 'yyyy-MM-dd') djsj,
+       t.djdwdm djdwdm,
+       t.djdwmc djdwmc
+  from t_fwqz_xqzbggzxx t where 1=1
+			#if($bggzzt and !$bggzzt.equals(""))
+	      		and bggzzt like '%'||#[bggzzt]||'%' 
+	      	#end
+	      	#if($hbsj_from && !$hbsj_from.equals(""))
+				and bggzsj >= to_date(#[hbsj_from],'yyyy-MM-dd')
+			#end
+	      	#if($hbsj_to && !$hbsj_to.equals(""))
+				and bggzsj <= to_date(#[hbsj_to],'yyyy-MM-dd')
+			#end
+			
+			#if($jwsqdm && !$jwsqdm.equals(""))
+	    		and djdwdm = #[jwsqdm]
+    		#elseif ($pcsdm && !$pcsdm.equals(""))
+			 	and djdwdm like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+		   	#end
+				
+			order by djsj desc
+  ) bg
+ left join t_fwqz_fjxx fj
+    on bg.bh = fj.djbh
+			
+		]]>
+	</property>
+	<property name="gethbgzByBh">
+		<![CDATA[
+			select bh, bggzzt, to_char(bggzsj,'yyyy-MM-dd') bggzsj, cjrs, bggzzcrxm, bggzzcrlxdh, bggzdd, bggznr, qzjy, djrxm, djrjh, to_char(djsj,'yyyy-MM-dd') djsj, djdwdm, djdwmc 
+			from t_fwqz_xqzbggzxx
+			where bh=?
+		]]>
+	</property>
+	<property name="gethbgzcyrByBgbh">
+		<![CDATA[
+			select bh, bggzzt, to_char(bggzsj,'yyyy-MM-dd') bggzsj, cjrs, bggzzcrxm, bggzzcrlxdh, bggzdd, bggznr, qzjy, djrxm, to_char(djsj,'yyyy-MM-dd') djsj, djdwdm, djdwmc 
+			from t_fwqz_xqzbggzxx
+			where bh=?
+		]]>
+	</property>
+	<property name="addhbgzcyr">
+		<![CDATA[
+			insert into t_fwqz_xqzbggzyhrxx
+			  (bh, bgbh, xm, lxdh, dwmc, zw)
+			values
+			  (#[bh], #[bgbh], #[xm], #[lxdh], #[dwmc], #[zw])
+		]]>
+	</property>
+	<property name="updatecyrrs">
+		<![CDATA[
+			update t_fwqz_xqzbggzxx a
+			set cjrs=(select count(*) from t_fwqz_xqzbggzyhrxx b where a.bh=b.bgbh)
+			where bh=?
+		]]>
+	</property>
+		<property name="updatehbgzyhr">
+		<![CDATA[
+			update t_fwqz_xqzbggzyhrxx
+   set bh = #[bh],
+       bgbh = #[bgbh],
+       xm = #[xm],
+       lxdh = #[lxdh],
+       dwmc = #[dwmc],
+       zw = #[zw]
+ where bh = #[bh]
+
+		]]>
+	</property>
+	<property name="listhbgzByBh">
+		<![CDATA[
+			select bh, bgbh, xm, lxdh, dwmc, zw from t_fwqz_xqzbggzyhrxx
+			where bgbh=?
+			order by bh
+		]]>
+	</property>
+	<property name="deletehbgzcyrByBgbh">
+		<![CDATA[
+			delete t_fwqz_xqzbggzyhrxx
+			where bgbh=?
+		]]>
+	</property>
+	<property name="deletehbgzcyrBybh">
+		<![CDATA[
+			delete t_fwqz_xqzbggzyhrxx
+			where bh=?
+		]]>
+	</property>
+	<property name="deleteOldFjxx">
+		<![CDATA[
+			delete t_fwqz_fjxx
+ 			where djbh = ? and fjlx='1'
+		]]>
+	</property>
+	<property name="getFjxxByBgbh">
+		<![CDATA[
+			select bh, fjlx, fjmc, fj, djbh from t_fwqz_fjxx
+			where fjlx='1' and djbh=?
+		]]>
+	</property>
+		<property name="getHbgzyhrxxbybh">
+		<![CDATA[
+			select bh, bgbh, xm, lxdh, dwmc, zw from t_fwqz_xqzbggzyhrxx
+			where bh=?
+		]]>
+	</property>
+	<property name="queryhbgzcyrlist">
+		<![CDATA[
+			select bh, bgbh, xm, lxdh, dwmc, zw from t_fwqz_xqzbggzyhrxx
+			where bgbh=?
+		]]>
+	</property>
+	<property name="countyhr">
+		<![CDATA[
+			select count(*) from t_fwqz_xqzbggzyhrxx  where bgbh=?
+		]]>
+	</property>
+		<property name="deleteyhrbybh">
+		<![CDATA[
+			delete t_fwqz_xqzbggzyhrxx
+			where bh=?
+		]]>
+	</property>
+	<property name="updatefjxx">
+		<![CDATA[
+			
+update t_fwqz_fjxx
+   set bh = #[bh],
+       fjlx = #[fjlx],
+       fjmc = #[fjmc],
+       fj = #[fj],
+       djbh = #[djbh]
+ where bh = #[bh]
+			
+		]]>
+	</property>
+	
+</properties>

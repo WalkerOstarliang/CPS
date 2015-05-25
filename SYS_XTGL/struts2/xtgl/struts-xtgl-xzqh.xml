@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="xzqh" namespace="/xtgl/xzqh" extends="default"> 
+	  		<action name="*" class="com.chinacreator.xtgl.action.XzqhglAction" method="{1}">
+	  			<result name="toXzqhPage">/jsp/xtgl/pages/xzqh/xzqhIndex.jsp</result>
+	  			<result name="toXzqhPageInfo">/jsp/xtgl/pages/xzqh/xzqhinfo.jsp</result>
+	  		</action>
+	  </package>
+	  
+	  <package name="pcs" namespace="/xtgl/pcs" extends="default"> 
+	  		<action name="*" class="com.chinacreator.xtgl.action.PcsglAction" method="{1}">
+	  			<result name="toPcsglPage">/jsp/xtgl/pages/pcsgl/pcsindex.jsp</result>
+	  			<result name="toJwtglPage">/jsp/xtgl/pages/pcsgl/jwtgllist.jsp</result>
+	  			<result name="toJwtglInfoPage">/jsp/xtgl/pages/pcsgl/jwtglinfo.jsp</result>
+	  		</action>
+	  </package>
+</struts>

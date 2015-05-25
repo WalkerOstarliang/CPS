@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="rk" namespace="/lsgl/rk" extends="default"> 
+	  		<action name="*" class="com.chinacreator.lsgl.action.LsglRkJbxxAction" method="{1}">
+	  			<result name="toRkListPage">/jsp/lsgl/pages/rk/rklist.jsp</result>
+	  			<result name="toRkInfoPage">/jsp/lsgl/pages/rk/rkinfo.jsp</result>
+	  			<result name="toRydaRkInfoPage">/jsp/lsgl/pages/rk/rydarkinfo.jsp</result>
+	  			<result name="toSyrkListPage">/jsp/lsgl/pages/rk/syrklist.jsp</result>
+	  			<result name="toSyrkDjQueryPage">/jsp/lsgl/pages/syrk/syrkdjlist.jsp</result>
+	  			<result name="toSyrkdjSelectPage">/jsp/lsgl/pages/rk/rkdj/syrkdjselect.jsp</result>
+	  			<result name="toRkDetailInfoPage">/jsp/lsgl/pages/rk/rkdetailinfo.jsp</result>
+	  			<result name="toRydaRkDetailInfoPage">/jsp/lsgl/pages/rk/rydarkdetailinfo.jsp</result>
+	  			<result name="toSyrkInfoPage">/jsp/lsgl/pages/rk/rkinfowin.jsp</result>
+	  			<result name="toRkInfoDefailtPage">/jsp/lsgl/pages/rk/rkinfodetail.jsp</result>
+	  			<result name="czrkinfo">/jsp/lsgl/pages/rk/czrk/czrkinfo.jsp</result>
+	  			<result name="ryglczrkinfo">/jsp/lsgl/pages/rk/czrk/ryglczrkinfo.jsp</result>
+	  			<result name="rklshkxxlist">/jsp/lsgl/pages/rk/czrk/rklshkxxlist.jsp</result>
+	  			<result name="rkzpxx">/jsp/lsgl/pages/rk/rkzpxx.jsp</result>
+	  			<result name="shgxxx">/jsp/lsgl/pages/rk/shgxxx.jsp</result>
+	  			<result name="tmtzxx">/jsp/lsgl/pages/rk/tmtzxx.jsp</result>
+	  			<result name="lxfsxx">/jsp/lsgl/pages/rk/lxfsxx.jsp</result>
+	  			<result name="lkjbxx">/jsp/lsgl/pages/rk/zzrk/lkjbxx.jsp</result>
+	  			<result name="rygllkjbxx">/jsp/lsgl/pages/rk/zzrk/rygllkjbxx.jsp</result>
+	  			<result name="zzrklist">/jsp/lsgl/pages/rk/zzrk/zzrklist.jsp</result>
+	  			<result name="jzjbxx">/jsp/lsgl/pages/rk/jzrk/jzjbxx.jsp</result>
+	  			<result name="rygljzjbxx">/jsp/lsgl/pages/rk/jzrk/rygljzjbxx.jsp</result>
+	  			<result name="jzrklist">/jsp/lsgl/pages/rk/jzrk/jzrkxxlist.jsp</result>
+	  			<result name="wlhrkjbxx">/jsp/lsgl/pages/rk/wlczhk/wlhrkjbxx.jsp</result>
+	  			<result name="ryglwlhrkjbxx">/jsp/lsgl/pages/rk/wlczhk/ryglwlhrkjbxx.jsp</result>
+	  			<result name="lswlhjllist">/jsp/lsgl/pages/rk/wlczhk/lswlhjllist.jsp</result>
+	  			<result name="jwrkinfo">/jsp/lsgl/pages/rk/jwrk/jwrkinfo.jsp</result>
+	  			<result name="jwrklsjzxx">/jsp/lsgl/pages/rk/jwrk/lsjzxx.jsp</result>
+	  			<result name="toSyrkSelectPage">/jsp/lsgl/pages/rk/syrkselect.jsp</result>
+				<result name="toSyrkSelectListPage">/jsp/lsgl/pages/rk/syrkListSelectPage.jsp</result>
+	  			<result name="thryxx">/jsp/lsgl/pages/rk/thryxx.jsp</result>
+	  			<result name="tzryxx">/jsp/lsgl/pages/rk/tzryxx.jsp</result>
+	  			<result name="cylsxx">/jsp/lsgl/pages/rk/cylsxx.jsp</result>
+	  			<result name="syfcxx">/jsp/lsgl/pages/rk/syfcxx.jsp</result>
+	  			<result name="toRkSelectWin">/jsp/lsgl/pages/rk/rkSelectWin.jsp</result>
+	  			
+	  			<result name="rklsjzlist">/jsp/lsgl/pages/rk/rklsjzPage.jsp</result>
+	  			<result name="lsjzxxlist">/jsp/lsgl/pages/rk/lsjzxxlist.jsp</result>
+	  			
+	  			<result name="toLdrkYanQi">/jsp/lsgl/pages/rk/zzrk/ldrkYanQi.jsp</result>
+	  			<result name="toLogoutPage">/jsp/lsgl/pages/rk/logoutRkInfoPage.jsp</result>
+	  			<result name="toBatchLogoutRkInfoPage">/jsp/lsgl/pages/rk/batchlogoutRkInfoPage.jsp</result>
+	  			<result name="toRkJhsyPage">/jsp/lsgl/pages/rk/jhsypage.jsp</result>
+	  			<result name="toJhsyListPage">/jsp/lsgl/pages/rk/jhsylist.jsp</result>
+	  			<result name="toRyxglPageList">/jsp/rxgl/pages/ryxprklist.jsp</result>
+	  			<result name="toLdrkListExcelPage">/jsp/lsgl/pages/rk/zzrk/ldrkdcexcel.jsp</result>
+	  			<result name="toCzrkPrintPage">/jsp/lsgl/pages/rk/czrk/czrkinfody.jsp</result>
+	  			<result name="toJzrkPrintPage">/jsp/lsgl/pages/rk/jzrk/jzrkinfody.jsp</result>
+	  			<result name="toCzrkExportExcelPage">/jsp/lsgl/pages/rk/czrk/czrkexceldy.jsp</result>
+	  			<result name="toJzrkExportExcelPage">/jsp/lsgl/pages/rk/jzrk/jzrkexceldy.jsp</result>
+	  			<result name="toSyrkExportExcelPage">/jsp/lsgl/pages/rk/syrkExcelTemplate.jsp</result>
+	  			<result name="toSrykLsjzPage">/jsp/lsgl/pages/rk/rklsjzxxlist.jsp</result>
+	  			<result name="torkjbxxWordPage">/jsp/lsgl/pages/rk/rkjbxxWord.jsp</result>
+	  			
+	  			<!-- 远程加载判断错误页面 -->
+	  			<result name="ryinfo_0">/jsp/lsgl/pages/rk/rylberror.jsp</result>
+	  			<!-- 常住人口 -->
+	  			<result name="ryinfo_1">/jsp/lsgl/pages/rk/czrk/czrkindex.jsp</result>
+	  			<result name="ryinfo_2">/jsp/lsgl/pages/rk/zzrk/ldrkindex.jsp</result>
+	  			<result name="ryinfo_3">/jsp/lsgl/pages/rk/wlczhk/wlhrkindex.jsp</result>
+	  			<result name="ryinfo_4">/jsp/lsgl/pages/rk/jwrk/jwrkindex.jsp</result>
+	  			<result name="ryinfo_5">/jsp/lsgl/pages/rk/jzrk/jzrkindex.jsp</result>
+	  			
+	  			<result name="toRkJbxxInfo_1">/jsp/lsgl/pages/rk/czrk/czrkjbxx.jsp</result>
+	  			<result name="toRkJbxxInfo_2">/jsp/lsgl/pages/rk/zzrk/ldrkjbxx.jsp</result>
+	  			<result name="toRkJbxxInfo_3">/jsp/lsgl/pages/rk/wlczhk/wlhrkxxjbxx.jsp</result>
+	  			<result name="toRkJbxxInfo_4">/jsp/lsgl/pages/rk/jwrk/jwrkxxjbxx.jsp</result>
+	  			<result name="toRkJbxxInfo_5">/jsp/lsgl/pages/rk/jzrk/jzrkjbxx.jsp</result>
+	  			
+	  			<result name="czrklsjzxx">/jsp/lsgl/pages/rk/czrk/czrklsjzxx.jsp</result>
+	  			<result name="ldrklsjzxx">/jsp/lsgl/pages/rk/zzrk/ldrklsjzxx.jsp</result>
+	  			<result name="jzrllsjzxx">/jsp/lsgl/pages/rk/jzrk/jzrklsjzxx.jsp</result>
+	  			<result name="wlhrklsjzxx">/jsp/lsgl/pages/rk/wlczhk/wlhrklsjzxx.jsp</result>
+	  			
+	  			<result name="rkzppage">/jsp/lsgl/pages/rk/others/rkzppage.jsp</result>
+	  			<result name="shgxpage">/jsp/lsgl/pages/rk/others/shgxpage.jsp</result>
+	  			<result name="lxfspage">/jsp/lsgl/pages/rk/others/lxfspage.jsp</result>
+	  			<result name="tmtzpage">/jsp/lsgl/pages/rk/others/tmtzpage.jsp</result>
+	  		</action>
+	  </package>
+	  
+	   <package name="collect" namespace="/lsgl/collect" extends="default"> 
+	  		<action name="*" class="com.chinacreator.lsgl.action.LsglCollectionAction" method="{1}">
+	  			<result name="toLsglCollection">/jsp/lsgl/pages/collect/lsglcollect.jsp</result>
+	  		</action>
+	  </package>
+	  
+	   <package name="jwrk" namespace="/lsgl/jwrk" extends="default"> 
+	  		<action name="*" class="com.chinacreator.lsgl.action.JwrkManageAction" method="{1}">
+	  			<result name="toJwrkListPage">/jsp/lsgl/pages/jwrk/jwrklist.jsp</result>
+	  			<result name="toJwrkfwSelectPage">/jsp/lsgl/pages/jwrk/jwrkfwselect.jsp</result>
+	  			<result name="toJwrkQueryPage">/jsp/lsgl/pages/jwrk/jwrkselect.jsp</result>
+	  			<result name="toJwrkInfoPage">/jsp/lsgl/pages/jwrk/jwrkindex.jsp</result>
+	  			<result name="loadJwrkJbxxInfo">/jsp/lsgl/pages/jwrk/jwrkinfo.jsp</result>
+	  			<result name="toJwrkzpPage">/jsp/lsgl/pages/jwrk/jwrkzppage.jsp</result>
+	  			<result name="toShgxxxPage">/jsp/lsgl/pages/jwrk/jwrkshgxpage.jsp</result>
+	  			<result name="toTmtzxxPage">/jsp/lsgl/pages/jwrk/jwrktmtzpage.jsp</result>
+	  			<result name="toLxfsxxPage">/jsp/lsgl/pages/jwrk/jwrklxfspage.jsp</result>
+	  			<result name="toJwrkDetailPage">/jsp/lsgl/pages/jwrk/jwrkdetail.jsp</result>
+	  			<result name="toRkLsjzListPage">/jsp/lsgl/pages/jwrk/lsjzinfo.jsp</result>
+	  			<result name="toJwrkTzryPage">/jsp/lsgl/pages/jwrk/tzryxx.jsp</result>
+	  			<result name="toJwrkCyryPage">/jsp/lsgl/pages/jwrk/lscyinfo.jsp</result>
+	  			<result name="toJwrkDyPage">/jsp/lsgl/pages/jwrk/jwrkdypage.jsp</result>
+	  			
+	  		</action>
+	  </package>
+</struts>

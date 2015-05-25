@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="menu" namespace="/menu" extends="default">
+	  	    <action name="*" class="com.chinacreator.menu.action.MenuManagerAction" method="{1}">
+	  	    	<result name="toLeftMenuPage">/jsp/mainicon/leftmenu.jsp</result>
+	  	    	<result name="toAddTwoMenuPage">/jsp/mainicon/addTowMenu.jsp</result>
+	  	    	<result name="toAddSitePage">/jsp/outsite/sitemenu.jsp</result>
+	  	    	<result name="toOutSiteListPage">/jsp/outsite/sitemenulist.jsp</result>
+	  	    	<result name="loadChildMenuMap">/jsp/mainicon/mainmenu.jsp</result>
+	  	    	<result name="showChildMenu">/jsp/outsite/mainmenu.jsp</result>
+	  	    	<result name="toAddThreeMenuPage">/jsp/mainicon/addThreeMenu.jsp</result>
+	  	    	<result name="toSystemShotCutMenu">/jsp/outsite/sitekjrk.jsp</result>
+	  	    	<result name="toShotCutMenuSelectWin">/jsp/outsite/sitekjrkselectwin.jsp</result>
+	  	    	<result name="loadBtnChildMenuMap">/jsp/outsite/sitemenumain.jsp</result>
+	  	    </action>
+	  </package>
+	  
+	  <package name="schedule" namespace="/schedule" extends="default">
+	  	    <action name="*" class="com.chinacreator.menu.action.MyScheduleAction" method="{1}">
+	  	    	<result name="toMySchedulePage">/jsp/outsite/outsitemyrcap.jsp</result>
+	  	    	<result name="toMyGztxPage">/jsp/outsite/gztx.jsp</result>
+	  	    	<result name="toMyGztxListPage">/jsp/outsite/gztxlist.jsp</result>
+	  	    	<result name="toMyGztxNotListPage">/jsp/outsite/gztx.jsp</result>
+	  	    	<result name="toGztxDataList">/jsp/outsite/tj/gztxdatalist.jsp</result>
+	  	    	<result name="toCheckAfterLogin">/jsp/common/pages/checkafterlogin.jsp</result>
+	  	    	<result name="queryXq7tlfaList">/jsp/outsite/zjxqfatj.jsp</result>
+	  	    	<result name="toAjjbxxListPage">/jsp/outsite/ajjbxxlist.jsp</result>
+	  	    	<result name="toAjxxDetail">/jsp/outsite/ajxxdetail.jsp</result>
+	  	    	<!-- 导出excel -->
+	  	    	<result name="downLoadExcel_ldrkdqtx">/jsp/outsite/excelmode/downLoadExcel_ldrkdqtx.jsp</result>
+	  	    	<result name="downLoadExcel_cyrytx">/jsp/outsite/excelmode/downLoadExcel_cyrytx.jsp</result>
+	  	    	<result name="downLoadExcel_stxxbztx">/jsp/outsite/excelmode/downLoadExcel_stxxbztx.jsp</result>
+	  	    	<result name="downLoadExcel_57718">/jsp/outsite/excelmode/downLoadExcel_57718.jsp</result>
+	  	    	<result name="downLoadExcel_czfwxxdjtx">/jsp/outsite/excelmode/downLoadExcel_czfwxxdjtx.jsp</result>
+	  	    	<result name="downLoadExcel_zdryzkdj">/jsp/outsite/excelmode/downLoadExcel_zdryzkdj.jsp</result>
+	  	    	<result name="downLoadExcel_zdryzktg">/jsp/outsite/excelmode/downLoadExcel_zdryzktg.jsp</result>
+	  	    	<result name="downLoadExcel_cyrypftx">/jsp/outsite/excelmode/downLoadExcel_cyrypftx.jsp</result>
+	  	    	
+	  	    </action>
+	  </package>
+	  
+	  <package name="outsite" namespace="/outsite" extends="default">
+	  	    <action name="*" class="com.chinacreator.menu.action.OutSitePageManagerAction" method="{1}">
+	  	    	<result name="toXqjbqkPage">/jsp/outsite/tj/mhxqgk.jsp</result>
+	  	    	<result name="toXxcjtjPage">/jsp/outsite/tj/mhxxcjtj.jsp</result>
+	  	    	<result name="toXqzatjPage">/jsp/outsite/tj/xqzatj.jsp</result>
+	  	    	<result name="queryXqFatj">/jsp/outsite/tj/falist.jsp</result>
+	  	    </action>
+	  </package>
+</struts>

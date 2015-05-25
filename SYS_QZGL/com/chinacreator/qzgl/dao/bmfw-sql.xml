@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryBmfwxx">
+	  <![CDATA[
+	 select bh,
+       fwxmlb,
+       fwdxxm,
+       fwdxsfzh,
+       fwdxlxfs,
+       to_char(fwsj,'yyyy-MM-dd') fwsj,
+       bfwqtmc,
+       bfwdxxm,
+       bfwdxsfzh,
+       bfwdxlxfs,
+       bfwdxjtzz,
+       fwnrms,
+       bz,
+       djrxm,
+       to_char(djsj,'yyyy-MM-dd hh24:mi:ss')djsj,
+       djdwdm,
+       djdwmc
+  from t_fwqz_bmfwdjxx
+  where 1=1 
+   and zxbs ='0'
+   	#if($fwdxxm and !$fwdxxm.equals(""))
+	      		and fwdxxm like '%'||#[fwdxxm]||'%' 
+	#end
+	#if($fwdxsfzh and !$fwdxsfzh.equals(""))
+	      		and fwdxsfzh like '%'||#[fwdxsfzh]||'%' 
+	#end
+		#if($bfwdxxm and !$bfwdxxm.equals(""))
+	      		and bfwdxxm like '%'||#[bfwdxxm]||'%' 
+	#end
+		#if($bfwdxsfzh and !$bfwdxsfzh.equals(""))
+	      		and bfwdxsfzh like '%'||#[bfwdxsfzh]||'%' 
+	#end
+	      	#if($fwsj_from && !$fwsj_from.equals(""))
+				and fwsj >= to_date(#[fwsj_from],'yyyy-MM-dd')
+			#end
+	      	#if($fwsj_to && !$fwsj_to.equals(""))
+				and fwsj <= to_date(#[fwsj_to],'yyyy-MM-dd')
+			#end
+	      	#if($jwsqdm && !$jwsqdm.equals(""))
+    			and djdwdm = #[jwsqdm]
+    		#elseif ($pcsdm && !$pcsdm.equals(""))
+			 	and djdwdm like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+		   	#end
+			order by djsj desc
+
+	  	  	]]>
+	</property>
+	<property name="updateBmfw">
+	  <![CDATA[
+	  update t_fwqz_bmfwdjxx
+   set fwxmlb = #[fwxmlb],
+       fwdxxm = #[fwdxxm],
+       fwdxsfzh = #[fwdxsfzh],
+       fwdxlxfs = #[fwdxlxfs],
+       fwsj = to_date(#[fwsj],'yyyy-MM-dd'),
+       bfwqtmc = #[bfwqtmc],
+       bfwdxxm = #[bfwdxxm],
+       bfwdxsfzh = #[bfwdxsfzh],
+       bfwdxlxfs = #[bfwdxlxfs],
+       bfwdxjtzz = #[bfwdxjtzz],
+       fwnrms = #[fwnrms],
+       bz = #[bz],
+       djrxm = #[djrxm],
+       djsj = to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss'),
+       djdwdm = #[djdwdm],
+       djdwmc = #[djdwmc]
+ where bh = #[bh]
+
+	  
+	  	  	]]>
+	</property>
+		<property name="insertBmfw">
+	  <![CDATA[
+insert into t_fwqz_bmfwdjxx
+  (bh,
+   fwxmlb,
+   fwdxxm,
+   fwdxsfzh,
+   fwdxlxfs,
+   fwsj,
+   bfwqtmc,
+   bfwdxxm,
+   bfwdxsfzh,
+   bfwdxlxfs,
+   bfwdxjtzz,
+   fwnrms,
+   bz,
+   djrxm,
+   djsj,
+   djdwdm,
+   djdwmc,
+   zxbs,
+   zxsj,
+   zxyy,
+   djrsfzh)
+values
+  (#[bh],
+   #[fwxmlb],
+   #[fwdxxm],
+   #[fwdxsfzh],
+   #[fwdxlxfs],
+   to_date(#[fwsj],'yyyy-MM-dd'),
+   #[bfwqtmc],
+   #[bfwdxxm],
+   #[bfwdxsfzh],
+   #[bfwdxlxfs],
+   #[bfwdxjtzz],
+   #[fwnrms],
+   #[bz],
+   #[djrxm],
+   to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss'),
+   #[djdwdm],
+   #[djdwmc],
+   '0',
+   to_date(#[zxsj],'yyyy-MM-dd hh24:mi:ss'),
+   #[zxyy],#[djrsfzh])
+
+
+	  	  	]]>
+	</property>
+	<property name="queryBmfw">
+	  <![CDATA[
+	   select bh,
+       fwxmlb,
+       fwdxxm,
+       fwdxsfzh,
+       fwdxlxfs,
+       to_char(fwsj,'yyyy-MM-dd') fwsj,
+       bfwqtmc,
+       bfwdxxm,
+       bfwdxsfzh,
+       bfwdxlxfs,
+       bfwdxjtzz,
+       fwnrms,
+       bz,
+       djrxm,
+       to_char(djsj,'yyyy-MM-dd') djsj,
+       djdwdm,
+       djdwmc
+  from t_fwqz_bmfwdjxx
+  where bh = ?
+
+	  
+	  	  	]]>
+	</property>
+		<property name="deleteBmfw">
+	  <![CDATA[
+	delete t_fwqz_bmfwdjxx
+ where bh = ?
+	  
+	  	  	]]>
+	</property>
+			<property name="deleteBmfws">
+	  <![CDATA[
+	update t_fwqz_bmfwdjxx
+	set zxbs = '1',
+		zxsj = sysdate
+	where bh=?
+	  
+	  	  	]]>
+	</property>
+</properties>

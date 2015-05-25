@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="insertImg">
+		<![CDATA[
+			insert into t_rxgl_pic values (?, ?, ?)
+		]]>
+	</property>
+	
+	<property name="updateImg">
+		<![CDATA[
+			update t_rxgl_pic set pic = ? where pic_id = ?
+		]]>
+	</property>
+</properties>

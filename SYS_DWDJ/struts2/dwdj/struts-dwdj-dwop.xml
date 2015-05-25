@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="dwop" namespace="/sydw/dwop" extends="default"> 
+	  		<action name="*" class="com.chinacreator.dwdj.action.DwOpManagerAction" method="{1}">
+	  			<result name="toDwOpListPage">/jsp/dwdj/page/dwop/dwoplist.jsp</result>
+	  			<result name="toDwOpPage">/jsp/dwdj/page/dwop/dwbaseinfo.jsp</result>
+	  			<result name="toDwSelectPage">/jsp/dwdj/page/dwop/dwselect.jsp</result>
+	  			<result name="toAddWbdwPage">/jsp/dwdj/page/dwop/wbdwxxinfo.jsp</result>
+	  		</action>
+	  </package>
+</struts>

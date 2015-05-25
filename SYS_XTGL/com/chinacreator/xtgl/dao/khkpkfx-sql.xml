@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 查询配置 -->
+	<property name="queryKfpzByKhlx">
+		<![CDATA[
+			select khlx, bt, kfgz, sql, fhz, cllj from t_khkp_kfxpz where khlx = ? and leve = ?
+		]]>
+	</property>
+	
+	<!-- 根据考核类型查询页面表格 -->
+	<property name="queryTableByKhlx">
+		select tablename, title, class as classStr, style, width, khlx 
+		from t_khkp_pagetable 
+		where khlx = ?
+		and leve = ?
+		and showplay = '1'
+	</property>
+	
+	<!-- 根据tablename 查询表头 -->
+	<property name="queryPageTableHeadByTablename">
+		select * from t_khkp_pagetablehead where tablename = ? order by xh
+	</property>
+</properties>	

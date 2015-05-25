@@ -1,0 +1,3349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryRkJbxxBeanByRybh">
+		<![CDATA[
+			select * 
+			from v_lsgl_rk_jbxx
+			where rybh=?
+		]]>
+	</property>
+
+	<property name="queryRkJbxxBeanBySfzh">
+		<![CDATA[
+			select * 
+			from v_lsgl_rk_jbxx
+			where sfzh=?
+		]]>
+	</property>
+
+	<property name="queryRkJbxxBeanBySfzhFormSt">
+		<![CDATA[
+			select * 
+			from v_lsgl_rk_czrk_st
+			where sfzh=? and glzt not in ('2','3','4')
+			order by glzt asc
+		]]>
+	</property>
+
+	<property name="queryRkJbxxBeanByGjAndZjzlAndZjhm">
+		<![CDATA[
+			select * 
+			from v_lsgl_rk_jbxx
+			where gj=#[gj] and zjzl=#[zjzl] and zjhm=#[zjhm]
+		]]>
+	</property>
+	
+ 	<property name="queryCzrkxxPageResult">
+ 		<![CDATA[
+ 			 select ck.czrkbh, 
+ 			 		rk.rybh,
+ 			 		rk.sfzh, 
+ 			 		rk.XZZQH,
+ 			 		rk.XZZXZ,
+ 			 		ck.HJSSSQBH,
+ 			 		rk.HJDQH,
+ 			 		rk.HJDXZ,
+ 			 		'1' as rylb,
+ 			 		rk.xm as xm, 
+ 			 		rk.lxdh as lxdh,
+ 			 		rk.xb as xb,
+ 			 		rk.mz as mz,
+ 			 		ck.zxbs as zxbs,
+ 			 		ck.czdwdm,ck.djdwdm,ck.zrdwdm,
+ 			 		to_char(rk.csrq,'yyyy-mm-dd')  as csrq,
+ 			 		ck.djsj,
+ 			 		ck.zxsj,
+ 			 		ck.rkfwglid
+			 from T_lsgl_rk_czrk ck,t_lsgl_rk_jbxx rk
+			 where 1=1 and ck.rybh=rk.rybh and ck.sfzh is not null
+			 
+			 #if($hjdqh && !$hjdqh.equals(""))
+				and rk.hjdqh like  substr(#[hjdqh],0,4)||'%'
+			 #end 
+			 #if ($zjzl && !$zjzl.equals("111"))
+					and rk.zjzl=#[zjzl]
+			 #end
+			
+ 			 #if($zjhm && !$zjhm.equals("") && $zjzl.equals("111"))
+	 			and ck.sfzh=trim(#[zjhm])
+ 			 #end
+			 #if ($xb && !$xb.equals(""))
+					and rk.xb=#[xb]
+			 #end
+			
+			 #if ($mz && !$mz.equals(""))
+					and rk.mz=#[mz]
+			 #end
+			 #if ($csrq_start && !$csrq_start.equals(""))
+					and rk.csrq >= to_date(#[csrq_start],'yyyy-MM-dd')
+			 #end
+			 #if($csrq_end && !$csrq_end.equals(""))
+					and rk.csrq <= to_date(#[csrq_end],'yyyy-MM-dd')
+			 #end
+			 #if($xm && !$xm.equals(""))
+					and 
+					(
+						rk.xm like trim(#[xm])||'%'
+ 						#if($xmty && $xmty.equals("1"))
+ 							or rk.xmpy like Lower(#[xmpy])||'%'
+ 						#end
+ 					)
+			#end
+			#if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+		 	 	and (zxbs = #[zxbs] or zxbs is null)
+		    #end
+		    #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+		 	 	and (zxbs = #[zxbs])
+		    #end 
+		    #if ($djsj_start && !$djsj_start.equals(""))
+					and ck.djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if($djsj_end && !$djsj_end.equals(""))
+					and ck.djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			#end
+			
+			#if ($zxsj_start && !$zxsj_start.equals(""))
+					and ck.zxsj >= to_date(#[zxsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if($zxsj_end && !$zxsj_end.equals(""))
+					and ck.zxsj <= to_date(#[zxsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			#end
+		    
+		    #if($sqdm && !$sqdm.equals(""))
+		   		and ck.hjsssqbh = #[sqdm]
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+    			and (ck.zrdwdm = #[jwsqdm])
+    		#elseif ($pcsdm && !$pcsdm.equals(""))
+		 		and ck.zrdwdm like substr(#[pcsdm],1,8)||'%'
+ 			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+ 				and ck.zrdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+ 			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+ 				and ck.zrdwdm like substr(#[citygajgjgdm],1,4)||'%'
+		   	#end
+		   	#if($stid && !$stid.equals(""))
+		   		and ck.rkfwglid in
+		   		(SELECT RFGL.RKFWGLID
+  					FROM T_COMMON_DZXX DZXX, T_LSGL_FW_JBXX FW, T_LSGL_RKFW_GL RFGL
+				 WHERE DZXX.DZID = FW.DZID
+   					AND FW.FWID = RFGL.FWID
+   					AND FW.ZXBS = '0'
+   					AND RFGL.ZXBS = '0'
+   					AND DZXX.STID = #[stid])
+		   	#end
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryLdrkxxPageResult">
+ 		<![CDATA[
+ 			select lk.zzbh,
+ 					rk.rybh,
+ 					rk.sfzh, 
+ 					rk.XZZQH,
+ 					rk.XZZXZ,
+ 					rk.HJDQH,
+ 					rk.HJDXZ, 
+ 					to_char(rk.csrq,'yyyy-mm-dd')  as csrq,
+ 					'2' as rylb,
+ 				    rk.xm as xm, 
+ 				    rk.lxdh as lxdh,
+ 			 	    rk.xb   as xb,
+ 			 	    rk.mz as mz,
+ 			 	    to_char(lk.lbdrq,'yyyy-mm-dd') as lbdrq,
+ 			 	    lk.czdwdm,
+ 			 	    lk.zrdwdm,
+ 			 	    lk.zxbs,
+ 			 	    lk.djrxm,
+ 			 	    lk.djdwdm,
+ 			 	    lk.djdwmc,
+ 			 	    lk.sssqbh,
+ 			 	    to_char(lk.djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+ 			 	    zxsj,
+ 			 	    to_char(lk.njzrq,'yyyy-mm-dd hh24:mi:ss') as njzrq,
+ 			 	    lk.rkfwglid,
+ 			 	    lk.qx,
+ 			 	    (select JZZDYZT from t_lsgl_ldrk_jzzxx where zzbh=lk.zzbh and JZZZXBS='0' and rownum=1) as jzzdyzt
+ 		    from t_lsgl_rk_ldrkzzxx lk,t_lsgl_rk_jbxx rk
+ 		    where 1=1 and lk.rybh = rk.rybh and lk.sfzh is not null
+ 		    #if ($zjzl && !$zjzl.equals("111"))
+				and rk.zjzl=#[zjzl]
+			#end
+			
+ 		    #if($hjdqh && !$hjdqh.equals(""))
+				and rk.hjdqh like  #[hjdqh]||'%'
+			#end 
+			
+ 		    
+ 			#if($zjhm && !$zjhm.equals("") && $zjzl.equals("111"))
+	 			and lk.sfzh=trim(#[zjhm])
+ 			#end
+			#if ($xb && !$xb.equals(""))
+				and rk.xb=#[xb]
+			#end
+			#if ($mz && !$mz.equals(""))
+				and rk.mz=#[mz]
+			#end
+			#if ($csrq_start && !$csrq_start.equals(""))
+					and rk.csrq >= to_date(#[csrq_start],'yyyy-MM-dd')
+			#end
+			#if($csrq_end && !$csrq_end.equals(""))
+					and rk.csrq <= to_date(#[csrq_end],'yyyy-MM-dd')
+			#end
+			
+			#if ($djsj_start && !$djsj_start.equals(""))
+					and lk.djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if($djsj_end && !$djsj_end.equals(""))
+					and lk.djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			#end
+			
+			#if ($zxsj_start && !$zxsj_start.equals(""))
+					and lk.zxsj >= to_date(#[zxsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if($zxsj_end && !$zxsj_end.equals(""))
+					and lk.zxsj <= to_date(#[zxsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			#end
+			
+			#if($xm && !$xm.equals(""))
+					and (
+						rk.xm like  trim(#[xm])||'%' 
+						#if($xmty && $xmty.equals("1"))
+							or rk.xmpy like Lower(#[xmpy])||'%'
+						#end
+					)
+			#end
+			#if($zjhm && (!$zjhm.equals("") && !$zjzl.equals("111")))
+					and rk.zjzl=#[zjzl] 
+					and rk.zjhm=trim(#[zjhm])
+			#end 
+			#if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+		 	 	and (zxbs = #[zxbs] or zxbs is null)
+		    #end
+		    #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+		 	 	and (zxbs = #[zxbs])
+		    #end  
+			
+			#if (($xj && !$xj.equals("")) && ($xz && !$xz.equals("")))
+				and (rk.hjdqh like  '65%'  or  rk.hjdqh like  '54%')
+				and (rk.mz = '05' or rk.mz = '04')
+			#elseif($xj && !$xj.equals(""))
+				and rk.hjdqh like  '65%'
+				and rk.mz = '05'
+			#elseif($xz && !$xz.equals(""))
+				and rk.hjdqh like  '54%'
+				and rk.mz = '04'
+			#end
+			
+			
+		    #if ($fwid && !$fwid.equals(""))
+				and  exists (select 1 from t_lsgl_rkfw_gl gl where gl.rkfwglid=lk.rkfwglid and gl.fwid = #[fwid] and (zxbs='0' or zxbs is null))					
+			#end
+			
+			#if($sfbljzz && $sfbljzz.equals("1"))
+				and exists (select 1 from t_lsgl_ldrk_jzzxx jz where jz.jzzrybh=rk.rybh and JZZZXBS='0' and JZZDYZT='20')
+			#elseif($sfbljzz && $sfbljzz.equals("0"))
+				and not exists (select 1 from t_lsgl_ldrk_jzzxx jz where jz.jzzrybh=rk.rybh and JZZZXBS='0' and JZZDYZT='20')
+			#end
+			
+		   	#if($sqdm && !$sqdm.equals(""))
+		   		and lk.sssqbh = #[sqdm]
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+	    		and (lk.zrdwdm = #[jwsqdm])
+    		#elseif ($pcsdm && !$pcsdm.equals(""))
+			 	and lk.ZRDWDM like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and lk.ZRDWDM like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and lk.ZRDWDM like substr(#[citygajgjgdm],1,4)||'%'
+		   	#end
+		   	#if($stid && !$stid.equals(""))
+		   		and lk.rkfwglid in
+		   		(SELECT RFGL.RKFWGLID
+  					FROM T_COMMON_DZXX DZXX, T_LSGL_FW_JBXX FW, T_LSGL_RKFW_GL RFGL
+				 WHERE DZXX.DZID = FW.DZID
+   					AND FW.FWID = RFGL.FWID
+   					AND FW.ZXBS = '0'
+   					AND RFGL.ZXBS = '0'
+   					AND DZXX.STID = #[stid])
+		   	#end
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryLdrkBeanListByLdrkids">
+ 		<![CDATA[
+ 			select lk.zzbh,
+ 					rk.rybh,
+ 					rk.sfzh, 
+ 					rk.XZZQH,
+ 					rk.XZZXZ,
+ 					rk.HJDQH,
+ 					rk.HJDXZ, 
+ 					to_char(rk.csrq,'yyyy-mm-dd')  as csrq,
+ 					'2' as rylb,
+ 				    rk.xm as xm, 
+ 				    rk.lxdh as lxdh,
+ 			 	    rk.xb   as xb,
+ 			 	    to_char(lk.lbdrq,'yyyy-mm-dd') as lbdrq,
+ 			 	    lk.zzsy,
+ 			 	    lk.czdwdm,
+ 			 	    lk.czdwmc,
+ 			 	    to_char(lk.czsj,'yyyy-mm-dd') as czsj,
+ 			 	    lk.zrdwdm,
+ 			 	    lk.zxbs,
+ 			 	    lk.djrxm,
+ 			 	    lk.djdwdm,
+ 			 	    lk.djdwmc,
+ 			 	    lk.qx,
+ 			 	    to_char(lk.djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+ 			 	    to_char(lk.njzrq,'yyyy-mm-dd') as njzrq
+ 		    from t_lsgl_rk_ldrkzzxx lk,t_lsgl_rk_jbxx rk
+ 		    where 1=1 and lk.rybh = rk.rybh 
+ 		    	and ZZBH in (#[ldrkids])
+			
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	<property name="queryJzrkPageResult">
+ 		<![CDATA[
+ 			 select jb.rybh,
+ 			 		jb.xm,
+ 			 		jb.sfzh,
+ 			 		jb.xb,
+ 			 		to_char(csrq,'yyyy-mm-dd') as csrq,
+ 			 		jb.hjdqh,
+ 			 		jb.hjdxz,
+ 			 		jb.xzzxz,
+ 			 		jb.lxdh,
+ 			 		jb.mz,
+ 			 		jk.zxbs,
+ 			 		jk.jzbh,
+ 			 		jk.zrdwdm,
+ 			 		jk.djdwdm,
+ 			 		jk.czdwdm,
+ 			 		'5' as rylb,
+ 			 		jk.rkfwglid,
+ 			 		jk.djsj,
+ 			 		jk.zxsj
+   			 from t_lsgl_rk_jbxx jb inner join t_lsgl_rk_jzrkxx jk on jb.rybh=jk.rybh
+   			 where 1=1 and jk.sfzh is not null
+   			 	 #if($sqdm && !$sqdm.equals(""))
+				   		and jk.sssqbh = #[sqdm]
+			   	 #elseif($jwsqdm && !$jwsqdm.equals(""))
+		    			and jk.zrdwdm = #[jwsqdm]
+	    		 #elseif ($pcsdm && !$pcsdm.equals(""))
+				 		and jk.zrdwdm like substr(#[pcsdm],1,8)||'%'
+				 #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				 		and jk.zrdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				 #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				 		and jk.zrdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			  	 #end
+   			     
+   			     #if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+			 	 	and (jk.zxbs = #[zxbs] or jk.zxbs is null)
+			     #end
+			     #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+			 	 	and jk.zxbs = #[zxbs]
+			     #end
+			     #if ($djsj_start && !$djsj_start.equals(""))
+					and jk.djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			     #end
+			     #if($djsj_end && !$djsj_end.equals(""))
+					and jk.djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			     #end
+			     
+			     #if ($zxsj_start && !$zxsj_start.equals(""))
+					and jk.zxsj >= to_date(#[zxsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+				#end
+				#if($zxsj_end && !$zxsj_end.equals(""))
+					and jk.zxsj <= to_date(#[zxsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+				#end
+   			     
+   			     #if($hjdqh && !$hjdqh.equals(""))
+					and jb.hjdqh like  substr(#[hjdqh],0,4)||'%'
+				 #end 
+				 #if ($zjzl && !$zjzl.equals("111"))
+					and jb.zjzl=#[zjzl]
+				 #end
+	 			 #if($zjhm && !$zjhm.equals("") && $zjzl.equals("111"))
+		 			and jb.sfzh=trim(#[zjhm])
+	 			 #end
+				 #if ($xb && !$xb.equals(""))
+					and jb.xb=#[xb]
+				 #end
+				 #if ($mz && !$mz.equals(""))
+					and jb.mz=#[mz]
+				 #end
+				 #if ($csrq_start && !$csrq_start.equals(""))
+					and jb.csrq >= to_date(#[csrq_start],'yyyy-MM-dd')
+				 #end
+				 #if($csrq_end && !$csrq_end.equals(""))
+					and jb.csrq <= to_date(#[csrq_end],'yyyy-MM-dd')
+				 #end
+				 #if($xm && !$xm.equals(""))
+			 		 and (
+			 		 		jb.xm like '%'||#[xm]||'%' 
+							#if($xmty && $xmty.equals("1"))
+	 							or jb.xmpy like Lower(#[xmpy])||'%'
+	 						#end
+						)
+			     #end
+			     #if($stid && !$stid.equals(""))
+			   		and jk.rkfwglid in
+			   		(SELECT RFGL.RKFWGLID
+	  					FROM T_COMMON_DZXX DZXX, T_LSGL_FW_JBXX FW, T_LSGL_RKFW_GL RFGL
+					 WHERE DZXX.DZID = FW.DZID
+	   					AND FW.FWID = RFGL.FWID
+	   					AND FW.ZXBS = '0'
+	   					AND RFGL.ZXBS = '0'
+	   					AND DZXX.STID = #[stid])
+			   	#end
+ 		]]>
+ 	</property>
+ 
+ 	<property name="queryJwrkPageResult">
+ 		<![CDATA[
+ 			 select * 
+ 			 from v_lsgl_rk_jwrkxx
+ 			 where 1=1
+ 			 
+ 			  #if($hjdqh && !$hjdqh.equals(""))
+				and hjdqh like  substr(#[hjdqh],0,4)||'%'
+			 #end 
+ 			 #if($gj && !$gj.equals(""))
+			 	and gj=#[gj]
+			 #end
+			 #if($zjzl && !$zjzl.equals(""))
+			 	and zjzl=#[zjzl]
+			 #end
+			 #if($zjhm && !$zjhm.equals(""))
+			 	and zjhm=#[zjhm]
+			 #end
+			  #if ($xb && !$xb.equals(""))
+					and xb=#[xb]
+			#end
+			#if ($csrq_start && !$csrq_start.equals(""))
+					and csrq >= #[csrq_start]
+			#end
+			#if ($csrq_end && !$csrq_end.equals(""))
+					and csrq <= #[csrq_end]
+			#end
+			 #if($xm && !$xm.equals(""))
+			 	and ywx||ywm like '%'||#[xm]||'%'
+			 #end
+			 #if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+		 	 	and (zxbs = #[zxbs] or zxbs is null)
+		     #end
+		     #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+		 	 	and (zxbs = #[zxbs])
+		     #end 
+		     
+		     #if ($djsj_start && !$djsj_start.equals(""))
+					and djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if($djsj_end && !$djsj_end.equals(""))
+					and djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			#end
+			
+			#if ($zxsj_start && !$zxsj_start.equals(""))
+					and zxsj >= to_date(#[zxsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if($zxsj_end && !$zxsj_end.equals(""))
+					and zxsj <= to_date(#[zxsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			#end
+			 
+			#if($sqdm && !$sqdm.equals(""))
+		   		and sssqbh = #[sqdm]
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+    			and 
+    			     (zrdwdm = #[jwsqdm] or czdwdm =#[jwsqdm] or djdwdm = #[jwsqdm])
+    		#elseif($pcsdm && !$pcsdm.equals(""))
+			 	and (
+				 		djdwdm like substr(#[pcsdm],1,8)||'%' or 
+				 		czdwdm like substr(#[pcsdm],1,8)||'%' or 
+				 		zrdwdm like substr(#[pcsdm],1,8)||'%'
+				 	)
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and (
+				 		djdwdm like substr(#[countrygajgjgdm],1,6)||'%' or 
+				 		czdwdm like substr(#[countrygajgjgdm],1,6)||'%' or 
+				 		zrdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				 	)
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and (
+				 		djdwdm like substr(#[citygajgjgdm],1,4)||'%' or 
+				 		czdwdm like substr(#[citygajgjgdm],1,4)||'%' or 
+				 		zrdwdm like substr(#[citygajgjgdm],1,4)||'%'
+				   )
+		    #end
+		    #if($stid && !$stid.equals(""))
+		   		and rkfwglid in
+		   		(SELECT RFGL.RKFWGLID
+  					FROM T_COMMON_DZXX DZXX, T_LSGL_FW_JBXX FW, T_LSGL_RKFW_GL RFGL
+				 WHERE DZXX.DZID = FW.DZID
+   					AND FW.FWID = RFGL.FWID
+   					AND FW.ZXBS = '0'
+   					AND RFGL.ZXBS = '0'
+   					AND DZXX.STID = #[stid])
+		   	#end
+ 		]]>
+ 	</property>
+ 
+ 	<property name="queryWlczhkPageResult">
+ 		<![CDATA[
+ 			 select * 
+ 			 from v_lsgl_rk_wlhczhk
+ 			 where 1=1 and sfzh is not null
+ 			  #if($hjdqh && !$hjdqh.equals(""))
+				and hjdqh like  substr(#[hjdqh],0,4)||'%'
+			 #end 
+ 			 
+ 			 #if ($zjzl && !$zjzl.equals("111"))
+					and rk.zjzl=#[zjzl]
+			#end
+ 			 #if($zjhm && !$zjhm.equals("") && $zjzl.equals("111"))
+	 			and sfzh=trim(#[zjhm])
+ 			 #end
+			 #if ($xb && !$xb.equals(""))
+					and xb=#[xb]
+			 #end
+			 #if ($mz && !$mz.equals(""))
+					and mz=#[mz]
+			 #end
+			 
+ 			 #if ($csrq_start && !$csrq_start.equals(""))
+					and csrq >= #[csrq_start]
+			 #end
+			 #if ($csrq_end && !$csrq_end.equals(""))
+					and csrq <= #[csrq_end]
+			 #end
+			 #if($xm && !$xm.equals(""))
+			 	and (
+			 			xm like '%'||#[xm]||'%'
+					 	#if($xmty && $xmty.equals("1"))
+ 							or rk.xmpy like Lower(#[xmpy]))||'%'
+ 						#end
+			 	)
+			 #end
+			 #if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+		 	 	and (zxbs = #[zxbs] or zxbs is null)
+		     #end
+		     #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+		 	 	and (zxbs = #[zxbs])
+		     #end 
+		    #if ($djsj_start && !$djsj_start.equals(""))
+					and djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if($djsj_end && !$djsj_end.equals(""))
+					and djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			#end
+			
+			#if ($zxsj_start && !$zxsj_start.equals(""))
+					and zxsj >= to_date(#[zxsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if($zxsj_end && !$zxsj_end.equals(""))
+					and zxsj <= to_date(#[zxsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			#end
+		    #if($sqdm && !$sqdm.equals(""))
+		   		and sssqbh = #[sqdm]
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+    			and (zrdwdm = #[jwsqdm] or czdwdm =#[jwsqdm] or djdwdm = #[jwsqdm])
+    		#elseif($pcsdm && !$pcsdm.equals(""))
+			 	and (
+				 		djdwdm like substr(#[pcsdm],1,8)||'%' or 
+				 		czdwdm like substr(#[pcsdm],1,8)||'%' or 
+				 		zrdwdm like substr(#[pcsdm],1,8)||'%'
+				 	)
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and (
+				 		djdwdm like substr(#[countrygajgjgdm],1,6)||'%' or 
+				 		czdwdm like substr(#[countrygajgjgdm],1,6)||'%' or 
+				 		zrdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				 	)
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and (
+				 		djdwdm like substr(#[citygajgjgdm],1,4)||'%' or 
+				 		czdwdm like substr(#[citygajgjgdm],1,4)||'%' or 
+				 		zrdwdm like substr(#[citygajgjgdm],1,4)||'%'
+				   )
+		    #end
+		    #if($stid && !$stid.equals(""))
+		   		and rkfwglid in
+		   		(SELECT RFGL.RKFWGLID
+  					FROM T_COMMON_DZXX DZXX, T_LSGL_FW_JBXX FW, T_LSGL_RKFW_GL RFGL
+				 WHERE DZXX.DZID = FW.DZID
+   					AND FW.FWID = RFGL.FWID
+   					AND FW.ZXBS = '0'
+   					AND RFGL.ZXBS = '0'
+   					AND DZXX.STID = #[stid])
+		   	#end
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryCzrkBeanByRybh">
+ 		<![CDATA[
+ 			select * 
+ 			from V_LSGL_CZRK_FWGL
+ 			where rybh=?
+ 			order by djsj desc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryCzrkBeanByCzrkid">
+ 		<![CDATA[
+ 			 select * 
+			 from v_lsgl_rk_czrk
+			 where czrkbh=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryJzrkBeanByJzrkid">
+ 		<![CDATA[
+ 			select * 
+ 			from v_lsgl_rk_jzrkxx
+ 			where JZBH=?
+ 		]]>
+ 	</property>
+ 
+ 	<property name="queryLdrkBeanByLdrkid">
+ 		<![CDATA[
+ 			select * 
+ 			from v_lsgl_rk_ldrk
+ 			where zzbh=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryJwrkBeanByJwrkid">
+ 		<![CDATA[
+ 			select *
+ 			from v_lsgl_rk_jwrkxx
+ 			where jwbh=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryWlhczrkByRybh">
+ 		<![CDATA[
+ 			select * 
+ 			from V_LSGL_WLHCZRK_FWGL
+ 			where rybh=?
+ 			order by djsj desc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryWlhczrkBeanByWlhrkid">
+ 		<![CDATA[
+ 			select * 
+ 			from v_lsgl_rk_wlhczhk
+ 			where WLHRKBH=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryRkgxrBeansByRybh">
+ 		<![CDATA[
+ 			select id,
+		       rybh,
+		       sfzh,
+		       gxrxm,
+		       gxrsfzh,
+		       gxrlxdh,
+		       gxrxzdxz,
+		       ydsrgx,
+		       isgdzy,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+		       djdwdm,
+		       djdwmc,
+		       czrxm,
+		       czdwdm,
+		       czdwmc,
+		       to_char(czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+		       czbs,
+		       gxrxb,
+		       to_char(gxrcsrq,'yyyy-mm-dd') as gxrcsrq,
+		       zjlx,wwx,wwm
+		   from t_lsgl_rk_gxr
+			where rybh=?
+			and czbs != '3'
+			order by djsj desc
+ 		]]>
+ 	</property>
+ 
+ 	<property name="queryRklxfsBeansByRybh">
+ 		<![CDATA[
+ 			select *
+  			from t_lsgl_ry_lxfs
+  			where rybh=? and czbs !='3' order by djsj 
+ 		]]>
+ 	</property>
+ 
+ 	<property name="queryRktmtzBeanByRybh">
+ 		<![CDATA[
+ 			select *
+  			from t_lsgl_rk_tmtz
+  			where rybh=?
+ 		]]>
+ 	</property>
+ 
+ 	<property name="queryRkxsbxBeanByRybh">
+ 		<![CDATA[
+ 			select *
+  			from t_lsgl_ry_xsbx
+ 			where rybh=?
+ 		]]>
+ 	</property>
+ 
+ 	<property name="queryRkzpxxBeansByRybh">
+ 		<![CDATA[
+ 			select id,rybh,sfzh,ms,to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,djrxm,ycfwzp,rxfw
+ 					djdwdm,djdwmc
+  			from t_lsgl_rk_zpxx
+  			where rybh=?
+  			order by djsj asc
+ 		]]>
+ 	</property>
+ 
+ 	<property name="insertRkzpxx">
+ 		<![CDATA[
+ 			insert into t_lsgl_rk_zpxx(id, rybh, sfzh, zp, ms,djrxm,djdwdm,djdwmc,djsj,YCFWZP,RXFW,zxbs,zxsj,djrsfzh) 
+ 			values (?, ?, ?, ?, ?,?,?,?,sysdate,?,?,'0',null,?)
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="deleteRkzpImage">
+ 		<![CDATA[
+ 			delete from t_lsgl_rk_zpxx where id=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryJzrkJzxxByRybh">
+ 		<![CDATA[
+ 			select *
+ 			from v_lsgl_jzrk_fwgl
+ 			where rybh=?
+ 			order by zxbs 
+ 		]]>
+ 	</property>
+ 
+ 	<property name="queryLdrkZzxxByRybh">
+ 		<![CDATA[
+ 			select *
+  			from V_LSGL_LDRK_FWGL
+ 			where rybh=?
+ 			order by zxbs 
+ 		]]>
+ 	</property>
+ 	
+ 		<property name="queryLdrkBeanByRybhAndYxzt">
+ 		<![CDATA[
+ 			select *
+  			from V_LSGL_LDRK_FWGL
+ 			where rybh=? and (zxbs='0' or zxbs is null)
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryJwrkJzxxByRybh">
+ 		<![CDATA[
+ 			select * 
+ 			from  V_LSGL_JWRK_FWGL
+ 			where rybh=?
+ 			order by zxbs
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="insertRkJbxxBean">
+ 		<![CDATA[
+ 			insert into t_lsgl_rk_jbxx
+			  (rybh,
+			   xm,
+			   xmpy,
+			   sfzh,
+			   xb,
+			   gj,
+			   mz,
+			   csrq,
+			   bmch,
+			   byzk,
+			   ywm,
+			   whcd,
+			   zjzl,
+			   zjhm,
+			   zzmm,
+			   hyzk,
+			   sg,
+			   xx,
+			   zzxy,
+			   zc,
+			   lxdh,
+			   fwcs,
+			   zydm,
+			   zw,
+			   sf,
+			   jg,
+			   rysx,
+			   rylb,
+			   hjdqh,
+			   hjdxz,
+			   ssgajgjgdm,
+			   ssgajgjgmc,
+			   sspcsdm,
+			   sspcsmc,
+			   xzzqh,
+			   xzzqhmc,
+			   xzzxz,
+			   czsj,
+			   czdwdm,
+			   czdwmc,
+			   czrjh,
+			   czrxm,
+			   czbs,
+			   xzzzrq,
+			   rytssx,
+			   lxdhbz,
+			   csd)
+			values
+			  (#[rybh],
+			   #[xm],
+			   #[xmpy],
+			   #[sfzh],
+			   #[xb],
+			   #[gj],
+			   #[mz],
+			   to_date(#[csrq],'yyyy-mm-dd'),
+			   #[bmch],
+			   #[byzk],
+			   #[ywm],
+			   #[whcd],
+			   #[zjzl],
+			   #[zjhm],
+			   #[zzmm],
+			   #[hyzk],
+			   #[sg],
+			   #[xx],
+			   #[zzxy],
+			   #[zc],
+			   #[lxdh],
+			   #[fwcs],
+			   #[zydm],
+			   #[zw],
+			   #[sf],
+			   #[jg],
+			   #[rysx],
+			   #[rylb],
+			   #[hjdqh],
+			   #[hjdxz],
+			   #[ssgajgjgdm],
+			   #[ssgajgjgmc],
+			   #[sspcsdm],
+			   #[sspcsmc],
+			   #[xzzqh],
+			   #[xzzqhmc],
+			   #[xzzxz],
+			   sysdate,
+			   #[czdwdm],
+			   #[czdwmc],
+			   #[czrjh],
+			   #[czrxm],
+			   '1',
+			   #[xzzzrq],
+			   #[rytssx],
+			   #[lxdhbz],
+			   #[csd])
+ 		]]>
+ 	</property>
+ 
+ 	<property name="updateRkJbxxBean">
+ 		<![CDATA[
+ 			update t_lsgl_rk_jbxx
+			   set 
+			       xm = #[xm],
+			       xmpy = #[xmpy],
+			       sfzh = #[sfzh],
+			       xb = #[xb],
+			       gj = #[gj],
+			       mz = #[mz],
+			       csrq = to_date(#[csrq],'yyyy-mm-dd'),
+			       bmch = #[bmch],
+			       byzk = #[byzk],
+			       ywm = #[ywm],
+			       whcd = #[whcd],
+			       zjzl = #[zjzl],
+			       zjhm = #[zjhm],
+			       zzmm = #[zzmm],
+			       hyzk = #[hyzk],
+			       sg = #[sg],
+			       xx = #[xx],
+			       zzxy = #[zzxy],
+			       zc = #[zc],
+			       lxdh = #[lxdh],
+			       fwcs = #[fwcs],
+			       zydm = #[zydm],
+			       zw = #[zw],
+			       sf = #[sf],
+			       jg = #[jg],
+			       rylb = #[rylb],
+			       rysx = #[rysx],
+			       hjdqh = #[hjdqh],
+			       hjdxz = #[hjdxz],
+			       ssgajgjgdm = #[ssgajgjgdm],
+			       ssgajgjgmc = #[ssgajgjgmc],
+			       sspcsdm = #[sspcsdm],
+			       sspcsmc = #[sspcsmc],
+			       xzzqh = #[xzzqh],
+			       xzzqhmc = #[xzzqhmc],
+			       xzzxz = #[xzzxz],
+			       czsj = sysdate,
+			   	   czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czrjh = #[czrjh],
+			       czrxm = #[czrxm],
+			       czbs = '2',
+			       xzzzrq = #[xzzzrq],
+			       rytssx = #[rytssx],
+			       lxdhbz = #[lxdhbz],
+			       csd = #[csd]
+			 where rybh = #[rybh]
+ 		]]>
+ 	</property>
+ 
+ 	<property name="insertCzrkxxBean">
+ 		<![CDATA[
+ 			insert into t_lsgl_rk_czrk
+			  (CZRKBH,
+			   rybh,
+			   sfzh,
+			   hh,
+			   hklb,
+			   yhzgx,
+			   hkxz,
+			   bdyy,
+			   bdqh,
+			   bdxz,
+			   qryy,
+			   qrsj,
+			   hdqr,
+			   hdqrxz,
+			   ryzt,
+			   bz,
+			   czbs,
+			   czdwdm,
+			   czdwmc,
+			   czsj,
+			   czrxm,
+			   djdwdm,
+			   djdwmc,
+			   djrxm,
+			   djsj,
+			   zrdwdm,
+			   zrdwmc,
+			   zrmjxm,
+			   zrmjjh,
+			   zrmjlxdh,
+			   zxbs,
+			   zxsj,
+			   zxyy,
+			   zzssxq,
+			   zzxz,
+			   qtzzssxq,
+			   qtzzxz,
+			   ssgajgjgdm,
+			   ssgajgjgmc,
+			   sspcsdm,
+			   sspcsmc,
+			   rkfwglid,
+			   hjsssqbh,
+			   djrsfzh,
+			   czrsfzh)
+			values
+			  (#[czrkbh],
+			   #[rybh],
+			   #[sfzh],
+			   #[hh],
+			   #[hklb],
+			   #[yhzgx],
+			   #[hkxz],
+			   #[bdyy],
+			   #[bdqh],
+			   #[bdxz],
+			   #[qryy],
+			   to_date(#[qrsj],'yyyy-mm-dd'),
+			   #[hdqr],
+			   #[hdqrxz],
+			   #[ryzt],
+			   #[bz],
+			   #[czbs],
+			   #[czdwdm],
+			   #[czdwmc],
+			   to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+			   #[czrxm],
+			   #[djdwdm],
+			   #[djdwmc],
+			   #[djrxm],
+			   sysdate,
+			   #[zrdwdm],
+			   #[zrdwmc],
+			   #[zrmjxm],
+			   #[zrmjjh],
+			   #[zrmjlxdh],
+			   #[zxbs],
+			   to_date(#[zxsj],'yyyy-mm-dd hh24:mi:ss'),
+			   #[zxyy],
+			   #[zzssxq],
+			   #[zzxz],
+			   #[qtzzssxq],
+			   #[qtzzxz],
+			   #[ssgajgjgdm],
+			   #[ssgajgjgmc],
+			   #[sspcsdm],
+			   #[sspcsmc],
+			   #[rkfwglid],
+			   #[hjdsssqbh],
+			   #[djrsfzh],
+			   #[czrsfzh])
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateCzrkxxBean">
+ 		<![CDATA[
+ 			update t_lsgl_rk_czrk
+			   set 
+			       czbs = #[czbs],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czsj = sysdate,
+			       czrxm = #[czrxm],
+			       czrsfzh = #[czrsfzh],
+			       zrdwdm = #[zrdwdm],
+			       zrdwmc = #[zrdwmc],
+			       zrmjxm = #[zrmjxm],
+			       zrmjjh = #[zrmjjh],
+			       zrmjlxdh = #[zrmjlxdh],
+			       zzssxq = #[zzssxq],
+				   zzxz =#[zzxz],
+				   qtzzssxq = #[qtzzssxq],
+				   qtzzxz = #[qtzzxz],
+				   rkfwglid = #[rkfwglid],
+				   hjsssqbh = #[hjdsssqbh]
+			 where czrkbh = #[czrkbh]
+ 		]]>
+ 	</property>
+ 
+ 	<property name="insertFwRkGlBean">
+ 		<![CDATA[
+ 			insert into t_lsgl_rkfw_gl
+			  (rybh, fwid, dzid, rkfwglid,zxbs,zxsj,zxmjxm,zxdwdm,zxdwmc,sfzh,rzsj,djsj)
+			values
+			  (#[rybh], #[fwid], (select dzid from t_lsgl_fw_jbxx where fwid=#[fwid] and rownum=1), 
+			  #[rkfwglid],'0',to_date(#[zxsj],'yyyy-mm-dd hh24:mi:ss'),#[zxmjxm],#[zxdwdm],#[zxdwmc],
+			  #[sfzh],to_date(#[rzsj],'yyyy-mm-dd'),sysdate)
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateFwrkGlBean">
+ 		<![CDATA[
+ 			update t_lsgl_rkfw_gl
+ 			set rybh=#[rybh],
+ 				fwid = #[fwid],
+ 				dzid = #[dzid],
+ 				zxbs = #[zxbs],
+ 				zxsj = to_date(#[zxsj],'yyyy-mm-dd hh24:mi:ss'),
+ 				zxmjxm = #[zxmjxm],
+ 				zxdwdm = #[zxdwdm],
+ 				zxdwmc = #[zxdwmc]
+ 			where rkfwglid = #[rkfwglid]
+ 			
+ 		]]>
+ 	</property>
+ 
+ 	<property name="queryFwJbxxBeanByRybh">
+ 		<![CDATA[
+ 			select fw.*
+			from t_lsgl_rkfw_gl gl inner join t_lsgl_fw_jbxx fw on gl.fwid=fw.fwid
+			where gl.rybh=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryFwRkGlBeanByFwrkglid">
+ 		<![CDATA[
+ 			select gl.rybh,gl.fwid,gl.dzid,fw.fwmc,gl.rkfwglid,f_get_dzmc(gl.dzid) as dzmc
+			from t_lsgl_rkfw_gl gl 
+				inner join t_lsgl_fw_jbxx fw on gl.fwid=fw.fwid
+				inner join t_common_dzxx dz on dz.dzid=gl.dzid
+			where gl.rkfwglid=?
+ 		]]>
+ 	</property>
+ 
+ 	<property name="insertRkgxrxxBean">
+ 		<![CDATA[
+			insert into t_lsgl_rk_gxr
+			  (id, rybh, sfzh, gxrxm, gxrsfzh, gxrlxdh, 
+			  gxrxzdxz, ydsrgx, isgdzy, djrxm, djsj, djdwdm, 
+			  djdwmc, czrxm, czdwdm, czdwmc, czsj, 
+			  czbs, gxrxb, gxrcsrq,zjlx,wwx,wwm,czrsfzh,djrsfzh)
+			values
+			  (#[id], #[rybh], #[sfzh], #[gxrxm], #[gxrsfzh], 
+			  #[gxrlxdh], #[gxrxzdxz], #[ydsrgx], #[isgdzy], 
+			  #[djrxm], sysdate, 
+			  #[djdwdm], #[djdwmc], #[czrxm], 
+			  #[czdwdm], #[czdwmc], to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'), 
+			  #[czbs], #[gxrxb], to_date(#[gxrcsrq],'yyyy-mm-dd'),#[zjlx],#[wwx],#[wwm],#[czrsfzh],#[djrsfzh])
+ 		]]>
+ 	</property>
+ 
+ 	<property name="updateRkgxrxxBean">
+ 		<![CDATA[
+ 			 update t_lsgl_rk_gxr
+			    set 
+			        rybh = #[rybh],
+			        sfzh = #[sfzh],
+			        gxrxm = #[gxrxm],
+			        gxrsfzh = #[gxrsfzh],
+			        gxrlxdh = #[gxrlxdh],
+			        gxrxzdxz = #[gxrxzdxz],
+			        ydsrgx = #[ydsrgx],
+			        isgdzy = #[isgdzy],
+			        czrxm = #[czrxm],
+			        czdwdm = #[czdwdm],
+			        czdwmc = #[czdwmc],
+			        czsj = sysdate,
+			        czrsfzh = #[czrsfzh],
+			        czbs = #[czbs],
+			        gxrxb = #[gxrxb],
+			        gxrcsrq = to_date(#[gxrcsrq],'yyyy-mm-dd'),
+			        zjlx = #[zjlx],
+			        wwx = #[wwx],
+			        wwm = #[wwm]
+			  where id = #[id]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="insertTmtzxxBean">
+ 		<![CDATA[
+ 			 insert into t_lsgl_rk_tmtz
+			   (id, rybh, sfzh, lx, tx, ywsb, 
+			    sbwz, ky, xh, zc, ywmxbs, tstz, 
+			    tstzbj, tstzbw, tstzdx, tstzfw, 
+			    tstzsl, bz, djsj, djrxm, djdwdm, 
+			    djdwmc, czrxm, czdwdm, czdwmc, 
+			    czsj, czbs,djrsfzh,czrsfzh)
+			 values
+			   (#[id], #[rybh], #[sfzh], #[lx], #[tx], #[ywsb], 
+			    #[sbwz], #[ky], #[xh], #[zc], #[ywmxbs], #[tstz], 
+			    #[tstzbj], #[tstzbw], #[tstzdx], #[tstzfw], 
+			    #[tstzsl], #[bz], sysdate, #[djrxm], #[djdwdm], 
+			    #[djdwmc], #[czrxm], #[czdwdm], #[czdwmc], 
+			    to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'), #[czbs],#[djrsfzh],#[czrsfzh])
+ 
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateTmtzxxBean">
+ 		<![CDATA[
+			  update t_lsgl_rk_tmtz
+			    set 
+			        lx = #[lx],
+			        tx = #[tx],
+			        ywsb = #[ywsb],
+			        sbwz = #[sbwz],
+			        ky = #[ky],
+			        xh = #[xh],
+			        zc = #[zc],
+			        ywmxbs = #[ywmxbs],
+			        tstz = #[tstz],
+			        tstzbj = #[tstzbj],
+			        tstzbw = #[tstzbw],
+			        tstzdx = #[tstzdx],
+			        tstzfw = #[tstzfw],
+			        tstzsl = #[tstzsl],
+			        bz = #[bz],
+			        czrxm = #[czrxm],
+			        czrsfzh = #[czrsfzh],
+			        czdwdm = #[czdwdm],
+			        czdwmc = #[czdwmc],
+			        czsj = sysdate,
+			        czbs = #[czbs]
+			  where id=#[id]
+			 			
+ 		]]>
+ 	</property>
+ 
+ 	<property name="insertLxfsxxBean">
+ 		<![CDATA[
+ 			 insert into t_lsgl_ry_lxfs
+			   (id, rybh, sfzh, sjhm, jtdh, gsdh, 
+			   czhm, qqhm, email, msn, djsj, djrxm, 
+			   djdwdm, djdwmc, czrxm, czdwdm, czdwmc, 
+			   czbs, czsj, wlsf,lxfs,lxfslx,lxfsbz,djrsfzh,czrsfzh)
+			 values
+			   (#[id], #[rybh], #[sfzh], #[sjhm], #[jtdh], #[gsdh], 
+			   #[czhm], #[qqhm], #[email], #[msn], sysdate,
+			   #[djrxm], 
+			   #[djdwdm], #[djdwmc], #[czrxm], #[czdwdm], #[czdwmc], 
+			   #[czbs], to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'), #[wlsf],#[lxfs],#[lxfslx],#[lxfsbz],#[djrsfzh],#[czrsfzh])
+ 		]]>
+ 	</property>
+ 
+ 	<property name="updateLxfsxxBean">
+ 		<![CDATA[
+ 			update t_lsgl_ry_lxfs
+			   set 
+			       sjhm = #[sjhm],
+			       jtdh = #[jtdh],
+			       gsdh = #[gsdh],
+			       czhm = #[czhm],
+			       qqhm = #[qqhm],
+			       email = #[email],
+			       msn = #[msn],
+			       czrxm = #[czrxm],
+			       czrsfzh = #[czrsfzh],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czbs = #[czbs],
+			       czsj = sysdate,
+			       wlsf = #[wlsf],
+			       lxfs = #[lxfs],
+			       lxfslx = #[lxfslx] ,
+			       lxfsbz = #[lxfsbz]
+			 where id = #[id]
+ 		]]>
+ 	</property>
+ 
+ 	<property name="insertLdrkxxBean">
+ 		<![CDATA[
+ 			insert into t_lsgl_rk_ldrkzzxx
+			  (zzbh, rybh, sfzh, zzzbh, hh, fzsfzh, 
+			  fzxm, yhzgx, lbdrq, zzzqfrq, zzzyxqjzrq, 
+			  xfwcs, zzsy, zzdqh, zzdxz,
+			  czbs, czdwdm, czdwmc, czsj, czrxm, 
+			  djdwdm, djdwmc, djrxm, djsj, zrdwdm, 
+			  zrdwmc, zrmjxm, zrmjjh, zrmjlxdh, 
+			  xcszy, ssgajgjgdm, ssgajgjgmc, 
+			  sspcsdm, sspcsmc, zzcs, zxbs, zxsj, zxyy,
+			  zaglzrrxm,zaglzrrsfzh,gzgx,
+			  fhbh,hdqk,bz,njzqx,hjdlx,rkfwglid,sssqbh,NJZRQ,
+			  sfzhbx,sfjkzm,bmzw,sfjhsy,djrsfzh,czrsfzh,qx)
+			values
+			  (#[zzbh], #[rybh], #[sfzh], #[zzzbh], #[hh], #[fzsfzh], 
+			  #[fzxm], #[yhzgx], to_date(#[lbdrq],'yyyy-mm-dd'), to_date(#[zzzqfrq],'yyyy-mm-dd'), 
+			  to_date(#[zzzyxqjzrq],'yyyy-mm-dd'), 
+			  #[xfwcs], #[zzsy], #[zzdqh], #[zzdxz],
+			  #[czbs], #[czdwdm], #[czdwmc], to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'), #[czrxm], 
+			  #[djdwdm], #[djdwmc], #[djrxm], sysdate, #[zrdwdm],
+			  #[zrdwmc], #[zrmjxm], #[zrmjjh], #[zrmjlxdh], 
+			  #[xcszy], #[ssgajgjgdm], 
+			  #[ssgajgjgmc], #[sspcsdm], #[sspcsmc], 
+			  #[zzcs], #[zxbs], to_date(#[zxsj],'yyyy-mm-dd hh24:mi:ss'), #[zxyy],
+			  #[zaglzrrxm],#[zaglzrrsfzh],#[gzgx],
+			  #[fhbh],#[hdqk],#[bz],#[njzqx],F_GET_HJDLXBYSFZH(#[sfzh]),#[rkfwglid],
+			  #[sssqbh],to_date(#[njzrq],'yyyy-mm-dd'),
+			  #[sfzhbx],#[sfjkzm],#[bmzw],#[sfjhsy],#[djrsfzh],#[czrsfzh],#[qx])
+ 		]]>
+ 	</property>
+ 
+ 	<property name="updateLdrkxxBean">
+ 		<![CDATA[
+ 			update t_lsgl_rk_ldrkzzxx
+			   set 
+			       zzzbh = #[zzzbh],
+			       hh = #[hh],
+			       fzsfzh = #[fzsfzh],
+			       fzxm = #[fzxm],
+			       yhzgx = #[yhzgx],
+			       lbdrq = to_date(#[lbdrq],'yyyy-mm-dd'),
+			       zzzqfrq = to_date(#[zzzqfrq],'yyyy-mm-dd hh24:mi:ss'),
+			       zzzyxqjzrq = to_date(#[zzzyxqjzrq],'yyyy-mm-dd hh24:mi:ss'),
+			       xfwcs = #[xfwcs],
+			       zzsy = #[zzsy],
+			       zzdqh = #[zzdqh],
+			       zzdxz = #[zzdxz],
+			       czbs = #[czbs],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czsj = sysdate,
+			       czrxm = #[czrxm],
+			       czrsfzh = #[czrsfzh],
+			       zrdwdm = #[zrdwdm],
+			       zrdwmc = #[zrdwmc],
+			       zrmjxm = #[zrmjxm],
+			       zrmjjh = #[zrmjjh],
+			       zrmjlxdh = #[zrmjlxdh],
+			       xcszy = #[xcszy],
+			       ssgajgjgdm = #[ssgajgjgdm],
+			       ssgajgjgmc = #[ssgajgjgmc],
+			       sspcsdm = #[sspcsdm],
+			       sspcsmc = #[sspcsmc],
+			       zzcs = #[zzcs],
+			       zxbs = #[zxbs],
+			       #if($zxbs && $zxbs.equals("1"))
+			           zxsj = sysdate,
+			           zxyy = #[zxyy],
+			       #end
+			       zaglzrrxm =#[zaglzrrxm],
+			       zaglzrrsfzh = #[zaglzrrsfzh],
+			       gzgx = #[gzgx],
+			       fhbh = #[fhbh],
+			       hdqk = #[hdqk],
+			       bz = #[bz],
+			       njzqx = #[njzqx],
+			       hjdlx = F_GET_HJDLXBYSFZH(#[sfzh]),
+			       rkfwglid = #[rkfwglid],
+			       sssqbh = #[sssqbh],
+			       NJZRQ = to_date(#[njzrq],'yyyy-mm-dd'),
+			       sfzhbx = #[sfzhbx],
+			       sfjkzm = #[sfjkzm],
+			       bmzw = #[bmzw],
+			       sfjhsy = #[sfjhsy],
+			       qx = #[qx]
+		 	where zzbh=#[zzbh]
+ 		]]>
+ 	</property>
+ 
+ 	<property name="insertJzrkBean">
+ 		<![CDATA[
+ 			insert into t_lsgl_rk_jzrkxx
+			  (jzbh, rybh, sfzh, jzsj, jzyy, yhzgy, 
+			  hzsfzh, hzxm, gllb, czbs, czdwdm, 
+			  czdwmc, czsj, czrxm, djdwdm, djdwmc, 
+			  djrxm, djsj, zrdwdm, zrdwmc, zrmjxm, 
+			  zrmjjh, zrmjlxdh, zxbs, rkfwglid,
+			  zxsj, zxyy, bz,sssqbh,djrsfzh,czrsfzh)
+			values
+			  (#[jzbh], #[rybh], #[sfzh], to_date(#[jzsj],'yyyy-mm-dd'), #[jzyy], #[yhzgy], 
+			  #[hzsfzh], #[hzxm], #[gllb], #[czbs], #[czdwdm], 
+			  #[czdwmc], to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'), #[czrxm], #[djdwdm], #[djdwmc], 
+			  #[djrxm], sysdate, #[zrdwdm], #[zrdwmc], #[zrmjxm], 
+			  #[zrmjjh], #[zrmjlxdh], #[zxbs], #[rkfwglid],
+			  to_date(#[zxsj],'yyyy-mm-dd hh24:mi:ss'), #[zxyy], #[bz],#[sssqbh],#[djrsfzh],#[czrsfzh])
+ 		]]>
+ 	</property>
+ 
+ 	<property name="updateJzrkBean">
+ 		<![CDATA[
+ 			 update t_lsgl_rk_jzrkxx
+		     set 
+		        jzsj = to_date(#[jzsj],'yyyy-mm-dd hh24:mi:ss'),
+		        jzyy = #[jzyy],
+		        yhzgy = #[yhzgy],
+		        hzsfzh = #[hzsfzh],
+		        hzxm = #[hzxm],
+		        gllb = #[gllb],
+		        czbs = #[czbs],
+		        czdwdm = #[czdwdm],
+		        czdwmc = #[czdwmc],
+		        czsj = sysdate,
+		        czrxm = #[czrxm],
+		        czrsfzh = #[czrsfzh],
+		        zrdwdm = #[zrdwdm],
+		        zrdwmc = #[zrdwmc],
+		        zrmjxm = #[zrmjxm],
+		        zrmjjh = #[zrmjjh],
+		        zrmjlxdh = #[zrmjlxdh],
+		        zxbs = #[zxbs],
+		        rkfwglid = #[rkfwglid],
+		        zxsj = to_date(#[zxsj],'yyyy-mm-dd hh24:mi:ss'),
+		        zxyy = #[zxyy],
+		        bz = #[bz],
+		        sssqbh = #[sssqbh]
+		  where jzbh = #[jzbh]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="insertWlhrkBean">
+ 		<![CDATA[
+ 			insert into t_lsgl_rk_wlhczhk
+			  (wlhrkbh, rybh, sfzh, czjzl, czjhm, wlhyy, 
+			   wlhqssj, yhjdqh, yhjdxz, csdxz, 
+			   bz, czbs, czdwdm, czdwmc, czsj, czrxm, 
+			   djdwdm, djdwmc, djrxm, djsj, zrdwdm, 
+			   zrdwmc, zrmjxm, zrmjjh, zrmjlxdh, zxbs, 
+			   zxsj, zxyy,RKFWGLID,ssgajgjgdm,ssgajgjgmc,sspcsdm,sspcsmc,sssqbh,djrsfzh,czrsfzh)
+			values
+			  (#[wlhrkbh], #[rybh], #[sfzh], #[czjzl], #[czjhm], #[wlhyy], 
+			  to_date(#[wlhqssj],'yyyy-mm-dd'), #[yhjdqh], #[yhjdxz], #[csdxz], 
+			  #[bz], #[czbs], #[czdwdm], #[czdwmc], to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'), #[czrxm], 
+			  #[djdwdm], #[djdwmc], #[djrxm], sysdate, #[zrdwdm], 
+			  #[zrdwmc], #[zrmjxm], #[zrmjjh], #[zrmjlxdh], #[zxbs], 
+			  to_date(#[zxsj],'yyyy-mm-dd hh24:mi:ss'), #[zxyy],#[rkfwglid],
+			  #[ssgajgjgdm],#[ssgajgjgmc],#[sspcsdm],#[sspcsmc],#[sssqbh],#[djrsfzh],#[czrsfzh])
+ 			
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateWlhrkBean">
+ 		<![CDATA[
+ 			update t_lsgl_rk_wlhczhk
+			   set 
+			       czjzl = #[czjzl],
+			       czjhm = #[czjhm],
+			       wlhyy = #[wlhyy],
+			       wlhqssj = to_date(#[wlhqssj],'yyyy-mm-dd'),
+			       yhjdqh = #[yhjdqh],
+			       yhjdxz = #[yhjdxz],
+			       csdxz = #[csdxz],
+			       bz = #[bz],
+			       czbs = #[czbs],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czsj = sysdate,
+			       czrxm = #[czrxm],
+			       czrsfzh = #[czrsfzh],
+			       zrdwdm = #[zrdwdm],
+			       zrdwmc = #[zrdwmc],
+			       zrmjxm = #[zrmjxm],
+			       zrmjjh = #[zrmjjh],
+			       zrmjlxdh = #[zrmjlxdh],
+			       zxbs = #[zxbs],
+			       zxsj = to_date(#[zxsj],'yyyy-mm-dd hh24:mi:ss'),
+			       zxyy = #[zxyy],
+			       rkfwglid = #[rkfwglid],
+			       ssgajgjgdm = #[ssgajgjgdm],
+			       ssgajgjgmc = #[ssgajgjgmc],
+			       sspcsdm = #[sspcsdm],
+			       sspcsmc = #[sspcsmc],
+			       sssqbh = #[sssqbh]
+			 where wlhrkbh = #[wlhrkbh]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="insertJwrkxxBean">
+ 		<![CDATA[
+ 			insert into t_lsgl_rk_jwrkxx
+			  (jwbh, rybh, rjzjzl, rjzjhm, zjyxq, qzzl, 
+			  qzyxq, tlyxq, qzjg, tlsy, qfrq, rzsj, czbs, 
+			  czdwdm, czdwmc, czsj, czrxm, djdwdm, djdwmc, 
+			  djrxm, djsj, zrdwdm, zrdwmc, zrmjxm, zrmjjh, 
+			  zrmjlxdh, jwrylx, zxbs, zxsj, zxyy, 
+			  bz,rkfwglid,sssqbh,ywx,ywm,djrsfzh,czrsfzh)
+			values
+			  (#[jwbh], #[rybh], #[rjzjzl], #[rjzjhm], to_date(#[zjyxq],'yyyy-mm-dd'), #[qzzl], 
+			  to_date(#[qzyxq],'yyyy-mm-dd'), to_date(#[tlyxq],'yyyy-mm-dd'), #[qzjg], #[tlsy], 
+			  to_date(#[qfrq],'yyyy-mm-dd'), to_date(#[rzsj],'yyyy-mm-dd'), #[czbs], 
+			  #[czdwdm], #[czdwmc], to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'), 
+			  #[czrxm], #[djdwdm], #[djdwmc], 
+			  #[djrxm], sysdate, 
+			  #[zrdwdm], #[zrdwmc], #[zrmjxm], #[zrmjjh], 
+			  #[zrmjlxdh], #[jwrylx], #[zxbs], to_date(#[zxsj],'yyyy-mm-dd hh24:mi:ss'), 
+			  #[zxyy], #[bz],#[rkfwglid],#[sssqbh],#[ywx],#[ywm],#[djrsfzh],#[czrsfzh])
+ 		]]>
+ 	</property>
+ 
+ 	<property name="updateJwrkxxBean">
+ 		<![CDATA[
+			update t_lsgl_rk_jwrkxx
+			   set 
+			       rjzjzl = #[rjzjzl],
+			       rjzjhm = #[rjzjhm],
+			       zjyxq = to_date(#[zjyxq],'yyyy-mm-dd'),
+			       qzzl = #[qzzl],
+			       qzyxq = to_date(#[qzyxq],'yyyy-mm-dd'),
+			       tlyxq = to_date(#[tlyxq],'yyyy-mm-dd'),
+			       qzjg = #[qzjg],
+			       tlsy = #[tlsy],
+			       qfrq = to_date(#[qfrq],'yyyy-mm-dd'),
+			       rzsj = to_date(#[rzsj],'yyyy-mm-dd'),
+			       czbs = #[czbs],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czsj = sysdate,
+			       czrxm = #[czrxm],
+			       czrsfzh = #[czrsfzh],
+			       zrdwdm = #[zrdwdm],
+			       zrdwmc = #[zrdwmc],
+			       zrmjxm = #[zrmjxm],
+			       zrmjjh = #[zrmjjh],
+			       zrmjlxdh = #[zrmjlxdh],
+			       jwrylx = #[jwrylx],
+			       zxbs = #[zxbs],
+			       zxsj = to_date(#[zxsj],'yyyy-mm-dd hh24:mi:ss'),
+			       zxyy = #[zxyy],
+			       bz = #[bz],
+			       rkfwglid = #[rkfwglid],
+			       sssqbh = #[sssqbh],
+			       ywx = #[ywx],
+			       ywm= #[ywm],
+			       djrsfzh = #[djrsfzh],
+			       djdwdm = #[djdwdm], 
+			       djdwmc = #[djdwmc], 
+			  	   djrxm = #[djrxm], 
+			       djsj = to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss')
+			 where jwbh = #[jwbh]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="zxFwrkGlBean">
+ 		<![CDATA[
+ 			update t_lsgl_rkfw_gl
+			set  
+				zxbs = #[zxbs],
+				zxsj = sysdate,
+				zxmjxm = #[zxmjxm],
+				zxdwdm = #[zxdwdm],
+				zxdwmc = #[zxdwmc],
+				zxyy = ''
+			where rybh = #[rybh] and zxbs='1'
+ 			
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="getRkfwBean">
+ 		<![CDATA[
+ 			select gl.rkfwglid,
+			       gl.rybh,
+			       gl.fwid,
+			       fw.fwmc,
+			       gl.dzid,
+			       f_get_dzmc(gl.dzid) as dzmc,
+			       gl.rzsj,
+			       gl.blsj,
+			       gl.zxbs,
+			       gl.zxsj,
+			       gl.zxmjxm,
+			       gl.zxdwdm,
+			       gl.zxdwmc,
+			       gl.zxyy,
+			       gl.djsj
+			  from t_lsgl_rkfw_gl gl INNER join t_lsgl_fw_jbxx fw on gl.fwid=fw.fwid
+			  	   inner join t_common_dzxx dz on dz.dzid=fw.dzid
+ 			 where gl.rybh=? and gl.zxbs <> '1'
+ 			 order by gl.djsj desc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="zxRkfwBean">
+ 		<![CDATA[
+ 			update t_lsgl_rkfw_gl
+ 			set ZXBS='1',
+ 				ZXSJ=sysdate,
+ 				zxyy= #[zxyy],
+ 				zxmjxm = #[zxmjxm],
+ 				zxdwdm = #[zxdwdm],
+ 				zxdwmc = #[zxdwmc]
+ 			where RKFWGLID=#[rkfwglid]
+ 		]]>
+ 	</property>
+ 
+ 	<property name="querySyrkListBeanByCondition">
+ 		<![CDATA[
+ 		
+ 			  select t.*,rownum as rn
+ 			  from (
+		 			  select rk.rybh,rk.sfzh,rk.xm,rk.zjzl,rk.zjhm,rk.xmpy,rk.xb,rk.csrq,rk.hjdqh,rk.hjdxz,rk.xzzxz,rk.LXDH,
+		 			  		c.zrdwdm,c.zrdwmc,c.djsj,c.czrkbh as rkid,rk.mz,c.hjsssqbh,c.zxbs as zxbs,c.zxsj as zxsj
+			          from t_lsgl_rk_jbxx rk inner join t_lsgl_rk_czrk c  on  rk.rybh=c.rybh 
+			          where 1=1 and c.sfzh is not null
+			                 #if($zjhm && !$zjhm.equals(""))
+				             	and c.sfzh = #[zjhm]
+				             #end
+					        #if($sqdm && !$sqdm.equals(""))
+						   		and c.hjsssqbh = #[sqdm]
+			                #elseif ($jwsqdm && !$jwsqdm.equals(""))
+								and c.zrdwdm = #[jwsqdm]
+							#elseif ($pcsdm && !$pcsdm.equals(""))
+						 		and c.zrdwdm like substr(#[pcsdm],1,8)||'%'
+						    #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+							    and (c.zrdwdm like substr(#[countrygajgjgdm],1,6)||'%')
+						 	#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+							   and (c.zrdwdm like substr(#[citygajgjgdm],1,4)||'%')
+						    #end
+						    #if ($djsj_start && !$djsj_start.equals(""))
+								and c.djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+							#end
+							#if($djsj_end && !$djsj_end.equals(""))
+								and c.djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+							#end
+							#if ($zxsj_start && !$zxsj_start.equals(""))
+								and c.zxsj >= to_date(#[zxsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+							#end
+							#if($zxsj_end && !$zxsj_end.equals(""))
+								and c.zxsj <= to_date(#[zxsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+							#end
+							
+							#if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+						 	 	and (zxbs = #[zxbs] or zxbs is null)
+						    #end
+						    #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+						 	 	and (zxbs = #[zxbs])
+						    #end 
+			          union all
+			          
+			          select rk.rybh,rk.sfzh,rk.xm,rk.zjzl,rk.zjhm,rk.xmpy,rk.xb,rk.csrq,rk.hjdqh,rk.hjdxz,rk.xzzxz,rk.LXDH,
+			          		l.zrdwdm,l.zrdwmc,l.djsj,l.zzbh as rkid,rk.mz,l.sssqbh,l.zxbs as zxbs,l.zxsj as zxsj
+			          from t_lsgl_rk_jbxx rk inner join t_lsgl_rk_ldrkzzxx l on  rk.rybh=l.rybh 
+			          where 1=1 and l.sfzh is not null
+			            #if($zjhm && !$zjhm.equals(""))
+			             	and l.sfzh = #[zjhm]
+			            #end
+			            #if($sqdm && !$sqdm.equals(""))
+						   	and l.sssqbh = #[sqdm]
+			            #elseif ($jwsqdm && !$jwsqdm.equals(""))
+							and l.zrdwdm = #[jwsqdm]
+						#elseif ($pcsdm && !$pcsdm.equals(""))
+					 		and l.zrdwdm like substr(#[pcsdm],1,8)||'%'
+					    #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+						    and (l.zrdwdm like substr(#[countrygajgjgdm],1,6)||'%')
+					 	#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+						   and (l.zrdwdm like substr(#[citygajgjgdm],1,4)||'%')
+					    #end
+			            #if ($djsj_start && !$djsj_start.equals(""))
+							and l.djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+						#end
+						#if($djsj_end && !$djsj_end.equals(""))
+							and l.djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+						#end
+						#if ($zxsj_start && !$zxsj_start.equals(""))
+							and l.zxsj >= to_date(#[zxsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+						#end
+						#if($zxsj_end && !$zxsj_end.equals(""))
+							and l.zxsj <= to_date(#[zxsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+						#end
+						
+						#if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+					 	 	and (zxbs = #[zxbs] or zxbs is null)
+					    #end
+					    #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+					 	 	and (zxbs = #[zxbs])
+					    #end 
+					    
+			          union all 
+			          
+			          select rk.rybh,rk.sfzh,rk.xm,rk.zjzl,rk.zjhm,rk.xmpy,rk.xb,rk.csrq,rk.hjdqh,rk.hjdxz,rk.xzzxz,rk.LXDH,
+			          		jz.zrdwdm,jz.zrdwmc,jz.djsj,jz.jzbh as rkid,rk.mz,jz.sssqbh,jz.zxbs as zxbs,jz.zxsj as zxsj
+			          from t_lsgl_rk_jbxx rk inner join t_lsgl_rk_jzrkxx jz on rk.rybh=jz.rybh
+			          where 1=1 and jz.sfzh is not null
+			            #if($zjhm && !$zjhm.equals(""))
+			             	and jz.sfzh = #[zjhm]
+			            #end
+			            #if($sqdm && !$sqdm.equals(""))
+						   	and jz.sssqbh = #[sqdm]
+			            #elseif ($jwsqdm && !$jwsqdm.equals(""))
+							and jz.zrdwdm = #[jwsqdm]
+						#elseif ($pcsdm && !$pcsdm.equals(""))
+					 		and jz.zrdwdm like substr(#[pcsdm],1,8)||'%'
+					    #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+						    and (jz.zrdwdm like substr(#[countrygajgjgdm],1,6)||'%')
+					 	#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+						   and (jz.zrdwdm like substr(#[citygajgjgdm],1,4)||'%')
+					    #end
+			            #if ($djsj_start && !$djsj_start.equals(""))
+							and jz.djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+						#end
+						#if($djsj_end && !$djsj_end.equals(""))
+							and jz.djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+						#end
+						#if ($zxsj_start && !$zxsj_start.equals(""))
+							and jz.zxsj >= to_date(#[zxsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+						#end
+						#if($zxsj_end && !$zxsj_end.equals(""))
+							and jz.zxsj <= to_date(#[zxsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+						#end
+						
+						#if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+					 	 	and (zxbs = #[zxbs] or zxbs is null)
+					    #end
+					    #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+					 	 	and (zxbs = #[zxbs])
+					    #end 
+					    
+			          union all
+			          
+			          select rk.rybh,rk.sfzh,rk.xm,rk.zjzl,rk.zjhm,rk.xmpy,rk.xb,rk.csrq,rk.hjdqh,rk.hjdxz,rk.xzzxz,rk.LXDH,
+			          		w.zrdwdm,w.zrdwmc,w.djsj,w.wlhrkbh as rkid,rk.mz,w.sssqbh,w.zxbs as zxbs,w.zxsj as zxsj
+			          from t_lsgl_rk_jbxx rk inner join t_lsgl_rk_wlhczhk w on rk.rybh=w.rybh
+			          where 1=1 and w.sfzh is not null
+			          	 #if($zjhm && !$zjhm.equals(""))
+			             	and w.sfzh = #[zjhm]
+			             #end
+			             #if($sqdm && !$sqdm.equals(""))
+						   	and w.sssqbh = #[sqdm]
+			             #elseif ($jwsqdm && !$jwsqdm.equals(""))
+							and w.zrdwdm = #[jwsqdm]
+						 #elseif ($pcsdm && !$pcsdm.equals(""))
+					 		and w.zrdwdm like substr(#[pcsdm],1,8)||'%'
+					     #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+						    and (w.zrdwdm like substr(#[countrygajgjgdm],1,6)||'%')
+					 	 #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+						   and (w.zrdwdm like substr(#[citygajgjgdm],1,4)||'%')
+					     #end
+					     #if ($djsj_start && !$djsj_start.equals(""))
+							and w.djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+						#end
+						#if($djsj_end && !$djsj_end.equals(""))
+							and w.djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+						#end
+					    #if ($zxsj_start && !$zxsj_start.equals(""))
+							and w.zxsj >= to_date(#[zxsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+						#end
+						#if($zxsj_end && !$zxsj_end.equals(""))
+							and w.zxsj <= to_date(#[zxsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+						#end
+						
+						#if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+					 	 	and (zxbs = #[zxbs] or zxbs is null)
+					    #end
+					    #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+					 	 	and (zxbs = #[zxbs])
+					    #end 
+ 		    ) t
+ 		    where 1=1 
+ 		    #if ($xm && !$xm.equals(""))
+ 				and (t.xm like #[xm]||'%'
+	 				#if($xmty && $xmty.equals("1"))
+	 					or t.xmpy like '%'||#[xmpy]||'%'
+	 				#end
+ 				)
+ 			#end
+ 			
+ 			#if ($zjzl && !$zjzl.equals("111"))
+				and t.zjzl=#[zjzl]
+			#end
+			
+			#if($zjhm && !$zjhm.equals(""))
+	 			#if($zjzl && $zjzl.equals("111"))
+	 				and t.sfzh = #[zjhm]
+	 			#else
+	 				and t.zjhm = #[zjhm]
+	 			#end
+ 			#end
+ 			
+ 			#if($xb && !$xb.equals(""))
+				and t.xb = #[xb]
+			#end
+			#if($mz && !$mz.equals(""))
+				and t.mz = #[mz]
+			#end
+			
+		    #if($csrq_start && !$csrq_start.equals(""))
+		    	#if($csrq_end.equals(""))
+		    		and t.csrq = to_date(#[csrq_start],'yyyy-MM-dd')
+		    	#else
+		    		and t.csrq >= to_date(#[csrq_start],'yyyy-MM-dd')
+		    	#end
+			#end
+			
+			#if($csrq_end && !$csrq_end.equals(""))
+				#if($csrq_start.equals(""))
+					and t.csrq = to_date(#[csrq_end],'yyyy-MM-dd')
+				#else
+					and t.csrq <= to_date(#[csrq_end],'yyyy-MM-dd')
+				#end
+			#end
+			
+			#if($hjdqh && !$hjdqh.equals(""))
+				and t.hjdqh like substr(#[hjdqh],0,4)||'%'
+			#end
+		    
+		    #if($stid && !$stid.equals(""))
+		   		and rybh in
+		   		(SELECT RFGL.rybh
+  					FROM T_COMMON_DZXX DZXX, T_LSGL_FW_JBXX FW, T_LSGL_RKFW_GL RFGL
+				 WHERE DZXX.DZID = FW.DZID
+   					AND FW.FWID = RFGL.FWID
+   					AND FW.ZXBS = '0'
+   					AND RFGL.ZXBS = '0'
+   					AND DZXX.STID = #[stid])
+		   	#end
+		    
+ 		]]>
+ 	</property>
+ 
+ 	<property name="querySyrkBeanByConditionForPageResultInfo">
+ 		<![CDATA[
+ 			select /*+index(rk T_LSGL_RK_JBXX_XM)*/rybh,
+			       xm,
+			       xmpy,
+			       sfzh,
+			       xb,
+			       mz,
+			       rylb,
+			       to_char(csrq,'yyyy-mm-dd') csrq,
+			       hjdqh,
+			       zjzl,
+			       hjdxz,
+			       zjhm, 
+			       XZZXZ,
+			       xzzzrq,
+			       czdwdm,
+			       lxdh
+ 			from t_lsgl_rk_jbxx rk
+ 			where 1=1 and (rk.rylb <> '4' or rk.rylb is null)
+ 			
+ 			#if ($xm && !$xm.equals(""))
+ 				and (rk.xm like #[xm]||'%' or Lower(rk.xmpy) like Lower(#[xm])||'%')
+ 			#end
+ 			#if ($zjzl && !$zjzl.equals("111"))
+					and rk.zjzl=#[zjzl]
+			#end
+            	  						
+ 			#if($zjhm && !$zjhm.equals(""))
+	 			#if($zjzl && $zjzl.equals("111"))
+	 				and rk.sfzh = #[zjhm]
+	 			#else
+	 				and rk.zjhm = #[zjhm]
+	 			#end
+ 			#end
+			
+			#if($xb && !$xb.equals(""))
+				and rk.xb = #[xb]
+			#end
+			
+			#if($mz && !$mz.equals(""))
+				and rk.mz = #[mz]
+			#end
+		    #if($csrq_start && !$csrq_start.equals(""))
+		    	#if($csrq_end.equals(""))
+		    		and rk.csrq = to_date(#[csrq_start],'yyyy-MM-dd')
+		    	#else
+		    		and rk.csrq >= to_date(#[csrq_start],'yyyy-MM-dd')
+		    	#end
+			#end
+			#if($csrq_end && !$csrq_end.equals(""))
+				#if($csrq_start.equals(""))
+					and rk.csrq = to_date(#[csrq_end],'yyyy-MM-dd')
+				#else
+					and rk.csrq <= to_date(#[csrq_end],'yyyy-MM-dd')
+				#end
+			#end
+			
+			#if($hjdqh && !$hjdqh.equals(""))
+				and rk.hjdqh like  substr(#[hjdqh],0,4)||'%'
+			#end
+			
+			#if ($czsj_start && !$czsj_start.equals(""))
+					and czsj >= to_date(#[czsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if($czsj_end && !$czsj_end.equals(""))
+					and czsj <= to_date(#[czsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if ($jwsqdm && !$jwsqdm.equals(""))
+				and rk.czdwdm = #[jwsqdm]
+			#elseif ($pcsdm && !$pcsdm.equals(""))
+		 		and rk.SSPCSDM=#[pcsdm]
+		    #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			    and (rk.XZZQH=substr(#[countrygajgjgdm],1,6) or rk.hjdqh=substr(#[countrygajgjgdm],1,6))
+		 	#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			   and (rk.XZZQH like substr(#[citygajgjgdm],1,4)||'%' or rk.hjdqh like substr(#[citygajgjgdm],1,4)||'%')
+		    #end
+		    #if($stid && !$stid.equals(""))
+		   		and rybh in
+		   		(SELECT RFGL.rybh
+  					FROM T_COMMON_DZXX DZXX, T_LSGL_FW_JBXX FW, T_LSGL_RKFW_GL RFGL
+				 WHERE DZXX.DZID = FW.DZID
+   					AND FW.FWID = RFGL.FWID
+   					AND FW.ZXBS = '0'
+   					AND RFGL.ZXBS = '0'
+   					AND DZXX.STID = #[stid])
+		   	#end
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryRkZpPageResultInfo">
+ 		<![CDATA[
+ 			select j.rybh, j.xm, j.sfzh,j.zjzl,j.zjhm,j.lxdh, j.xb, t.rylb, to_char(j.csrq,'yyyy-mm-dd') csrq, j.hjdqh, j.hjdxz,  j.xzzxz
+ 			from t_lsgl_rk_jbxx j 
+ 				inner join (
+			 			SELECT rybh,'1' as rylb
+			 			from t_lsgl_rk_czrk rk
+			 			where 1=1
+			 			and (rk.zxbs = '0' or zxbs is null)
+			 				#if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+						 	 	and (rk.zxbs = #[zxbs] or rk.zxbs is null)
+						    #end
+						    #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+						 	 	and (rk.zxbs = #[zxbs])
+						    #end 
+			 				#if ($djsj_start && !$djsj_start.equals(""))
+								and rk.djsj >= to_date(#[djsj_start],'yyyy-MM-dd hh24:mi:ss')
+							#end
+							#if($djsj_end && !$djsj_end.equals(""))
+								and rk.djsj <= to_date(#[djsj_end],'yyyy-MM-dd hh24:mi:ss')
+							#end
+							 
+							#if($jwsqdm && !$jwsqdm.equals(""))
+								and rk.zrdwdm=#[jwsqdm]		
+							#elseif ($pcsdm && !$pcsdm.equals(""))
+						 	   and rk.zrdwdm like substr(#[pcsdm],1,8)||'%'
+						    #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+							   and rk.zrdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+						 	#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+							   and rk.zrdwdm like substr(#[citygajgjgdm],1,4)||'%'
+						    #end
+						     
+			 			
+			 			union all
+			 			
+			 			SELECT rybh,'2' as rylb
+			 			from t_lsgl_rk_ldrkzzxx rk
+			 			where 1=1
+			 			and (rk.zxbs = '0' or zxbs is null)
+			 				#if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+						 	 	and (rk.zxbs = #[zxbs] or rk.zxbs is null)
+						    #end
+						    #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+						 	 	and (rk.zxbs = #[zxbs])
+						    #end 
+			 				#if ($djsj_start && !$djsj_start.equals(""))
+								and rk.djsj >= to_date(#[djsj_start],'yyyy-MM-dd hh24:mi:ss')
+							#end
+							#if($djsj_end && !$djsj_end.equals(""))
+								and rk.djsj <= to_date(#[djsj_end],'yyyy-MM-dd hh24:mi:ss')
+							#end
+							 
+							#if($jwsqdm && !$jwsqdm.equals(""))
+								and rk.zrdwdm=#[jwsqdm]		
+							#elseif ($pcsdm && !$pcsdm.equals(""))
+						 	   and rk.zrdwdm like substr(#[pcsdm],1,8)||'%'
+						    #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+							   and rk.zrdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+						 	#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+							   and rk.zrdwdm like substr(#[citygajgjgdm],1,4)||'%'
+						    #end
+						     
+						
+						union all
+						
+						SELECT rybh,'5' as rylb
+			 			from t_lsgl_rk_jzrkxx rk
+			 			where 1=1
+			 			and (rk.zxbs = '0' or zxbs is null)
+			 				#if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+						 	 	and (rk.zxbs = #[zxbs] or rk.zxbs is null)
+						    #end
+						    #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+						 	 	and (rk.zxbs = #[zxbs])
+						    #end 
+			 				#if ($djsj_start && !$djsj_start.equals(""))
+								and rk.djsj >= to_date(#[djsj_start],'yyyy-MM-dd hh24:mi:ss')
+							#end
+							#if($djsj_end && !$djsj_end.equals(""))
+								and rk.djsj <= to_date(#[djsj_end],'yyyy-MM-dd hh24:mi:ss')
+							#end
+							 
+							#if($jwsqdm && !$jwsqdm.equals(""))
+								and rk.zrdwdm=#[jwsqdm]		
+							#elseif ($pcsdm && !$pcsdm.equals(""))
+						 	   and rk.zrdwdm like substr(#[pcsdm],1,8)||'%'
+						    #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+							   and rk.zrdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+						 	#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+							   and rk.zrdwdm like substr(#[citygajgjgdm],1,4)||'%'
+						    #end
+				) t on t.rybh=j.rybh
+ 			  where 1=1
+ 			  	#if ($xm && !$xm.equals(""))
+	 				and j.xm like #[xm]||'%'
+	 			#end
+ 				#if($zjhm && !$zjhm.equals(""))
+		 			#if($zjzl && $zjzl.equals("111"))
+		 				and j.sfzh = #[zjhm]
+		 			#else
+		 				and j.zjhm = #[zjhm]
+		 			#end
+	 			#end
+				#if($xb && !$xb.equals(""))
+					and j.xb = #[xb]
+				#end
+				#if($csrq_start && !$csrq_start.equals(""))
+			    	#if($csrq_end.equals(""))
+			    		and j.csrq = to_date(#[csrq_start],'yyyy-MM-dd')
+			    	#else
+			    		and j.csrq >= to_date(#[csrq_start],'yyyy-MM-dd')
+			    	#end
+				#end
+ 				#if($csrq_end && !$csrq_end.equals(""))
+					#if($csrq_start.equals(""))
+						and j.csrq = to_date(#[csrq_end]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+					#else
+						and j.csrq <= to_date(#[csrq_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+					#end
+				#end
+ 				
+ 				#if($hjdqh && !$hjdqh.equals(""))
+ 					#if ($hjdqh.substr(4,2).equals("00"))
+ 						and j.hjdqh like substr(#[hjdqh],1,4)||'%'
+ 					#else
+						and j.hjdqh = #[hjdqh]
+					#end
+				#end
+ 				
+ 				#if($ywzp.equals("0"))
+			    	and not exists (select 1 from t_lsgl_rk_zpxx zp where j.rybh=zp.rybh)
+			    #else
+			    	and exists (select 1 from t_lsgl_rk_zpxx zp where j.rybh=zp.rybh)
+			    #end
+ 			
+		    
+ 		]]>
+ 	</property>
+ 
+ 	<property name="queryDqCzrkxxBeanByRybh">
+ 		<![CDATA[
+ 			select * 
+ 			from v_lsgl_rk_czrk
+ 			where (zxbs <> '1' or zxbs is null) and rybh=?
+ 		]]>
+ 	</property>
+ 	 
+ 	<property name="updateRysxBySfzh">
+ 		<![CDATA[
+ 			update t_lsgl_rk_jbxx
+ 			set rysx=?
+ 			where sfzh=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryCzrkxxBeanBySfzhAndFwid">
+ 		<![CDATA[
+ 			select ld.*,ld.czrkbh as rkid 
+      		from t_lsgl_rk_czrk ld
+      		where ld.sfzh=?
+            	and ld.rkfwglid in (select gl.rkfwglid from t_lsgl_rkfw_gl gl where fwid=?) 
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryLdrkxxBeanBySfzhAndFwid">
+ 		<![CDATA[
+			select  lk.zzbh as rkid,
+			        lk.ZZBH,
+					lk.ZZZBH,
+					lk.HH,
+					lk.FZSFZH,
+					lk.FZXM,
+					lk.YHZGX,
+					TO_CHAR(lk.LBDRQ,'YYYY-MM-DD') AS LBDRQ,
+					TO_CHAR(lk.ZZZQFRQ,'YYYY-MM-DD') AS ZZZQFRQ,
+					TO_CHAR(lk.ZZZYXQJZRQ,'YYYY-MM-DD') AS ZZZYXQJZRQ,
+					lk.XFWCS,
+					lk.ZZSY,
+					lk.ZZDQH,
+					lk.ZZDXZ,
+					lk.CZBS,
+					lk.CZDWDM,
+					lk.CZDWMC,
+					lk.CZSJ,
+					lk.CZRXM,
+					lk.DJDWDM,
+					lk.DJDWMC,
+					lk.DJRXM,
+					lk.DJSJ,
+					lk.ZRDWDM,
+					lk.ZRDWMC,
+					lk.ZRMJXM,
+					lk.ZRMJJH,
+					lk.ZRMJLXDH,
+					lk.XCSZY,
+					lk.SSGAJGJGDM,
+					lk.SSGAJGJGMC,
+					lk.SSPCSDM,
+					lk.SSPCSMC,
+					lk.ZZCS,
+					lk.ZXBS,
+					lk.ZXSJ,
+					lk.ZXYY,
+					lk.ZAGLZRRXM,
+					lk.ZAGLZRRSFZH,
+					lk.GZGX,
+					lk.FHBH,
+					lk.BZ,
+					lk.HDQK,
+					lk.HJDLX,
+					lk.NJZQX,
+					lk.bmzw,
+					lk.sfzhbx,
+					lk.sfjkzm,
+					lk.sfjhsy,
+					TO_CHAR(lk.NJZRQ,'YYYY-MM-DD') AS NJZRQ,
+					lk.RKFWGLID ,
+					lk.qx
+			from t_lsgl_rk_ldrkzzxx lk
+			where (lk.zxbs='0' or lk.zxbs is null) 
+			and lk.sfzh=?
+			and exists (
+			      select 1 
+			      from t_lsgl_rkfw_gl gl 
+			      where lk.rkfwglid=gl.rkfwglid 
+			            and gl.fwid=? 
+			)
+			order by lk.djsj desc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryWlhrkxxBeanBySfzhAndFwid">
+ 		<![CDATA[
+ 			select 
+				C.WLHRKBH,
+				      c.rybh,
+				      c.sfzh,
+				      C.CZJZL,
+				      C.CZJHM,
+				      C.WLHYY,
+				      TO_CHAR(C.WLHQSSJ,'YYYY-MM-DD') AS WLHQSSJ,
+				      C.YHJDQH,
+				      C.YHJDXZ,
+				      C.CSDXZ,
+				      C.BZ,
+				      C.CZBS,
+				      C.CZDWDM,
+				      C.CZDWMC,
+				      C.CZSJ,
+				      C.CZRXM,
+				      C.DJDWDM,
+				      C.DJDWMC,
+				      C.DJRXM,
+				      C.DJSJ,
+				      C.ZRDWDM,
+				      C.ZRDWMC,
+				      C.ZRMJXM,
+				      C.ZRMJJH,
+				      C.ZRMJLXDH,
+				      C.ZXBS,
+				      C.ZXSJ,
+				      C.ZXYY,
+				      C.Rkfwglid,
+				      C.SSGAJGJGDM,
+				      C.SSGAJGJGMC,
+				      C.SSPCSDM,
+				      C.SSPCSMC,
+				      c.sssqbh
+				from t_lsgl_rk_wlhczhk c
+				where (c.zxbs='0' or c.zxbs is null) 
+							and c.sfzh=?
+							and exists (
+							      select 1 
+							      from t_lsgl_rkfw_gl gl 
+							      where c.rkfwglid=gl.rkfwglid 
+							            and gl.fwid=?
+							)
+							order by c.djsj desc
+ 		]]>
+ 	</property>
+ 		
+ 	<property name="queryJzrkxxBeanBySfzhAndFwid">
+ 		<![CDATA[
+ 			select C.JZBH,
+			      TO_CHAR(C.JZSJ,'YYYY-MM-DD') AS JZSJ,
+			      C.JZYY,
+			      C.YHZGY,
+			      C.HZSFZH,
+			      C.HZXM,
+			      C.GLLB,
+			      C.CZBS,
+			      C.CZDWDM,
+			      C.CZDWMC,
+			      TO_CHAR(C.CZSJ,'YYYY-MM-DD HH24:MI:SS') AS CZSJ,
+			      C.CZRXM,
+			      C.DJDWDM,
+			      C.DJDWMC,
+			      C.DJRXM,
+			      C.DJSJ,
+			      C.ZRDWDM,
+			      C.ZRDWMC,
+			      C.ZRMJXM,
+			      C.ZRMJJH,
+			      C.ZRMJLXDH,
+			      C.ZXBS,
+			      C.RKFWGLID,
+			      C.sssqbh,
+			      TO_CHAR(C.ZXSJ,'YYYY-MM-DD HH24:MI:SS') AS ZXSJ,
+			      C.ZXYY,
+			      C.BZ,
+			      c.jzbh as rkid 
+			      from t_lsgl_rk_jzrkxx c
+			      where c.sfzh=? 
+			            and (c.zxbs='0' or c.zxbs is null)
+            			and exists (select 1 from t_lsgl_rkfw_gl gl where gl.rkfwglid=c.rkfwglid and gl.fwid=?)
+            
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateFwrkGlDzBean">
+		<![CDATA[
+			update t_lsgl_rkfw_gl
+			set  
+				fwid = #[fwid],
+				dzid = #[dzid]
+			where rkfwglid = #[rkfwglid]
+		]]>
+	</property>
+	
+	 	<property name="queryDqCzrkxxBeanByRybh">
+ 		<![CDATA[
+ 			select * 
+ 			from v_lsgl_rk_czrk
+ 			where (zxbs <> '1' or zxbs is null) and rybh=?
+ 		]]>
+ 	</property>
+ 	 
+ 	<property name="updateRysxBySfzh">
+ 		<![CDATA[
+ 			update t_lsgl_rk_jbxx
+ 			set rysx=?
+ 			where sfzh=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryRkFwGlBySfzh">
+ 		<![CDATA[
+ 			select *
+			  from (select rkfwglid,
+			               rybh,
+			               fwid,
+			               dzid,
+			               to_char(rzsj, 'yyyy-mm-dd') as rzsj,
+			               to_char(blsj, 'yyyy-mm-dd') as blsj,
+			               zxbs,
+			               to_char(zxsj, 'yyyy-mm-dd HH24:mi:ss') as zxsj,
+			               zxmjxm,
+			               zxdwdm,
+			               zxdwmc,
+			               zxyy,
+			               to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+			               sfzh
+			          from t_lsgl_rkfw_gl
+			         where sfzh = ?
+			         order by djsj desc)
+			 where rownum = '1'
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryRkFwGlByRybh">
+ 		<![CDATA[
+ 				 select rkfwglid,
+			               rybh,
+			               fwid,
+			               dzid,
+			               to_char(rzsj, 'yyyy-mm-dd') as rzsj,
+			               to_char(blsj, 'yyyy-mm-dd') as blsj,
+			               zxbs,
+			               to_char(zxsj, 'yyyy-mm-dd HH24:mi:ss') as zxsj,
+			               zxmjxm,
+			               zxdwdm,
+			               zxdwmc,
+			               zxyy,
+			               to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+			               sfzh
+			          from t_lsgl_rkfw_gl
+			         where rybh = ?
+			         and (zxbs = '0' or zxbs  is null)
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	<property name="updateLdrkxxJzzxxBean">
+ 		<![CDATA[
+ 			update t_lsgl_rk_ldrkzzxx
+			   set 
+			       zzzbh = #[zzzbh],
+			       zzzyxqjzrq = to_date(#[zzzyxqjzrq],'yyyy-mm-dd')
+		 	where zzbh=#[zzbh]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateLdrkInfoBean">
+ 		<![CDATA[
+ 			update t_lsgl_rk_ldrkzzxx
+			   set 
+			   	   njzqx = #[njzqx],
+			       NJZRQ = to_date(#[zzzyxqjzrq],'yyyy-mm-dd'),
+			       zxbs = #[zxbs],
+			       #if($zxbs && $zxbs.equals("1"))
+			       	 zxsj = sysdate,
+			       #end
+			       zxyy = #[zxyy]
+		 	where zzbh = #[zzbh]
+ 		]]>
+ 	</property>
+ 	<property name="updateLdrkInfoBeanForZX">
+ 		<![CDATA[
+ 			update t_lsgl_rk_ldrkzzxx
+			   set 
+			  	   zxbs = #[zxbs],
+			  	   #if($zxbs && $zxbs.equals("1"))
+			   	  	 zxsj = sysdate,
+			   	   #end
+			       zxyy = #[zxyy]
+		 	where zzbh=#[zzbh]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryLdrkBeanByZzbh">
+ 		<![CDATA[
+ 			select zzbh, rybh, sfzh, zzzbh, hh, 
+			        fzsfzh, fzxm, yhzgx, to_char(lbdrq,'yyyy-mm-dd') lbdrq, 
+			        to_char(zzzqfrq,'yyyy-mm-dd') zzzqfrq, 
+			        to_char(zzzyxqjzrq,'yyyy-mm-dd') zzzyxqjzrq, 
+			        xfwcs, zzsy, zzdqh, zzdxz, czbs, czdwdm, czdwmc, 
+			        to_char(czsj,'yyyy-mm-dd hh24:mi:ss') czsj, 
+			        czrxm, djdwdm, djdwmc, djrxm, to_char(djsj,'yyyy-mm-dd hh24:mi:ss') djsj, 
+			        zrdwdm, zrdwmc, 
+			        zrmjxm, zrmjjh, zrmjlxdh, xcszy, ssgajgjgdm, 
+			        ssgajgjgmc, sspcsdm, sspcsmc, zzcs, zxbs, 
+			        zxsj, zxyy, zaglzrrxm, zaglzrrsfzh, 
+			        gzgx, fhbh, hdqk, bz, njzqx, hjdlx, 
+			        rkfwglid, sssqbh,to_char(NJZRQ,'yyyy-mm-dd') njzrq, 
+			        sfzhbx, sfjkzm, 
+			        sfjhsy, bmzw, djrsfzh, czrsfzh,qx 
+ 			from  t_lsgl_rk_ldrkzzxx 
+ 			where zzbh = ?
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	<property name="deleteJwrkInfo">
+ 		<![CDATA[
+ 			delete t_lsgl_rk_jwrkxx  where jwbh = ?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="deleteJzrkInfo">
+ 		<![CDATA[
+ 			delete t_lsgl_rk_jzrkxx where jzbh = ?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="deleteLdrkInfo">
+ 		<![CDATA[
+ 			delete t_lsgl_rk_ldrkzzxx where zzbh =?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="logoutCzrkInfo">
+ 		<![CDATA[
+ 			update t_lsgl_rk_czrk
+			   set 
+			       zxbs = '1',
+			       zxsj = sysdate,
+			       zxyy = #[zxyy]
+			  
+			 where czrkbh = #[czrkbh]
+ 		]]>
+ 	</property>
+ 	<property name="logoutJwrkInfo">
+ 		<![CDATA[
+ 			update t_lsgl_rk_jwrkxx
+			   set 
+			       zxbs = '1',
+			       zxsj = sysdate,
+			       zxyy = #[zxyy]
+			 where jwbh = #[jwbh]
+ 			
+ 		]]>
+ 	</property>
+ 	<property name="logoutJzrkInfo">
+ 		<![CDATA[
+ 			update t_lsgl_rk_jzrkxx
+			   set 
+			       zxbs = '1',
+			       zxsj = sysdate,
+			       zxyy = #[zxyy]
+			 where jzbh = #[jzbh]
+ 			
+ 		]]>
+ 	</property>
+ 	<property name="logoutLdrkInfo">
+ 		<![CDATA[
+ 			update t_lsgl_rk_ldrkzzxx
+			   set 
+			       zxbs = '1',
+			       zxsj = sysdate,
+			       zxyy = #[zxyy],
+			       qx = #[qx]
+			 where zzbh = #[zzbh]
+ 
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="recoveryCzrkInfo">
+ 		<![CDATA[
+ 				update t_lsgl_rk_czrk
+			   set 
+			       zxbs = '0',
+			       zxsj = '',
+			       zxyy = ''
+			  
+			 where czrkbh = #[czrkbh]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="recoveryJwrkInfo">
+ 		<![CDATA[
+ 			update t_lsgl_rk_jwrkxx
+			   set 
+			       zxbs = '0',
+			       zxsj = '',
+			       zxyy = ''
+			 where jwbh = #[jwbh]
+ 		]]>
+ 	</property>
+ 	<property name="recoveryJzrkInfo">
+ 		<![CDATA[
+ 			update t_lsgl_rk_jzrkxx
+			   set 
+			       zxbs = '0',
+			       zxsj = '',
+			       zxyy = ''
+			 where jzbh = #[jzbh]
+ 		]]>
+ 	</property>
+ 	<property name="recoveryLdrkInfo">
+ 		<![CDATA[
+ 			update t_lsgl_rk_ldrkzzxx
+			   set 
+			       zxbs = '0',
+			       zxsj = '',
+			       zxyy = '',
+			       qx = ''
+			 where zzbh = #[zzbh]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="deleteWlhrkInfo">
+ 		<![CDATA[
+ 			delete t_lsgl_rk_wlhczhk where wlhrkbh =?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="logoutWlhrkInfo">
+ 		<![CDATA[
+ 			update t_lsgl_rk_wlhczhk
+			   set 
+			       zxbs = '1',
+			       zxsj = to_date(#[zxsj],'yyyy-mm-dd hh24:mi:ss'),
+			       zxyy = #[zxyy]
+			 where wlhrkbh = #[wlhrkbh]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="recoveryWlhrkInfo">
+ 		<![CDATA[
+ 			update t_lsgl_rk_wlhczhk
+			   set 
+			       zxbs = '0',
+			       zxsj = '',
+			       zxyy = ''
+			 where wlhrkbh = #[wlhrkbh]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="deleteRkJhsyBean">
+ 		<![CDATA[
+ 			delete t_lsgl_rk_jhsy
+ 			 where id=?
+ 		]]>
+ 	</property>
+ 	<property name="insertRkJhsyBean">
+ 		<![CDATA[
+ 			insert into t_lsgl_rk_jhsy
+			  (id, jlbh, jhsyyq, jszhm, fzrq, znqk, byjycs, djrxm, djrjh, djdwdm, djdwmc, djsj,rybh,djrsfzh)
+			values
+			  (#[id], #[jlbh], #[jhsyyq], #[jszhm], to_date(#[fzrq],'yyyy-mm-dd hh24:mi:ss'), #[znqk], #[byjycs], #[djrxm], #[djrjh], #[djdwdm], #[djdwmc], to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),#[rybh],#[djrsfzh])
+ 			
+ 		]]>
+ 	</property>
+ 	<property name="queryJhsyBeanByjlbh">
+ 		<![CDATA[
+ 			select 
+	 			xm,
+				sfzh,
+				xb,
+				xzzxz,
+				rylb,
+				mz,
+				hjdxz,
+ 			   id,
+		       jlbh,
+		       jhsyyq,
+		       jszhm,
+		       fzrq,
+		       znqk,
+		       byjycs,
+		       djrxm,
+		       djrjh,
+		       djdwdm,
+		       djdwmc,
+		       djsj,
+		       jbxx.rybh
+		  from t_lsgl_rk_jhsy jhsy left join t_lsgl_rk_jbxx  jbxx
+		  on jhsy.rybh = jbxx.rybh
+		  where 1 = 1
+		  and id=?
+ 		]]>
+ 	</property>
+ 	<property name="queryJhsyBeanPage">
+ 		<![CDATA[
+				select 
+	 			xm,
+				sfzh,
+				xb,
+				xzzxz,
+				rylb,
+				mz,
+				hjdxz,
+ 			   id,
+		       jlbh,
+		       jhsyyq,
+		       jszhm,
+		       fzrq,
+		       znqk,
+		       byjycs,
+		       djrxm,
+		       djrjh,
+		       djdwdm,
+		       djdwmc,
+		       djsj,
+		       jbxx.rybh
+		  from t_lsgl_rk_jhsy jhsy left join t_lsgl_rk_jbxx  jbxx
+		  on jhsy.rybh = jbxx.rybh
+		  where 1 = 1
+		 	 #if ($xb && !$xb.equals(""))
+					and jbxx.xb=#[xb]
+			#end
+			#if ($csrq_start && !$csrq_start.equals(""))
+					and jbxx.csrq >= to_date(#[csrq_start],'yyyy-MM-dd')
+			#end
+			#if($csrq_end && !$csrq_end.equals(""))
+					and jbxx.csrq <= to_date(#[csrq_end],'yyyy-MM-dd')
+			#end
+			
+			#if ($fzrq_start && !$fzrq_start.equals(""))
+					and jhsy.fzrq >= to_date(#[fzrq_start],'yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if($csrq_end && !$csrq_end.equals(""))
+					and jhsy.fzrq <= to_date(#[fzrq_end],'yyyy-MM-dd hh24:mi:ss')
+			#end
+			
+			#if ($djsj_start && !$djsj_start.equals(""))
+					and jhsy.djsj >= to_date(#[djsj_start],'yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if($djsj_end && !$djsj_end.equals(""))
+					and jhsy.djsj <= to_date(#[djsj_end],'yyyy-MM-dd hh24:mi:ss')
+			#end
+		    #if($leve==5)
+	    		and djdwdm = #[orgcode]
+	    	#else
+	    		 #if ($pcsdm && !$pcsdm.equals(""))
+				 	and djdwdm like substr(#[pcsdm],1,8)||'%'
+				 #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				 	and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				 #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				 	and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+				 #end
+	   		#end
+ 			
+ 		]]>
+ 	</property>
+ 	<property name="updateRkJhsyBean">
+ 		<![CDATA[
+ 			update t_lsgl_rk_jhsy
+			   set id = #[id],
+			       jlbh = #[jlbh],
+			       jhsyyq = #[jhsyyq],
+			       jszhm = #[jszhm],
+			       fzrq = to_date(#[fzrq],'yyyy-mm-dd hh24:mi:ss'),
+			       znqk = #[znqk],
+			       byjycs = #[byjycs],
+			       rybh = #[rybh]
+			 where id = #[id]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="zxLdrkxxBySfzh">
+ 		<![CDATA[
+ 			update T_LSGL_RK_LDRKZZXX
+ 			set ZXBS='1', 
+	 			ZXSJ=sysdate,
+	 			zxyy=?
+ 			where ZXBS='0' 
+ 				  and SFZH=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="delGxr">
+ 		<![CDATA[
+ 			update t_lsgl_rk_gxr set czbs = '3' where id=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="delLxfs">
+ 		<![CDATA[
+ 			update t_lsgl_ry_lxfs set czbs = #[czbs],czrxm = #[czrxm],czdwdm = #[czdwdm],czdwmc = #[czdwmc] where id = #[id]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="deleteRkfwInfo">
+ 		<![CDATA[
+ 			delete t_lsgl_rkfw_gl
+       			 where rkfwglid = ?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateRkfwInfo">
+ 		<![CDATA[
+ 			update t_lsgl_rkfw_gl
+ 				set zxbs = '1',
+ 					zxsj = sysdate,
+ 					zxyy = #[zxyy],
+ 					zxmjxm = #[zxmjxm],
+ 					zxdwdm = #[zxdwdm],
+ 					zxdwmc = #[zxdwmc]
+ 				    where rkfwglid = #[rkfwglid]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="recoveryRkfwInfo">
+ 		<![CDATA[
+ 			update t_lsgl_rkfw_gl
+ 				set zxbs = '0',
+ 					zxsj = '',
+ 					zxyy = '',
+ 					zxmjxm = '',
+ 					zxdwdm = '',
+ 					zxdwmc = ''
+ 				    where rkfwglid = #[rkfwglid]
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	<property name="queryCzrkInfoByCzrkbh">
+ 		<![CDATA[
+ 			select * from t_lsgl_rk_czrk where czrkbh =? 
+ 		]]>
+ 	</property>
+ 	<property name="queryJwrkInfoByJwbh">
+ 		<![CDATA[
+ 			select * from t_lsgl_rk_jwrkxx where jwbh =?
+ 		]]>
+ 	</property>
+ 	<property name="queryJzrkInfoByJzbh">
+ 		<![CDATA[
+ 			select * from t_lsgl_rk_jzrkxx where jzbh =?
+ 		]]>
+ 	</property>
+ 	<property name="queryWlhrkInfoByWlhbh">
+ 		<![CDATA[
+ 			select * from t_lsgl_rk_wlhczhk where wlhrkbh = ?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryJhsyBeanByRybh">
+ 		<![CDATA[
+ 			select 
+ 			   id,
+		       jlbh,
+		       jhsyyq,
+		       jszhm,
+		       fzrq,
+		       znqk,
+		       byjycs,
+		       djrxm,
+		       djrjh,
+		       djdwdm,
+		       djdwmc,
+		       djsj,
+		     rybh
+		  from t_lsgl_rk_jhsy 
+		  where rybh=?
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryHzRkJbxxByHH">
+ 		<![CDATA[
+ 			select * 
+			from v_lsgl_rk_jbxx jb
+			where exists (
+			select rybh from t_lsgl_rk_czrk cz where cz.rybh=jb.RYBH and  hh=? and yhzgx='102'
+			)
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryCzrkBeansByQueryBean">
+ 		<![CDATA[
+ 			select /*+rule*/ ck.czrkbh, 
+ 					rk.rybh,
+ 					rk.sfzh, 
+ 					rk.XZZQH,
+ 			 		rk.XZZXZ,
+ 			 		ck.HJSSSQBH,
+ 			 		rk.HJDQH,
+ 			 		rk.HJDXZ,
+ 			 		'1' as rylb,
+ 			 		rk.xm as xm, 
+ 			 		rk.lxdh as lxdh,
+ 			 		rk.xb as xb,
+ 			 		ck.zxbs as zxbs,
+ 			 		ck.czdwdm,
+ 			 		ck.djdwdm,
+ 			 		ck.zrdwdm,
+ 			 		to_char(rk.csrq,'yyyy-mm-dd')  as csrq,
+ 			 		ck.hh,
+ 			 		ck.hklb,
+ 			 		to_char(ck.qrsj,'yyyy-mm-dd') as qrsj,
+ 			 		ck.qtzzssxq,
+ 			 		ck.qtzzxz,
+ 			 		to_char(ck.czsj,'yyyy-mm-dd') as czsj,
+ 			 		ck.hh,
+ 			 		ck.yhzgx
+			 from T_lsgl_rk_czrk ck,t_lsgl_rk_jbxx rk
+			 where 1=1 and ck.rybh=rk.rybh 
+			 
+			 #if($hjdqh && !$hjdqh.equals(""))
+				and rk.hjdqh like  substr(#[hjdqh],0,4)||'%'
+			#end 
+			#if ($zjzl && !$zjzl.equals("111"))
+					and rk.zjzl=#[zjzl]
+			#end
+			
+ 			#if($zjhm && !$zjhm.equals("") && $zjzl.equals("111"))
+	 			and ck.sfzh=trim(#[zjhm])
+ 			#end
+			#if ($xb && !$xb.equals(""))
+					and rk.xb=#[xb]
+			#end
+			#if ($csrq_start && !$csrq_start.equals(""))
+					and rk.csrq >= to_date(#[csrq_start],'yyyy-MM-dd')
+			#end
+			#if($csrq_end && !$csrq_end.equals(""))
+					and rk.csrq <= to_date(#[csrq_end],'yyyy-MM-dd')
+			#end
+			#if($xm && !$xm.equals(""))
+					and (rk.xm like trim(#[xm])||'%'
+ 					or Lower(rk.xmpy) like Lower(trim(#[xm]))||'%')
+			#end
+			#if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+		 	 	and (zxbs = #[zxbs] or zxbs is null)
+		    #end
+		    #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+		 	 	and (zxbs = #[zxbs])
+		    #end 
+		    #if ($djsj_start && !$djsj_start.equals(""))
+					and ck.djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if($djsj_end && !$djsj_end.equals(""))
+					and ck.djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			#end
+		    
+	    	 #if($sqdm && !$sqdm.equals(""))
+		   		and ck.hjsssqbh = #[sqdm]
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+    			and (ck.zrdwdm = #[jwsqdm])
+    		#elseif ($pcsdm && !$pcsdm.equals(""))
+		 		and ck.zrdwdm like substr(#[pcsdm],1,8)||'%'
+ 			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+ 				and ck.hjdqh=substr(#[countrygajgjgdm],1,6)
+ 			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+ 				and ck.hjdqh like substr(#[citygajgjgdm],1,4)||'%'
+		   	#end
+		   	order by ck.hh
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryCzrkBeansByczrkbhs">
+ 		<![CDATA[
+ 			select /*+rule*/ ck.czrkbh, 
+ 					rk.rybh,
+ 					ck.sfzh, 
+ 					rk.XZZQH,
+ 			 		rk.XZZXZ,
+ 			 		ck.HJSSSQBH,
+ 			 		rk.HJDQH,
+ 			 		rk.HJDXZ,
+ 			 		'1' as rylb,
+ 			 		rk.xm as xm, 
+ 			 		rk.lxdh as lxdh,
+ 			 		rk.xb as xb,
+ 			 		ck.zxbs as zxbs,
+ 			 		ck.czdwdm,
+ 			 		ck.djdwdm,
+ 			 		ck.zrdwdm,
+ 			 		to_char(rk.csrq,'yyyy-mm-dd')  as csrq,
+ 			 		ck.hh,
+ 			 		ck.hklb,
+ 			 		to_char(ck.qrsj,'yyyy-mm-dd') as qrsj,
+ 			 		ck.qtzzssxq,
+ 			 		ck.qtzzxz,
+ 			 		to_char(ck.czsj,'yyyy-mm-dd') as czsj,
+ 			 		ck.hh,
+ 			 		ck.yhzgx
+			 from T_lsgl_rk_czrk ck,t_lsgl_rk_jbxx rk
+			 where rk.rybh=ck.rybh
+			 	and ck.CZRKBH in (#[czrkbhs]) 
+			 	order by ck.hh
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	<property name="queryJzrkBeansByQueryBean">
+ 		<![CDATA[
+ 			select * 
+ 		    from v_lsgl_rk_jzrkxx
+ 			where 1=1
+ 			#if($hjdqh && !$hjdqh.equals(""))
+				and hjdqh like  substr(#[hjdqh],0,4)||'%'
+			#end 
+			 
+			#if ($zjzl && !$zjzl.equals("111"))
+					and zjzl=#[zjzl]
+			#end
+ 			 
+ 			#if($zjhm && !$zjhm.equals("") && $zjzl.equals("111"))
+	 			and sfzh=trim(#[zjhm])
+ 			#end
+			
+			 #if ($xb && !$xb.equals(""))
+					and xb=#[xb]
+			#end
+			#if ($csrq_start && !$csrq_start.equals(""))
+					and csrq >= #[csrq_start]
+			#end
+			#if ($csrq_end && !$csrq_end.equals(""))
+					and csrq <= #[csrq_end]
+			#end
+			
+			#if($xm && !$xm.equals(""))
+		 		 and (xm like '%'||#[xm]||'%'
+		 		 or Lower(xmpy) like Lower(#[xm])||'%')
+		    #end
+			
+			#if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+		 	 	and (zxbs = #[zxbs] or zxbs is null)
+		    #end
+		    #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+		 	 	and (zxbs = #[zxbs])
+		    #end 
+			#if ($djsj_start && !$djsj_start.equals(""))
+				and djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if($djsj_end && !$djsj_end.equals(""))
+				and djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			#end
+		  
+	    	#if($sqdm && !$sqdm.equals(""))
+		   		and sssqbh = #[sqdm]
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+	    			and 
+	    			     (zrdwdm = #[jwsqdm] or czdwdm =#[jwsqdm] or djdwdm = #[jwsqdm])
+    		#elseif ($pcsdm && !$pcsdm.equals(""))
+			 	and (
+				 		djdwdm like substr(#[pcsdm],1,8)||'%' or 
+				 		czdwdm like substr(#[pcsdm],1,8)||'%' or 
+				 		zrdwdm like substr(#[pcsdm],1,8)||'%'
+				 	)
+			 #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 	and (
+				 		djdwdm like substr(#[countrygajgjgdm],1,6)||'%' or 
+				 		czdwdm like substr(#[countrygajgjgdm],1,6)||'%' or 
+				 		zrdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				 	)
+			 #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 	and (
+				 		djdwdm like substr(#[citygajgjgdm],1,4)||'%' or 
+				 		czdwdm like substr(#[citygajgjgdm],1,4)||'%' or 
+				 		zrdwdm like substr(#[citygajgjgdm],1,4)||'%'
+				   )
+		  	#end
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryJzrkBeansByJzrkbhs">
+ 		<![CDATA[
+ 			 select * 
+ 		     from v_lsgl_rk_jzrkxx
+ 			 where JZBH in (#[jzbhs])
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryLsjlRkfwglByRybh">
+ 		<![CDATA[
+			select 
+			   syrk.rylb rylb,
+		       syrk.zxbs zxbs,
+		       syrk.rkid rkid,
+		       syrk.zxsj zxsj,
+		       syrk.djsj djsj,
+		       syrk.djdwdm djdwdm,
+		       syrk.djdwmc djdwmc,
+		       jbxx.rybh rybh,
+		       jbxx.sfzh sfzh,
+		       jbxx.lxdh lxdh,
+		       jbxx.xm   xm,
+		       jbxx.xb   xb,
+		       gl.dzid   dzid,
+		       gl.fwid   fwid,
+		       gl.rkfwglid rkfwglid,
+		       (select HZSFZH from t_lsgl_fw_jbxx where fwid=gl.fwid) as fzsfzh,
+		       (select HZXM from t_lsgl_fw_jbxx where fwid=gl.fwid) as fzxm,
+		       f_get_dzmc(gl.dzid) as dzmc
+		  from v_lsgl_rk_syrk syrk, t_lsgl_rk_jbxx jbxx, t_lsgl_rkfw_gl gl
+		   where jbxx.rybh = syrk.rybh
+		   and syrk.rkfwglid = gl.rkfwglid
+		   and jbxx.rybh = ?
+		   order by syrk.djsj desc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryCzrkFwglInfoByCzrkbh">
+ 		<![CDATA[
+ 			select * from v_lsgl_czrk_fwgl where czrkbh =? 
+ 		]]>
+ 	</property>
+ 	<property name="queryJwrkFwglInfoByJwbh">
+ 		<![CDATA[
+ 			select * from v_lsgl_jwrk_fwgl where jwbh =?
+ 		]]>
+ 	</property>
+ 	<property name="queryJzrkFwglInfoByJzbh">
+ 		<![CDATA[
+ 			select * from v_lsgl_jzrk_fwgl where jzbh =?
+ 		]]>
+ 	</property>
+ 	<property name="queryLdrkFwglBeanByZzbh">
+ 		<![CDATA[
+ 			select * from V_LSGL_LDRK_FWGL where zzbh = ?
+ 		]]>
+ 	</property>
+ 	<property name="queryWlhrkFwglInfoByWlhbh">
+ 		<![CDATA[
+ 			select * from v_lsgl_wlhczrk_fwgl where wlhrkbh = ?
+ 		]]>
+ 	</property>
+ 	<property name="queryLsjlRkFwGlBySfzh">
+ 		<![CDATA[
+			select 
+			   syrk.rylb rylb,
+		       syrk.zxbs zxbs,
+		       syrk.rkid rkid,
+		       syrk.djsj djsj,
+		       syrk.zxsj zxsj,
+		       syrk.djdwdm djdwdm,
+		       syrk.djdwmc djdwmc,
+		       jbxx.rybh rybh,
+		       jbxx.sfzh sfzh,
+		       jbxx.lxdh lxdh,
+		       jbxx.xm   xm,
+		       jbxx.xb   xb,
+		       gl.dzid   dzid,
+		       gl.fwid   fwid,
+		       gl.rkfwglid rkfwglid,
+		       f_get_dzmc(gl.dzid) as dzmc
+		  from v_lsgl_rk_syrk syrk, t_lsgl_rk_jbxx jbxx, t_lsgl_rkfw_gl gl
+		   where jbxx.rybh = syrk.rybh
+		   and syrk.rkfwglid = gl.rkfwglid
+		   and jbxx.rybh = (select rybh from t_lsgl_rk_jbxx where sfzh = ?)
+		   order by syrk.djsj desc
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	<property name="zxCzrkxxBySfzh">
+ 		<![CDATA[
+ 			update t_lsgl_rk_czrk
+ 			set ZXBS='1', ZXSJ=sysdate,zxyy=?
+ 			where ZXBS='0' and SFZH=?
+ 		]]>
+ 	</property>
+ 	<property name="zxJwrkxxBySfzh">
+ 		<![CDATA[
+ 			update t_lsgl_rk_jwrkxx
+ 			set ZXBS='1', ZXSJ=sysdate,zxyy=?
+ 			where ZXBS='0' and rybh=?
+ 		]]>
+ 	</property>
+ 	<property name="zxJzrkxxBySfzh">
+ 		<![CDATA[
+ 			update t_lsgl_rk_jzrkxx
+ 			set ZXBS='1', ZXSJ=sysdate,zxyy=?
+ 			where ZXBS='0' and SFZH=?
+ 		]]>
+ 	</property>
+ 	<property name="zxWlhrkxxBySfzh">
+ 		<![CDATA[
+ 			update t_lsgl_rk_wlhczhk
+ 			set ZXBS='1', ZXSJ=sysdate,zxyy=?
+ 			where ZXBS='0' and SFZH=?
+ 		]]>
+ 	</property>
+ 	<property name="queryJzxxListByRybh">
+ 		<![CDATA[
+ 			select * from v_lsgl_rk_syrk where rybh = ? and (zxbs = '0' or zxbs is null)
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="insertLdryYqzxBean">
+ 		<![CDATA[
+ 			insert into t_lsgl_ldrk_yqzx
+			  (id, czrjh, czrxm, czrsfzh, czdwdm, czdwmc, cllx, ldrkzzbh, ldrkrybh, ldrksfzh, czsj,ynjzrq)
+			values
+			  (#[id], #[czrjh], #[czrxm], #[czrsfzh], #[czdwdm], #[czdwmc], #[cllx], #[ldrkzzbh], #[ldrkrybh], #[ldrksfzh], sysdate,to_date(#[ynjzrq],'yyyy-mm-dd'))
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="querySyrkBeansByQueryBean">
+ 		<![CDATA[
+ 		 select * 
+ 			  from (
+		 			  select rk.rybh,rk.sfzh,rk.xm,rk.zjzl,rk.zjhm,rk.xmpy,rk.xb,rk.csrq,rk.hjdqh,rk.hjdxz,rk.xzzxz,rk.LXDH,
+		 			  		c.zrdwdm,c.zrdwmc,c.djsj,c.czrkbh as rkid,rk.mz,c.hjsssqbh,c.zxbs as zxbs
+			          from t_lsgl_rk_jbxx rk inner join t_lsgl_rk_czrk c  on  rk.rybh=c.rybh 
+			          where 1=1
+					        #if($sqdm && !$sqdm.equals(""))
+						   		and c.hjsssqbh = #[sqdm]
+			                #elseif ($jwsqdm && !$jwsqdm.equals(""))
+								and c.zrdwdm = #[jwsqdm]
+							#elseif ($pcsdm && !$pcsdm.equals(""))
+						 		and c.zrdwdm like substr(#[pcsdm],1,8)||'%'
+						    #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+							    and (c.zrdwdm like substr(#[countrygajgjgdm],1,6)||'%')
+						 	#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+							   and (c.zrdwdm like substr(#[citygajgjgdm],1,4)||'%')
+						    #end
+			          union all
+			          
+			          select rk.rybh,rk.sfzh,rk.xm,rk.zjzl,rk.zjhm,rk.xmpy,rk.xb,rk.csrq,rk.hjdqh,rk.hjdxz,rk.xzzxz,rk.LXDH,
+			          		l.zrdwdm,l.zrdwmc,l.djsj,l.zzbh as rkid,rk.mz,l.sssqbh,l.zxbs as zxbs
+			          from t_lsgl_rk_jbxx rk inner join t_lsgl_rk_ldrkzzxx l on  rk.rybh=l.rybh 
+			          where 1=1
+			            #if($sqdm && !$sqdm.equals(""))
+						   	and l.sssqbh = #[sqdm]
+			            #elseif ($jwsqdm && !$jwsqdm.equals(""))
+							and l.zrdwdm = #[jwsqdm]
+						#elseif ($pcsdm && !$pcsdm.equals(""))
+					 		and l.zrdwdm like substr(#[pcsdm],1,8)||'%'
+					    #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+						    and (l.zrdwdm like substr(#[countrygajgjgdm],1,6)||'%')
+					 	#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+						   and (l.zrdwdm like substr(#[citygajgjgdm],1,4)||'%')
+					    #end
+			          
+			          union all 
+			          
+			          select rk.rybh,rk.sfzh,rk.xm,rk.zjzl,rk.zjhm,rk.xmpy,rk.xb,rk.csrq,rk.hjdqh,rk.hjdxz,rk.xzzxz,rk.LXDH,
+			          		jz.zrdwdm,jz.zrdwmc,jz.djsj,jz.jzbh as rkid,rk.mz,jz.sssqbh,jz.zxbs as zxbs
+			          from t_lsgl_rk_jbxx rk inner join t_lsgl_rk_jzrkxx jz on rk.rybh=jz.rybh
+			          where  1=1
+			            #if($sqdm && !$sqdm.equals(""))
+						   	and jz.sssqbh = #[sqdm]
+			            #elseif ($jwsqdm && !$jwsqdm.equals(""))
+							and jz.zrdwdm = #[jwsqdm]
+						#elseif ($pcsdm && !$pcsdm.equals(""))
+					 		and jz.zrdwdm like substr(#[pcsdm],1,8)||'%'
+					    #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+						    and (jz.zrdwdm like substr(#[countrygajgjgdm],1,6)||'%')
+					 	#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+						   and (jz.zrdwdm like substr(#[citygajgjgdm],1,4)||'%')
+					    #end
+			          
+			          union all
+			          
+			          select rk.rybh,rk.sfzh,rk.xm,rk.zjzl,rk.zjhm,rk.xmpy,rk.xb,rk.csrq,rk.hjdqh,rk.hjdxz,rk.xzzxz,rk.LXDH,
+			          		w.zrdwdm,w.zrdwmc,w.djsj,w.wlhrkbh as rkid,rk.mz,w.sssqbh,w.zxbs as zxbs
+			          from t_lsgl_rk_jbxx rk inner join t_lsgl_rk_wlhczhk w on rk.rybh=w.rybh
+			          where 1=1
+			             #if($sqdm && !$sqdm.equals(""))
+						   	and w.sssqbh = #[sqdm]
+			             #elseif ($jwsqdm && !$jwsqdm.equals(""))
+							and w.zrdwdm = #[jwsqdm]
+						 #elseif ($pcsdm && !$pcsdm.equals(""))
+					 		and w.zrdwdm like substr(#[pcsdm],1,8)||'%'
+					     #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+						    and (w.zrdwdm like substr(#[countrygajgjgdm],1,6)||'%')
+					 	 #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+						   and (w.zrdwdm like substr(#[citygajgjgdm],1,4)||'%')
+					     #end
+ 		    ) t
+ 		    where 1=1 
+ 		    #if ($xm && !$xm.equals(""))
+ 				and (
+ 						t.xm like #[xm]||'%'
+ 					)
+ 				
+ 			#end
+ 			
+ 			#if ($zjzl && !$zjzl.equals("111"))
+				and t.zjzl=#[zjzl]
+			#end
+			
+			#if($zjhm && !$zjhm.equals(""))
+	 			#if($zjzl && $zjzl.equals("111"))
+	 				and t.sfzh = #[zjhm]
+	 			#else
+	 				and t.zjhm = #[zjhm]
+	 			#end
+ 			#end
+ 			
+ 			#if($xb && !$xb.equals(""))
+				and t.xb = #[xb]
+			#end
+			#if($mz && !$mz.equals(""))
+				and t.mz = #[mz]
+			#end
+			
+		    #if($csrq_start && !$csrq_start.equals(""))
+		    	#if($csrq_end.equals(""))
+		    		and t.csrq = to_date(#[csrq_start],'yyyy-MM-dd')
+		    	#else
+		    		and t.csrq >= to_date(#[csrq_start],'yyyy-MM-dd')
+		    	#end
+			#end
+			
+			#if($csrq_end && !$csrq_end.equals(""))
+				#if($csrq_start.equals(""))
+					and t.csrq = to_date(#[csrq_end],'yyyy-MM-dd')
+				#else
+					and t.csrq <= to_date(#[csrq_end],'yyyy-MM-dd')
+				#end
+			#end
+			
+			#if($hjdqh && !$hjdqh.equals(""))
+				and t.hjdqh like substr(#[hjdqh],0,4)||'%'
+			#end
+			
+			#if ($czsj_start && !$czsj_start.equals(""))
+				and t.djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if($czsj_end && !$czsj_end.equals(""))
+				and t.djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-MM-dd hh24:mi:ss')
+			#end
+			
+			#if($zxbs && !$zxbs.equals("") && $zxbs.equals("0"))
+		 	 	and (zxbs = #[zxbs] or zxbs is null)
+		    #end
+		    #if($zxbs && !$zxbs.equals("") && $zxbs.equals("1"))
+		 	 	and (zxbs = #[zxbs])
+		    #end 
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	<property name="querySyrkBeanByrkids">
+ 		<![CDATA[
+ 			 select * 
+         from (
+             select rk.rybh,rk.sfzh,rk.xm,rk.zjzl,rk.zjhm,rk.xmpy,rk.xb,to_char(rk.csrq,'yyyy-mm-dd') csrq,rk.hjdqh,rk.hjdxz,rk.xzzxz,rk.LXDH,
+                 c.zrdwdm,c.zrdwmc,c.djsj,c.czrkbh as rkid
+                from t_lsgl_rk_jbxx rk inner join t_lsgl_rk_czrk c  on  rk.rybh=c.rybh 
+                 
+                union all
+                
+                select rk.rybh,rk.sfzh,rk.xm,rk.zjzl,rk.zjhm,rk.xmpy,rk.xb,to_char(rk.csrq,'yyyy-mm-dd') csrq,rk.hjdqh,rk.hjdxz,rk.xzzxz,rk.LXDH,
+                    l.zrdwdm,l.zrdwmc,l.djsj,l.zzbh as rkid
+                from t_lsgl_rk_jbxx rk inner join t_lsgl_rk_ldrkzzxx l on  rk.rybh=l.rybh 
+                 
+                union all 
+                
+                select rk.rybh,rk.sfzh,rk.xm,rk.zjzl,rk.zjhm,rk.xmpy,rk.xb,to_char(rk.csrq,'yyyy-mm-dd') csrq,rk.hjdqh,rk.hjdxz,rk.xzzxz,rk.LXDH,
+                    jz.zrdwdm,jz.zrdwmc,jz.djsj,jz.jzbh as rkid
+                from t_lsgl_rk_jbxx rk inner join t_lsgl_rk_jzrkxx jz on rk.rybh=jz.rybh
+                 
+                union all
+                
+                select rk.rybh,rk.sfzh,rk.xm,rk.zjzl,rk.zjhm,rk.xmpy,rk.xb,to_char(rk.csrq,'yyyy-mm-dd') csrq,rk.hjdqh,rk.hjdxz,rk.xzzxz,rk.LXDH,
+                    w.zrdwdm,w.zrdwmc,w.djsj,w.wlhrkbh as rkid
+                from t_lsgl_rk_jbxx rk inner join t_lsgl_rk_wlhczhk w on rk.rybh=w.rybh
+               
+         ) t
+         where 1=1 
+         and rkid in (#[rkids])
+ 		]]>
+ 	</property>
+ 	<property name="queryRkjbxxByRybhs">
+ 		<![CDATA[
+		 	   select  rybh,
+				       xm,
+				       sfzh,
+				       xb,
+				       gj,
+				       mz,
+				       to_char(csrq,'yyyy-mm-dd') csrq,
+				       bmch,
+				       byzk,
+				       ywm,
+				       whcd,
+				       zjzl,
+				       zjhm,
+				       zzmm,
+				       hyzk,
+				       sg,
+				       xx,
+				       zzxy,
+				       zc,
+				       lxdh,
+				       fwcs,
+				       zydm,
+				       zw,
+				       sf,
+				      (select mc
+					  from t_common_dictionary t
+					 	where t.zdlb = 'GB_XZQH'
+					   	and t.zdmc = '行政区划'
+					   	and dm = jg ) as jg,
+				       rysx,
+				       f_get_rylb(sfzh,(select max(fw.fwid)
+			          	from t_lsgl_fw_jbxx fw
+			           where fw.dzid = f_getdzid_by_rybh(rybh))) as rylb,
+				       hjdqh,
+				       hjdxz,
+				       ssgajgjgdm,
+				       ssgajgjgmc,
+				       sspcsdm,
+				       sspcsmc,
+				       swrq,
+				       swzmbh,
+				       zwbh,
+				       dnabh,
+				       xxjb,
+				       czsj,
+				       czdwdm,
+				       czdwmc,
+				       czrjh,
+				       czrxm,
+				       czbs,
+				       xzzqh,
+				       xzzqhmc,
+				       f_get_dzmc(f_getdzid_by_rybh(rybh)) as xzzxz,
+				       xzzzrq,
+				       rytssx,
+				       lxdhbz,
+				       fromstdate,
+				       xmpy,
+				       csd,
+				       sfjwtdj
+				  from t_lsgl_rk_jbxx	
+				  where 1=1 
+		          and rybh in (#[rybhs])
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryCzrkxxBeanByFwidAndSfzh">
+		<![CDATA[
+			  select ck.CZRKBH,
+				      ck.HH,
+				      ck.HKLB,
+				      ck.YHZGX,
+				      ck.HKXZ,
+				      ck.BDYY,
+				      TO_CHAR(ck.BDSJ,'YYYY-MM-DD') AS BDSJ,
+				      ck.BDQH,
+				      ck.BDXZ,
+				      ck.QRYY,
+				      TO_CHAR(ck.QRSJ,'YYYY-MM-DD') AS QRSJ,
+				      ck.HDQR,
+				      ck.HDQRXZ,
+				      ck.RYZT,
+				      ck.BZ,
+				      ck.CZBS,
+				      ck.CZDWDM,
+				      ck.CZDWMC,
+				      ck.CZSJ,
+				      ck.CZRXM,
+				      ck.DJDWDM,
+				      ck.DJDWMC,
+				      ck.DJRXM,
+				      ck.DJSJ,
+				      ck.ZRDWDM,
+				      ck.ZRDWMC,
+				      ck.ZRMJXM,
+				      ck.ZRMJJH,
+				      ck.ZRMJLXDH,
+				      ck.ZXBS,
+				      ck.ZXSJ,
+				      ck.ZXYY,
+				      ck.ZZSSXQ,
+				      ck.ZZXZ,
+				      ck.QTZZSSXQ,
+				      ck.QTZZXZ,
+				      ck.JHRYXM,
+				      ck.YJHRYGX,
+				      ck.JHREXM,
+				      ck.YJHREGX,
+				      ck.RKFWGLID
+			  from t_lsgl_rk_czrk ck inner join t_lsgl_rkfw_gl gl on ck.rkfwglid=gl.rkfwglid
+			  where  gl.fwid=? 
+			         and ck.sfzh=? 
+			         and (ck.ZXBS='0' or ck.zxbs is null)
+			  order by gl.djsj desc
+		]]>
+	</property>
+	
+	<property name="queryFwidByRkfwglid">
+		<![CDATA[
+			select fwid 
+			from t_lsgl_rkfw_gl
+			where rkfwglid=?
+		]]>
+	</property>
+	
+	<property name="isExistsRkBean">
+		<![CDATA[
+			select dzmc
+			from (
+				select f_get_dzmc_byrkfwglid(c.rkfwglid) as dzmc
+				from t_lsgl_rk_czrk c
+				where sfzh=#[sfzh] and djdwdm=#[orgcode] and (zxbs is null or zxbs='0')
+				
+				union all
+				
+				select f_get_dzmc_byrkfwglid(l.rkfwglid) as dzmc
+				from t_lsgl_rk_ldrkzzxx l
+				where sfzh=#[sfzh] and djdwdm=#[orgcode] and (zxbs is null or zxbs='0')
+				
+				union all
+				
+				select f_get_dzmc_byrkfwglid(j.rkfwglid) as dzmc
+				from t_lsgl_rk_jzrkxx j
+				where sfzh=#[sfzh] and djdwdm=#[orgcode] and (zxbs is null or zxbs='0')
+				
+				union all
+				
+				select f_get_dzmc_byrkfwglid(w.rkfwglid) as dzmc
+				from t_lsgl_rk_wlhczhk w
+				where sfzh=#[sfzh] and djdwdm=#[orgcode] and (zxbs is null or zxbs='0')
+			)
+			where rownum=1
+		]]>
+	</property>
+	
+	<property name="getExistsRkBeanOfRybh">
+		<![CDATA[
+			select rybh
+			from (
+				select rybh
+				from t_lsgl_rk_czrk c
+				where sfzh=#[sfzh] and djdwdm=#[orgcode] and (zxbs is null or zxbs='0')
+				
+				union all
+				
+				select rybh
+				from t_lsgl_rk_ldrkzzxx l
+				where sfzh=#[sfzh] and djdwdm=#[orgcode] and (zxbs is null or zxbs='0')
+				
+				union all
+				
+				select rybh
+				from t_lsgl_rk_jzrkxx j
+				where sfzh=#[sfzh] and djdwdm=#[orgcode] and (zxbs is null or zxbs='0')
+				
+				union all
+				
+				select rybh
+				from t_lsgl_rk_wlhczhk w
+				where sfzh=#[sfzh] and djdwdm=#[orgcode] and (zxbs is null or zxbs='0')
+			)
+			where rownum=1
+		]]>
+	</property>
+	
+	<property name="getRybhBySfzh">
+		<![CDATA[
+			select rybh from t_lsgl_rk_jbxx where sfzh=?
+		]]>
+	</property>
+	
+	<property name="queryGlgxrPageResultBySfzh">
+		<![CDATA[
+			select rybh,sfzh,ydsrgx,
+			       (select xm from t_lsgl_rk_jbxx where sfzh=g.sfzh) as gxrxm,  
+			       (select lxdh from t_lsgl_rk_jbxx where sfzh=g.sfzh) as gxrlxdh, 
+			       (select xzzxz from t_lsgl_rk_jbxx where sfzh=g.sfzh) as gxrxzdxz
+			from t_lsgl_rk_gxr g
+			where gxrsfzh=?
+		]]>
+	</property>
+	
+</properties>

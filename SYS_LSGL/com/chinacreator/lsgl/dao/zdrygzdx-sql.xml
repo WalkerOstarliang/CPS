@@ -1,0 +1,1396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+ 	<property name="insertZdryJsbrBean">
+ 		<![CDATA[
+ 			insert into t_zdry_gzdx_jsbr
+			  (jsbrbh,
+			   gzdxbh,
+			   rybh,
+			   sfzh,
+			   xxly,
+			   jsblx,
+			   xszt,
+			   whcd,
+			   dqbq,
+			   brzz,
+			   brlb,
+			   sflb,
+			   issrzl,
+			   kzqk,
+			   brjb,
+			   lxfs,
+			   zzjsbz,
+			   bz,
+			   jhr,
+			   jhrdh,
+			   ybrgx,
+			   jhrfwcs,
+			   jhrzz,
+			   fbsj,
+			   zdyy,
+			   zdys,
+			   zdsj,
+			   zdjg,
+			   zlsj,
+			   zlyy,
+			   zsyf,
+			   fbqk,
+			   pzlrr,
+			   gxpcsdm,
+			   gxpcsmc,
+			   gxjwqdm,
+			   gxjwqmc,
+			   gxsq,
+			   zrmjjh,
+			   zrmjxm,
+			   zrmjlxdh,
+			   djsj)
+			values
+			  (#[jsbrbh],
+			   #[gzdxbh],
+			   #[rybh],
+			   #[sfzh],
+			   #[xxly],
+			   #[jsblx],
+			   #[xszt],
+			   #[whcd],
+			   #[dqbq],
+			   #[brzz],
+			   #[brlb],
+			   #[sflb],
+			   #[issrzl],
+			   #[kzqk],
+			   #[brjb],
+			   #[lxfs],
+			   #[zzjsbz],
+			   #[bz],
+			   #[jhr],
+			   #[jhrdh],
+			   #[ybrgx],
+			   #[jhrfwcs],
+			   #[jhrzz],
+			   to_date(#[fbsj],'yyyy-mm-dd'),
+			   #[zdyy],
+			   #[zdys],
+			   to_date(#[zdsj],'yyyy-mm-dd'),
+			   #[zdjg],
+			   to_date(#[zlsj],'yyyy-mm-dd'),
+			   #[zlyy],
+			   #[zsyf],
+			   #[fbqk],
+			   #[pzlrr],
+			   #[gxpcsdm],
+			   #[gxpcsmc],
+			   #[gxjwqdm],
+			   #[gxjwqmc],
+			   #[gxsq],
+			   #[zrmjjh],
+			   #[zrmjxm],
+			   #[zrmjlxdh],
+			   to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss')
+			   )
+ 		]]>
+ 	</property>
+ 
+ 	<property name="updateZdryJsbrBean">
+ 		<![CDATA[
+ 			
+		update t_zdry_gzdx_jsbr
+		   set jsbrbh = #[jsbrbh],
+		       gzdxbh = #[gzdxbh],
+		       rybh = #[rybh],
+		       sfzh = #[sfzh],
+		       xxly = #[xxly],
+		       jsblx = #[jsblx],
+		       xszt = #[xszt],
+		       whcd = #[whcd],
+		       dqbq = #[dqbq],
+		       brzz = #[brzz],
+		       brlb = #[brlb],
+		       sflb = #[sflb],
+		       issrzl = #[issrzl],
+		       kzqk = #[kzqk],
+		       brjb = #[brjb],
+		       lxfs = #[lxfs],
+		       zzjsbz = #[zzjsbz],
+		       bz = #[bz],
+		       jhr = #[jhr],
+		       jhrdh = #[jhrdh],
+		       ybrgx = #[ybrgx],
+		       jhrfwcs = #[jhrfwcs],
+		       jhrzz = #[jhrzz],
+		       fbsj = to_date(#[fbsj],'yyyy-mm-dd'),
+		       zdyy = #[zdyy],
+		       zdys = #[zdys],
+		       zdsj = to_date(#[zdsj],'yyyy-mm-dd'),
+		       zdjg = #[zdjg],
+		       zlsj = to_date(#[zlsj],'yyyy-mm-dd'),
+		       zlyy = #[zlyy],
+		       zsyf = #[zsyf],
+		       fbqk = #[fbqk],
+		       pzlrr = #[pzlrr],
+		       gxpcsdm = #[gxpcsdm],
+		       gxpcsmc = #[gxpcsmc],
+		       gxjwqdm = #[gxjwqdm],
+		       gxjwqmc = #[gxjwqmc],
+		       gxsq = #[gxsq],
+		       zrmjjh = #[zrmjjh],
+		       zrmjxm = #[zrmjxm],
+		       zrmjlxdh = #[zrmjlxdh],
+		       djsj = to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss')
+		 where sfzh = #[sfzh]
+ 		]]>
+ 	</property>
+ 	 
+ 	 
+ 	 <property name="queryZdryJsbrByGzdxbh">
+		<![CDATA[
+		select jsbrbh,
+	       gzdxbh,
+	       rybh,
+	       sfzh,
+	       xxly,
+	       jsblx,
+	       xszt,
+	       whcd,
+	       dqbq,
+	       brzz,
+	       brlb,
+	       sflb,
+	       issrzl,
+	       kzqk,
+	       brjb,
+	       lxfs,
+	       zzjsbz,
+	       bz,
+	       jhr,
+	       jhrdh,
+	       ybrgx,
+	       jhrfwcs,
+	       jhrzz,
+	       to_char(fbsj,'yyyy-mm-dd') fbsj,
+	       zdyy,
+	       zdys,
+	       to_char(zdsj,'yyyy-mm-dd') zdsj,
+	       zdjg,
+	       to_char(zlsj,'yyyy-mm-dd') zlsj,
+	       zlyy,
+	       zsyf,
+	       fbqk,
+	       pzlrr,
+	       gxpcsdm,
+	       gxpcsmc,
+	       gxjwqdm,
+	       gxjwqmc,
+	       gxsq,
+	       zrmjjh,
+	       zrmjxm,
+	       zrmjlxdh,
+	       djsj
+	  from t_zdry_gzdx_jsbr
+	  where gzdxbh=?
+		
+		]]>
+	</property>
+	
+	
+	 <property name="insertZdrySwryBean">
+		<![CDATA[
+			insert into t_zdry_gzdx_swry
+  (swrybh,
+   gzdxbh,
+   rybh,
+   sfzh,
+   swrylb,
+   xxlb,
+   wtlb,
+   swzt,
+   sfdqx,
+   sfcyd,
+   sfzrq,
+   gldw,
+   zywt,
+   gzcs,
+   gllb,
+   gllllb,
+   glrxm,
+   glrsfzh,
+   glrxzdz,
+   glrlxdh,
+   xswjb,
+   zgswdj,
+   gxpcsdm,
+   gxpcsmc,
+   gxjwqdm,
+   gxjwqmc,
+   gxsq,
+   zrmjjh,
+   zrmjxm,
+   zrmjlxdh,
+   djsj)
+values
+  (#[swrybh],
+   #[gzdxbh],
+   #[rybh],
+   #[sfzh],
+   #[swrylb],
+   #[xxlb],
+   #[wtlb],
+   #[swzt],
+   #[sfdqx],
+   #[sfcyd],
+   #[sfzrq],
+   #[gldw],
+   #[zywt],
+   #[gzcs],
+   #[gllb],
+   #[gllllb],
+   #[glrxm],
+   #[glrsfzh],
+   #[glrxzdz],
+   #[glrlxdh],
+   #[xswjb],
+   #[zgswdj],
+   #[gxpcsdm],
+   #[gxpcsmc],
+   #[gxjwqdm],
+   #[gxjwqmc],
+   #[gxsq],
+   #[zrmjjh],
+   #[zrmjxm],
+   #[zrmjlxdh],
+   to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss')
+   )
+		]]>
+	</property>
+	
+	 <property name="updateZdrySwryBean">
+		<![CDATA[
+	
+update t_zdry_gzdx_swry
+   set swrybh = #[swrybh],
+       gzdxbh = #[gzdxbh],
+       rybh = #[rybh],
+       sfzh = #[sfzh],
+       swrylb = #[swrylb],
+       xxlb = #[xxlb],
+       wtlb = #[wtlb],
+       swzt = #[swzt],
+       sfdqx = #[sfdqx],
+       sfcyd = #[sfcyd],
+       sfzrq = #[sfzrq],
+       gldw = #[gldw],
+       zywt = #[zywt],
+       gzcs = #[gzcs],
+       gllb = #[gllb],
+       gllllb = #[gllllb],
+       glrxm = #[glrxm],
+       glrsfzh = #[glrsfzh],
+       glrxzdz = #[glrxzdz],
+       glrlxdh = #[glrlxdh],
+       xswjb = #[xswjb],
+       zgswdj = #[zgswdj],
+       gxpcsdm = #[gxpcsdm],
+       gxpcsmc = #[gxpcsmc],
+       gxjwqdm = #[gxjwqdm],
+       gxjwqmc = #[gxjwqmc],
+       gxsq = #[gxsq],
+       zrmjjh = #[zrmjjh],
+       zrmjxm = #[zrmjxm],
+       zrmjlxdh = #[zrmjlxdh],
+       djsj = to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss')
+ where   sfzh = #[sfzh]
+		]]>
+	</property>
+	
+	 <property name="queryZdrySwryBeanBySfzh">
+		<![CDATA[		
+		select swrybh,
+		       gzdxbh,
+		       rybh,
+		       sfzh,
+		       swrylb,
+		       xxlb,
+		       wtlb,
+		       swzt,
+		       sfdqx,
+		        sfdqx  sfdqxmc,
+		       sfcyd,
+		       sfzrq,
+		       gldw,
+		       zywt,
+		       gzcs,
+		       gllb,
+		       gllllb,
+		       glrxm,
+		       glrsfzh,
+		       glrxzdz,
+		       glrlxdh,
+		       xswjb,
+		       zgswdj,
+		       gxpcsdm,
+		       gxpcsmc,
+		       gxjwqdm,
+		       gxjwqmc,
+		       gxsq,
+		       zrmjjh,
+		       zrmjxm,
+		       zrmjlxdh,
+		       djsj
+		  from t_zdry_gzdx_swry
+		  where sfzh=?
+			
+		]]>
+	</property>
+ 
+ 	 <property name="insertZdryJsbrzsxxBean">
+		<![CDATA[
+		
+			insert into t_zdry_gzdx_jsbrzsxx
+			  (id,
+			   jsbrbh,
+			   zsxz,
+			   fasy,
+			   fayy,
+			   zssj,
+			   zsdd,
+			   jyqk,
+			   djrxm,
+			   djsj,
+			   djdwdm,
+			   djdwmc)
+			values
+			  (#[id],
+			   #[jsbrbh],
+			   #[zsxz],
+			   #[fasy],
+			   #[fayy],
+			   to_date(#[zssj],'yyyy-mm-dd'),
+			   #[zsdd],
+			   #[jyqk],
+			   #[djrxm],
+			   to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+			   #[djdwdm],
+			   #[djdwmc]
+			   )
+		
+	
+		
+		]]>
+	</property>
+	
+	 <property name="updateZdryJsbrzsxxBean">
+		<![CDATA[
+		update t_zdry_gzdx_jsbrzsxx
+		   set id = #[id],
+		       jsbrbh = #[jsbrbh],
+		       zsxz = #[zsxz],
+		       fasy = #[fasy],
+		       fayy = #[fayy],
+		       zssj = to_date(#[zssj],'yyyy-mm-dd'),
+		       zsdd = #[zsdd],
+		       jyqk = #[jyqk],
+		       djrxm = #[djrxm],
+		       djsj = to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+		       djdwdm = #[djdwdm],
+		       djdwmc = #[djdwmc]
+		 where id = #[id]
+		
+		]]>
+	</property>
+	 <property name="queryZdryJsbrzsPageResult">
+		<![CDATA[	
+			select id,
+			       jsbrbh,
+			       zsxz,
+			       fasy,
+			       fayy,
+			       to_char(zssj,'yyyy-mm-dd') zssj,
+			       zsdd,
+			       jyqk,
+			       djrxm,
+			       djsj,
+			       djdwdm,
+			       djdwmc
+			  from t_zdry_gzdx_jsbrzsxx
+			  where jsbrbh=?
+		]]>
+	</property>
+	<property name="insertZdrySwrySfjlBean">
+		<![CDATA[
+		
+		insert into t_zdry_gzdx_swsfjl
+				  (id,
+				   swrybh,
+				   bxxw,
+				   jlxxly,
+				   sfdd,
+				   sfsj,
+				   clqk,
+				   bz,
+				   djrxm,
+				   djsj,
+				   djdwdm,
+				   djdwmc)
+				values
+				  (#[id],
+				   #[swrybh],
+				   #[bxxw],
+				   #[jlxxly],
+				   #[sfdd],
+				   to_date(#[sfsj],'yyyy-mm-dd'),
+				   #[clqk],
+				   #[bz],
+				   #[djrxm],
+				   to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+				   #[djdwdm],
+				   #[djdwmc]
+				   )
+		]]>
+	</property>
+	
+	 <property name="updateZdrySwrySfjlBean">
+		<![CDATA[
+		update t_zdry_gzdx_swsfjl
+		   set id = #[id],
+		       swrybh = #[swrybh],
+		       bxxw = #[bxxw],
+		       jlxxly = #[jlxxly],
+		       sfdd = #[sfdd],
+		       sfsj = to_date(#[sfsj],'yyyy-mm-dd'),
+		       clqk = #[clqk],
+		       bz = #[bz],
+		       djrxm = #[djrxm],
+		       djsj = to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+		       djdwdm = #[djdwdm],
+		       djdwmc = #[djdwmc]
+		 where id = #[id]
+		
+		]]>
+	</property>
+	 <property name="queryZdrySwrysfjlPageResult">
+		<![CDATA[
+		select id,
+		       swrybh,
+		       bxxw,
+		       jlxxly,
+		       sfdd,
+		       to_char(sfsj,'yyyy-mm-dd') sfsj,
+		       clqk,
+		       bz,
+		       djrxm,
+		       djsj,
+		       djdwdm,
+		       djdwmc
+	    from t_zdry_gzdx_swsfjl
+		where swrybh=?
+				
+		]]>
+	</property>
+ 	<property name="insertZdryJzdxInfo">
+ 		<![CDATA[
+ 			insert into t_zdry_gzdx_jzdxxx
+			  (jzdxbh,
+			   gzdxbh,
+			   rybh,
+			   sfzh,
+			   cflb,
+			   salb,
+			   pjjg,
+			   xqqsrq,
+			   xqjsrq,
+			   xqnx,
+			   sfbdzzql,
+			   bdzzqlnx,
+			   pzjg,
+			   jdkcqsrq,
+			   jdkczzrq,
+			   wtzxdw,
+			   xbkcqsrq,
+			   xbkcjzrq,
+			   yzxjg,
+			   wsrq,
+			   wszh,
+			   jwzxyy,
+			   zyfzss,
+			   gxpcsdm,
+			   gxpcsmc,
+			   gxjwqdm,
+			   gxjwqmc,
+			   gxsq,
+			   zrmjjh,
+			   zrmjxm,
+			   zrmjlxdh,
+			   djrxm,
+			   djdwdm,
+			   djdwmc,
+			   djsj,
+			   zxdwdm,
+			   zxdwmc,
+			   zxyy,
+			   zxsj)
+			values
+			  (#[jzdxbh],
+			   #[gzdxbh],
+			   #[rybh],
+			   #[sfzh],
+			   #[cflb],
+			   #[salb],
+			   #[pjjg],
+			   to_date(#[xqqsrq],'yyyy-MM-dd'),
+			   to_date(#[xqjsrq],'yyyy-MM-dd'),
+			   #[xqnx],
+			   #[sfbdzzql],
+			   #[bdzzqlnx],
+			   #[pzjg],
+			   to_date(#[jdkcqsrq],'yyyy-MM-dd'),
+			   to_date(#[jdkczzrq],'yyyy-MM-dd'),
+			   #[wtzxdw],
+			   to_date(#[xbkcqsrq],'yyyy-MM-dd'),
+			   to_date(#[xbkcjzrq],'yyyy-MM-dd'),
+			   #[yzxjg],
+			   to_date(#[wsrq],'yyyy-MM-dd'),
+			   #[wszh],
+			   #[jwzxyy],
+			   #[zyfzss],
+			   #[gxpcsdm],
+			   #[gxpcsmc],
+			   #[gxjwqdm],
+			   #[gxjwqmc],
+			   #[gxsq],
+			   #[zrmjjh],
+			   #[zrmjxm],
+			   #[zrmjlxdh],
+			   #[djrxm],
+			   #[djdwdm],
+			   #[djdwmc],
+			    to_date(#[djsj],'yyyy-MM-dd HH24:mi:ss'),
+			   #[zxdwdm],
+			   #[zxdwmc],
+			   #[zxyy],
+			   to_date(#[zxsj],'yyyy-MM-dd HH24:mi:ss'))
+ 			
+ 		]]>
+ 	</property>
+ 
+ 	<property name="updateZdryJzdxInfo">
+ 		<![CDATA[
+ 			update t_zdry_gzdx_jzdxxx
+   set gzdxbh = #[gzdxbh],
+       rybh = #[rybh],
+       sfzh = #[sfzh],
+       cflb = #[cflb],
+       salb = #[salb],
+       pjjg = #[pjjg],
+       xqqsrq =to_date(#[xqqsrq],'yyyy-MM-dd'),
+       xqjsrq =to_date(#[jdkczzrq],'yyyy-MM-dd'),
+       xqnx = #[xqnx],
+       sfbdzzql = #[sfbdzzql],
+       bdzzqlnx = #[bdzzqlnx],
+       pzjg = #[pzjg],
+       jdkcqsrq =  to_date(#[jdkcqsrq],'yyyy-MM-dd'),
+       jdkczzrq =  to_date(#[jdkczzrq],'yyyy-MM-dd'),
+       wtzxdw = #[wtzxdw],
+       xbkcqsrq =to_date(#[xbkcqsrq],'yyyy-MM-dd'),
+       xbkcjzrq = to_date(#[xbkcjzrq],'yyyy-MM-dd'),
+       yzxjg = #[yzxjg],
+       wsrq = to_date(#[wsrq],'yyyy-MM-dd'),
+       wszh = #[wszh],
+       jwzxyy = #[jwzxyy],
+       zyfzss = #[zyfzss],
+       gxpcsdm = #[gxpcsdm],
+       gxpcsmc = #[gxpcsmc],
+       gxjwqdm = #[gxjwqdm],
+       gxjwqmc = #[gxjwqmc],
+       gxsq = #[gxsq],
+       zrmjjh = #[zrmjjh],
+       zrmjxm = #[zrmjxm],
+       zrmjlxdh = #[zrmjlxdh],
+       djrxm = #[djrxm],
+       djdwdm = #[djdwdm],
+       djdwmc = #[djdwmc],
+       djsj =  to_date(#[djsj],'yyyy-MM-dd HH24:mi:ss'),
+       zxdwdm = #[zxdwdm],
+       zxdwmc = #[zxdwmc],
+       zxyy = #[zxyy],
+       zxsj =  to_date(#[zxsj],'yyyy-MM-dd HH24:mi:ss')
+ where jzdxbh = #[jzdxbh]
+ 			
+ 		]]>
+ 	</property>
+ 	 
+ 	 
+ 	 <property name="insertZdryGzryInfo">
+		<![CDATA[			
+insert into t_zdry_gzdx_gzryxx
+  (gzrybh,
+   gzdxbh,
+   rybh,
+   sfzh,
+   gzyy,
+   gzlb,
+   gzsj,
+   jyqk,
+   bz,
+   ladw,
+   lamjxm,
+   lamjsfzh,
+   lamjlxfs,
+   gxpcsdm,
+   gxpcsmc,
+   gxjwqdm,
+   gxjwqmc,
+   gxsq,
+   zrmjjh,
+   zrmjxm,
+   zrmjlxdh,
+   djdwdm,
+   djdwmc,
+   zxrxm,
+   djsj,
+   zxyy,
+   djrxm,
+   zxdwdm,
+   zxdwmc,
+   zxsj)
+values
+  (#[gzrybh],
+   #[gzdxbh],
+   #[rybh],
+   #[sfzh],
+   #[gzyy],
+   #[gzlb],
+   to_date(#[gzsj],'yyyy-MM-dd'),
+   #[jyqk],
+   #[bz],
+   #[ladw],
+   #[lamjxm],
+   #[lamjsfzh],
+   #[lamjlxfs],
+   #[gxpcsdm],
+   #[gxpcsmc],
+   #[gxjwqdm],
+   #[gxjwqmc],
+   #[gxsq],
+   #[zrmjjh],
+   #[zrmjxm],
+   #[zrmjlxdh],
+   #[djdwdm],
+   #[djdwmc],
+   #[zxrxm],
+   to_date(#[djsj],'yyyy-MM-dd HH24:mi:ss'),
+   #[zxyy],
+   #[djrxm],
+   #[zxdwdm],
+   #[zxdwmc],
+   to_date(#[zxsj],'yyyy-MM-dd HH24:mi:ss'))
+			
+		]]>
+	</property>
+ 	
+ 	
+ 	<property name="updateZdryGzryInfo">
+		<![CDATA[
+		update t_zdry_gzdx_gzryxx
+   set 
+       gzdxbh = #[gzdxbh],
+       rybh = #[rybh],
+       sfzh = #[sfzh],
+       gzyy = #[gzyy],
+       gzlb = #[gzlb],
+       gzsj = to_date(#[gzsj],'yyyy-MM-dd'),
+       jyqk = #[jyqk],
+       bz = #[bz],
+       ladw = #[ladw],
+       lamjxm = #[lamjxm],
+       lamjsfzh = #[lamjsfzh],
+       lamjlxfs = #[lamjlxfs],
+       gxpcsdm = #[gxpcsdm],
+       gxpcsmc = #[gxpcsmc],
+       gxjwqdm = #[gxjwqdm],
+       gxjwqmc = #[gxjwqmc],
+       gxsq = #[gxsq],
+       zrmjjh = #[zrmjjh],
+       zrmjxm = #[zrmjxm],
+       zrmjlxdh = #[zrmjlxdh],
+       djdwdm = #[djdwdm],
+       djdwmc = #[djdwmc],
+       zxrxm = #[zxrxm],
+       djsj =  to_date(#[djsj],'yyyy-MM-dd HH24:mi:ss'),
+       zxyy = #[zxyy],
+       djrxm = #[djrxm],
+       zxdwdm = #[zxdwdm],
+       zxdwmc = #[zxdwmc],
+       zxsj =  to_date(#[zxsj],'yyyy-MM-dd HH24:mi:ss')
+ where gzrybh = #[gzrybh]
+		
+		]]>
+	</property>
+	
+	<property name="insertZdryXdryInfo">
+		<![CDATA[
+			
+insert into t_zdry_gzdx_xdryxx
+  (xdrybh,
+   gzdxbh,
+   rybh,
+   sfzh,
+   ryxz,
+   xzdjrq,
+   jkzk,
+   ccxdrq,
+   ccxdcs,
+   xdfs,
+   ccxddpzl,
+   gxpcsdm,
+   gxpcsmc,
+   gxjwqdm,
+   gxjwqmc,
+   gxsq,
+   zrmjjh,
+   zrmjxm,
+   zrmjlxdh)
+values
+  (#[xdrybh],
+   #[gzdxbh],
+   #[rybh],
+   #[sfzh],
+   #[ryxz],
+   to_date(#[xzdjrq],'yyyy-MM-dd'),
+   #[jkzk],
+   to_date(#[ccxdrq],'yyyy-MM-dd'),
+   #[ccxdcs],
+   #[xdfs],
+   #[ccxddpzl],
+   #[gxpcsdm],
+   #[gxpcsmc],
+   #[gxjwqdm],
+   #[gxjwqmc],
+   #[gxsq],
+   #[zrmjjh],
+   #[zrmjxm],
+   #[zrmjlxdh])
+			
+		]]>
+	</property>
+	<property name="updateZdryXdryInfo">
+		<![CDATA[
+		update t_zdry_gzdx_xdryxx
+   set gzdxbh = #[gzdxbh],
+       rybh = #[rybh],
+       sfzh = #[sfzh],
+       ryxz = #[ryxz],
+       xzdjrq = to_date(#[xzdjrq],'yyyy-MM-dd'),
+       jkzk = #[jkzk],
+       ccxdrq = to_date(#[ccxdrq],'yyyy-MM-dd'),
+       ccxdcs = #[ccxdcs],
+       xdfs = #[xdfs],
+       ccxddpzl = #[ccxddpzl],
+       gxpcsdm = #[gxpcsdm],
+       gxpcsmc = #[gxpcsmc],
+       gxjwqdm = #[gxjwqdm],
+       gxjwqmc = #[gxjwqmc],
+       gxsq = #[gxsq],
+       zrmjjh = #[zrmjjh],
+       zrmjxm = #[zrmjxm],
+       zrmjlxdh = #[zrmjlxdh]
+ where xdrybh= #[xdrybh]
+		
+		]]>
+	</property>
+	<property name="queryZdryXdryhdPageResult">
+		<![CDATA[
+			select id,
+       xdrybh,
+       to_char(chrq,'yyyy-MM-dd') chrq,
+       chdq,
+       chdd,
+       xdcs,
+       dply,
+       dpzl,
+       wfss,
+       chdwdm,
+       chdwmc,
+       to_char(njrq,'yyyy-MM-dd') njrq,
+       njdq,
+       njdd,
+       njjg,
+       fxcs,
+       djrxm,
+       to_char(djsj,'yyyy-MM-dd HH24:mi:ss') djsj,
+       djdwdm,
+       djdwmc,
+       czrxm,
+       to_char(czsj,'yyyy-MM-dd HH24:mi:ss') czsj,
+       czdwdm,
+       czdwmc,
+       czbs
+  from t_zdry_xdchnjxx
+  where xdrybh=?
+			
+		]]>
+	</property>
+	<property name="insertZdryXdnjxxBean">
+		<![CDATA[
+		insert into t_zdry_xdchnjxx
+  (id,
+   xdrybh,
+   chrq,
+   chdq,
+   chdd,
+   xdcs,
+   dply,
+   dpzl,
+   wfss,
+   chdwdm,
+   chdwmc,
+   njrq,
+   njdq,
+   njdd,
+   njjg,
+   fxcs,
+   djrxm,
+   djsj,
+   djdwdm,
+   djdwmc,
+   czrxm,
+   czsj,
+   czdwdm,
+   czdwmc,
+   czbs)
+values
+  (#[id],
+   #[xdrybh],
+   to_date(#[chrq],'yyyy-mm-dd'),
+   #[chdq],
+   #[chdd],
+   #[xdcs],
+   #[dply],
+   #[dpzl],
+   #[wfss],
+   #[chdwdm],
+   #[chdwmc],
+   to_date(#[njrq],'yyyy-mm-dd'),
+   #[njdq],
+   #[njdd],
+   #[njjg],
+   #[fxcs],
+   #[djrxm],
+   to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+   #[djdwdm],
+   #[djdwmc],
+   #[czrxm],
+   to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'), 
+   #[czdwdm],
+   #[czdwmc],
+   #[czbs]
+   )
+		]]>
+	</property>
+	<property name="updateZdryXdnjxxBean">
+		<![CDATA[
+		update t_zdry_xdchnjxx
+      set xdrybh = #[xdrybh],
+          chrq =  to_date(#[chrq],'yyyy-mm-dd'),
+          chdq = #[chdq],
+          chdd = #[chdd],
+          xdcs = #[xdcs],
+          dply = #[dply],
+          dpzl = #[dpzl],
+          wfss = #[wfss],
+          chdwdm = #[chdwdm],
+          chdwmc = #[chdwmc],
+          njrq = to_date(#[njrq],'yyyy-mm-dd'),
+          njdq = #[njdq],
+          njdd = #[njdd],
+          njjg = #[njjg],
+          fxcs = #[fxcs],
+          djrxm = #[djrxm],
+          djsj =to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+          djdwdm = #[djdwdm],
+          djdwmc = #[djdwmc],
+          czrxm = #[czrxm],
+          czsj =  to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'), 
+          czdwdm = #[czdwdm],
+          czdwmc = #[czdwmc],
+          czbs = #[czbs]
+    where  id = #[id]
+   
+		
+		]]>
+	</property>
+	
+	<property name="queryZdryJsbrBeanByJsbrbh">
+		<![CDATA[
+			select * from t_zdry_gzdx_jsbr where jsbrbh=?
+		]]>
+	</property>
+	<property name="queryZdrySwryBeanBySwrybh">
+		<![CDATA[
+			select * from t_zdry_gzdx_swry where swrybh=?
+		]]>
+	</property>
+	<property name="queryZdryXdryxxBeanByXdrybh">
+		<![CDATA[
+			select * from t_zdry_gzdx_xdryxx where xdrybh=?
+		]]>
+	</property>
+	<!-- 统计在控登记情况 -->
+	<property name="queryZdryGzdxPageResult">
+		<![CDATA[
+			select zdryzrdw,
+                   (select orgname
+                     from v_common_organization
+                     where isyx = '1'
+                     and orgcode = zdryzrdw) zdryzrdwmc,
+                   zdrysl,
+                   zkdjs,
+                   zkdjzks,
+                   zkdjsks,
+                   zkdjlv || '%' as zkdjlv,
+                   zkdjzklv || '%' as zkdjzklv
+                   from ( select
+                           #if($jwsqdm && !$jwsqdm.equals("") && $tjjb.equals("3"))
+	                           sszrdwdm as zdryzrdw,
+                            #elseif ($pcsdm && !$pcsdm.equals("") && $tjjb.equals("3"))
+	                           sszrdwdm as zdryzrdw,
+                            #elseif($countrygajgjgdm && !$countrygajgjgdm.equals("") && $tjjb.equals("3"))
+	                           sszrdwdm as zdryzrdw,
+                            #elseif($citygajgjgdm && !$citygajgjgdm.equals("") && $tjjb.equals("3")) 
+	                           sszrdwdm as zdryzrdw,
+                            #end
+                            #if($jwsqdm && !$jwsqdm.equals("") && $tjjb.equals("2"))
+	                           sszrdwdm as zdryzrdw,
+                            #elseif ($pcsdm && !$pcsdm.equals("") && $tjjb.equals("2"))
+	                           substr(sszrdwdm,1,8)||'0000' as zdryzrdw,
+                            #elseif($countrygajgjgdm && !$countrygajgjgdm.equals("") && $tjjb.equals("2"))
+	                           substr(sszrdwdm,1,8)||'0000' as zdryzrdw,
+                            #elseif($citygajgjgdm && !$citygajgjgdm.equals("") && $tjjb.equals("2")) 
+	                           substr(sszrdwdm,1,8)||'0000' as zdryzrdw,
+                            #end
+                            #if($jwsqdm && !$jwsqdm.equals("") && $tjjb.equals("1"))
+	                           sszrdwdm as zdryzrdw,
+                            #elseif ($pcsdm && !$pcsdm.equals("") && $tjjb.equals("1"))
+	                           sszrdwdm as zdryzrdw,
+                            #elseif($countrygajgjgdm && !$countrygajgjgdm.equals("") && $tjjb.equals("1"))
+	                           substr(sszrdwdm,1,6)||'000000' as zdryzrdw,
+                            #elseif($citygajgjgdm && !$citygajgjgdm.equals("") && $tjjb.equals("1")) 
+	                           substr(sszrdwdm,1,6)||'000000' as zdryzrdw,
+                            #end
+                 count(distinct v_zdry_gzdx.sfzh) as zdrysl,
+                 count(distinct ZDRY_ZKDJB.sfzh) as zkdjs,
+                 count(distinct ZDRY_ZKDJB_ZK.sfzh)as zkdjzks,
+                 count(distinct ZDRY_ZKDJB_SK.sfzh)as zkdjsks,
+                 round(100 * COUNT(distinct ZDRY_ZKDJB.sfzh) /
+                     count(distinct v_zdry_gzdx.sfzh),
+                     2) as zkdjlv,
+                 round(100 * COUNT(distinct ZDRY_ZKDJB_ZK.sfzh) /
+                     count(distinct v_zdry_gzdx.sfzh),
+                     2) as zkdjzklv
+                 from v_zdry_gzdx,
+                 (select *
+                  from t_zdry_xsbx
+                 where 1=1
+                 #if($djdateStart && !$djdateStart.equals("")) 
+                   and djsj >=to_date(#[djdateStart]||'00:00:00','yyyy-mm-dd hh24:mi:ss')
+                 #end 
+                 #if($djdateEnd && !$djdateEnd.equals(""))  
+                    and djsj<=to_date(#[djdateEnd]|| '23:59:59','yyyy-mm-dd hh24:mi:ss')
+                 #end
+                 ) ZDRY_ZKDJB,
+               (select *
+                  from t_zdry_xsbx
+                 where zkzt = '1'
+                  #if ($djdateStart && !$djdateStart.equals(""))
+                   and djsj>=to_date(#[djdateStart]||'00:00:00','yyyy-mm-dd hh24:mi:ss')
+                  #end 
+                  #if ($djdateEnd && !$djdateEnd.equals("")) 
+                    and djsj<=to_date(#[djdateEnd]|| '23:59:59','yyyy-mm-dd hh24:mi:ss')
+                  #end  
+                  ) ZDRY_ZKDJB_ZK,
+                  (select *
+                  from t_zdry_xsbx
+                 where zkzt = '0'
+                  #if ($djdateStart && !$djdateStart.equals(""))
+                   and djsj>=to_date(#[djdateStart]||'00:00:00','yyyy-mm-dd hh24:mi:ss')
+                  #end 
+                  #if ($djdateEnd && !$djdateEnd.equals("")) 
+                    and djsj<=to_date(#[djdateEnd]|| '23:59:59','yyyy-mm-dd hh24:mi:ss')
+                  #end  
+                  ) ZDRY_ZKDJB_SK                  
+         where (v_zdry_gzdx.yxx = '1' or v_zdry_gzdx.yxx is null)
+           and v_zdry_gzdx.sfzh = ZDRY_ZKDJB.sfzh(+)
+           and v_zdry_gzdx.sfzh = ZDRY_ZKDJB_ZK.sfzh(+)
+           and v_zdry_gzdx.sfzh = ZDRY_ZKDJB_SK.sfzh(+)
+           and v_zdry_gzdx.sszrdwdm is not null
+           and v_zdry_gzdx.sszrdwdm = ZDRY_ZKDJB.DJDWDM(+)
+           and v_zdry_gzdx.sszrdwdm = ZDRY_ZKDJB_ZK.DJDWDM(+)
+           and v_zdry_gzdx.sszrdwdm = ZDRY_ZKDJB_SK.DJDWDM(+)
+           #if ($djdateEnd && !$djdateEnd.equals("")) 
+           	 and v_zdry_gzdx.scxfsj<=to_date(#[djdateEnd]|| '23:59:59','yyyy-mm-dd hh24:mi:ss')
+           #end 
+           #if($sqdm && !$sqdm.equals(""))
+           	 and  v_zdry_gzdx.sszrdwdm=#[jwsqdm] and  v_zdry_gzdx.ssxzsq=#[sqdm]
+           #elseif($jwsqdm && !$jwsqdm.equals(""))
+	         and v_zdry_gzdx.sszrdwdm=#[jwsqdm]
+           #elseif ($pcsdm && !$pcsdm.equals(""))
+	         and substr(sszrdwdm,1,8)=substr(#[pcsdm],1,8)
+           #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+	         and substr(sszrdwdm,1,6)= substr(#[countrygajgjgdm],1,6)
+           #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+	         and substr(sszrdwdm,1,4)= substr(#[citygajgjgdm],1,4)
+           #end
+           #if($zdryxm && !$zdryxm.equals(""))
+             and v_zdry_gzdx.xm like '%'||#[zdryxm]||'%'
+           #end
+            #if($zdrysfzh && !$zdrysfzh.equals(""))
+             and v_zdry_gzdx.sfzh = #[zdrysfzh]
+           #end
+           #if($dxlb && !$dxlb.equals(""))
+			 	#if($dxlb.equals("01"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,1,1)='1'
+			 	#elseif($dxlb.equals("02"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,2,1)='1'
+			 	#elseif($dxlb.equals("03"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,3,1)='1'
+			 	#elseif($dxlb.equals("04"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,4,1)='1'
+			 	#elseif($dxlb.equals("05"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,5,1)='1'
+			 	#elseif($dxlb.equals("06"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,6,1)='1'
+			 	#elseif($dxlb.equals("07"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,7,1)='1'
+			 	#end
+			 #end
+         group by
+          #if($sqdm && !$sqdm.equals("") && $tjjb.equals("3"))
+          	 v_zdry_gzdx.sszrdwdm
+          #elseif($jwsqdm && !$jwsqdm.equals("") && $tjjb.equals("3"))
+	         v_zdry_gzdx.sszrdwdm
+          #elseif ($pcsdm && !$pcsdm.equals("") && $tjjb.equals("3"))
+	         v_zdry_gzdx.sszrdwdm
+           #elseif($countrygajgjgdm && !$countrygajgjgdm.equals("") && $tjjb.equals("3"))
+	         v_zdry_gzdx.sszrdwdm
+           #elseif($citygajgjgdm && !$citygajgjgdm.equals("") && $tjjb.equals("3"))
+	         v_zdry_gzdx.sszrdwdm
+           #end
+           
+            #if($sqdm && !$sqdm.equals("") && $tjjb.equals("2"))
+          	 v_zdry_gzdx.sszrdwdm
+          #elseif($jwsqdm && !$jwsqdm.equals("") && $tjjb.equals("2"))
+	         v_zdry_gzdx.sszrdwdm
+          #elseif ($pcsdm && !$pcsdm.equals("") && $tjjb.equals("2"))
+	         substr(v_zdry_gzdx.sszrdwdm,1,8)
+           #elseif($countrygajgjgdm && !$countrygajgjgdm.equals("") && $tjjb.equals("2"))
+	         substr(v_zdry_gzdx.sszrdwdm,1,8)
+           #elseif($citygajgjgdm && !$citygajgjgdm.equals("") && $tjjb.equals("2"))
+	         substr(v_zdry_gzdx.sszrdwdm,1,8)
+           #end
+           
+            #if($sqdm && !$sqdm.equals("") && $tjjb.equals("1"))
+          	 v_zdry_gzdx.sszrdwdm
+          #elseif($jwsqdm && !$jwsqdm.equals("") && $tjjb.equals("1"))
+	         v_zdry_gzdx.sszrdwdm
+          #elseif ($pcsdm && !$pcsdm.equals("") && $tjjb.equals("1"))
+	         v_zdry_gzdx.sszrdwdm
+           #elseif($countrygajgjgdm && !$countrygajgjgdm.equals("") && $tjjb.equals("1"))
+	         substr(v_zdry_gzdx.sszrdwdm,1,6)
+           #elseif($citygajgjgdm && !$citygajgjgdm.equals("") && $tjjb.equals("1"))
+	         substr(v_zdry_gzdx.sszrdwdm,1,6)
+           #end
+           having count(distinct v_zdry_gzdx.sfzh) > 0 
+          )
+		]]>
+	</property>
+	<!-- queryZdryPageResult 返回重点人员数列表信息 -->
+	<property name="queryZdryPageResult">
+		<![CDATA[
+			select  v_zdry_gzdx.xm as xm,
+					v_zdry_gzdx.sfzh as sfzh,
+					v_zdry_gzdx.hjdxz as hjdxz,
+					v_zdry_gzdx.xzzxz as xzzxz,
+					v_zdry_gzdx.zdrybh as zdrybh,
+					v_zdry_gzdx.rybh as rybh,
+					v_zdry_gzdx.sszrdwmc as sszrdwmc
+              from v_zdry_gzdx          
+         where (v_zdry_gzdx.yxx = '1' or v_zdry_gzdx.yxx is null)
+           
+           and v_zdry_gzdx.sszrdwdm is not null
+           #if ($djdateEnd && !$djdateEnd.equals("")) 
+           	 and v_zdry_gzdx.scxfsj<=to_date(#[djdateEnd]|| '23:59:59','yyyy-mm-dd hh24:mi:ss')
+           #end 
+           #if($orgcode && !$orgcode.equals("") && $tjjb.equals("1"))
+              and substr(v_zdry_gzdx.sszrdwdm,1,6)=substr(#[orgcode],1,6)
+           #end
+           #if($orgcode && !$orgcode.equals("") &&  $tjjb.equals("2"))
+              and substr(v_zdry_gzdx.sszrdwdm,1,8)=substr(#[orgcode],1,8)
+           #end
+           #if($orgcode && !$orgcode.equals("") &&  $tjjb.equals("3"))
+              and v_zdry_gzdx.sszrdwdm=#[orgcode]
+           #end
+           #if($sqdm && !$sqdm.equals(""))
+           	 and  v_zdry_gzdx.sszrdwdm=#[jwsqdm] and  v_zdry_gzdx.ssxzsq=#[sqdm]
+           #elseif($jwsqdm && !$jwsqdm.equals(""))
+	         and v_zdry_gzdx.sszrdwdm=#[jwsqdm]
+           #elseif ($pcsdm && !$pcsdm.equals(""))
+	         and substr(sszrdwdm,1,8)=substr(#[pcsdm],1,8)
+           #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+	         and substr(sszrdwdm,1,6)= substr(#[countrygajgjgdm],1,6)
+           #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+	         and substr(sszrdwdm,1,4)= substr(#[citygajgjgdm],1,4)
+           #end
+           #if($zdryxm && !$zdryxm.equals(""))
+             and v_zdry_gzdx.xm like '%'||#[zdryxm]||'%'
+           #end
+            #if($zdrysfzh && !$zdrysfzh.equals(""))
+             and v_zdry_gzdx.sfzh = #[zdrysfzh]
+           #end
+           #if($dxlb && !$dxlb.equals(""))
+			 	#if($dxlb.equals("01"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,1,1)='1'
+			 	#elseif($dxlb.equals("02"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,2,1)='1'
+			 	#elseif($dxlb.equals("03"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,3,1)='1'
+			 	#elseif($dxlb.equals("04"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,4,1)='1'
+			 	#elseif($dxlb.equals("05"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,5,1)='1'
+			 	#elseif($dxlb.equals("06"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,6,1)='1'
+			 	#elseif($dxlb.equals("07"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,7,1)='1'
+			 	#end
+			 #end   
+		]]>
+	</property>
+	
+	<!-- queryZdryPageResult 返回在控登记数列表信息 -->
+	<property name="queryZdryZKDJSPageResult">
+		<![CDATA[
+			select  distinct
+					v_zdry_gzdx.xm as xm,
+					v_zdry_gzdx.sfzh as sfzh,
+					v_zdry_gzdx.hjdxz as hjdxz,
+					v_zdry_gzdx.xzzxz as xzzxz,
+					v_zdry_gzdx.zdrybh as zdrybh,
+					v_zdry_gzdx.rybh as rybh,
+					v_zdry_gzdx.sszrdwmc as sszrdwmc
+              from v_zdry_gzdx,
+              (select *
+                  from t_zdry_xsbx
+                 where 1=1
+                 #if($djdateStart && !$djdateStart.equals("")) 
+                   and djsj >=to_date(#[djdateStart]||'00:00:00','yyyy-mm-dd hh24:mi:ss')
+                 #end 
+                 #if($djdateEnd && !$djdateEnd.equals(""))  
+                    and djsj<=to_date(#[djdateEnd]|| '23:59:59','yyyy-mm-dd hh24:mi:ss')
+                 #end
+                 ) ZDRY_ZKDJB          
+         where (v_zdry_gzdx.yxx = '1' or v_zdry_gzdx.yxx is null)
+           
+           and v_zdry_gzdx.sszrdwdm is not null
+           and v_zdry_gzdx.sfzh = ZDRY_ZKDJB.sfzh
+           and v_zdry_gzdx.sszrdwdm = ZDRY_ZKDJB.DJDWDM
+           #if ($djdateEnd && !$djdateEnd.equals("")) 
+           	 and v_zdry_gzdx.scxfsj<=to_date(#[djdateEnd]|| '23:59:59','yyyy-mm-dd hh24:mi:ss')
+           #end 
+           #if($orgcode && !$orgcode.equals("") && $tjjb.equals("1"))
+              and substr(v_zdry_gzdx.sszrdwdm,1,6)=substr(#[orgcode],1,6)
+           #end
+           #if($orgcode && !$orgcode.equals("") &&  $tjjb.equals("2"))
+              and substr(v_zdry_gzdx.sszrdwdm,1,8)=substr(#[orgcode],1,8)
+           #end
+           #if($orgcode && !$orgcode.equals("") &&  $tjjb.equals("3"))
+              and v_zdry_gzdx.sszrdwdm=#[orgcode]
+           #end
+           #if($sqdm && !$sqdm.equals(""))
+           	 and  v_zdry_gzdx.sszrdwdm=#[jwsqdm] and  v_zdry_gzdx.ssxzsq=#[sqdm]
+           #elseif($jwsqdm && !$jwsqdm.equals(""))
+	         and v_zdry_gzdx.sszrdwdm=#[jwsqdm]
+           #elseif ($pcsdm && !$pcsdm.equals(""))
+	         and substr(sszrdwdm,1,8)=substr(#[pcsdm],1,8)
+           #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+	         and substr(sszrdwdm,1,6)= substr(#[countrygajgjgdm],1,6)
+           #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+	         and substr(sszrdwdm,1,4)= substr(#[citygajgjgdm],1,4)
+           #end
+           #if($zdryxm && !$zdryxm.equals(""))
+             and v_zdry_gzdx.xm like '%'||#[zdryxm]||'%'
+           #end
+            #if($zdrysfzh && !$zdrysfzh.equals(""))
+             and v_zdry_gzdx.sfzh = #[zdrysfzh]
+           #end
+           #if($dxlb && !$dxlb.equals(""))
+			 	#if($dxlb.equals("01"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,1,1)='1'
+			 	#elseif($dxlb.equals("02"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,2,1)='1'
+			 	#elseif($dxlb.equals("03"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,3,1)='1'
+			 	#elseif($dxlb.equals("04"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,4,1)='1'
+			 	#elseif($dxlb.equals("05"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,5,1)='1'
+			 	#elseif($dxlb.equals("06"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,6,1)='1'
+			 	#elseif($dxlb.equals("07"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,7,1)='1'
+			 	#end
+			 #end   
+		]]>
+	</property>
+	
+	
+	<!-- queryZdryZKZKSPageResult 返回在控登记在控数列表信息 -->
+	<property name="queryZdryZKZKSPageResult">
+		<![CDATA[
+			select  distinct
+					v_zdry_gzdx.xm as xm,
+					v_zdry_gzdx.sfzh as sfzh,
+					v_zdry_gzdx.hjdxz as hjdxz,
+					v_zdry_gzdx.xzzxz as xzzxz,
+					v_zdry_gzdx.zdrybh as zdrybh,
+					v_zdry_gzdx.rybh as rybh,
+					v_zdry_gzdx.sszrdwmc as sszrdwmc
+              from v_zdry_gzdx,
+              (select *
+                  from t_zdry_xsbx
+                 where zkzt='1'
+                 #if($djdateStart && !$djdateStart.equals("")) 
+                   and djsj >=to_date(#[djdateStart]||'00:00:00','yyyy-mm-dd hh24:mi:ss')
+                 #end 
+                 #if($djdateEnd && !$djdateEnd.equals(""))  
+                    and djsj<=to_date(#[djdateEnd]|| '23:59:59','yyyy-mm-dd hh24:mi:ss')
+                 #end
+                 ) ZDRY_ZKDJB_ZK          
+         where (v_zdry_gzdx.yxx = '1' or v_zdry_gzdx.yxx is null)          
+           and v_zdry_gzdx.sszrdwdm is not null
+           and v_zdry_gzdx.sfzh = ZDRY_ZKDJB_ZK.sfzh
+           and v_zdry_gzdx.sszrdwdm = ZDRY_ZKDJB_ZK.DJDWDM
+           #if ($djdateEnd && !$djdateEnd.equals("")) 
+           	 and v_zdry_gzdx.scxfsj<=to_date(#[djdateEnd]|| '23:59:59','yyyy-mm-dd hh24:mi:ss')
+           #end 
+           #if($orgcode && !$orgcode.equals("") && $tjjb.equals("1"))
+              and substr(v_zdry_gzdx.sszrdwdm,1,6)=substr(#[orgcode],1,6)
+           #end
+           #if($orgcode && !$orgcode.equals("") &&  $tjjb.equals("2"))
+              and substr(v_zdry_gzdx.sszrdwdm,1,8)=substr(#[orgcode],1,8)
+           #end
+           #if($orgcode && !$orgcode.equals("") &&  $tjjb.equals("3"))
+              and v_zdry_gzdx.sszrdwdm=#[orgcode]
+           #end
+           #if($sqdm && !$sqdm.equals(""))
+           	 and  v_zdry_gzdx.sszrdwdm=#[jwsqdm] and  v_zdry_gzdx.ssxzsq=#[sqdm]
+           #elseif($jwsqdm && !$jwsqdm.equals(""))
+	         and v_zdry_gzdx.sszrdwdm=#[jwsqdm]
+           #elseif ($pcsdm && !$pcsdm.equals(""))
+	         and substr(sszrdwdm,1,8)=substr(#[pcsdm],1,8)
+           #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+	         and substr(sszrdwdm,1,6)= substr(#[countrygajgjgdm],1,6)
+           #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+	         and substr(sszrdwdm,1,4)= substr(#[citygajgjgdm],1,4)
+           #end
+           #if($zdryxm && !$zdryxm.equals(""))
+             and v_zdry_gzdx.xm like '%'||#[zdryxm]||'%'
+           #end
+            #if($zdrysfzh && !$zdrysfzh.equals(""))
+             and v_zdry_gzdx.sfzh = #[zdrysfzh]
+           #end
+           #if($dxlb && !$dxlb.equals(""))
+			 	#if($dxlb.equals("01"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,1,1)='1'
+			 	#elseif($dxlb.equals("02"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,2,1)='1'
+			 	#elseif($dxlb.equals("03"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,3,1)='1'
+			 	#elseif($dxlb.equals("04"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,4,1)='1'
+			 	#elseif($dxlb.equals("05"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,5,1)='1'
+			 	#elseif($dxlb.equals("06"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,6,1)='1'
+			 	#elseif($dxlb.equals("07"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,7,1)='1'
+			 	#end
+			 #end   
+		]]>
+	</property>
+	
+	
+	<!-- queryZdryZKSKSPageResult 返回在控登记失控数列表信息 -->
+	<property name="queryZdryZKSKSPageResult">
+		<![CDATA[
+			select  distinct
+					v_zdry_gzdx.xm as xm,
+					v_zdry_gzdx.sfzh as sfzh,
+					v_zdry_gzdx.hjdxz as hjdxz,
+					v_zdry_gzdx.xzzxz as xzzxz,
+					v_zdry_gzdx.zdrybh as zdrybh,
+					v_zdry_gzdx.rybh as rybh,
+					v_zdry_gzdx.sszrdwmc as sszrdwmc
+              from v_zdry_gzdx,
+              (select *
+                  from t_zdry_xsbx
+                 where zkzt='0'
+                 #if($djdateStart && !$djdateStart.equals("")) 
+                   and djsj >=to_date(#[djdateStart]||'00:00:00','yyyy-mm-dd hh24:mi:ss')
+                 #end 
+                 #if($djdateEnd && !$djdateEnd.equals(""))  
+                    and djsj<=to_date(#[djdateEnd]|| '23:59:59','yyyy-mm-dd hh24:mi:ss')
+                 #end
+                 ) ZDRY_ZKDJB_SK          
+         where (v_zdry_gzdx.yxx = '1' or v_zdry_gzdx.yxx is null)          
+           and v_zdry_gzdx.sszrdwdm is not null
+           and v_zdry_gzdx.sfzh = ZDRY_ZKDJB_SK.sfzh
+           and v_zdry_gzdx.sszrdwdm = ZDRY_ZKDJB_SK.DJDWDM
+           #if ($djdateEnd && !$djdateEnd.equals("")) 
+           	 and v_zdry_gzdx.scxfsj<=to_date(#[djdateEnd]|| '23:59:59','yyyy-mm-dd hh24:mi:ss')
+           #end 
+           #if($orgcode && !$orgcode.equals("") && $tjjb.equals("1"))
+              and substr(v_zdry_gzdx.sszrdwdm,1,6)=substr(#[orgcode],1,6)
+           #end
+           #if($orgcode && !$orgcode.equals("") &&  $tjjb.equals("2"))
+              and substr(v_zdry_gzdx.sszrdwdm,1,8)=substr(#[orgcode],1,8)
+           #end
+           #if($orgcode && !$orgcode.equals("") &&  $tjjb.equals("3"))
+              and v_zdry_gzdx.sszrdwdm=#[orgcode]
+           #end
+           #if($sqdm && !$sqdm.equals(""))
+           	 and  v_zdry_gzdx.sszrdwdm=#[jwsqdm] and  v_zdry_gzdx.ssxzsq=#[sqdm]
+           #elseif($jwsqdm && !$jwsqdm.equals(""))
+	         and v_zdry_gzdx.sszrdwdm=#[jwsqdm]
+           #elseif ($pcsdm && !$pcsdm.equals(""))
+	         and substr(sszrdwdm,1,8)=substr(#[pcsdm],1,8)
+           #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+	         and substr(sszrdwdm,1,6)= substr(#[countrygajgjgdm],1,6)
+           #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+	         and substr(sszrdwdm,1,4)= substr(#[citygajgjgdm],1,4)
+           #end
+           #if($zdryxm && !$zdryxm.equals(""))
+             and v_zdry_gzdx.xm like '%'||#[zdryxm]||'%'
+           #end
+            #if($zdrysfzh && !$zdrysfzh.equals(""))
+             and v_zdry_gzdx.sfzh = #[zdrysfzh]
+           #end
+           #if($dxlb && !$dxlb.equals(""))
+			 	#if($dxlb.equals("01"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,1,1)='1'
+			 	#elseif($dxlb.equals("02"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,2,1)='1'
+			 	#elseif($dxlb.equals("03"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,3,1)='1'
+			 	#elseif($dxlb.equals("04"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,4,1)='1'
+			 	#elseif($dxlb.equals("05"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,5,1)='1'
+			 	#elseif($dxlb.equals("06"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,6,1)='1'
+			 	#elseif($dxlb.equals("07"))
+			 		and substr(v_zdry_gzdx.zdrylbbj,7,1)='1'
+			 	#end
+			 #end   
+		]]>
+	</property>
+</properties>

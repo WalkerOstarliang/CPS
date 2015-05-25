@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="CPS"
+  id="myeclipse.1358502140703"
+  context-root="/CPS"
+  j2ee-spec="5.0"
+  archive="CPS.war">
+  <attributes>
+    <attribute name="webrootdir" value="/WebRoot" />
+  </attributes>
+</project-module>
+

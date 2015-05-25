@@ -1,0 +1,100 @@
+body {
+	font-size: 12px;
+	font-family: "宋体";
+	margin: 0;
+	padding: 0;
+}
+
+img 
+{
+	border: 0;
+}
+
+.div_box01 {
+	height: 50px;
+	border-bottom: 1px solid #e1e4e9;
+	background: #f9f9f9;
+}
+
+.div_box02 {
+	width: 146px;
+	height: 12px;
+	background: url(../images/img_05.gif) no-repeat right top;
+	padding: 5px;
+}
+
+.div_box03 {
+	width: 280px;
+	overflow-y: hidden;
+}
+
+.div_box04 {
+	padding: 5px;
+	background: url(../images/img_04.gif) repeat-x left bottom;
+	margin: 0 5px;
+}
+
+.div_box04 a:link {
+	color: #003ecc;
+	text-decoration: none;
+}
+
+.div_box04 a:visited {
+	color: #003ecc;
+	text-decoration: none;
+}
+
+.div_box04 a:hover {
+	color: #ff0000;
+	text-decoration: underline;
+}
+
+.div_box05 {
+	height: 25px;
+	line-height: 25px;
+	font-size:14px;
+	color: #003ecc;
+}
+
+.div_box06 {
+	line-height: 180%;
+	color: #717e92;
+}
+
+.div_box07 {
+	padding: 10px 0;
+	text-align: center;
+}
+
+.div_an {
+	width: 125px;
+	height: 22px;
+	font-size: 12px;
+	background: url(../images/img_11.gif) no-repeat left top;
+	cursor: pointer;
+	border: 0;
+}
+
+.div_input {
+	width: 146px;
+	height: 12px;
+	line-height: 12px;
+	background: #FFFFFF;
+	border: 0;
+}
+.pgisbtn
+{
+	text-align:center;
+	line-height:2px;
+	padding:5px;
+	height:15px;
+	width:30px;
+	background-position:0px 0px;
+	background:url(../images/btn_org.png);
+	color: #fff;
+	font-size:12px;
+	text-decoration:none;
+	color: white;
+	cursor: pointer;
+}
+ 

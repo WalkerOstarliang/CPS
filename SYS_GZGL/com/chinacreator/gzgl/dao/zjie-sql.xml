@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+		
+	<!-- 工作总结sql文件 sequence:SEQ_GZGL_GZRZ -->
+	
+	<property name="queryZjie">
+		<![CDATA[
+			select zjbh,
+       zjlx,
+       zjbt,
+       zjmjjh,
+       zjmjsfzh,
+       zjmjxm,
+       zjmjdwdm,
+       zjmjdwmc,
+       zjnr,
+       djrxm,
+       djsj,
+       djdwdm,
+       djdwmc,
+       djmjjh,
+       czbz,
+       gxsj,
+       zjlxms
+  from t_gzgl_gzzj t
+			WHERE 
+				t.czbz !='0' AND t.DJDWDM IS NOT NULL AND t.DJMJJH IS NOT NULL
+				#if ($zjbh && !$zjbh.equals(""))
+					and t.ZJBH=#[zjbh]
+				#end
+				#if ($zjrxm && !$zjrxm.equals(""))
+					and t.ZJMJXM LIKE '%'||#[zjrxm]||'%'
+				#end
+				#if ($zjbt && !$zjbt.equals(""))
+					and t.ZJBT LIKE '%'||#[zjbt]||'%'
+				#end
+				#if ($zjrdwdm && !$zjrdwdm.equals(""))
+					and t.ZJMJDWDM = #[zjrdwdm]
+				#end
+				#if ($beginDate && !$beginDate.equals(""))
+					and t.DJSJ >= to_date(#[beginDate], 'yyyy-MM-dd')
+				#end
+				#if ($endDate && !$endDate.equals(""))
+					and t.DJSJ <= to_date(#[endDate], 'yyyy-MM-dd')
+				#end
+				#if($zjlx && !$zjlx.equals(""))
+					and t.zjlx = #[zjlx]
+				#end
+				
+				#if($jwsqdm && !$jwsqdm.equals(""))
+	    			and (t.djdwdm = #[jwsqdm])
+	    		#elseif ($pcsdm && !$pcsdm.equals(""))
+				 	and t.djdwdm like substr(#[pcsdm],1,8)||'%'
+				#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				 	and t.djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				 	and t.djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			   	#end
+				
+				order by djsj desc
+		]]>
+	</property>
+	
+	<property name="insertZjie">
+		<![CDATA[
+			INSERT INTO T_GZGL_GZZJ 
+			(
+				ZJBH,
+				ZJLX,
+				ZJBT,
+				ZJMJJH,
+				ZJMJSFZH,
+				ZJMJXM,
+				ZJMJDWDM,
+				ZJMJDWMC,
+				ZJNR,
+				DJRXM,
+				DJSJ,
+				DJDWDM,
+				DJDWMC,
+				DJMJJH,
+				czbz,
+				gxsj,
+				zjlxms,
+				djrsfzh
+			)
+			VALUES
+			(
+				#[zjbh],
+				#[zjlx],
+				#[zjbt],
+				#[zjmjjh],
+				#[zjmjsfzh],
+				#[zjmjxm],
+				#[zjmjdwdm],
+				#[zjmjdwmc],
+				#[zjnr],
+				#[djrxm],
+				to_date(#[djsj],'yyyy-MM-dd'),
+				#[djdwdm],
+				#[djdwmc],
+				#[djmjjh],
+				#[czbz],
+				to_date(#[gxsj],'yyyy-mm-dd HH24:mi:ss'),
+				#[zjlxms],
+				#[djrsfzh]
+			)
+		]]>
+	</property>
+	
+	<property name="updateZjie">
+		<![CDATA[
+			UPDATE T_GZGL_GZZJ t
+			SET 
+				t.ZJLX=#[zjlx],
+				t.ZJNR=#[zjnr],
+				t.czbz = #[czbz],
+				t.zjlxms=#[zjlxms],
+				t.gxsj = to_date(#[gxsj],'yyyy-mm-dd HH24:mi:ss')
+			WHERE 
+				t.ZJBH=#[zjbh]
+		]]>
+	</property>
+	
+	<property name="queryZjieBeanByZjbh">
+		<![CDATA[
+			select zjbh,
+       zjlx,
+       zjbt,
+       zjmjjh,
+       zjmjsfzh,
+       zjmjxm,
+       zjmjdwdm,
+       zjmjdwmc,
+       zjnr,
+       djrxm,
+       to_char(djsj,'yyyy-MM-dd')djsj,
+       djdwdm,
+       djdwmc,
+       djmjjh,
+       czbz,
+       to_char(gxsj,'yyyy-mm-dd HH24:mi:ss') gxsj,
+       zjlxms
+  from t_gzgl_gzzj
+   where zjbh=?
+		]]>
+	</property>
+	
+	<property name="delZjie">
+		<![CDATA[
+			UPDATE T_GZGL_GZZJ set czbz = #[czbz], gxsj = to_date(#[gxsj],'yyyy-mm-dd HH24:mi:ss')
+			WHERE zjbh=#[zjbh]
+		]]>
+	</property>
+</properties>

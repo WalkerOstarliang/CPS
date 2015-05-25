@@ -1,0 +1,880 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 从业人员 -->
+	<property name="queryCyry">
+		<![CDATA[
+				select org.orgname,  nvl(ss.sl,0) as sl
+					  from t_common_organization_sjjs org
+					  left join (
+					  		select  
+					  				#if($tjjb.equals('5'))
+					  					djdwdm,
+					  				#elseif($tjjb.equals('4'))
+					  					substr(djdwdm , 0 , 8  ) as djdwdm,
+					  				#elseif($tjjb.equals('3'))
+					  					substr(djdwdm , 0 , 6  ) as djdwdm,
+					  				#elseif($tjjb.equals('2'))
+					  					substr(djdwdm , 0 , 4  ) as djdwdm,
+					  				#elseif($tjjb.equals('1'))
+					  					substr(djdwdm , 0 , 2  ) as djdwdm,		
+					  				#end	
+					  				count(1)  as  sl
+					        from t_za_ry_cyry s
+					        where s.zxbs = '0' and  s.czbs !='3'
+					              	#if($tjsj_start && !$tjsj_start.equals(""))
+						                and djsj >= to_date(#[tjsj_start], 'yyyy-mm-dd hh24:mi:ss')
+					              	#end 
+					              	#if($tjsj_end && !$tjsj_end.equals(""))
+					                	and djsj <=to_date(#[tjsj_end], 'yyyy-mm-dd hh24:mi:ss')
+					                #end
+					        #if($tjdwjb.equals('5'))
+					        	 and djdwdm = #[tjdwdm] 
+					        #else
+						        and djdwdm like    substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'       
+					        #end  
+					        #if($tjjb.equals('5'))
+			  					group by djdwdm
+			  				#elseif($tjjb.equals('4'))
+			  					group by substr(djdwdm , 0 , 8  ) 
+			  				#elseif($tjjb.equals('3'))
+			  					group by substr(djdwdm , 0 , 6  ) 
+			  				#elseif($tjjb.equals('2'))
+			  					group by substr(djdwdm , 0 , 4  ) 
+			  				#elseif($tjjb.equals('1'))
+			  					group by substr(djdwdm , 0 , 2  ) 
+			  				#end	
+					    ) ss  on  1 = 1
+					    #if($tjjb.equals('5'))
+					    	and ss.djdwdm = org.orgcode
+					    #else
+						    and ss.djdwdm = substr(org.orgcode, 0, to_number(#[tjjb]) * 2)
+					    #end
+					 where org.leve = #[tjjb]
+					   #if($tjdwjb.equals('5'))
+				        	 and org.orgcode = #[tjdwdm] 
+				        #else
+						    and org.orgcode like substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'
+				        #end       
+					 order by sl desc
+		]]>
+	</property>
+
+	<!-- 出租房屋 -->
+	<property name="queryCzfw">
+		<![CDATA[
+					select /*+index(ss)*/org.orgname,  nvl(ss.sl,0) as sl
+					  from t_common_organization_sjjs org
+					  left join (
+					  		select  
+					  				#if($tjjb.equals('5'))
+					  					djdwdm,
+					  				#elseif($tjjb.equals('4'))
+					  					substr(djdwdm , 0 , 8  ) as djdwdm,
+					  				#elseif($tjjb.equals('3'))
+					  					substr(djdwdm , 0 , 6  ) as djdwdm,
+					  				#elseif($tjjb.equals('2'))
+					  					substr(djdwdm , 0 , 4  ) as djdwdm,
+					  				#elseif($tjjb.equals('1'))
+					  					substr(djdwdm , 0 , 2  ) as djdwdm,		
+					  				#end	
+					  				count(1)  as  sl
+					        from (
+										SELECT czfwbh,djdwdm,djsj,row_number() OVER(PARTITION BY fwbh ORDER BY czfwbh) AS sn 
+										FROM t_lsgl_czfw_jbxx 
+										WHERE  (fwzt = '0' OR fwzt IS NULL)
+										#if($tjsj_start && !$tjsj_start.equals(""))
+						                		and djsj >= to_date(#[tjsj_start], 'yyyy-mm-dd hh24:mi:ss')
+					              		#end 
+					              		#if($tjsj_end && !$tjsj_end.equals(""))
+					                			and djsj <=to_date(#[tjsj_end], 'yyyy-mm-dd hh24:mi:ss')
+					                	#end
+										#if($tjdwjb.equals('5'))
+					        				 and djdwdm = #[tjdwdm] 
+								        #else
+									        and djdwdm like    substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'       
+								        #end  
+							) s
+					        #if($tjjb.equals('5'))
+			  					group by djdwdm
+			  				#elseif($tjjb.equals('4'))
+			  					group by substr(djdwdm , 0 , 8  ) 
+			  				#elseif($tjjb.equals('3'))
+			  					group by substr(djdwdm , 0 , 6  ) 
+			  				#elseif($tjjb.equals('2'))
+			  					group by substr(djdwdm , 0 , 4  ) 
+			  				#elseif($tjjb.equals('1'))
+			  					group by substr(djdwdm , 0 , 2  ) 
+			  				#end	
+					    ) ss  on  1 = 1
+					    #if($tjjb.equals('5'))
+					    	and ss.djdwdm = org.orgcode
+					    #else
+						    and ss.djdwdm = substr(org.orgcode, 0, to_number(#[tjjb]) * 2)
+					    #end
+					 where org.leve = #[tjjb]
+					   #if($tjdwjb.equals('5'))
+				        	 and org.orgcode = #[tjdwdm] 
+				        #else
+						    and org.orgcode like substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'
+				        #end       
+					 order by sl desc
+		]]>
+	</property>
+
+	<!-- 出租房屋巡查 -->
+	<property name="queryCzfwxc">
+		<![CDATA[
+				select org.orgname,  nvl(ss.sl,0) as sl
+					  from t_common_organization_sjjs org
+					  left join (
+					  		select  
+					  				#if($tjjb.equals('5'))
+					  					djdwdm,
+					  				#elseif($tjjb.equals('4'))
+					  					substr(djdwdm , 0 , 8  ) as djdwdm,
+					  				#elseif($tjjb.equals('3'))
+					  					substr(djdwdm , 0 , 6  ) as djdwdm,
+					  				#elseif($tjjb.equals('2'))
+					  					substr(djdwdm , 0 , 4  ) as djdwdm,
+					  				#elseif($tjjb.equals('1'))
+					  					substr(djdwdm , 0 , 2  ) as djdwdm,		
+					  				#end	
+					  				count(1)  as  sl
+					        from t_lsgl_fw_czwxcdj s
+					        where 1=1
+					              	#if($tjsj_start && !$tjsj_start.equals(""))
+						                and djsj >= to_date(#[tjsj_start], 'yyyy-mm-dd hh24:mi:ss')
+					              	#end 
+					              	#if($tjsj_end && !$tjsj_end.equals(""))
+					                	and djsj <=to_date(#[tjsj_end], 'yyyy-mm-dd hh24:mi:ss')
+					                #end
+					        #if($tjdwjb.equals('5'))
+					        	 and djdwdm = #[tjdwdm] 
+					        #else
+						        and djdwdm like    substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'       
+					        #end  
+					        #if($tjjb.equals('5'))
+			  					group by djdwdm
+			  				#elseif($tjjb.equals('4'))
+			  					group by substr(djdwdm , 0 , 8  ) 
+			  				#elseif($tjjb.equals('3'))
+			  					group by substr(djdwdm , 0 , 6  ) 
+			  				#elseif($tjjb.equals('2'))
+			  					group by substr(djdwdm , 0 , 4  ) 
+			  				#elseif($tjjb.equals('1'))
+			  					group by substr(djdwdm , 0 , 2  ) 
+			  				#end	
+					    ) ss  on  1 = 1
+					    #if($tjjb.equals('5'))
+					    	and ss.djdwdm = org.orgcode
+					    #else
+						    and ss.djdwdm = substr(org.orgcode, 0, to_number(#[tjjb]) * 2)
+					    #end
+					 where org.leve = #[tjjb]
+					   #if($tjdwjb.equals('5'))
+				        	 and org.orgcode = #[tjdwdm] 
+				        #else
+						    and org.orgcode like substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'
+				        #end       
+					 order by sl desc	
+		]]>
+	</property>
+
+	<!-- 常住人口 -->
+	<property name="queryCzrk">
+		<![CDATA[
+					select org.orgname,  nvl(ss.sl,0) as sl
+					  from t_common_organization_sjjs org
+					  left join (
+					  		select  
+					  				#if($tjjb.equals('5'))
+					  					djdwdm,
+					  				#elseif($tjjb.equals('4'))
+					  					substr(djdwdm , 0 , 8  ) as djdwdm,
+					  				#elseif($tjjb.equals('3'))
+					  					substr(djdwdm , 0 , 6  ) as djdwdm,
+					  				#elseif($tjjb.equals('2'))
+					  					substr(djdwdm , 0 , 4  ) as djdwdm,
+					  				#elseif($tjjb.equals('1'))
+					  					substr(djdwdm , 0 , 2  ) as djdwdm,		
+					  				#end	
+					  				count(1)  as  sl
+					        from t_lsgl_rk_czrk s
+					        where sfzh IS NOT NULL AND zxbs = '0' 
+					              	#if($tjsj_start && !$tjsj_start.equals(""))
+						                and djsj >= to_date(#[tjsj_start], 'yyyy-mm-dd hh24:mi:ss')
+					              	#end 
+					              	#if($tjsj_end && !$tjsj_end.equals(""))
+					                	and djsj <=to_date(#[tjsj_end], 'yyyy-mm-dd hh24:mi:ss')
+					                #end
+					        #if($tjdwjb.equals('5'))
+					        	 and djdwdm = #[tjdwdm] 
+					        #else
+						        and djdwdm like    substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'       
+					        #end  
+					        #if($tjjb.equals('5'))
+			  					group by djdwdm
+			  				#elseif($tjjb.equals('4'))
+			  					group by substr(djdwdm , 0 , 8  ) 
+			  				#elseif($tjjb.equals('3'))
+			  					group by substr(djdwdm , 0 , 6  ) 
+			  				#elseif($tjjb.equals('2'))
+			  					group by substr(djdwdm , 0 , 4  ) 
+			  				#elseif($tjjb.equals('1'))
+			  					group by substr(djdwdm , 0 , 2  ) 
+			  				#end	
+					    ) ss  on  1 = 1
+					    #if($tjjb.equals('5'))
+					    	and ss.djdwdm = org.orgcode
+					    #else
+						    and ss.djdwdm = substr(org.orgcode, 0, to_number(#[tjjb]) * 2)
+					    #end
+					 where org.leve = #[tjjb]
+					   #if($tjdwjb.equals('5'))
+				        	 and org.orgcode = #[tjdwdm] 
+				        #else
+						    and org.orgcode like substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'
+				        #end       
+					 order by sl desc
+		]]>
+	</property>
+
+	<!-- 单位 -->
+	<property name="queryDw">
+		<![CDATA[
+					select org.orgname,  nvl(ss.sl,0) as sl
+					  from t_common_organization_sjjs org
+					  left join (
+					  		select  
+					  				#if($tjjb.equals('5'))
+					  					djdwdm,
+					  				#elseif($tjjb.equals('4'))
+					  					substr(djdwdm , 0 , 8  ) as djdwdm,
+					  				#elseif($tjjb.equals('3'))
+					  					substr(djdwdm , 0 , 6  ) as djdwdm,
+					  				#elseif($tjjb.equals('2'))
+					  					substr(djdwdm , 0 , 4  ) as djdwdm,
+					  				#elseif($tjjb.equals('1'))
+					  					substr(djdwdm , 0 , 2  ) as djdwdm,		
+					  				#end	
+					  				count(1)  as  sl
+					        from t_za_jg_jbxx s
+					        where  zxbs = '0'  and czbs != '3'
+					              	#if($tjsj_start && !$tjsj_start.equals(""))
+						                and djsj >= to_date(#[tjsj_start], 'yyyy-mm-dd hh24:mi:ss')
+					              	#end 
+					              	#if($tjsj_end && !$tjsj_end.equals(""))
+					                	and djsj <=to_date(#[tjsj_end], 'yyyy-mm-dd hh24:mi:ss')
+					                #end
+					        #if($tjdwjb.equals('5'))
+					        	 and djdwdm = #[tjdwdm] 
+					        #else
+						        and djdwdm like    substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'       
+					        #end  
+					        #if($tjjb.equals('5'))
+			  					group by djdwdm
+			  				#elseif($tjjb.equals('4'))
+			  					group by substr(djdwdm , 0 , 8  ) 
+			  				#elseif($tjjb.equals('3'))
+			  					group by substr(djdwdm , 0 , 6  ) 
+			  				#elseif($tjjb.equals('2'))
+			  					group by substr(djdwdm , 0 , 4  ) 
+			  				#elseif($tjjb.equals('1'))
+			  					group by substr(djdwdm , 0 , 2  ) 
+			  				#end	
+					    ) ss  on  1 = 1
+					    #if($tjjb.equals('5'))
+					    	and ss.djdwdm = org.orgcode
+					    #else
+						    and ss.djdwdm = substr(org.orgcode, 0, to_number(#[tjjb]) * 2)
+					    #end
+					 where org.leve = #[tjjb]
+					   #if($tjdwjb.equals('5'))
+				        	 and org.orgcode = #[tjdwdm] 
+				        #else
+						    and org.orgcode like substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'
+				        #end       
+					 order by sl desc
+		]]>
+	</property>
+
+	<!-- 房屋 -->
+	<property name="queryFw">
+		<![CDATA[
+				select org.orgname,  nvl(ss.sl,0) as sl
+					  from t_common_organization_sjjs org
+					  left join (
+					  		select  
+					  				#if($tjjb.equals('5'))
+					  					djdwdm,
+					  				#elseif($tjjb.equals('4'))
+					  					substr(djdwdm , 0 , 8  ) as djdwdm,
+					  				#elseif($tjjb.equals('3'))
+					  					substr(djdwdm , 0 , 6  ) as djdwdm,
+					  				#elseif($tjjb.equals('2'))
+					  					substr(djdwdm , 0 , 4  ) as djdwdm,
+					  				#elseif($tjjb.equals('1'))
+					  					substr(djdwdm , 0 , 2  ) as djdwdm,		
+					  				#end	
+					  				count(1)  as  sl
+					        from ( 
+					        	SELECT FW.DJDWDM
+								  FROM T_LSGL_FW_JBXX fw, T_COMMON_DZXX dz
+								 WHERE FW.DZID = DZ.DZID
+								   AND DZ.STID IS NOT NULL
+								   and fw.czbs <> '3'
+								   #if($tjsj_start && !$tjsj_start.equals(""))
+						                and fw.djsj >= to_date(#[tjsj_start], 'yyyy-mm-dd hh24:mi:ss')
+					              	#end 
+					              	#if($tjsj_end && !$tjsj_end.equals(""))
+					                	and fw.djsj <=to_date(#[tjsj_end], 'yyyy-mm-dd hh24:mi:ss')
+					                #end
+					                 #if($tjdwjb.equals('5'))
+							        	 and fw.djdwdm = #[tjdwdm] 
+							        #else
+								        and fw.djdwdm like    substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'       
+							        #end  
+					        ) s
+					        #if($tjjb.equals('5'))
+			  					group by djdwdm
+			  				#elseif($tjjb.equals('4'))
+			  					group by substr(djdwdm , 0 , 8  ) 
+			  				#elseif($tjjb.equals('3'))
+			  					group by substr(djdwdm , 0 , 6  ) 
+			  				#elseif($tjjb.equals('2'))
+			  					group by substr(djdwdm , 0 , 4  ) 
+			  				#elseif($tjjb.equals('1'))
+			  					group by substr(djdwdm , 0 , 2  ) 
+			  				#end	
+					    ) ss  on  1 = 1
+					    #if($tjjb.equals('5'))
+					    	and ss.djdwdm = org.orgcode
+					    #else
+						    and ss.djdwdm = substr(org.orgcode, 0, to_number(#[tjjb]) * 2)
+					    #end
+					 where org.leve = #[tjjb]
+					   #if($tjdwjb.equals('5'))
+				        	 and org.orgcode = #[tjdwdm] 
+				        #else
+						    and org.orgcode like substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'
+				        #end       
+					 order by sl desc	
+		]]>
+	</property>
+
+	<!-- 境外人口 -->
+	<property name="queryJwrk">
+		<![CDATA[
+				select org.orgname,  nvl(ss.sl,0) as sl
+					  from t_common_organization_sjjs org
+					  left join (
+					  		select  
+					  				#if($tjjb.equals('5'))
+					  					djdwdm,
+					  				#elseif($tjjb.equals('4'))
+					  					substr(djdwdm , 0 , 8  ) as djdwdm,
+					  				#elseif($tjjb.equals('3'))
+					  					substr(djdwdm , 0 , 6  ) as djdwdm,
+					  				#elseif($tjjb.equals('2'))
+					  					substr(djdwdm , 0 , 4  ) as djdwdm,
+					  				#elseif($tjjb.equals('1'))
+					  					substr(djdwdm , 0 , 2  ) as djdwdm,		
+					  				#end	
+					  				count(1)  as  sl
+					        from t_lsgl_rk_jwrkxx s
+					        where s.zxbs = '0' 
+					              	#if($tjsj_start && !$tjsj_start.equals(""))
+						                and djsj >= to_date(#[tjsj_start], 'yyyy-mm-dd hh24:mi:ss')
+					              	#end 
+					              	#if($tjsj_end && !$tjsj_end.equals(""))
+					                	and djsj <=to_date(#[tjsj_end], 'yyyy-mm-dd hh24:mi:ss')
+					                #end
+					        #if($tjdwjb.equals('5'))
+					        	 and djdwdm = #[tjdwdm] 
+					        #else
+						        and djdwdm like    substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'       
+					        #end  
+					        #if($tjjb.equals('5'))
+			  					group by djdwdm
+			  				#elseif($tjjb.equals('4'))
+			  					group by substr(djdwdm , 0 , 8  ) 
+			  				#elseif($tjjb.equals('3'))
+			  					group by substr(djdwdm , 0 , 6  ) 
+			  				#elseif($tjjb.equals('2'))
+			  					group by substr(djdwdm , 0 , 4  ) 
+			  				#elseif($tjjb.equals('1'))
+			  					group by substr(djdwdm , 0 , 2  ) 
+			  				#end	
+					    ) ss  on  1 = 1
+					    #if($tjjb.equals('5'))
+					    	and ss.djdwdm = org.orgcode
+					    #else
+						    and ss.djdwdm = substr(org.orgcode, 0, to_number(#[tjjb]) * 2)
+					    #end
+					 where org.leve = #[tjjb]
+					   #if($tjdwjb.equals('5'))
+				        	 and org.orgcode = #[tjdwdm] 
+				        #else
+						    and org.orgcode like substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'
+				        #end       
+					 order by sl desc	
+		]]>
+	</property>
+
+	<!-- 寄住人口 -->
+	<property name="queryJzrk">
+		<![CDATA[
+				select org.orgname,  nvl(ss.sl,0) as sl
+					  from t_common_organization_sjjs org
+					  left join (
+					  		select  
+					  				#if($tjjb.equals('5'))
+					  					djdwdm,
+					  				#elseif($tjjb.equals('4'))
+					  					substr(djdwdm , 0 , 8  ) as djdwdm,
+					  				#elseif($tjjb.equals('3'))
+					  					substr(djdwdm , 0 , 6  ) as djdwdm,
+					  				#elseif($tjjb.equals('2'))
+					  					substr(djdwdm , 0 , 4  ) as djdwdm,
+					  				#elseif($tjjb.equals('1'))
+					  					substr(djdwdm , 0 , 2  ) as djdwdm,		
+					  				#end	
+					  				count(1)  as  sl
+					        from t_lsgl_rk_jzrkxx s
+					        where s.zxbs = '0'  and sfzh is not null
+					              	#if($tjsj_start && !$tjsj_start.equals(""))
+						                and djsj >= to_date(#[tjsj_start], 'yyyy-mm-dd hh24:mi:ss')
+					              	#end 
+					              	#if($tjsj_end && !$tjsj_end.equals(""))
+					                	and djsj <=to_date(#[tjsj_end], 'yyyy-mm-dd hh24:mi:ss')
+					                #end
+					        #if($tjdwjb.equals('5'))
+					        	 and djdwdm = #[tjdwdm] 
+					        #else
+						        and djdwdm like    substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'       
+					        #end  
+					        #if($tjjb.equals('5'))
+			  					group by djdwdm
+			  				#elseif($tjjb.equals('4'))
+			  					group by substr(djdwdm , 0 , 8  ) 
+			  				#elseif($tjjb.equals('3'))
+			  					group by substr(djdwdm , 0 , 6  ) 
+			  				#elseif($tjjb.equals('2'))
+			  					group by substr(djdwdm , 0 , 4  ) 
+			  				#elseif($tjjb.equals('1'))
+			  					group by substr(djdwdm , 0 , 2  ) 
+			  				#end	
+					    ) ss  on  1 = 1
+					    #if($tjjb.equals('5'))
+					    	and ss.djdwdm = org.orgcode
+					    #else
+						    and ss.djdwdm = substr(org.orgcode, 0, to_number(#[tjjb]) * 2)
+					    #end
+					 where org.leve = #[tjjb]
+					   #if($tjdwjb.equals('5'))
+				        	 and org.orgcode = #[tjdwdm] 
+				        #else
+						    and org.orgcode like substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'
+				        #end       
+					 order by sl desc		
+		]]>
+	</property>
+
+	<!-- 流动人口 -->
+	<property name="queryLdrk">
+		<![CDATA[
+				select org.orgname,  nvl(ss.sl,0) as sl
+					  from t_common_organization_sjjs org
+					  left join (
+					  		select  
+					  				#if($tjjb.equals('5'))
+					  					djdwdm,
+					  				#elseif($tjjb.equals('4'))
+					  					substr(djdwdm , 0 , 8  ) as djdwdm,
+					  				#elseif($tjjb.equals('3'))
+					  					substr(djdwdm , 0 , 6  ) as djdwdm,
+					  				#elseif($tjjb.equals('2'))
+					  					substr(djdwdm , 0 , 4  ) as djdwdm,
+					  				#elseif($tjjb.equals('1'))
+					  					substr(djdwdm , 0 , 2  ) as djdwdm,		
+					  				#end	
+					  				count(1)  as  sl
+					        from t_lsgl_rk_ldrkzzxx s
+					        where s.zxbs = '0'  and sfzh is not null
+					              	#if($tjsj_start && !$tjsj_start.equals(""))
+						                and djsj >= to_date(#[tjsj_start], 'yyyy-mm-dd hh24:mi:ss')
+					              	#end 
+					              	#if($tjsj_end && !$tjsj_end.equals(""))
+					                	and djsj <=to_date(#[tjsj_end], 'yyyy-mm-dd hh24:mi:ss')
+					                #end
+					        #if($tjdwjb.equals('5'))
+					        	 and djdwdm = #[tjdwdm] 
+					        #else
+						        and djdwdm like    substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'       
+					        #end  
+					        #if($tjjb.equals('5'))
+			  					group by djdwdm
+			  				#elseif($tjjb.equals('4'))
+			  					group by substr(djdwdm , 0 , 8  ) 
+			  				#elseif($tjjb.equals('3'))
+			  					group by substr(djdwdm , 0 , 6  ) 
+			  				#elseif($tjjb.equals('2'))
+			  					group by substr(djdwdm , 0 , 4  ) 
+			  				#elseif($tjjb.equals('1'))
+			  					group by substr(djdwdm , 0 , 2  ) 
+			  				#end	
+					    ) ss  on  1 = 1
+					    #if($tjjb.equals('5'))
+					    	and ss.djdwdm = org.orgcode
+					    #else
+						    and ss.djdwdm = substr(org.orgcode, 0, to_number(#[tjjb]) * 2)
+					    #end
+					 where org.leve = #[tjjb]
+					   #if($tjdwjb.equals('5'))
+				        	 and org.orgcode = #[tjdwdm] 
+				        #else
+						    and org.orgcode like substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'
+				        #end       
+					 order by sl desc		
+		]]>
+	</property>
+
+	<!-- 流动人口延期 -->
+	<property name="queryLdrkyq">
+		<![CDATA[
+					select org.orgname,  nvl(ss.sl,0) as sl
+					  from t_common_organization_sjjs org
+					  left join (
+					  		select  
+					  				#if($tjjb.equals('5'))
+					  					czdwdm,
+					  				#elseif($tjjb.equals('4'))
+					  					substr(czdwdm , 0 , 8  ) as czdwdm,
+					  				#elseif($tjjb.equals('3'))
+					  					substr(czdwdm , 0 , 6  ) as czdwdm,
+					  				#elseif($tjjb.equals('2'))
+					  					substr(czdwdm , 0 , 4  ) as czdwdm,
+					  				#elseif($tjjb.equals('1'))
+					  					substr(czdwdm , 0 , 2  ) as czdwdm,		
+					  				#end	
+					  				count(1)  as  sl
+					        from t_lsgl_ldrk_yqzx s
+					        where 1=1
+					              	#if($tjsj_start && !$tjsj_start.equals(""))
+						                and czsj >= to_date(#[tjsj_start], 'yyyy-mm-dd hh24:mi:ss')
+					              	#end 
+					              	#if($tjsj_end && !$tjsj_end.equals(""))
+					                	and czsj <=to_date(#[tjsj_end], 'yyyy-mm-dd hh24:mi:ss')
+					                #end
+					        #if($tjdwjb.equals('5'))
+					        	 and czdwdm = #[tjdwdm] 
+					        #else
+						        and czdwdm like    substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'       
+					        #end  
+					        #if($tjjb.equals('5'))
+			  					group by czdwdm
+			  				#elseif($tjjb.equals('4'))
+			  					group by substr(czdwdm , 0 , 8  ) 
+			  				#elseif($tjjb.equals('3'))
+			  					group by substr(czdwdm , 0 , 6  ) 
+			  				#elseif($tjjb.equals('2'))
+			  					group by substr(czdwdm , 0 , 4  ) 
+			  				#elseif($tjjb.equals('1'))
+			  					group by substr(czdwdm , 0 , 2  ) 
+			  				#end	
+					    ) ss  on  1 = 1
+					    #if($tjjb.equals('5'))
+					    	and ss.czdwdm = org.orgcode
+					    #else
+						    and ss.czdwdm = substr(org.orgcode, 0, to_number(#[tjjb]) * 2)
+					    #end
+					 where org.leve = #[tjjb]
+					   #if($tjdwjb.equals('5'))
+				        	 and org.orgcode = #[tjdwdm] 
+				        #else
+						    and org.orgcode like substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'
+				        #end       
+					 order by sl desc	
+		]]>
+	</property>
+
+	<!-- 实体 -->
+	<property name="querySt">
+		<![CDATA[
+					select org.orgname,  nvl(ss.sl,0) as sl
+					  from t_common_organization_sjjs org
+					  left join (
+					  		select  
+					  				#if($tjjb.equals('5'))
+					  					djdwdm,
+					  				#elseif($tjjb.equals('4'))
+					  					substr(djdwdm , 0 , 8  ) as djdwdm,
+					  				#elseif($tjjb.equals('3'))
+					  					substr(djdwdm , 0 , 6  ) as djdwdm,
+					  				#elseif($tjjb.equals('2'))
+					  					substr(djdwdm , 0 , 4  ) as djdwdm,
+					  				#elseif($tjjb.equals('1'))
+					  					substr(djdwdm , 0 , 2  ) as djdwdm,		
+					  				#end	
+					  				count(1)  as  sl
+					        from t_common_stxx s
+					        where (s.zxbs = '1' or s.zxbs is null)
+					              	#if($tjsj_start && !$tjsj_start.equals(""))
+						                and djsj >= to_date(#[tjsj_start], 'yyyy-mm-dd hh24:mi:ss')
+					              	#end 
+					              	#if($tjsj_end && !$tjsj_end.equals(""))
+					                	and djsj <=to_date(#[tjsj_end], 'yyyy-mm-dd hh24:mi:ss')
+					                #end
+					        #if($tjdwjb.equals('5'))
+					        	 and djdwdm = #[tjdwdm] 
+					        #else
+						        and djdwdm like    substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'       
+					        #end  
+					        #if($tjjb.equals('5'))
+			  					group by djdwdm
+			  				#elseif($tjjb.equals('4'))
+			  					group by substr(djdwdm , 0 , 8  ) 
+			  				#elseif($tjjb.equals('3'))
+			  					group by substr(djdwdm , 0 , 6  ) 
+			  				#elseif($tjjb.equals('2'))
+			  					group by substr(djdwdm , 0 , 4  ) 
+			  				#elseif($tjjb.equals('1'))
+			  					group by substr(djdwdm , 0 , 2  ) 
+			  				#end	
+					    ) ss  on  1 = 1
+					    #if($tjjb.equals('5'))
+					    	and ss.djdwdm = org.orgcode
+					    #else
+						    and ss.djdwdm = substr(org.orgcode, 0, to_number(#[tjjb]) * 2)
+					    #end
+					 where org.leve = #[tjjb]
+					   #if($tjdwjb.equals('5'))
+				        	 and org.orgcode = #[tjdwdm] 
+				        #else
+						    and org.orgcode like substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'
+				        #end       
+					 order by sl desc
+		]]>
+	</property>
+
+	<!-- 实有人口 -->
+	<property name="querySyrk">
+		<![CDATA[
+				select org.orgname,  nvl(ss.sl,0) as sl
+					  from t_common_organization_sjjs org
+					  left join (
+					  		select  
+					  				#if($tjjb.equals('5'))
+					  					djdwdm,
+					  				#elseif($tjjb.equals('4'))
+					  					substr(djdwdm , 0 , 8  ) as djdwdm,
+					  				#elseif($tjjb.equals('3'))
+					  					substr(djdwdm , 0 , 6  ) as djdwdm,
+					  				#elseif($tjjb.equals('2'))
+					  					substr(djdwdm , 0 , 4  ) as djdwdm,
+					  				#elseif($tjjb.equals('1'))
+					  					substr(djdwdm , 0 , 2  ) as djdwdm,		
+					  				#end	
+					  				count(1)  as  sl
+					        from
+					        (
+					        
+					              (select djdwdm 
+					               from  t_lsgl_rk_czrk 
+					                where zxbs = '0'  and sfzh is not null
+					              	#if($tjsj_start && !$tjsj_start.equals(""))
+						                and djsj >= to_date(#[tjsj_start], 'yyyy-mm-dd hh24:mi:ss')
+					              	#end 
+					              	#if($tjsj_end && !$tjsj_end.equals(""))
+					                	and djsj <=to_date(#[tjsj_end], 'yyyy-mm-dd hh24:mi:ss')
+					                #end
+					                #if($tjdwjb.equals('5'))
+							        	 and djdwdm = #[tjdwdm] 
+							        #else
+								        and djdwdm like    substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'       
+							        #end  )
+							        
+							        union all
+							        
+							        (	select djdwdm 
+						               	from  t_lsgl_rk_ldrkzzxx 
+						                where zxbs = '0' and sfzh is not null
+						              	#if($tjsj_start && !$tjsj_start.equals(""))
+							                and djsj >= to_date(#[tjsj_start], 'yyyy-mm-dd hh24:mi:ss')
+						              	#end 
+						              	#if($tjsj_end && !$tjsj_end.equals(""))
+						                	and djsj <=to_date(#[tjsj_end], 'yyyy-mm-dd hh24:mi:ss')
+						                #end
+						                #if($tjdwjb.equals('5'))
+								        	 and djdwdm = #[tjdwdm] 
+								        #else
+									        and djdwdm like    substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'       
+								        #end  )
+								        
+								     union all
+								     
+								      (	select djdwdm 
+						               	from  t_lsgl_rk_jzrkxx 
+						                where zxbs = '0'  and sfzh is not null
+						              	#if($tjsj_start && !$tjsj_start.equals(""))
+							                and djsj >= to_date(#[tjsj_start], 'yyyy-mm-dd hh24:mi:ss')
+						              	#end 
+						              	#if($tjsj_end && !$tjsj_end.equals(""))
+						                	and djsj <=to_date(#[tjsj_end], 'yyyy-mm-dd hh24:mi:ss')
+						                #end
+						                #if($tjdwjb.equals('5'))
+								        	 and djdwdm = #[tjdwdm] 
+								        #else
+									        and djdwdm like    substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'       
+								        #end  )
+								        
+								        union all
+								        
+								         (	select djdwdm 
+						               	from  t_lsgl_rk_wlhczhk 
+						                where zxbs = '0' and sfzh is not null
+						              	#if($tjsj_start && !$tjsj_start.equals(""))
+							                and djsj >= to_date(#[tjsj_start], 'yyyy-mm-dd hh24:mi:ss')
+						              	#end 
+						              	#if($tjsj_end && !$tjsj_end.equals(""))
+						                	and djsj <=to_date(#[tjsj_end], 'yyyy-mm-dd hh24:mi:ss')
+						                #end
+						                #if($tjdwjb.equals('5'))
+								        	 and djdwdm = #[tjdwdm] 
+								        #else
+									        and djdwdm like    substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'       
+								        #end  )   
+								        
+								        union all
+								        
+								         (	select djdwdm 
+						               	from  t_lsgl_rk_jwrkxx
+						                where zxbs = '0' 
+						              	#if($tjsj_start && !$tjsj_start.equals(""))
+							                and djsj >= to_date(#[tjsj_start], 'yyyy-mm-dd hh24:mi:ss')
+						              	#end 
+						              	#if($tjsj_end && !$tjsj_end.equals(""))
+						                	and djsj <=to_date(#[tjsj_end], 'yyyy-mm-dd hh24:mi:ss')
+						                #end
+						                #if($tjdwjb.equals('5'))
+								        	 and djdwdm = #[tjdwdm] 
+								        #else
+									        and djdwdm like    substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'       
+								        #end  )   
+					         ) s 
+					        
+					        #if($tjjb.equals('5'))
+			  					group by djdwdm
+			  				#elseif($tjjb.equals('4'))
+			  					group by substr(djdwdm , 0 , 8  ) 
+			  				#elseif($tjjb.equals('3'))
+			  					group by substr(djdwdm , 0 , 6  ) 
+			  				#elseif($tjjb.equals('2'))
+			  					group by substr(djdwdm , 0 , 4  ) 
+			  				#elseif($tjjb.equals('1'))
+			  					group by substr(djdwdm , 0 , 2  ) 
+			  				#end	
+					    ) ss  on  1 = 1
+					    #if($tjjb.equals('5'))
+					    	and ss.djdwdm = org.orgcode
+					    #else
+						    and ss.djdwdm = substr(org.orgcode, 0, to_number(#[tjjb]) * 2)
+					    #end
+					 where org.leve = #[tjjb]
+					   #if($tjdwjb.equals('5'))
+				        	 and org.orgcode = #[tjdwdm] 
+				        #else
+						    and org.orgcode like substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'
+				        #end       
+					 order by sl desc		
+		]]>
+	</property>
+
+	<!-- 未落户人口 -->
+	<property name="queryWlhrk">
+		<![CDATA[
+				select org.orgname,  nvl(ss.sl,0) as sl
+					  from t_common_organization_sjjs org
+					  left join (
+					  		select  
+					  				#if($tjjb.equals('5'))
+					  					djdwdm,
+					  				#elseif($tjjb.equals('4'))
+					  					substr(djdwdm , 0 , 8  ) as djdwdm,
+					  				#elseif($tjjb.equals('3'))
+					  					substr(djdwdm , 0 , 6  ) as djdwdm,
+					  				#elseif($tjjb.equals('2'))
+					  					substr(djdwdm , 0 , 4  ) as djdwdm,
+					  				#elseif($tjjb.equals('1'))
+					  					substr(djdwdm , 0 , 2  ) as djdwdm,		
+					  				#end	
+					  				count(1)  as  sl
+					        from t_lsgl_rk_wlhczhk s
+					        where s.zxbs = '0'  and sfzh is not null
+					              	#if($tjsj_start && !$tjsj_start.equals(""))
+						                and djsj >= to_date(#[tjsj_start], 'yyyy-mm-dd hh24:mi:ss')
+					              	#end 
+					              	#if($tjsj_end && !$tjsj_end.equals(""))
+					                	and djsj <=to_date(#[tjsj_end], 'yyyy-mm-dd hh24:mi:ss')
+					                #end
+					        #if($tjdwjb.equals('5'))
+					        	 and djdwdm = #[tjdwdm] 
+					        #else
+						        and djdwdm like    substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'       
+					        #end  
+					        #if($tjjb.equals('5'))
+			  					group by djdwdm
+			  				#elseif($tjjb.equals('4'))
+			  					group by substr(djdwdm , 0 , 8) 
+			  				#elseif($tjjb.equals('3'))
+			  					group by substr(djdwdm , 0 , 6) 
+			  				#elseif($tjjb.equals('2'))
+			  					group by substr(djdwdm , 0 , 4) 
+			  				#elseif($tjjb.equals('1'))
+			  					group by substr(djdwdm , 0 , 2) 
+			  				#end	
+					    ) ss  on  1 = 1
+					    #if($tjjb.equals('5'))
+					    	and ss.djdwdm = org.orgcode
+					    #else
+						    and ss.djdwdm = substr(org.orgcode, 0, to_number(#[tjjb]) * 2)
+					    #end
+					 where org.leve = #[tjjb]
+					   #if($tjdwjb.equals('5'))
+				        	 and org.orgcode = #[tjdwdm] 
+				        #else
+						    and org.orgcode like substr(#[tjdwdm] , 0 , ( f_get_dwleve(#[tjdwdm]) * 2 ) ) ||'%'
+				        #end       
+					 order by sl desc		
+		]]>
+	</property>
+	
+	<property name="queryRsdfxList">
+		<![CDATA[
+			select dwdm,(select orgname from t_common_organization_sjjs where orgcode=t.dwdm) as dwmc,f_get_dwleve(t.dwdm) as leve,
+			       a_thrth,
+			       a_twel,a_elev,a_ten,a_nin,a_eig,a_sev,a_six,a_fiv,a_fou,a_thr,a_two,a_ong,a_tod
+			from (
+				select dwdm ,
+				   SUM(DECODE(tjyf,to_char(add_months(SYSDATE,-13),'yyyymm'),rsdsl,0)) a_thrth,--13个月前
+				   SUM(DECODE(tjyf,to_char(add_months(SYSDATE,-12),'yyyymm'),rsdsl,0)) a_twel, --12个月前
+				   SUM(DECODE(tjyf,to_char(add_months(SYSDATE,-11),'yyyymm'),rsdsl,0)) a_elev,--1功尽弃个月前
+				   SUM(DECODE(tjyf,to_char(add_months(SYSDATE,-10),'yyyymm'),rsdsl,0)) a_ten,--10个月前
+				   SUM(DECODE(tjyf,to_char(add_months(SYSDATE,-9),'yyyymm'),rsdsl,0)) a_nin,--9个月前
+				   SUM(DECODE(tjyf,to_char(add_months(SYSDATE,-8),'yyyymm'),rsdsl,0)) a_eig,--8个月前
+				   SUM(DECODE(tjyf,to_char(add_months(SYSDATE,-7),'yyyymm'),rsdsl,0)) a_sev,--7个月前
+				   SUM(DECODE(tjyf,to_char(add_months(SYSDATE,-6),'yyyymm'),rsdsl,0)) a_six,--6个月前
+				   SUM(DECODE(tjyf,to_char(add_months(SYSDATE,-5),'yyyymm'),rsdsl,0)) a_fiv,--5个月前
+				   SUM(DECODE(tjyf,to_char(add_months(SYSDATE,-4),'yyyymm'),rsdsl,0)) a_fou,--4个月前
+				   SUM(DECODE(tjyf,to_char(add_months(SYSDATE,-3),'yyyymm'),rsdsl,0)) a_thr,--3个月前
+				   SUM(DECODE(tjyf,to_char(add_months(SYSDATE,-2),'yyyymm'),rsdsl,0)) a_two,--2个月前
+				   SUM(DECODE(tjyf,to_char(add_months(SYSDATE,-1),'yyyymm'),rsdsl,0)) a_ong,--1个月前
+				   SUM(DECODE(tjyf,to_char(SYSDATE,'yyyymm'),rsdsl,0)) a_tod  --当前月
+				FROM T_COMMON_RSDQYDTJ t WHERE t.tjyf>=to_char(add_months(SYSDATE,-13),'yyyymm') 
+				AND ( t.parentcode = rpad(SUBSTR(#[orgcode],0,(#[leve]+1)*2),12,0)  ) GROUP BY   dwdm 
+				ORDER BY dwdm ASC
+			) t
+		]]>
+	</property>
+	
+</properties>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="GBK" ?>
+<chart caption='辖区情况统计' xAxisName='辖区情况统计' yAxisName='数量'>
+   <set label='常住人口' value='420000'/>
+   <set label='流动人口' value='910000'/>
+   <set label='房屋数' value='720000'/>
+   <set label='出租屋数' value='550000'/>
+   <set label='重点人员' value='810000'/>
+   <set label='吸毒人员' value='510000'/>
+   <set label='精神病人' value='680000'/>
+   <set label='特种行业' value='620000'/>
+   <set label='内保单位' value='610000'/>
+   <set label='公共场所' value='490000'/>
+   <set label='上网场所' value='530000'/>
+   <set label='危险品单位' value='330000'/>
+</chart>

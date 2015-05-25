@@ -1,0 +1,32 @@
+源代码部署服务器修改
+1、修改/etc/exports文件（vi /etc/exports），
+   在文件中增加内容：/root/app/ 10.143.1.124(rw)  【文件目录 允许访问IP（权限）】
+2、修改/etc/sysconfig/nfs文件（vi /etc/sysconfig/nfs），去掉
+	# Turn off v2 and v3 protocol support
+	#RPCNFSDARGS="-N 2 -N 3"
+	# Turn off v4 protocol support
+	#RPCNFSDARGS="-N 4"
+	这4行的注释
+3、给/root/app目录授权（chmod 777 app）
+4、重启nfs服务（service nfs restart）
+
+------------------------------------------
+
+应用服务器修改
+引用远程代码
+1、进入相应tomcat的webapps目录（cd /home/sqjw/sqjw/tomcat_6.0.26_8080/webapps）
+2、创建目录（mkdir CPS）
+3、引用远程文件夹（mount -t nfs 10.143.1.200:/root/app/CPS ./CPS）
+
+如果要是机器重启后还能挂载需要在 /etc/rc.local 目录下增加如下代码：
+mount -t nfs 10.144.87.62:/root/app/CPS /root/app/CPS
+
+删除引用  umount CPS
+
+------------------------------------------
+引用本地目录
+ln -s /root/app/ app 
+
+------------------------------------------
+设置tomcat内存
+JAVA_OPTS="$JAVA_OPTS -Xms5120m -Xmx10240m -XX:NewSize=512m -XX:MaxNewSize=1024m -XX:PermSize=1024m -XX:MaxPermSize=2048m"

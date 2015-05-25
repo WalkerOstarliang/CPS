@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<property name="addXgdxx">
+		<![CDATA[
+			insert into t_af_xgdxx
+			  (xgdbh, xgdmc, sssqbh, sssqmc, zjrq, fzrxm, fzrlxdh, djrxm, djrjh, djrdwdm, djrdwmc, djsj)
+			values
+			  (#[xgdbh], #[xgdmc], #[sssqbh], #[sssqmc], to_date(#[zjrq],'yyyy-MM-dd'), #[fzrxm], #[fzrlxdh], #[djrxm], #[djrjh], 
+			  	#[djrdwdm], #[djrdwmc], to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss'))
+		]]>
+	</property>
+	
+	<property name="addXgdyxx">
+		<![CDATA[
+			insert into t_af_xgdyxx
+			  (dybh,dyxm, dysfzh, dyxb, whcd, dycsrq, dyhjdxz, dyxzdxz, dylxdh, gl, sgrq, 
+			  lgrq, zgzt, gzbx, shgx, dyjl, djrxm, djrjh, djrdwdm, djrdwmc, djsj, zxbs,pxqk,bz,djrsfzh)
+			values
+			  (#[dybh], #[dyxm], #[dysfzh], #[dyxb], #[whcd], to_date(#[dycsrq],'yyyy-MM-dd'),
+			   #[dyhjdxz],  #[dyxzdxz], #[dylxdh], #[gl], to_date(#[sgrq],'yyyy-MM-dd'), 
+			   to_date(#[lgrq],'yyyy-MM-dd'), #[zgzt], #[gzbx], #[shgx], #[dyjl],
+			   #[djrxm], #[djrjh], #[djrdwdm], #[djrdwmc], to_date(#[djsj],'yyyy-MM-dd HH24:mi:ss'), #[zxbs], 
+			   #[pxqk],#[bz],#[djrsfzh])
+		]]>
+	</property>
+	
+	<property name="updateXgdyxxByDybh">
+		<![CDATA[
+			update t_af_xgdyxx
+			   set dybh = #[dybh],
+			       dyxm = #[dyxm],
+			       dysfzh = #[dysfzh],
+			       dyxb = #[dyxb],
+			       whcd = #[whcd],
+			       dycsrq = to_date(#[dycsrq],'yyyy-MM-dd'),
+			       dyhjdxz = #[dyhjdxz],
+			       dyxzdxz = #[dyxzdxz],
+			       dylxdh = #[dylxdh],
+			       gl = #[gl],
+			       sgrq = to_date(#[sgrq],'yyyy-MM-dd'),
+			       lgrq = to_date(#[lgrq],'yyyy-MM-dd'),
+			       zgzt = #[zgzt],
+			       gzbx = #[gzbx],
+			       shgx = #[shgx],
+			       dyjl = #[dyjl],
+			       djrxm = #[djrxm],
+			       djrjh = #[djrjh],
+			       djrdwdm = #[djrdwdm],
+			       djrdwmc = #[djrdwmc],
+			       djsj = to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss'),
+			       pxqk = #[pxqk],
+			       bz = #[bz]
+			 where dybh = #[dybh]
+		]]>
+	</property>
+	
+	<property name="updateXgdxxByXgdbh">
+		<![CDATA[
+			update t_af_xgdxx
+			   set xgdbh = #[xgdbh],
+			       xgdmc = #[xgdmc],
+			       sssqbh = #[sssqbh],
+			       sssqmc = #[sssqmc],
+			       zjrq = to_date(#[zjrq],'yyyy-MM-dd'),
+			       fzrxm = #[fzrxm],
+			       fzrlxdh = #[fzrlxdh],
+			       djrxm = #[djrxm],
+			       djrjh = #[djrjh],
+			       djrdwdm = #[djrdwdm],
+			       djrdwmc = #[djrdwmc],
+			       djsj = to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss')
+			 where xgdbh = #[xgdbh]
+		]]>
+	</property>
+	
+	<property name="deleteXgdyxxByDybh">
+		<![CDATA[
+			update t_af_xgdyxx
+			   set 	zxbs = #[zxbs],
+			       zxsj = to_date(#[zxsj],'yyyy-MM-dd'),
+			       zxdwdm = #[zxdwdm],
+			       zxdwmc = #[zxdwmc]
+			 where dybh = #[dybh]
+		]]>
+	</property>
+	
+	<property name="xgdxxList">
+		<![CDATA[
+			select xgdbh,
+			       xgdmc,
+			       sssqbh,
+			       sssqmc,
+			       to_char(zjrq,'yyyy-MM-dd') zjrq,
+			       fzrxm,
+			       fzrlxdh,
+			       djrxm,
+			       djrjh,
+			       djrdwdm,
+			       djrdwmc,
+			       djsj
+			  from t_af_xgdxx
+		]]>
+	</property>
+	
+		
+	<property name="xgdyxxList">
+		<![CDATA[
+			select dy.dybh,
+			       dy.dyxm,
+			       dy.dysfzh,
+			       dy.dyxb,
+			       dy.whcd,
+			       to_char(dy.dycsrq,'yyyy-MM-dd') dycsrq,
+			       dy.dyhjdxz,
+			       dy.dyxzdxz,
+			       dy.dylxdh,
+			       dy.gl,
+			       to_char(dy.sgrq,'yyyy-MM-dd') sgrq,
+			       to_char(dy.lgrq,'yyyy-MM-dd') lgrq,
+			       dy.zgzt,
+			       dy.gzbx,
+			       dy.shgx,
+			       dy.dyjl,
+			       dy.djrxm,
+			       dy.djrjh,
+			       dy.djrdwdm ,
+			       dy.djrdwmc,
+			       dy.djsj,
+			       dy.zxbs,
+			       dy.zxsj,
+			       dy.zxdwdm,
+			       dy.zxdwmc,
+			       dy.pxqk,
+			       dy.bz
+			  from t_af_xgdyxx dy
+			  where 1=1
+			  
+			 #if($jwsqdm && !$jwsqdm.equals(""))
+		    	 and dy.djrdwdm = #[jwsqdm]
+	    	 #elseif ($pcsdm && !$pcsdm.equals(""))
+			 	 and dy.djrdwdm like substr(#[pcsdm],1,8)||'%'
+			 #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				 and dy.djrdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			 #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				 and dy.djrdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			 #end
+			 
+			 
+			  #if($dybh and !$dybh.equals(""))
+			  	and dy.dybh = #[dybh]
+			  #end
+			  #if($dyxm and !$dyxm.equals(""))
+			  	and dy.dyxm like '%'||#[dyxm]||'%'
+			  #end
+			  #if($dysfzh and !$dysfzh.equals(""))
+			  	and dy.dysfzh like '%'||#[dysfzh]||'%'
+			  #end
+			  #if($djrxm and !$djrxm.equals(""))
+			  	and dy.djrxm like '%'||#[djrxm]||'%'
+			  #end
+			  #if($xgdbh and !$xgdbh.equals(""))
+			  	and dy.ssxgdbh = #[xgdbh]
+			  #end
+			  #if($sgrq_from && !$sgrq_from.equals(""))
+			  	and dy.sgrq >= to_date(#[sgrq_from],'yyyy-MM-dd')
+			  #end
+			  #if($sgrq_to && !$sgrq_to.equals(""))
+			  	and dy.sgrq <= to_date(#[sgrq_to],'yyyy-MM-dd')
+			  #end
+			  #if($lgrq_from && !$lgrq_from.equals(""))
+			  	and dy.lgrq >= to_date(#[lgrq_from],'yyyy-MM-dd')
+			  #end
+			  #if($lgrq_to && !$lgrq_to.equals(""))
+			  	and dy.lgrq <= to_date(#[lgrq_to],'yyyy-MM-dd')
+			  #end
+			   #if($zxbs && !$zxbs.equals(""))
+			  	and dy.zxbs = #[zxbs]
+			  #end
+			  order by djsj desc
+		]]>
+	</property>
+	
+	
+	
+	<property name="queryXgdyxxBySfzh">
+		<![CDATA[
+			select dy.dybh,
+			       dy.dyxm,
+			       dy.dysfzh,
+			       dy.dyxb,
+			       dy.whcd,
+			       to_char(dy.dycsrq,'yyyy-MM-dd') dycsrq,
+			       dy.dyhjdxz,
+			       dy.dyxzdxz,
+			       dy.dylxdh,
+			       dy.gl,
+			       to_char(dy.sgrq,'yyyy-MM-dd') sgrq,
+			       to_char(dy.lgrq,'yyyy-MM-dd') lgrq,
+			       dy.zgzt,
+			       dy.gzbx,
+			       dy.shgx,
+			       dy.dyjl,
+			       dy.djrxm,
+			       dy.djrjh,
+			       dy.djrdwdm ,
+			       dy.djrdwmc,
+			       dy.djsj,
+			       dy.zxbs,
+			       dy.zxsj,
+			       dy.zxdwdm,
+			       dy.zxdwmc,
+			       dy.pxqk,
+			       dy.bz
+			  from t_af_xgdyxx dy
+			  where dy.dysfzh=?
+		]]>
+	</property>
+	
+		<property name="queryXgdyxxBySfzhAndOrgcode">
+		<![CDATA[
+			select * from t_af_xgdyxx
+			where dysfzh=?
+			and zxbs='0'
+			and djrdwdm=?
+		]]>
+	</property>
+	
+</properties>

@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 注销治安巡逻 -->
+	<property name="cancelZaxl">
+		<![CDATA[
+			update t_af_zaxl
+			   set 
+			       czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czsj = sysdate,
+			       czbs = #[czbs]
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<!-- 修改治安巡逻 -->
+	<property name="updateZaxl">
+		<![CDATA[
+			update t_af_zaxl
+			   set
+			       xlsj = to_date(#[xlsj],'yyyy-mm-dd'),
+			       xldx = #[xldx],
+			       xlsqdm = #[xlsqdm],
+			       xlqk = #[xlqk],
+			       bz = #[bz],
+			       czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czsj = sysdate,
+			       czbs = #[czbs],
+			       xllx = #[xllx]
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<!-- 新增治安巡逻 -->
+	<property name="insertZaxl">
+		<![CDATA[
+			insert into t_af_zaxl
+			  (id, xlsj, xldx, xlsqdm, xlqk, bz, djrxm, djrjh, djrsfzh,
+			   djsj, djdwdm, djdwmc, czrxm, czrjh, czrsfzh, czdwdm, czdwmc, czsj, czbs,xllx)
+			values
+			  (#[id], to_date(#[xlsj],'yyyy-mm-dd'), #[xldx], #[xlsqdm], #[xlqk], #[bz], #[djrxm], 
+			  #[djrjh], #[djrsfzh], sysdate, #[djdwdm], #[djdwmc], #[czrxm], #[czrjh], 
+			  #[czrsfzh], #[czdwdm], #[czdwmc], sysdate, #[czbs],#[xllx])
+		]]>
+	</property>
+	
+	<!-- 根据id查询治安巡逻 -->
+	<property name="queryZaxlById">
+		<![CDATA[
+			select id, to_char(xlsj,'yyyy-mm-dd') as xlsj, xldx,
+				   (select mc from t_common_hnxzqh where dm = xlsqdm) as xlsqmc,
+				   xlsqdm, xlqk, bz, djrxm, djrjh, djrsfzh,djsj, djdwdm, djdwmc, 
+				   czrxm, czrjh, czrsfzh, czdwdm, czdwmc, czsj, czbs, xllx 
+			from t_af_zaxl where id = ?
+		]]>
+	</property>
+	
+	<!-- 分页查询治安巡逻 -->
+	<property name="queryZaxlList">
+		<![CDATA[
+			select id, to_char(xlsj,'yyyy-mm-dd') as xlsj, xldx,
+				   (select jc from t_common_hnxzqh where dm = xlsqdm) as xlsqmc,
+				   xlsqdm, xlqk, bz, djrxm, djrjh, djrsfzh,djsj, djdwdm, djdwmc, 
+				   czrxm, czrjh, czrsfzh, czdwdm, czdwmc, czsj, czbs, xllx 
+			from t_af_zaxl where (czbs = '1' or czbs = '2')
+			#if($sqdm && !$sqdm.equals(""))
+		   		and xlsqdm = #[sqdm]
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+		   		--精确到警务区
+				and   djdwdm = #[jwsqdm]
+			    --精确到派出所
+			#elseif($pcsdm and !$pcsdm.equals(""))
+			  	and djdwdm like substr(#[pcsdm],1,8)||'%'
+			  	--精确到县区
+		    #elseif($countrygajgjgdm and !$countrygajgjgdm.equals(""))
+				and djdwdm like substr(#[countrygajgjgdm],1,6) || '%'
+			    --精确到市州
+			#elseif($citygajgjgdm and !$citygajgjgdm.equals(""))
+				 and djdwdm like substr(#[citygajgjgdm],1,4) ||'%'
+			#end
+			#if($xlsj_s && !$xlsj_s.equals(""))
+				and xlsj >= to_date(#[xlsj_s],'yyyy-mm-dd')
+			#end
+			#if($xlsj_e && !$xlsj_e.equals(""))
+				and xlsj <= to_date(#[xlsj_e],'yyyy-mm-dd')
+			#end	
+		]]>
+	</property>
+	<!-- 分页查询治安巡逻人员 -->
+	<property name="queryZaxlryList">
+		<![CDATA[
+			select id,
+			       zaxlid,
+			       xldyxm,
+			       xldysfzh,
+			       decode(xldylxdh,'null','',xldylxdh) xldylxdh,
+			       djrxm,
+			       djrjh,
+			       djrsfzh,
+			       djsj,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czrjh,
+			       czrsfzh,
+			       czdwdm,
+			       czdwmc,
+			       czsj,
+			       czbs,
+			       zw,
+			       zwms
+			  from t_af_xlryb t
+			 where 1=1
+			 and czbs ='0'
+			 #if($id && !$id.equals(""))
+				and zaxlid = #[id]
+			 #end
+			 #if(!$id || $id.equals(""))
+				and 1 = 2
+			 #end	
+			 order by djsj desc	
+		]]>
+	</property>
+	<!-- 根据巡逻ID和身份证号查询巡逻民警信息 -->
+	<property name="queryZaxlRyMjByZaxlidAndSfzh">
+		<![CDATA[
+			select id,
+			       zaxlid,
+			       xldyxm,
+			       xldysfzh,
+			       decode(xldylxdh,'null','',xldylxdh) xldylxdh,
+			       djrxm,
+			       djrjh,
+			       djrsfzh,
+			       djsj,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czrjh,
+			       czrsfzh,
+			       czdwdm,
+			       czdwmc,
+			       czsj,
+			       czbs,
+			       zw,
+			       zwms
+			  from t_af_xlryb t
+			  where czbs = '0' and zaxlid = ? and xldysfzh = ?
+		]]>
+	</property>
+	<!-- 更新治安巡逻民警信息 -->
+	<property name="updateZaxlryMjSQL">
+		<![CDATA[
+			update t_af_xlryb
+			   set xldyxm = #[xldyxm],
+			       xldylxdh = #[xldylxdh]
+			 where xldysfzh = #[xldysfzh]
+			  and zaxlid = #[zaxlid]
+		]]>
+	</property>
+	<!-- 根据ID注销治安巡逻民警信息 -->
+	<property name="cancelZaxlryByIdSQL">
+		<![CDATA[
+			update t_af_xlryb
+			   set czbs = '1',
+			       czsj = sysdate
+			 where id = ?
+		]]>
+	</property>
+	<!-- 新增治安巡逻民警信息 -->
+	<property name="insertZaxlryMjSQL">
+		<![CDATA[
+			insert into t_af_xlryb
+				  (id,
+				   zaxlid,
+				   xldyxm,
+				   xldysfzh,
+				   xldylxdh,
+				   djrxm,
+				   djrjh,
+				   djrsfzh,
+				   djsj,
+				   djdwdm,
+				   djdwmc,
+				   czrxm,
+				   czrjh,
+				   czrsfzh,
+				   czdwdm,
+				   czdwmc,
+				   czsj,
+				   czbs,
+				   zw,
+				   zwms)
+				values
+				  (#[id],
+				   #[zaxlid],
+				   #[xldyxm],
+				   #[xldysfzh],
+				   #[xldylxdh],
+				   #[djrxm],
+				   #[djrjh],
+				   #[djrsfzh],
+				   sysdate,
+				   #[djdwdm],
+				   #[djdwmc],
+				   #[czrxm],
+				   #[czrjh],
+				   #[czrsfzh],
+				   #[czdwdm],
+				   #[czdwmc],
+				   sysdate,
+				   '0',
+				   #[zw],
+				   #[zwms])
+		]]>
+	</property>
+	<!-- 分页查询巡逻队员信息 -->
+	<property name="queryXlmjlList">
+		<![CDATA[
+			select xldybh,
+			       xldbh,
+			       xldyxm,
+			       xldyxb,
+			       xldysfzh,
+			       xldycsrq,
+			       xldyhjdxz,
+			       xldyxzdxz,
+			       xldylxdh,
+			       sgrq,
+			       tcrq,
+			       zgzt,
+			       bz,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       djsj,
+			       gxsj,
+			       djrsfzh,
+			       bwzw,
+			       sfftjzry,
+			       zzhjz,
+			       dwdh,
+			       zzdh,
+			       tc,
+			       jlqk,
+			       grjl,
+			       jtcy,
+			       xzzw
+			  from t_af_xldyxx t where t.djdwdm = #[orgcode] and zgzt ='1'
+		]]>
+	</property>
+	<!-- 分页查社区干部信息 -->
+	<property name="querySqgblList">
+		<![CDATA[
+			select gbbh,
+			       sssqbh,
+			       gbxm,
+			       gbxb,
+			       gbsfzh,
+			       gbcsrq,
+			       gblxdh,
+			       gbzzmm,
+			       gbzw,
+			       gbhjdqh,
+			       gbxzdxz,
+			       gbdrsj,
+			       gbdcsj,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       djsj,
+			       sssqmc,
+			       zxbs,
+			       zxsj,
+			       zxyy,
+			       bz,
+			       sfdl,
+			       djrsfzh,
+			       whcd,
+			       lx
+			  from t_af_sqgbxx t
+			  where t.djdwdm = #[orgcode] and t.sfdl ='0'
+		]]>
+	</property>
+	<!-- 分页查询治安巡逻 盘查人员 -->
+	<property name="queryZaxlpcryList">
+		<![CDATA[
+			select id,
+			       zaxlid,
+			       pcryxm,
+			       pcrysfzh,
+			       decode(pcrylxdh,'null','',pcrylxdh) pcrylxdh,
+			       djrxm,
+			       djrjh,
+			       djrsfzh,
+			       djsj,
+			       djdwdm,
+			       djdwmc,
+			       czrxm,
+			       czrjh,
+			       czrsfzh,
+			       czdwdm,
+			       czdwmc,
+			       czsj,
+			       czbs
+			  from t_af_xlpcdxb t
+			 where 1=1
+			 and czbs ='0'
+			 #if($id && !$id.equals(""))
+				and zaxlid = #[id]
+			 #end
+			 #if(!$id || $id.equals(""))
+				and 1 = 2
+			 #end	
+			 order by djsj desc	
+		]]>
+	</property>
+	<!-- 更新治安巡逻 盘查人员 -->
+	<property name="updateZaxlpcrySQL">
+		<![CDATA[
+			update t_af_xlpcdxb t
+				   set 
+				       pcryxm = #[pcryxm],
+				       pcrylxdh = #[pcrylxdh],
+				       djsj = sysdate,
+				       czrxm = #[czrxm],
+				       czrjh = #[czrjh],
+				       czrsfzh = #[czrsfzh],
+				       czdwdm = #[czdwdm],
+				       czdwmc = #[czdwmc],
+				       czsj = sysdate
+				 where zaxlid = #[zaxlid] and pcrysfzh = #[pcrysfzh]
+		]]>
+	</property>
+	<!-- 新增治安巡逻 盘查人员 -->
+	<property name="insertZaxlpcrySQL">
+		<![CDATA[
+			insert into t_af_xlpcdxb
+				  (id,
+				   zaxlid,
+				   pcryxm,
+				   pcrysfzh,
+				   pcrylxdh,
+				   djrxm,
+				   djrjh,
+				   djrsfzh,
+				   djsj,
+				   djdwdm,
+				   djdwmc,
+				   czrxm,
+				   czrjh,
+				   czrsfzh,
+				   czdwdm,
+				   czdwmc,
+				   czsj,
+				   czbs)
+				values
+				  (#[id],
+				   #[zaxlid],
+				   #[pcryxm],
+				   #[pcrysfzh],
+				   #[pcrylxdh],
+				   #[djrxm],
+				   #[djrjh],
+				   #[djrsfzh],
+				   sysdate,
+				   #[djdwdm],
+				   #[djdwmc],
+				   #[czrxm],
+				   #[czrjh],
+				   #[czrsfzh],
+				   #[czdwdm],
+				   #[czdwmc],
+				   sysdate,
+				   '0')
+		]]>
+	</property>
+	<!-- 根据ID注销治安巡逻 盘查人员 -->
+	<property name="cancelZaxlrpcryById">
+		<![CDATA[
+			update t_af_xlpcdxb t
+				   set 
+				      czbs = '1',
+				       czsj = sysdate
+				 where id = #[id] 
+		]]>
+	</property>
+	
+	<!-- 根据zaxlid和身份证号查询治安巡逻 盘查人员 -->
+	<property name="queryZaxlpcRyByZaxlidAndSfzh">
+		<![CDATA[
+			select * from  t_af_xlpcdxb t
+				   where zaxlid =? and pcrysfzh = ?
+		]]>
+	</property>
+</properties>

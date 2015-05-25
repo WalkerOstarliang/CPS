@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Struts2Diagram version="2.0">
+  <package name="khkp" location="309,165" size="280,1855">
+    <action name="*" location="65,71" size="150,293">
+      <result name="toKhkpPage">
+        <resourceEdge source="toKhkpPage" routing="0" target="khkp.jsp" />
+      </result>
+      <result name="toSqkhtjPage">
+        <resourceEdge source="toSqkhtjPage" routing="0" target="sqkhtj.jsp" />
+      </result>
+      <result name="sqkhtj_03">
+        <resourceEdge source="sqkhtj_03" routing="0" target="wskh.jsp" />
+      </result>
+      <result name="sqkhtj_04">
+        <resourceEdge source="sqkhtj_04" routing="0" target="lscj.jsp" />
+      </result>
+      <result name="sqkhtj_05">
+        <resourceEdge source="sqkhtj_05" routing="0" target="dtgk.jsp" />
+      </result>
+      <result name="queryKhkpDl">
+        <resourceEdge source="queryKhkpDl" routing="0" target="dltj.jsp" />
+      </result>
+      <result name="queryKhkpXl">
+        <resourceEdge source="queryKhkpXl" routing="0" target="xltj.jsp" />
+      </result>
+      <result name="toSjcjsl">
+        <resourceEdge source="toSjcjsl" routing="0" target="sjcjslList.jsp" />
+      </result>
+      <result name="toWtsjflListPage">
+        <resourceEdge source="toWtsjflListPage" routing="0" target="wtsjfllist.jsp" />
+      </result>
+      <result name="exportWtsjtjPage">
+        <resourceEdge source="exportWtsjtjPage" routing="0" target="wtsjexportxls.jsp" />
+      </result>
+      <result name="toOpenWtsjPage">
+        <resourceEdge source="toOpenWtsjPage" routing="0" target="wtsjdetailinfo.jsp" />
+      </result>
+      <result name="toExportWtsjPage">
+        <resourceEdge source="toExportWtsjPage" routing="0" target="wtsjdetailexport.jsp" />
+      </result>
+      <result name="toExportMjDetailWin">
+        <resourceEdge source="toExportMjDetailWin" routing="0" target="wtsjmjdetaillist.jsp" />
+      </result>
+    </action>
+  </package>
+  <package name="khkpkfx" location="2403,2265" size="280,140">
+    <action name="*" location="65,57" size="150,41">
+      <result name="createMs">
+        <resourceEdge source="createMs" routing="0" target="kfxq.jsp" />
+      </result>
+    </action>
+  </package>
+  <package name="sjhc" location="13,2510" size="1995,350">
+    <action name="*" location="135,68" size="150,230">
+      <result name="toSjhcPage">
+        <resourceEdge source="toSjhcPage" routing="0" target="sjhc.jsp" />
+      </result>
+      <result name="dataPage_101">
+        <resourceEdge source="dataPage_101" routing="0" target="ldrkList.jsp" />
+      </result>
+      <result name="dataPage_102">
+        <resourceEdge source="dataPage_102" routing="0" target="cyryList.jsp" />
+      </result>
+      <result name="dataPage_103">
+        <resourceEdge source="dataPage_103" routing="0" target="czfwList.jsp" />
+      </result>
+      <result name="dataPage_104">
+        <resourceEdge source="dataPage_104" routing="0" target="fwList.jsp" />
+      </result>
+      <result name="dataPage_105">
+        <resourceEdge source="dataPage_105" routing="0" target="stList.jsp" />
+      </result>
+      <result name="dataPage_201">
+        <resourceEdge source="dataPage_201" routing="0" target="zdryList.jsp" />
+      </result>
+      <result name="dataPage_202">
+        <resourceEdge source="dataPage_202" routing="0" target="zdryList.jsp" />
+      </result>
+      <result name="dataPage_203">
+        <resourceEdge source="dataPage_203" routing="0" target="zdryList.jsp" />
+      </result>
+      <result name="dataPage_301">
+        <resourceEdge source="dataPage_301" routing="0" target="lmpcList.jsp" />
+      </result>
+    </action>
+  </package>
+  <webResource name="khkp.jsp" path="/jsp/xtgl/pages/khkp/khkp.jsp" location="66,1760" size="150,55" />
+  <webResource name="sqkhtj.jsp" path="/jsp/xtgl/pages/khkp/sqkhtj.jsp" location="25,1585" size="150,55" />
+  <webResource name="wskh.jsp" path="/jsp/xtgl/pages/khkp/wskh.jsp" location="66,1410" size="150,55" />
+  <webResource name="lscj.jsp" path="/jsp/xtgl/pages/khkp/lscj.jsp" location="66,1235" size="150,55" />
+  <webResource name="dtgk.jsp" path="/jsp/xtgl/pages/khkp/dtgk.jsp" location="66,1060" size="150,55" />
+  <webResource name="dltj.jsp" path="/jsp/xtgl/pages/khkp/dltj.jsp" location="66,885" size="150,55" />
+  <webResource name="xltj.jsp" path="/jsp/xtgl/pages/khkp/xltj.jsp" location="66,710" size="150,55" />
+  <webResource name="sjcjslList.jsp" path="/jsp/xtgl/pages/khkp/sjcjslList.jsp" location="13,535" size="150,55" />
+  <webResource name="wtsjfllist.jsp" path="/jsp/khkp/pages/wtsjfllist.jsp" location="28,325" size="150,55" />
+  <webResource name="wtsjexportxls.jsp" path="/jsp/khkp/pages/wtsjexportxls.jsp" location="334,10" size="150,55" />
+  <webResource name="wtsjdetailinfo.jsp" path="/jsp/khkp/pages/wtsjdetailinfo.jsp" location="646,325" size="150,55" />
+  <webResource name="wtsjdetailexport.jsp" path="/jsp/khkp/pages/wtsjdetailexport.jsp" location="325,2075" size="150,55" />
+  <webResource name="wtsjmjdetaillist.jsp" path="/jsp/khkp/pages/wtsjmjdetaillist.jsp" location="10,1935" size="150,55" />
+  <webResource name="kfxq.jsp" path="/jsp/xtgl/pages/khkp/kfxq.jsp" location="2440,2460" size="150,55" />
+  <webResource name="sjhc.jsp" path="/jsp/xtgl/pages/khkp/sjhc.jsp" location="120,2915" size="150,55" />
+  <webResource name="ldrkList.jsp" path="/jsp/xtgl/pages/sjhc/ldrkList.jsp" location="423,2355" size="150,55" />
+  <webResource name="cyryList.jsp" path="/jsp/xtgl/pages/sjhc/cyryList.jsp" location="738,2355" size="150,55" />
+  <webResource name="czfwList.jsp" path="/jsp/xtgl/pages/sjhc/czfwList.jsp" location="1053,2355" size="150,55" />
+  <webResource name="fwList.jsp" path="/jsp/xtgl/pages/sjhc/fwList.jsp" location="1374,2355" size="150,55" />
+  <webResource name="stList.jsp" path="/jsp/xtgl/pages/sjhc/stList.jsp" location="1689,2355" size="150,55" />
+  <webResource name="zdryList.jsp" path="/jsp/xtgl/pages/sjhc/zdryList.jsp" location="108,2250" size="150,55" />
+  <webResource name="lmpcList.jsp" path="/jsp/xtgl/pages/sjhc/lmpcList.jsp" location="2068,2635" size="150,55" />
+</Struts2Diagram>
+

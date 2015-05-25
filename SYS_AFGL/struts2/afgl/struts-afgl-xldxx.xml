@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="afgxld" namespace="/afgl/xldxx" extends="default">
+		  	<action name="*" class="com.chinacreator.afgl.action.AFXldxxAction" method="{1}">
+		  		<result name="toXldxxPage">/jsp/afgl/pages/xldgl/xldxxlist.jsp</result>
+		  		<result name="toXldInfoPage">/jsp/afgl/pages/xldgl/xldinfo.jsp</result>
+		  		<result name="toXldxxGjQueryPage">/jsp/afgl/pages/xldgl/xldgjquery.jsp</result>
+		  		<result name="toXfdyxxPage">/jsp/afgl/pages/xldgl/xfdylist.jsp</result>
+		  		<result name="toXldrxxPage">/jsp/afgl/pages/xldgl/xldrylist.jsp</result>
+		  		<result name="toXldryGjQueryPage">/jsp/afgl/pages/xldgl/xldrygjquery.jsp</result>
+		  		<result name="toXldryInfoPage">/jsp/afgl/pages/xldgl/xldryinfo.jsp</result>
+		  		<result name="toXldxxSelectPage">/jsp/afgl/pages/xldgl/xldselectlist.jsp</result>
+		  		<result name="toXldyxxSelectPage">/jsp/afgl/pages/xldgl/xldyselectlist.jsp</result>		  		
+		  		<result name="toXfryInfoPage">/jsp/afgl/pages/xldgl/xfryinfo.jsp</result>
+		  	</action>
+		  	
+	</package>	  	
+</struts>

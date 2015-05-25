@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 查询火灾信息列表 -->
+	<property name="queryHzldList">
+		<![CDATA[
+			#if($czrjh && !$czrjh.equals(""))
+			    select h.* from t_xfdw_hzldxx h,t_xfdw_hzpf p where h.hzxh=p.hzxh and p.czrjh=#[czrjh] and p.clzt = '1'
+			#elseif (!($issy && !$issy.equals("")))
+			  	 	select h.* from t_xfdw_hzldxx h where h.ssdwdm=#[ssdwdm]
+		  	#else
+		  		select h.* from t_xfdw_hzldxx h,
+			       (select *
+			          from v_common_organization o
+			         start with orgcode = #[ssdwdm]
+			        connect by prior orgid = parent_orgid
+			               and o.isyx = '1') a
+			 where a.orgcode = h.ssdwdm
+		  	#end
+		  #if($qhsjStart && !$qhsjStart.equals(""))
+		  	and h.qhsj >= #[qhsjStart]
+		  #end
+		  #if($qhsjEnd && !$qhsjEnd.equals(""))
+		  	and h.qhsj <= #[qhsjEnd]
+		  #end
+		  #if($zt && !$zt.equals(""))
+		  	and h.zt = #[zt]
+		  #end
+		  #if($qhdd && !$qhdd.equals(""))
+		  	and h.qhdd like '%' || #[qhdd] || '%'
+		  #end
+		  #if($hzxh && !$hzxh.equals(""))
+		  	and h.hzxh = #[hzxh]
+		  #end
+		  order by zt asc
+		]]>
+	</property>
+
+	<!-- 导入火灾信息 -->
+	<property name="importHzxx">
+		<![CDATA[
+			INSERT INTO t_xfdw_hzldxx(
+				xzqybm,
+				hzxh,
+				qhsj,
+				qhdd,
+				qhcs,
+				hzyy,
+				hzmc,
+				szhs,
+				zjccss,
+				ssrs,
+				swrs,
+				ssdwdm,
+				hzdj,
+				rksj
+			)VALUES(
+				#[xzqybm],
+				#[hzxh],
+				#[qhsj],
+				#[qhdd],
+				#[qhcs],
+				#[hzyy],
+				#[hzmc],
+				#[szhs],
+				#[zjccss],
+				#[ssrs],
+				#[swrs],
+				#[ssdwdm],
+				#[hzdj],
+				sysdate
+			) 
+		]]>
+	</property>
+	<!-- 查询火灾序号查询火灾信息 -->
+		<property name="queryXFxxExportBeanByhzxh">
+		<![CDATA[
+			select xzqybm,
+				hzxh,
+				qhsj,
+				qhdd,
+				qhcs,
+				hzyy,
+				hzmc,
+				szhs,
+				zjccss,
+				ssrs,
+				swrs,
+				ssdwdm,
+				hzdj,
+				rksj
+			 from t_xfdw_hzldxx
+			 where hzxh=#[hzxh]
+		]]>
+	</property>
+	<property name="UpdateXFxxByHZXH">
+		<![CDATA[
+			update t_xfdw_hzldxx
+			set
+			#if($xzqybm and !$xzqybm.equals(""))
+		      	 xzqybm  = #[xzqybm], 
+		   	#end
+		  	#if($qhsj and !$qhsj.equals(""))
+		      	 qhsj  = #[qhsj], 
+		   	#end
+		   	#if($qhdd and !$qhdd.equals(""))
+		      	 qhdd  = #[qhdd], 
+		   	#end
+		   	#if($qhcs and !$qhcs.equals(""))
+		      	 qhcs  = #[qhcs], 
+		   	#end
+		   	#if($hzyy and !$hzyy.equals(""))
+		      	 hzyy  = #[hzyy], 
+		   	#end
+		   	#if($hzmc and !$hzmc.equals(""))
+		      	 hzmc  = #[hzmc], 
+		   	#end
+		   	#if($szhs and !$szhs.equals(""))
+		      	 szhs  = #[szhs], 
+		   	#end
+		   	#if($zjccss and !$zjccss.equals(""))
+		      	 zjccss  = #[zjccss], 
+		   	#end
+		   	#if($ssrs and !$ssrs.equals(""))
+		      	 ssrs  = #[ssrs], 
+		   	#end
+		   	#if($swrs and !$swrs.equals(""))
+		      	 swrs  = #[swrs],
+		   	#end
+		   	#if($ssdwdm and !$ssdwdm.equals(""))
+		      	 ssdwdm  = #[ssdwdm],
+		   	#end
+		   	#if($hzdj and !$hzdj.equals(""))
+		      	 hzdj  = #[hzdj],
+		   	#end
+		   	hzxh=#[hzxh]
+		   	where hzxh=#[hzxh]
+		]]>
+	</property>
+
+	<property name="queryAllHzldList">
+		<![CDATA[
+			#if($czrjh && !$czrjh.equals(""))
+		  	 	 select h.* from t_xfdw_hzldxx h,t_xfdw_hzpf p where h.hzxh=p.hzxh and p.czrjh=#[czrjh] and p.clzt = '1'
+		  	#else 
+				select h.*
+		  		from t_xfdw_hzldxx h
+		  		where 1=1
+		  #if(!($issy && !$issy.equals("")))
+		  	 and h.ssdwdm = #[ssdwdm]
+		  #end
+		  #end
+		  #if($qhsjStart && !$qhsjStart.equals(""))
+		  	and h.qhsj >= #[qhsjStart]
+		  #end
+		  #if($qhsjEnd && !$qhsjEnd.equals(""))
+		  	and h.qhsj <= #[qhsjEnd]
+		  #end
+		  #if($zt && !$zt.equals(""))
+		  	and h.zt = #[zt]
+		  #end
+		  #if($qhdd && !$qhdd.equals(""))
+		  	and h.qhdd like '%' || #[qhdd] || '%'
+		  #end
+		  #if($hzxh && !$hzxh.equals(""))
+		  	and h.hzxh = #[hzxh]
+		  #end
+		]]>
+	</property>
+	
+	<property name="queryByHzxhInfo">
+		<![CDATA[
+			select * from t_xfdw_hzldxx where hzxh = #[hzxh]
+		]]>
+	</property>
+	
+	<property name="queryByHzpfInfo">
+		<![CDATA[
+			select id,
+		       hzxh,
+		       czrjh,
+		       (select max(realname) from v_common_user u where username = czrjh and u.isvalid='1') as czrxm,
+		       czrsfzh,
+		       czrdwdm,
+		       czsj,
+		       czip,
+		       cldwdm,
+		       clzt,
+		       bzsm
+		  from t_xfdw_hzpf where hzxh = #[hzxh]
+		  order by czsj desc
+		]]>
+	</property>
+	
+	<property name="queryHzpfInfo">
+		<![CDATA[
+				select *
+				  from (select *
+				          from t_xfdw_hzpf t
+				         where hzxh = #[hzxh]
+				         and cldwdm = (select ssdwdm from t_xfdw_hzldxx where hzxh = #[hzxh])
+				         and clzt='1'
+				         order by czsj desc)
+				 where rownum <= 1
+		]]>
+	</property>
+	
+	<property name="updateHzldInfo">
+		<![CDATA[
+			update t_xfdw_hzldxx
+			   set 
+				#if($ssdwdm && !$ssdwdm.equals(""))
+					ssdwdm = #[ssdwdm],
+				#end
+				#if($bzdz && !$bzdz.equals(""))
+					bzdz   = #[bzdz],
+				#end
+			    zt     = #[zt]
+			 where hzxh   = #[hzxh]
+		]]>
+	</property>
+	
+	<property name="insertHzpfInfo">
+		<![CDATA[
+			insert into t_xfdw_hzpf
+			  (id, hzxh, czrjh, czrsfzh, czrdwdm, czsj, czip, cldwdm, clzt, bzsm)
+			values
+			  (SEQ_XFDW_HZPF_ID.Nextval,
+			   #[hzxh],
+			   #[czrjh],
+			   #[czrsfzh],
+			   #[czrdwdm],
+			   sysdate,
+			   #[czip],
+			   #[cldwdm],
+			   #[clzt],
+			   #[bzsm])
+		]]>
+	</property>
+	
+	<!-- 插入火灾落地待办提醒 -->
+	<property name="insertHzpfDb">
+		<![CDATA[
+			insert into t_xxgl_db
+			  (id,
+			   zrrjh, 
+			   ztxx, 
+			   ljdz,
+			   ssmkbh,
+			   cjsj,
+			   yxj,
+			   actflag,
+			   org_id,
+			   remark）
+			values
+			  (SEQ_XXGL_DB.Nextval,
+			   #[zrrjh],
+			   #[ztxx],
+			   #[ljdz],
+			   #[ssmkbh],
+			   sysdate,
+			   #[yxj],
+			   #[actflag],
+			   #[org_id],
+			   #[remark])
+			
+		]]>
+	</property>
+	<!-- 修改待办提醒标记 -->
+	<property name="updateHzldDb">
+		<![CDATA[
+			update  t_xxgl_db
+			set actflag = '0'
+			where remark = ?
+		]]>
+	</property>
+</properties>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="xgdyxx" namespace="/xgdyxx" extends="default"> 
+	  		<action name="*" class="com.chinacreator.afgl.action.XgdyxxAction" method="{1}">
+	  			<result name="toXgdyxxList">/jsp/afgl/pages/xgdyxx/xgdyxxList.jsp</result>
+	  			<result name="toAddXgdyxx">/jsp/afgl/pages/xgdyxx/addXgdyxx.jsp</result>
+	  			<result name="toSelectXgdxx">/jsp/afgl/pages/xgdyxx/selectXgdxx.jsp</result>
+	  			<result name="toUpdateXgdyxxByDybh">/jsp/afgl/pages/xgdyxx/addXgdyxx.jsp</result>
+	  			<result name="viewXgdyxxByDybh">/jsp/afgl/pages/xgdyxx/viewXgdyxx.jsp</result>
+	  		</action>
+	  </package>
+</struts>

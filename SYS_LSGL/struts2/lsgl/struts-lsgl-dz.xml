@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="dz" namespace="/lsgl/dz" extends="default"> 
+	  		<action name="*" class="com.chinacreator.lsgl.action.LsglDzxxAction" method="{1}">
+	  			<result name="toDzxxList">/jsp/lsgl/pages/dz/dzxxList.jsp</result>
+	  			<result name="toDzxxDetail">/jsp/lsgl/pages/dz/dzxxDetail.jsp</result>
+	  		</action>
+	  </package>
+</struts>

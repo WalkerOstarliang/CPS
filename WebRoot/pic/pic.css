@@ -1,0 +1,11 @@
+body{margin:0px;}
+div{border:1xp solid #ccc; background-color:#eee;}
+.list{width:275px; height:93px; margin:0px 2px; float:left;}
+.up,.down{height:95px; width:20px; float:left; cursor:hand;}
+.up{background:#eee url("img/dislabel_left.png") no-repeat center;}
+.down{background:#eee url("img/dislabel_right.png") no-repeat center;}
+			
+ul{border:1px solid #ccc; background-color:#ddd; margin:5px 5px; height:83px; width:265px; text-align:center;overflow:hidden;}
+li{border:1px solid #bbb; margin:2px 2px;list-style:none; width:60px; height:75px; display:inline; float:left; clear:right;}
+.img_main{display:none;}
+.img{margin:5px;}

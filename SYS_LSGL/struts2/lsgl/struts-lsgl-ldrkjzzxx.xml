@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="jzzxx" namespace="/lsgl/jzzxx" extends="default"> 
+	  		<action name="*" class="com.chinacreator.lsgl.action.LsglLdrkJzzxxAction" method="{1}">
+	  			<result name="toAddJzzxxPage">/jsp/lsgl/pages/rk/zzrk/jzzxx.jsp</result>
+	  			<result name="toYqJzzxxPage">/jsp/lsgl/pages/rk/zzrk/jzzxxyq.jsp</result>
+	  			<result name="toPrintPage">/jsp/lsgl/pages/rk/zzrk/dyPage4.jsp</result>
+	  			<result name="toJzzxxPageInfo">/jsp/lsgl/pages/rk/zzrk/jzzxxlist.jsp</result>
+	  			<result name="toJzzDyListPage">/jsp/lsgl/pages/rk/zzrk/jzzdyList.jsp</result>
+	  			<result name="toBatchPrintPage">/jsp/lsgl/pages/rk/zzrk/dyPage5.jsp</result>
+	  			<result name="toPreViewPage">/jsp/lsgl/pages/rk/zzrk/preview.jsp</result>
+	  			<result name="toLdrkExportWordPage">/jsp/lsgl/pages/rk/zzrk/zzrkdc.jsp</result>
+	  			<result name="toJwrkExportWordPage">/jsp/lsgl/pages/rk/jwrk/jwrkdc.jsp</result>
+	  			<result name="toCzrkPrintPage">/jsp/lsgl/pages/rk/czrk/czrkinfody.jsp</result>
+	  			<result name="toTjLdrkMzxx">/jsp/lsgl/pages/rk/zzrk/ldrktj.jsp</result>
+	  			<result name="queryLdrkTjList">/jsp/lsgl/pages/rk/zzrk/ldrkmztj.jsp</result>
+	  			<result name="exportLdrkTjxx">/jsp/lsgl/pages/rk/zzrk/ldrkTjexcelTemplate.jsp</result>
+	  			<result name="toLdrkchQueryListPage">/jsp/lsgl/pages/rk/zzrk/ldrkzhquerylist.jsp</result>
+	  			<result name="exportLdrkZhQueryPage">/jsp/lsgl/pages/rk/zzrk/exportldrkzhpage.jsp</result>
+	  			<result name="toRsdqFatj">/jsp/tj/rsdqfaqkTj.jsp</result>
+	  			<result name="queryFatjBean">/jsp/tj/fatj.jsp</result>
+	  			<result name="expFatj">/jsp/tj/expFatj.jsp</result>
+	  			<result name="toExportLdrkRsqfx">/jsp/lsgl/pages/rk/zzrk/ldrkrsdfxdc.jsp</result>
+	  			<!-- 导出流口入室盗统计 -->
+	  			<result name="toExportLdrkRsqTj">/jsp/lsgl/pages/rk/zzrk/exportMode/exportLkrsdtj.jsp</result>
+	  			
+	  			<!-- 居住证统计 -->
+	  			<result name="toJzzTjPage">/jsp/lsgl/pages/rk/zzrk/jzztj.jsp</result>
+	  			<result name="downloadJjz">/jsp/lsgl/pages/rk/zzrk/exportMode/jzzdowload_mode.jsp</result>
+	  			
+	  			
+	  			<result name="queryJzztj">/jsp/lsgl/pages/rk/zzrk/jzztjDataPage.jsp</result>
+	  			<result name="toLdrkJzzhcPage">/jsp/lsgl/pages/jzz/jzzhclist.jsp</result>
+	  			<result name="downloadJZZtjPage">/jsp/lsgl/pages/jzz/JzzTjDownloadExcel.jsp</result>
+	  			
+	  		</action>
+	  </package>
+</struts>

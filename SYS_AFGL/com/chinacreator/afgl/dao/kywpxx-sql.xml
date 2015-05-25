@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="addKywpxx">
+		<![CDATA[
+			insert into t_af_zakywpxx
+			  (kywpbh, pcbh, wpmc, wplx, wpxh, wpgg, wpys, wpyas, wpsl, wpsldw, 
+			  wpzl, wpzldw, wpcd, wpcddw, zjdwdm, zjdwmc, zjsj, wpxz, wpjz, 
+			  wptz, wpms, clzt, clqk, clrxm, clrjh, cldwdm, cldwmc, clrq, bz, 
+			  wptp, wpcfdz, wplylx, djrxm, djrjh, djdwdm, djdwmc, djsj)
+			values
+			  (#[kywpbh], #[pcbh], #[wpmc], #[wplx], #[wpxh], #[wpgg], #[wpys], 
+			  #[wpyas], #[wpsl], #[wpsldw], #[wpzl], #[wpzldw], #[wpcd], #[wpcddw], 
+			  #[zjdwdm], #[zjdwmc], to_date(#[zjsj],'yyyy-MM-dd hh24:mi:ss'), #[wpxz], #[wpjz], #[wptz], #[wpms], 
+			  #[clzt], #[clqk], #[clrxm], #[clrjh], #[cldwdm], #[cldwmc], to_date(#[clrq],'yyyy-MM-dd hh24:mi:ss'), 
+			  #[bz], #[wptp], #[wpcfdz], #[wplylx], #[djrxm], #[djrjh], #[djdwdm], #[djdwmc], to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss'))
+			
+		]]>
+	</property>
+	
+	<property name="updateKywpxxByKywpbh">
+		<![CDATA[
+			update t_af_zakywpxx
+			   set wpmc = #[wpmc],
+			       wplx = #[wplx],
+			       wpxh = #[wpxh],
+			       wpgg = #[wpgg],
+			       wpys = #[wpys],
+			       wpyas = #[wpyas],
+			       wpsl = #[wpsl],
+			       wpsldw = #[wpsldw],
+			       wpzl = #[wpzl],
+			       wpzldw = #[wpzldw],
+			       wpcd = #[wpcd],
+			       wpcddw = #[wpcddw],
+			       zjdwdm = #[zjdwdm],
+			       zjdwmc = #[zjdwmc],
+			       zjsj = to_date(#[zjsj],'yyyy-MM-dd hh24:mi:ss'),
+			       wpxz = #[wpxz],
+			       wpjz = #[wpjz],
+			       wptz = #[wptz],
+			       wpms = #[wpms],
+			       clzt = #[clzt],
+			       clqk = #[clqk],
+			       clrxm = #[clrxm],
+			       clrjh = #[clrjh],
+			       cldwdm = #[cldwdm],
+			       cldwmc = #[cldwmc],
+			       clrq = to_date(#[clrq],'yyyy-MM-dd hh24:mi:ss'),
+			       bz = #[bz],
+			       wptp = #[wptp],
+			       wpcfdz = #[wpcfdz],
+			       wplylx = #[wplylx],
+			       djrxm = #[djrxm],
+			       djrjh = #[djrjh],
+			       djdwdm = #[djdwdm],
+			       djdwmc = #[djdwmc],
+			       djsj = to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss')
+			 where kywpbh = #[kywpbh]
+		]]>
+	</property>
+	
+	<property name="kywpxxList">
+		<![CDATA[
+			select kywpbh,
+			       pcbh,
+			       wpmc,
+			       wplx,
+			       wpxh,
+			       wpgg,
+			       wpys,
+			       wpyas,
+			       wpsl,
+			       wpsldw,
+			       wpzl,
+			       wpzldw,
+			       wpcd,
+			       wpcddw,
+			       zjdwdm,
+			       zjdwmc,
+			       zjsj,
+			       wpxz,
+			       wpjz,
+			       wptz,
+			       wpms,
+			       clzt,
+			       clqk,
+			       clrxm,
+			       clrjh,
+			       cldwdm,
+			       cldwmc,
+			       clrq,
+			       bz,
+			       wptp,
+			       wpcfdz,
+			       wplylx,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       djsj
+			  from t_af_zakywpxx
+			  where 1=1 
+			  --单位选择查询
+			  --精确到派出所
+			  #if($pcsdm and !$pcsdm.equals(""))
+			  	and djdwdm=#[pcsdm]
+			  #else
+			  	  --精确到县区
+				  #if($countrydm and !$countrydm.equals(""))
+				  	and substr(djdwdm,1,6)=#[countrydm]
+				  #else
+				     --精确到市州
+				  	 #if($citydm and !$citydm.equals(""))
+				  		and substr(djdwdm,1,4)=substr(#[citydm],1,4)
+				  	 #end
+				  #end
+			  #end
+			  #if($kywpbh && !$kywpbh.equals(""))
+			  	and kywpbh = #[kywpbh]
+			  #end
+			  #if($pcbh && !$pcbh.equals(""))
+			  	and pcbh = #[pcbh]
+			  #end
+			  #if($wpmc && !$wpmc.equals(""))
+			  	and wpmc like '%'||#[wpmc]||'%'
+			  #end
+			  #if($djsj_from && !$djsj_from.equals(""))
+			  	and djsj >= to_date(#[djsj_from],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($djsj_to && !$djsj_to.equals(""))
+			  	and djsj <= to_date(#[djsj_to],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($wplx && !$wplx.equals(""))
+			  	and wplx = #[wplx]
+			  #end
+			  #if($clzt && !$clzt.equals(""))
+			  	and clzt = #[clzt]
+			  #end
+			  #if($djrxm && !$djrxm.equals(""))
+			  	and djrxm like '%'||#[djrxm]||'%'
+			  #end
+			  order by djsj desc
+		]]>
+	</property>
+	
+</properties>

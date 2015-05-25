@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="querySqJbxxPageResultByQueryBean">
+		<![CDATA[
+		select sq.sqid,xz.dm as sqbh,xz.mc as sqmc, xz.jc as jc,
+		       (select dm from t_common_hnxzqh where dm=substr(xz.dm,1,6)||'000000') as ssxzqh,
+		       (select mc from t_common_hnxzqh where dm=substr(xz.dm,1,6)||'000000') as ssxzqhmc, 
+		       (select dm from t_common_hnxzqh where dm=xz.parent_dm) as ssjdxz, 
+		       (select mc from t_common_hnxzqh where dm=xz.parent_dm) as ssjdxzmc, 
+		       sq.jdxzfzr, sq.jdxzfzrdh, xz.ssjwsdm as gxsqjwsdm, 
+		       sq.gxsqjwsmc, 
+		       sq.djrxm, 
+		       sq.djrjh,
+		       sq.djdwdm, 
+		       sq.djdwmc, 
+		       sq.djsj, 
+		       sq.zxbs, 
+		       sq.zxsj, 
+		       sq.zxyy, 
+		       sq.sqmjxm, 
+		       sq.sqmjlxdh, 
+		       xz.sspcsdm as sspcsdm, 
+		       sq.sspcsmc,
+		       xz.leve, 
+		       xz.cxfl as sqlx  
+		from t_common_hnxzqh xz left join t_af_sqjbxx sq on xz.dm=sq.sqbh
+		where 1=1 
+		 #if($jwsqdm && !$jwsqdm.equals(""))
+		 	and xz.ssjwsdm = #[jwsqdm]
+		 #elseif ($pcsdm && !$pcsdm.equals(""))
+			 and xz.sspcsdm=#[pcsdm]
+		 #elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+			 and xz.dm like substr(#[countrygajgjgdm],1,6)||'%'
+		 #elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+			 and xz.dm like substr(#[citygajgjgdm],1,4)||'%'
+		 #end
+		  --社区名称
+		 #if ($sqmc && !$sqmc.equals(""))
+		  	and xz.mc like '%'||#[sqmc]||'%'
+		 #end
+		 #if($sqleve && !$sqleve.equals(""))
+		 	and xz.leve = #[sqleve]
+		 #end
+		 #if($zxbs && !$zxbs.equals(""))
+		 	and xz.isvalid=#[zxbs]
+		 #else
+		 	and xz.isvalid='1'
+		 #end
+		]]>
+	</property>
+	
+	<property name="querySqJbxxBeanListByPcsdm">
+		<![CDATA[
+			select 
+			   h.dm as sqbh,
+		       h.mc as sqmc,
+		       h.jc as jc ,
+		       s.ssxzqh,
+		       s.ssjdxz,
+		       s.jdxzfzr,
+		       s.jdxzfzrdh,
+		       s.gxsqjwsdm,
+		       s.gxsqjwsmc,
+		       s.djrxm,
+		       s.djrjh,
+		       s.djdwdm,
+		       s.djdwmc,
+		       s.djsj,
+		       s.zxbs,
+		       s.zxsj,
+		       s.zxyy,
+		       s.sqmjxm,
+		       s.sqmjlxdh,
+		       s.sspcsdm,
+		       s.sspcsmc,
+		       s.sqlx
+		  from t_common_hnxzqh h inner join t_af_sqjbxx s on h.dm=s.sqbh
+		  where h.isvalid='1' and h.leve='5' and h.sspcsdm=#[pcsdm]
+		]]>
+	</property>
+	
+	<property name="querySqJbxxBeanListByJwsdm">
+		<![CDATA[
+			select sq.sqid,xz.dm as sqbh,xz.mc as sqmc, xz.jc as jc,
+		       (select dm from t_common_hnxzqh where dm=substr(xz.dm,1,6)||'000000') as ssxzqh,
+		       (select mc from t_common_hnxzqh where dm=substr(xz.dm,1,6)||'000000') as ssxzqhmc, 
+		       (select dm from t_common_hnxzqh where dm=xz.parent_dm) as ssjdxz, 
+		       (select mc from t_common_hnxzqh where dm=xz.parent_dm) as ssjdxzmc, 
+		       sq.jdxzfzr, sq.jdxzfzrdh, 
+		       xz.ssjwsdm as gxsqjwsdm, 
+		       sq.gxsqjwsmc, 
+		       sq.djrxm, 
+		       sq.djrjh,
+		       sq.djdwdm, 
+		       sq.djdwmc, 
+		       sq.djsj, 
+		       sq.zxbs, 
+		       sq.zxsj, 
+		       sq.zxyy, 
+		       sq.sqmjxm, 
+		       sq.sqmjlxdh, 
+		       xz.sspcsdm as sspcsdm, 
+		       sq.sspcsmc, 
+		       xz.cxfl as sqlx  
+			from t_common_hnxzqh xz left join t_af_sqjbxx sq on xz.dm=sq.sqbh
+			where 1=1
+				and xz.ssjwsdm=?
+		]]>
+	</property>
+	
+	<property name="querySqJbxxBeanListByJdxzdm">
+		<![CDATA[
+			select sq.sqid,xz.dm as sqbh,xz.mc as sqmc, xz.jc as jc,
+           (select dm from t_common_hnxzqh where dm=substr(xz.dm,1,6)||'000000') as ssxzqh,
+           (select mc from t_common_hnxzqh where dm=substr(xz.dm,1,6)||'000000') as ssxzqhmc, 
+           (select dm from t_common_hnxzqh where dm=xz.parent_dm) as ssjdxz, 
+           (select mc from t_common_hnxzqh where dm=xz.parent_dm) as ssjdxzmc, 
+           sq.jdxzfzr, sq.jdxzfzrdh, 
+           xz.ssjwsdm as gxsqjwsdm, 
+           sq.gxsqjwsmc, 
+           sq.djrxm, 
+           sq.djrjh,
+           sq.djdwdm, 
+           sq.djdwmc, 
+           sq.djsj, 
+           sq.zxbs, 
+           sq.zxsj, 
+           sq.zxyy, 
+           sq.sqmjxm, 
+           sq.sqmjlxdh, 
+           xz.sspcsdm as sspcsdm, 
+           sq.sspcsmc, 
+           xz.cxfl as sqlx  
+      from t_common_hnxzqh xz left join t_af_sqjbxx sq on xz.dm=sq.sqbh
+      where 1=1 and leve='5'
+        	and xz.PARENT_DM=?
+		]]>
+	</property>
+	
+	<property name="querySqJbxxBeanListByJdxzdmAndJwqdm">
+		<![CDATA[
+			select sq.sqid,xz.dm as sqbh,xz.mc as sqmc, xz.jc as jc,
+           (select dm from t_common_hnxzqh where dm=substr(xz.dm,1,6)||'000000') as ssxzqh,
+           (select mc from t_common_hnxzqh where dm=substr(xz.dm,1,6)||'000000') as ssxzqhmc, 
+           (select dm from t_common_hnxzqh where dm=xz.parent_dm) as ssjdxz, 
+           (select mc from t_common_hnxzqh where dm=xz.parent_dm) as ssjdxzmc, 
+           sq.jdxzfzr, sq.jdxzfzrdh, 
+           xz.ssjwsdm as gxsqjwsdm, 
+           sq.gxsqjwsmc, 
+           sq.djrxm, 
+           sq.djrjh,
+           sq.djdwdm, 
+           sq.djdwmc, 
+           sq.djsj, 
+           sq.zxbs, 
+           sq.zxsj, 
+           sq.zxyy, 
+           sq.sqmjxm, 
+           sq.sqmjlxdh, 
+           xz.sspcsdm as sspcsdm, 
+           sq.sspcsmc, 
+           xz.cxfl as sqlx  
+      from t_common_hnxzqh xz left join t_af_sqjbxx sq on xz.dm=sq.sqbh
+      where 1=1 
+      		and leve='5' 
+      		and isvalid='1'
+        	and ssjwsdm=?
+		]]>
+	</property>
+	
+	
+	<property name="querySqJbxxBeanBySqbh">
+		<![CDATA[
+			select sqbh,
+		       sqmc,
+		       ssxzqh,
+		       ssjdxz,
+		       jdxzfzr,
+		       jdxzfzrdh,
+		       gxsqjwsdm,
+		       gxsqjwsmc,
+		       djrxm,
+		       djrjh,
+		       djdwdm,
+		       djdwmc,
+		       djsj,
+		       zxbs,
+		       zxsj,
+		       zxyy,
+		       sqmjxm,
+		       sqmjlxdh,
+		       sspcsdm,
+		       sspcsmc,
+		       sqlx
+		  from t_af_sqjbxx
+		  where sqbh=?
+		]]>
+	</property>
+	
+	<property name="insertSqJbxxBean">
+		<![CDATA[
+		insert into t_af_sqjbxx
+		  (sqid,
+		   sqbh,
+		   sqmc,
+		   ssxzqh,
+		   ssjdxz,
+		   jdxzfzr,
+		   jdxzfzrdh,
+		   gxsqjwsdm,
+		   gxsqjwsmc,
+		   djrxm,
+		   djrjh,
+		   djdwdm,
+		   djdwmc,
+		   djsj,
+		   sqmjxm,
+		   sqmjlxdh,
+		   sspcsdm,
+		   sspcsmc,
+		   sqlx
+		   )
+		values
+		  (#[sqid],
+		   #[sqbh],
+		   #[sqmc],
+		   #[ssxzqh],
+		   #[ssjdxz],
+		   #[jdxzfzr],
+		   #[jdxzfzrdh],
+		   #[gxsqjwsdm],
+		   #[gxsqjwsmc],
+		   #[djrxm],
+		   #[djrjh],
+		   #[djdwdm],
+		   #[djdwmc],
+		   sysdate,
+		   #[sqmjxm],
+		   #[sqmjlxdh],
+		   #[sspcsdm],
+		   #[sspcsmc],
+		   #[sqlx]
+		   )
+		]]>
+	</property>
+	
+	<property name="updateSqJbxxBean">
+		<![CDATA[
+			update t_af_sqjbxx
+			   set sqbh = #[sqbh],
+			       sqmc = #[sqmc],
+			       ssxzqh = #[ssxzqh],
+			       ssjdxz = #[ssjdxz],
+			       jdxzfzr = #[jdxzfzr],
+			       jdxzfzrdh = #[jdxzfzrdh],
+			       gxsqjwsdm = #[gxsqjwsdm],
+			       gxsqjwsmc = #[gxsqjwsmc],
+			       djrxm = #[djrxm],
+				   djrjh = #[djrjh],
+				   djdwdm = #[djdwdm],
+				   djdwmc = #[djdwmc],
+				   djsj = sysdate,
+			       sqmjxm = #[sqmjxm],
+			       sqmjlxdh = #[sqmjlxdh],
+			       sspcsdm = #[sspcsdm],
+			       sspcsmc = #[sspcsmc],
+			       sqlx = #[sqlx]
+			 where sqid = #[sqid]
+		]]>
+	</property>
+	
+	<property name="updateHnxzqhBySqbh">
+		<![CDATA[
+			update t_common_hnxzqh
+			set mc = #[sqmc],
+				jc = #[jc],
+				sspcsdm = #[sspcsdm],
+				ssjwsdm = #[gxsqjwsdm],
+				cxfl = #[sqlx]
+			where dm = #[sqbh]
+		]]>
+	</property>
+	
+	<property name="deleteSqJbxxBeanBySqbh">
+		<![CDATA[
+			update t_af_sqjbxx
+			   set 
+			       zxbs = '0',
+			       zxsj = sysdate
+			 where sqbh = ?
+		]]>
+	</property>
+	
+	<property name="querySqjbqkBySqbh">
+		<![CDATA[
+			 select tj.id, sq.sqbh, sq.sqmc,
+			        tj.tjsj, tj.gxsj, tj.czrks, tj.czrkhs, tj.zzrks, 
+			        tj.rhfls, tj.zdrks, tj.ztrys, tj.xdrks, tj.gzdxs, 
+			        tj.tzhys, tj.ggcss, tj.ylcss, tj.nbdws, tj.wbdws, 
+			        zddws, xxs, yrys, scmds, jzgds, 
+			        lds, wbs, czfws, ywxdls, 
+			        tj.zbhs, tj.sqgbs
+			 from t_af_sqjbxx sq left join t_tjfx_sqjbqkxx tj on sq.sqbh=tj.sqbh
+			 where sq.sqbh=? 
+			 order by tj.tjsj desc
+		]]>
+	</property>
+	
+	<property name="querySqJbqkxxByJwsdm">
+		<![CDATA[
+			 select tj.id, sq.sqbh, sq.sqmc,
+			        tj.tjsj, tj.gxsj, tj.czrks, tj.czrkhs, tj.zzrks, 
+			        tj.rhfls, tj.zdrks, tj.ztrys, tj.xdrks, tj.gzdxs, 
+			        tj.tzhys, tj.ggcss, tj.ylcss, tj.nbdws, tj.wbdws, 
+			        zddws, xxs, yrys, scmds, jzgds, 
+			        lds, wbs, czfws, ywxdls, 
+			        tj.zbhs, tj.sqgbs
+			 from t_af_sqjbxx sq left join t_tjfx_sqjbqkxx tj on sq.sqbh=tj.sqbh
+			 where sq.GXSQJWSDM=?
+		]]>
+	</property>
+	
+	<property name="querySqJbxxBeanByDm">
+		<![CDATA[
+			select sq.sqid,xz.dm as sqbh,xz.mc as sqmc, xz.jc as jc,
+			       (select dm from t_common_hnxzqh where dm=substr(xz.dm,1,6)||'000000') as ssxzqh,
+			       (select mc from t_common_hnxzqh where dm=substr(xz.dm,1,6)||'000000') as ssxzqhmc, 
+			       (select dm from t_common_hnxzqh where dm=xz.parent_dm) as ssjdxz, 
+			       (select mc from t_common_hnxzqh where dm=xz.parent_dm) as ssjdxzmc, 
+			       sq.jdxzfzr, sq.jdxzfzrdh, xz.ssjwsdm as gxsqjwsdm, 
+			       sq.gxsqjwsmc, 
+			       sq.djrxm, 
+			       sq.djrjh,
+			       sq.djdwdm, 
+			       sq.djdwmc, 
+			       sq.djsj, 
+			       sq.zxbs, 
+			       sq.zxsj, 
+			       sq.zxyy, 
+			       sq.sqmjxm, 
+			       sq.sqmjlxdh, 
+			       xz.sspcsdm as sspcsdm, 
+			       sq.sspcsmc, 
+			       xz.cxfl as sqlx  
+			from t_common_hnxzqh xz left join t_af_sqjbxx sq on xz.dm=sq.sqbh
+			where xz.dm=?
+		]]>
+	</property>
+	
+	
+	
+	
+	<property name="queryXqqk">
+		<![CDATA[
+			select 
+				f_get_czrkcount(#[xqParam]) as czrk,
+				f_get_ldrkcount(#[xqParam]) as ldrk,
+				f_get_jzrkcount(#[xqParam]) as jzrk,
+				f_get_jwrkcount(#[xqParam]) as jwrk,
+				f_get_zdrycount(#[xqParam]) as zdrk,
+				f_get_ztrybylbcount(#[xqParam],'01','3') as ztry ,
+				f_get_ztrybylbcount(#[xqParam],'01','4') as xdry,
+				f_get_ztrybylbcount(#[xqParam],'01','6') as jsbr,
+				f_get_dwbyhylb(#[xqParam],'01') as tzhy,
+				f_get_dwbyhylb(#[xqParam],'02') as ggcs,
+				f_get_ylcscount(#[xqParam]) as ylcs,
+				f_get_dwbyhylb(#[xqParam],'03') as qsydw,
+				f_get_dwbyhylb(#[xqParam],'04') as wxwp,
+				f_get_zddwcount(#[xqParam]) as zddws,
+				f_get_xxcount(#[xqParam]) as xx,
+				f_get_yrycount(#[xqParam])  as yey,
+				f_get_lgcount(#[xqParam]) as lg,
+				f_get_dwbyhylb(#[xqParam],'05') as wb ,
+				f_get_czfwcount(#[xqParam]) as fw,
+				f_get_czfwcount(#[xqParam]) as czw,
+				f_get_gxxzsqccount(#[xqParam]) as sq,
+				f_get_zbhcount(#[xqParam]) as zbh,
+				f_get_sqgbcount(#[xqParam]) as sqgb,
+				f_get_xldcount(#[xqParam]) as xld
+				from dual
+		]]>
+	</property>	
+	
+	<property name="insertXzqhbgjl">
+		<![CDATA[
+			insert into t_common_xzqh_bgjl
+			  (id,
+			   qysqdm,
+			   fromjwqdm,
+			   tojwqdm,
+			   czdwdm,
+			   czdwmc,
+			   czrsfzh,
+			   czrxm,
+			   czrjh,
+			   czsj,
+			   isexec)
+			values
+			  (#[id],
+			   #[qysqdm],
+			   #[fromjwqdm],
+			   #[tojwqdm],
+			   #[czdwdm],
+			   #[czdwmc],
+			   #[czrsfzh],
+			   #[czrxm],
+			   #[czrjh],
+			   sysdate,
+			   #[isexec])
+					
+		]]>
+	</property>
+	
+</properties>

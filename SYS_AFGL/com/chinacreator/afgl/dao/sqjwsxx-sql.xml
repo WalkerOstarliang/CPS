@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<property name="updateSqjwsxxByJwsdm">
+		<![CDATA[
+			update t_af_jwqsxx
+			   set jwslb = #[jwslb],
+			       jwslx = #[jwslx],
+			       jwsdz = #[jwsdz],
+			       bgcslx = #[bgcslx],
+			       fgdwldxm = #[fgdwldxm],
+			       fgdwldlxdh = #[fgdwldlxdh],
+			       czbs = #[czbs],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czsj = #[czsj],
+			       gxqy = #[gxqy],
+			       czrxm = #[czrxm],
+			       czrjh = #[czrjh]
+			 where orgid = #[orgid]
+		]]>
+	</property>
+	
+	<property name="insertSqjwsxxByJwsdm">
+		<![CDATA[
+			insert into t_af_jwqsxx
+			  (orgid, orgcode, orgname, jwslb, jwslx, jwsdz, bgcslx, zrmj, mjlxdh, sspcsdm, sspcsmc, ssxzqh, fgdwldxm, fgdwldlxdh, czbs, czdwdm, czdwmc, czsj, zxbs, zxrq, gxqy, czrxm, czrjh, zxdwdm)
+			values
+			  (#[orgid], #[orgcode], #[orgname], #[jwslb], #[jwslx], #[jwsdz], #[bgcslx], #[zrmj], #[mjlxdh], #[sspcsdm], #[sspcsmc], #[ssxzqh], #[fgdwldxm], #[fgdwldlxdh], #[czbs], #[czdwdm], #[czdwmc], #[czsj], #[zxbs], #[zxrq], #[gxqy], #[czrxm], #[czrjh], #[zxdwdm])
+		]]>
+	</property>
+	
+	<property name="sqjwsxxList">
+		<![CDATA[
+			select orgid,
+			       orgcode,
+			       orgname,
+			       jwslb,
+			       jwslx,
+			       jwsdz,
+			       bgcslx,
+			       zrmj,
+			       mjlxdh,
+			       sspcsdm,
+			       sspcsmc,
+			       ssxzqh,
+			       fgdwldxm,
+			       fgdwldlxdh,
+			       czbs,
+			       czdwdm,
+			       czdwmc,
+			       czsj,
+			       zxbs,
+			       zxrq,
+			       gxqy,
+			       czrxm,
+			       czrjh,
+			       zxdwdm
+			  from t_af_jwqsxx
+
+ 				where 1=1
+			  --单位选择查询
+			  --精确到派出所
+			  #if($pcsdm and !$pcsdm.equals(""))
+			  	and sspcsdm=#[pcsdm]
+			  #else
+			  	  --精确到县区
+				  #if($countrydm and !$countrydm.equals(""))
+				  	and substr(sspcsdm,1,6)=#[countrydm]
+				  #else
+				     --精确到市州
+				  	 #if($citydm and !$citydm.equals(""))
+				  		and substr(sspcsdm,1,4)=substr(#[citydm],1,4)
+				  	 #end
+				  #end
+			  #end
+			  #if($orgid and !$orgid.equals(""))
+			  	and orgid = #[orgid]
+			  #end 
+			  #if($jwslb and !$jwslb.equals(""))
+			  	and jwslb = #[jwslb]  
+			  #end
+			  #if($bgcslx and !$bgcslx.equals(""))
+			  	and bgcslx = #[bgcslx] 
+			  #end
+			  #if($orgname and !$orgname.equals(""))
+			  	and orgname like '%'||#[orgname]||'%'
+			  #end  
+			  #if($czrxm and !$czrxm.equals(""))
+			  	and czrxm like '%'||#[czrxm]||'%'
+			  #end
+			  #if($czdwmc and !$czdwmc.equals(""))
+			  	and czdwmc like '%'||#[czdwmc]||'%'
+			  #end
+			  #if($zrmj and !$zrmj.equals(""))
+			  	and zrmj like '%'||#[zrmj]||'%'
+			  #end
+			  #if($fgdwldxm and !$fgdwldxm.equals(""))
+			  	and fgdwldxm like '%'||#[fgdwldxm]||'%'
+			  #end
+			  #if($czsj_from && !$czsj_from.equals(""))
+			  	and czsj >= to_date(#[czsj_from],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($czsj_to && !$czsj_to.equals(""))
+			  	and czsj <= to_date(#[czsj_to],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  order by czsj desc
+		]]>
+	</property>
+	
+</properties>

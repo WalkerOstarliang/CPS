@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 删除关键词 -->
+	<property name="deleteGjc">
+		<![CDATA[
+			update t_za_nbdw_gjc
+			   set 
+			       czsj = sysdate,
+			       czr = #[czr],
+			       czrsfzh = #[czrsfzh],
+			       czbz = '2'
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<!-- 新增关键词 -->
+	<property name="insertGjc">
+		<![CDATA[
+			insert into t_za_nbdw_gjc
+			  (id, gjc, cjr, cjsj, czsj, czr, czrsfzh, cjrsfzh, czbz)
+			values
+			  (#[id], #[gjc], #[cjr], sysdate, sysdate, #[czr], #[czrsfzh], #[cjrsfzh], '0')
+		]]>
+	</property>
+	
+	<!-- 修改关键词 -->
+	<property name="updateGjc">
+		<![CDATA[
+			update t_za_nbdw_gjc
+			   set 
+			       gjc = #[gjc],
+			       czsj = sysdate,
+			       czr = #[czr],
+			       czrsfzh = #[czrsfzh],
+			       czbz = '1'
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<!-- 分页查询关键词 -->
+	<property name="queryGjcList">
+		<![CDATA[
+			select 
+				id, gjc, cjr, to_char(cjsj,'yyyy-mm-dd HH24:mi:ss') as cjsj, 
+				to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj, czr, czrsfzh, cjrsfzh, czbz 
+			from t_za_nbdw_gjc
+			where czbz != '2'
+			#if($gjc && !$gjc.equals(""))
+				and gjc like '%'||#[gjc]||'%'
+			#end
+		]]>
+	</property>
+	
+	<!-- 根据关键词查询关键词 -->
+	<property name="queryGjcListByGjc">
+		<![CDATA[
+			select 
+				id, gjc, cjr, to_char(cjsj,'yyyy-mm-dd HH24:mi:ss') as cjsj, 
+				to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj, czr, czrsfzh, cjrsfzh, czbz 
+			from t_za_nbdw_gjc
+			where czbz != '2' and gjc = ?
+		]]>
+	</property>
+	
+	<!-- 新增关键词日志 -->
+	<property name="insertGjcLog">
+		<![CDATA[
+			insert into t_nbgl_gjclog
+			  (id, gjc_old, gjc_new, czbs, czr, czrsfzh, czsj)
+			values
+			  (#[id], #[gjc_old], #[gjc_new], #[czbz], #[czr], #[czrsfzh], sysdate)
+		]]>
+	</property>
+	
+	<!-- 根据Id查询关键词 -->
+	<property name="queryGjcById">
+		<![CDATA[
+			select 
+				id, gjc, cjr, to_char(cjsj,'yyyy-mm-dd HH24:mi:ss') as cjsj, 
+				to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj, czr, czrsfzh, cjrsfzh, czbz 
+			from t_za_nbdw_gjc
+			where   id  = ?
+		]]>
+	</property>
+</properties>

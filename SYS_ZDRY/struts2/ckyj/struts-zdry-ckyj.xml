@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="ckyj" namespace="/zdry/ckyj" extends="default">
+		<action name="*" class="com.chinacreator.ckyj.action.CkyjAction" method="{1}">
+			<result name="toCkyjListPage">/jsp/zdrygl/pages/ckyj/ckyjList.jsp</result>
+			<result name="toYjxxDetailPage">/jsp/zdrygl/pages/ckyj/ckyjxxDetail.jsp</result>
+			<result name="toYjqsPage">/jsp/zdrygl/pages/ckyj/ckyjqs.jsp</result>
+			<result name="toYjqsListPage">/jsp/zdrygl/pages/ckyj/ckyjqsList.jsp</result>
+			<result name="toFkInfoPage">/jsp/zdrygl/pages/ckyj/yjfkInfo.jsp</result>
+			<result name="toYjqsfkPage">/jsp/zdrygl/pages/ckyj/yjfkDetail.jsp</result>
+		</action>
+	</package>
+</struts>

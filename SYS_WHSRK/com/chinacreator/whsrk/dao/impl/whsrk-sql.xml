@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 新增反馈 -->
+	<property name="insertWhsRkFk">
+		<![CDATA[
+			insert into t_lsgl_rk_fk
+			  (rkid, fkrxm, fkrjh, fkrsfzh, fksj, fkdwdm, fkdwmc, fknr,fklx)
+			values
+			  (#[rkid], #[fkrxm], #[fkrjh], #[fkrsfzh], sysdate, #[fkdwdm], #[fkdwmc], #[fknr],#[fklx])
+		]]>
+	</property>
+	
+	<!-- 新增派发  -->
+	<property name="insertWhsRkPf">
+		<![CDATA[
+			insert into t_lsgl_rk_pf
+			  (rkid, pfrxm, pfrjh, pfrsfzh, pfsj, pfdwdm, pfdwmc, mbdwdm, mbdwmc)
+			values
+			  (#[rkid], #[pfrxm], #[pfrjh],#[pfrsfzh],sysdate, #[pfdwdm], #[pfdwmc], #[mbdwdm], #[mbdwmc])
+						
+		]]>
+	</property>
+	
+	<!-- 新增退回  -->
+	<property name="insertWhsRkTh">
+		<![CDATA[
+			insert into t_lsgl_rk_th
+			  (rkid, thrxm, thrjh, thrsfzh, thsj, thdwdm, thdwmc, mbdwdm, mbdwmc, thyy)
+			values
+			  (#[rkid], #[thrxm], #[thrjh], #[thrsfzh], sysdate, #[thdwdm], #[thdwmc], #[mbdwdm], #[mbdwmc], #[thyy])			
+		]]>
+	</property>
+	
+	<!-- 查询未核实人口列表  -->
+	<property name="queryWhsRkList">
+		<![CDATA[
+		select * from (
+			select  /*+index(rk) index(st) index(jbxx)*/ rk.rkid,st.xm,st.xb,jbxx.csrq,st.sfhm,sssqdm,sssqmc,ssdwdm,ssdwmc,czzt,fkzt ,jbxx.lxdh as lxfs,pf.pfsj,
+       			decode(jbxx.hjdxz,'','未登记实有人口',jbxx.hjdxz) as hjdxz,
+       			decode(jbxx.xzzxz,'',st.zzxz,jbxx.xzzxz) as zzxz
+      		from t_lsgl_rk_whs rk,t_lsgl_rk_czrk_st st
+      		left join t_lsgl_rk_jbxx jbxx on st.sfhm = jbxx.sfzh
+      		left join (select /*+index(a)*/rkid,pfsj from (
+						select rkid,pfsj,row_number() over(partition by rkid order by pfsj desc) as sn 
+						from t_lsgl_rk_pf a)
+						where sn = 1) pf
+			on pf.rkid = st.personid
+      		where st.personid = rk.rkid
+			#if($czzt && !$czzt.equals(""))
+				and czzt = #[czzt]
+			#end
+			#if($fkzt && !$fkzt.equals(""))
+				and fkzt = #[fkzt]
+			#end
+			#if($xm && !$xm.equals(""))
+				and xm like '%'||#[xm]||'%'
+			#end
+			#if($sfzh && !$sfzh.equals(""))
+				and sfhm = #[sfzh]
+			#end
+			#if($sqdm && !$sqdm.equals(""))
+		   		and sssqdm = #[sqdm]
+		   		and rk.sfdjsyrk = '0' 
+		   		and rk.fkzt = '0'
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+		   		--精确到警务区
+				and  ssdwdm = #[jwsqdm]
+				and rk.sfdjsyrk = '0' 
+				and rk.fkzt = '0'
+			    --精确到派出所
+			#elseif($pcsdm and !$pcsdm.equals(""))
+			  	and (ssdwdm like substr(#[pcsdm],1,8)||'%')
+			  	--精确到县区
+		    #elseif($countrygajgjgdm and !$countrygajgjgdm.equals(""))
+				and (ssdwdm like substr(#[countrygajgjgdm],1,6) || '%')
+			    --精确到市州
+			#elseif($citygajgjgdm and !$citygajgjgdm.equals(""))
+				 and (ssdwdm like substr(#[citygajgjgdm],1,4) ||'%')
+			#end
+		)
+		where 1 = 1
+			#if($hjdxz && !$hjdxz.equals(""))
+      			and hjdxz like '%'||#[hjdxz]||'%'
+      		#end
+      		#if($pfsj_s && !$pfsj_s.equals(""))
+				and pfsj >= to_date(#[pfsj_s]||' 00:00:00','yyyy-mm-dd hh24:mi:ss')
+			#end
+			#if($pfsj_e && !$pfsj_e.equals(""))
+				and pfsj <= to_date(#[pfsj_e]||' 23:59:59','yyyy-mm-dd hh24:mi:ss')
+			#end
+			order by zzxz,rkid
+		]]>
+	</property>
+	
+	<!-- 更新操作状态 -->
+	<property name="updateWhrkCzzt">
+		<![CDATA[
+			update t_lsgl_rk_whs set czzt = #[czzt] ,czsj = sysdate,czdwdm = #[czdwdm] , czdwmc = #[czdwmc],
+									 czrxm = #[czrxm],czrjh = #[czrjh],czrsfzh = #[czrsfzh]
+			where rkid = #[rkid]						 
+		]]>
+	</property>
+	
+	
+	<!-- 更新反馈状态 -->
+	<property name="updateWhrkFkzt">
+		<![CDATA[
+			update t_lsgl_rk_whs set fkzt = #[fkzt] ,czsj = sysdate,czdwdm = #[czdwdm] , czdwmc = #[czdwmc],
+									 czrxm = #[czrxm],czrjh = #[czrjh],czrsfzh = #[czrsfzh]
+			where rkid = #[rkid]						 
+		]]>
+	</property>
+	
+	<!-- 更新派发信息 -->
+	<property name="updateWhsRkPfxx">
+		<![CDATA[
+			update t_lsgl_rk_whs set czzt = #[fkzt] ,czsj = sysdate,czdwdm = #[czdwdm] , czdwmc = #[czdwmc],
+									 czrxm = #[czrxm],czrjh = #[czrjh],czrsfzh = #[czrsfzh],sssqdm = #[sssqdm],
+									 sssqmc = #[sssqmc], ssdwdm = #[ssdwdm],ssdwmc = #[ssdwmc]
+			where rkid = #[rkid]						 
+		]]>
+	</property>
+</properties>

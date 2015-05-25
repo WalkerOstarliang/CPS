@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<property name="addKkxx">
+		<![CDATA[
+			insert into t_af_zakkxx
+  				(kkbh, kkmc, kkjls, kkzzxfrs, kkzbqk, kkcjsj, sszrqdm, sszrqmc, 
+  					kkwz, kkfw, zxbs, zxrq, zxyy, djrxm, djrjh, djdwdm, djdwmc, djsj)
+			values
+  				(#[kkbh], #[kkmc], #[kkjls], #[kkzzxfrs], #[kkzbqk], to_date(#[kkcjsj],'yyyy-MM-dd hh24:mi:ss'), #[sszrqdm], #[sszrqmc], 
+  				#[kkwz], #[kkfw], #[zxbs], to_date(#[zxrq],'yyyy-MM-dd hh24:mi:ss'), #[zxyy], #[djrxm], #[djrjh], #[djdwdm], #[djdwmc], to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss'))
+		]]>
+	</property>
+	
+	<property name="updateKkxxByKkbh">
+		<![CDATA[
+			update t_af_zakkxx
+				set kkbh = #[kkbh],
+				 	kkmc = #[kkmc],
+				 	kkjls = #[kkjls],
+				 	kkzzxfrs = #[kkzzxfrs],
+				 	kkzbqk = #[kkzbqk],
+				 	kkcjsj = to_date(#[kkcjsj],'yyyy-MM-dd hh24:mi:ss'),
+				 	sszrqdm = #[sszrqdm],
+				 	sszrqmc = #[sszrqmc],
+				 	kkwz = #[kkwz],
+				 	kkfw = #[kkfw],
+				 	zxbs = #[zxbs],
+				 	djrjh = #[djrjh],
+				 	djrxm = #[djrxm],
+				 	djdwdm = #[djdwdm],
+				 	djdwmc = #[djdwmc],
+				 	djsj = to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss')
+			 where kkbh = #[kkbh]
+		]]>
+	</property>
+	
+	<property name="deleteKkxxByKkbh">
+		<![CDATA[
+			update t_af_zakkxx
+				set zxbs = #[zxbs],
+				 	zxrq = to_date(#[zxrq],'yyyy-MM-dd hh24:mi:ss'),
+				 	zxyy = #[zxyy],
+				 	djrjh = #[djrjh],
+				 	djrxm = #[djrxm],
+				 	djdwdm = #[djdwdm],
+				 	djdwmc = #[djdwmc],
+				 	djsj = to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss')
+			 where kkbh = #[kkbh]
+		]]>
+	</property>
+	
+	<property name="kkxxList">
+		<![CDATA[
+			select kkbh,
+			       kkmc,
+			       kkjls,
+			       kkzzxfrs,
+			       kkzbqk,
+			       kkcjsj,
+			       sszrqdm,
+			       sszrqmc,
+			       kkwz,
+			       kkfw,
+			       zxbs,
+			       zxrq,
+			       zxyy,
+			       djrxm,
+			       djrjh,
+			       djdwdm,
+			       djdwmc,
+			       djsj
+			  from t_af_zakkxx
+			  where 1=1 
+			  --单位选择查询
+			  --精确到派出所
+			  #if($pcsdm and !$pcsdm.equals(""))
+			  	and sszrqdm=#[pcsdm]
+			  #else
+			  	  --精确到县区
+				  #if($countrydm and !$countrydm.equals(""))
+				  	and substr(sszrqdm,1,6)=#[countrydm]
+				  #else
+				     --精确到市州
+				  	 #if($citydm and !$citydm.equals(""))
+				  		and substr(sszrqdm,1,4)=substr(#[citydm],1,4)
+				  	 #end
+				  #end
+			  #end
+			  #if($kkbh && !$kkbh.equals(""))
+			  	and kkbh = #[kkbh]
+			  #end
+			  #if($zxbs && !$zxbs.equals(""))
+			  	and zxbs = #[zxbs]
+			  #end
+			  #if($kkmc && !$kkmc.equals(""))
+			  	and kkmc like '%'||#[kkmc]||'%'
+			  #end
+			  #if($kkcjsj_from && !$kkcjsj_from.equals(""))
+			  	and kkcjsj >= to_date(#[kkcjsj_from],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($kkcjsj_to && !$kkcjsj_to.equals(""))
+			  	and kkcjsj <= to_date(#[kkcjsj_to],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($kkwz && !$kkwz.equals(""))
+			  	and kkwz like '%'||#[kkwz]||'%'
+			  #end
+			  #if($sszrqdm && !$sszrqdm.equals(""))
+			  	and sszrqdm = #[sszrqdm]
+			  #end
+			  #if($djrxm && !$djrxm.equals(""))
+			  	and djrxm like '%'||#[djrxm]||'%'
+			  #end
+			  #if($djsj_from && !$djsj_from.equals(""))
+			  	and djsj >= to_date(#[djsj_from],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  #if($djsj_to && !$djsj_to.equals(""))
+			  	and djsj <= to_date(#[djsj_to],'yyyy-MM-dd hh24:mi:ss')
+			  #end
+			  order by djsj desc
+		]]>
+	</property>
+	
+</properties>

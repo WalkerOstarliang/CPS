@@ -1,0 +1,5588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 安保设施 -->
+	<!-- 新增安保设施 -->
+	<property name="insertDwabss">
+		<![CDATA[
+			insert into t_za_dw_abss
+			  (ssbh,
+			   jgbh,
+			   czrxm,
+			   czsj,
+			   czdwdm,
+			   czdwmc,
+			   czbs,
+			   djrxm,
+			   djsj,
+			   djdwdm,
+			   djdwmc,
+			   xtmc,
+			   sydwmc,
+			   ysdw,
+			   sydwdz,
+			   xtjcqk,
+			   afglsx,
+			   afxtgly,
+			   afxtzsdh,
+			   ywrqbjzxt,
+			   tcqsl,
+			   gdmbs,
+			   ydmbs,
+			   rqxtlwqk,
+			   ywspjkzxt,
+			   sgdw,
+			   sxjsl,
+			   spjkxtlwqk,
+			   txbcts,
+			   yxqk,
+			   xtzj,
+			   ywcrkjkzxt,
+			   ywdzxcxt,
+			   ywtckglzxt,djrjh,czrjh,djrsfzh,czrsfzh)
+			values
+			  (#[ssbh],
+			   #[jgbh],
+			   #[czrxm],
+			   to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+			   #[czdwdm],
+			   #[czdwmc],
+			   #[czbs],
+			   #[djrxm],
+			   to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[djdwdm],
+			   #[djdwmc],
+			   #[xtmc],
+			   #[sydwmc],
+			   #[ysdw],
+			   #[sydwdz],
+			   #[xtjcqk],
+			   #[afglsx],
+			   #[afxtgly],
+			   #[afxtzsdh],
+			   #[ywrqbjzxt],
+			   #[tcqsl],
+			   #[gdmbs],
+			   #[ydmbs],
+			   #[rqxtlwqk],
+			   #[ywspjkzxt],
+			   #[sgdw],
+			   #[sxjsl],
+			   #[spjkxtlwqk],
+			   #[txbcts],
+			   #[yxqk],
+			   #[xtzj],
+			   #[ywcrkjkzxt],
+			   #[ywdzxcxt],
+			   #[ywtckglzxt],#[djrjh],#[czrjh],#[djrsfzh],#[czrsfzh])
+		]]>
+	</property>
+
+	<!-- 根据主键编号查询安保设施 -->
+	<property name="queryDwabssByBh">
+		<![CDATA[
+			select ssbh,
+		       jgbh,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czdwdm,
+		       czdwmc,
+		       czbs,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       djdwdm,
+		       djdwmc,
+		       xtmc,
+		       sydwmc,
+		       ysdw,
+		       sydwdz,
+		       xtjcqk,
+		       afglsx,
+		       afxtgly,
+		       afxtzsdh,
+		       ywrqbjzxt,
+		       tcqsl,
+		       gdmbs,
+		       ydmbs,
+		       rqxtlwqk,
+		       ywspjkzxt,
+		       sgdw,
+		       sxjsl,
+		       spjkxtlwqk,
+		       txbcts,
+		       yxqk,
+		       xtzj,
+		       ywcrkjkzxt,
+		       ywdzxcxt,
+		       ywtckglzxt,
+		       djrjh,
+		       czrjh
+		  from t_za_dw_abss where shbh = ?
+			
+		]]>
+	</property>
+
+	<!-- 分页查询安保设施 -->
+	<property name="queryDwabssByJgbh">
+		<![CDATA[
+			select ssbh,
+		       jgbh,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czdwdm,
+		       czdwmc,
+		       czbs,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       djdwdm,
+		       djdwmc,
+		       xtmc,
+		       sydwmc,
+		       ysdw,
+		       sydwdz,
+		       xtjcqk,
+		       afglsx,
+		       afxtgly,
+		       afxtzsdh,
+		       ywrqbjzxt,
+		       tcqsl,
+		       gdmbs,
+		       ydmbs,
+		       rqxtlwqk,
+		       ywspjkzxt,
+		       sgdw,
+		       sxjsl,
+		       spjkxtlwqk,
+		       txbcts,
+		       yxqk,
+		       xtzj,
+		       ywcrkjkzxt,
+		       ywdzxcxt,
+		       ywtckglzxt,
+		       djrjh,
+		       czrjh
+		  from t_za_dw_abss where jgbh = ? and czbs != '3'
+		]]>
+	</property>
+
+	<!-- 修改安保设施 -->
+	<property name="updateDwabss">
+		<![CDATA[
+			update t_za_dw_abss
+		    set czrxm = #[czrxm],
+		       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+		       czdwdm = #[czdwdm],
+		       czdwmc = #[czdwmc],
+		       czrjh = #[czrjh],
+		       czbs = #[czbs],
+		       xtmc = #[xtmc],
+		       sydwmc = #[sydwmc],
+		       ysdw = #[ysdw],
+		       sydwdz = #[sydwdz],
+		       xtjcqk = #[xtjcqk],
+		       afglsx = #[afglsx],
+		       afxtgly = #[afxtgly],
+		       afxtzsdh = #[afxtzsdh],
+		       ywrqbjzxt = #[ywrqbjzxt],
+		       tcqsl = #[tcqsl],
+		       gdmbs = #[gdmbs],
+		       ydmbs = #[ydmbs],
+		       rqxtlwqk = #[rqxtlwqk],
+		       ywspjkzxt = #[ywspjkzxt],
+		       sgdw = #[sgdw],
+		       sxjsl = #[sxjsl],
+		       spjkxtlwqk = #[spjkxtlwqk],
+		       txbcts = #[txbcts],
+		       yxqk = #[yxqk],
+		       xtzj = #[xtzj],
+		       ywcrkjkzxt = #[ywcrkjkzxt],
+		       ywdzxcxt = #[ywdzxcxt],
+		       ywtckglzxt = #[ywtckglzxt],
+		       czrsfzh  = #[czrsfzh]
+		 where ssbh = #[ssbh]
+		]]>
+	</property>
+
+	<!-- 删除安保设施 -->
+	<property name="deleteDwabss">
+		<![CDATA[
+			update t_za_dw_abss
+		    set czrxm = #[czrxm],
+		    	czrjh = #[czrjh],
+		       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+		       czdwdm = #[czdwdm],
+		       czdwmc = #[czdwmc],
+		       czrsfzh = #[czrsfzh],
+		       czbs = #[czbs]
+		 where ssbh = #[ssbh]
+		]]>
+	</property>
+
+	<!-- 单位安全检查 -->
+	<!-- 新增单位安全检查 -->
+	<property name="insertDwaqjc">
+		insert into t_za_dw_aqjcxx (
+			jlbh,
+			jgbh,
+			jcdwdm,
+			jcdwmc,
+			jcryxm,
+			jcbw,
+			jcnr,
+			fxwt,
+			jcqk,
+			jcclqk,
+			jcclyj,
+			jcsj,
+			jcjzr,
+			jcjlr,
+			bjcdwfzr,
+			jcxqzgrq,
+			jczgjg,
+			bjcdwyj,
+			bz,
+			czrxm,
+			czdwdm,
+			czdwmc,
+			czsj,
+			czbs,
+			djrxm,
+			djdwdm,
+			djdwmc,
+			djsj,djrjh,
+			czrjh,
+			djrsfzh,
+			czrsfzh,
+			JCLB,
+			SFFXWT,
+			ZGQK
+			) values (
+			#[jlbh],
+			#[jgbh],
+			#[jcdwdm],
+			#[jcdwmc],
+			#[jcryxm],
+			#[jcbw],
+			#[jcnr],
+			#[fxwt],
+			#[jcqk],
+			#[jcclqk],
+			#[jcclyj],
+			#[jcsj],
+			#[jcjzr],
+			#[jcjlr],
+			#[bjcdwfzr],
+			to_date(#[jcxqzgrq],'yyyy-mm-dd'),
+			#[jczgjg],
+			#[bjcdwyj],
+			#[bz],
+			#[czrxm],
+			#[czdwdm],
+			#[czdwmc],
+			to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			#[czbs],
+			#[djrxm],
+			#[djdwdm],
+			#[djdwmc],
+			to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'),
+			#[djrjh],
+			#[czrjh],
+			#[djrsfzh],
+			#[czrsfzh],
+			#[jclb],
+			#[sffxwt],
+			#[zgqk]
+		)
+	</property>
+
+	<!-- 分页查询单位安全检查 -->
+	<property name="queryDwaqjcByJgbh">
+		<![CDATA[
+			select jlbh,
+				jgbh,
+				jcdwdm,
+				jcdwmc,
+				jcryxm,
+				jcbw,
+				jcnr,
+				fxwt,
+				jcqk,
+				jcclqk,
+				jcclyj,
+				jcsj,
+				jcjzr,
+				jcjlr,
+				bjcdwfzr,
+				to_char(jcxqzgrq,'yyyy-mm-dd') as jcxqzgrq,
+				jczgjg,
+				bjcdwyj,
+				bz,
+				czrxm,
+				czdwdm,
+				czdwmc,
+				to_char(czsj,'yyyy-mm-dd') as czsj,
+				czbs,
+				djrxm,
+				djdwdm,
+				djdwmc,
+				to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+				djrjh,czrjh
+			 from t_za_dw_aqjcxx
+			 where jgbh = ?
+		]]>
+	</property>
+	
+	<property name="queryDwAqjcPageResultInfoByJgbh">
+		<![CDATA[
+			select jlbh,
+				jgbh,
+				jcdwdm,
+				jcdwmc,
+				jcryxm,
+				jcbw,
+				jcnr,
+				fxwt,
+				jcqk,
+				jcclqk,
+				jcclyj,
+				jcsj,
+				jcjzr,
+				jcjlr,
+				bjcdwfzr,
+				to_char(jcxqzgrq,'yyyy-mm-dd') as jcxqzgrq,
+				jczgjg,
+				bjcdwyj,
+				bz,
+				czrxm,
+				czdwdm,
+				czdwmc,
+				to_char(czsj,'yyyy-mm-dd') as czsj,
+				czbs,
+				djrxm,
+				djdwdm,
+				djdwmc,
+				to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+				djrjh,
+				czrjh,
+				jclb,
+				sffxwt,
+				zgqk
+			 from t_za_dw_aqjcxx
+			 where jgbh = #[jgbh]
+		]]>
+	</property>
+
+	<!-- 根据主键编号查询单位安全检查 -->
+	<property name="queryDwaqjcByBh">
+		<![CDATA[
+			select jlbh,
+				jgbh,
+				jcdwdm,
+				jcdwmc,
+				jcryxm,
+				jcbw,
+				jcnr,
+				fxwt,
+				jcqk,
+				jcclqk,
+				jcclyj,
+				jcsj,
+				jcjzr,
+				jcjlr,
+				bjcdwfzr,
+				to_char(jcxqzgrq,'yyyy-mm-dd') as jcxqzgrq,
+				jczgjg,
+				bjcdwyj,
+				bz,
+				czrxm,
+				czdwdm,
+				czdwmc,
+				to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+				czbs,
+				djrxm,
+				djdwdm,
+				djdwmc,
+				to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+				djrjh,czrjh
+			 from t_za_dw_aqjcxx
+			 where jlbh = ?
+		]]>
+	</property>
+
+	<!-- 修改单位安全检查 -->
+	<property name="updateDwaqjc">
+		<![CDATA[
+			update t_za_dw_aqjcxx set
+				jcdwdm = #[jcdwdm],
+				jcdwmc = #[jcdwmc],
+				jcryxm = #[jcryxm],
+				jcbw = #[jcbw],
+				jcnr = #[jcnr],
+				fxwt = #[fxwt],
+				jcqk = #[jcqk],
+				jcclqk = #[jcclqk],
+				jcclyj = #[jcclyj],
+				jcsj = #[jcsj],
+				jcjzr = #[jcjzr],
+				jcjlr = #[jcjlr],
+				bjcdwfzr = #[bjcdwfzr],
+				jcxqzgrq = to_date(#[jcxqzgrq],'yyyy-mm-dd'),
+				jczgjg = #[jczgjg],
+				bjcdwyj = #[bjcdwyj],
+				bz = #[bz],
+				czrxm = #[czrxm],
+				czdwdm = #[czdwdm],
+				czdwmc = #[czdwmc],
+				czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+				czbs = #[czbs],
+				czrjh = #[czrjh],
+				czrsfzh = #[czrsfzh],
+				jclb = #[jclb],
+				sffxwt = #[sffxwt],
+				zgqk = #[zgqk]
+			where jlbh = #[jlbh]
+		]]>
+	</property>
+
+	<!-- 删除单位安全检查 -->
+	<property name="deleteDwaqjc">
+		<![CDATA[
+			update t_za_dw_aqjcxx 
+			set
+				czrxm = #[czrxm],
+				czdwdm = #[czdwdm],
+				czdwmc = #[czdwmc],
+				czrjh = #[czrjh],
+				czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+				czrsfzh = #[czrsfzh],
+				czbs = #[czbs]
+			where jlbh = #[jlbh]
+		]]>
+	</property>
+
+	<!-- 从业人员 -->
+	<!-- 新增单位从业人员 -->
+	<property name="insertDwcyry">
+		<![CDATA[
+		insert into t_za_ry_cyry
+		  (cyrybh,
+		   rybh,
+		   jgbh,
+		   sfzh,
+		   bmmc,
+		   gzly,
+		   pynx,
+		   zw,
+		   sjhm,
+		   qtlxdh,
+		   zsqk,
+		   pxzh,
+		   pxzs,
+		   zdfwdxlb,
+		   bwcs,
+		   kzcs,
+		   zygx,
+		   zywt,
+		   jcqk,
+		   bz,
+		   zxyy,
+		   zxbs,
+		   zxrq,
+		   czrxm,
+		   czdwdm,
+		   czdwmc,
+		   czsj,
+		   czbs,
+		   djdwdm,
+		   djdwmc,
+		   djrxm,
+		   djsj,
+		   lzsj,
+		   rzsj,
+		   cyryygh,
+		   xzdz,
+		   xm,xb,csrq,mz,bmch,sfabry,rkfwglid,djrjh,czrjh,
+		   XZDJWQ,JZDSQDM,JZDSQMC,djrsfzh,czrsfzh,jzdpcsdm,jzdpcsmc,sfjwry,pfsj
+		   )
+		values
+		  (#[cyrybh],
+		   #[rybh],
+		   #[jgbh],
+		   #[sfzh],
+		   #[bmmc],
+		   #[gzly],
+		   to_number(#[pynx]),
+		   #[zwlb],
+		   #[sjhm],
+		   #[qtlxdh],
+		   #[zsqk],
+		   #[pxzh],
+		   #[pxzs],
+		   #[zdfwdxlb],
+		   #[bwcs],
+		   #[kzcs],
+		   #[zygx],
+		   #[zywt],
+		   #[jcqk],
+		   #[bz],
+		   #[zxyy],
+		   #[zxbs],
+		   to_date(#[zxrq],'yyyy-mm-dd'),
+		   #[czrxm],
+		   #[czdwdm],
+		    #[czdwmc],
+		   to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+		   #[czbs],
+		   #[djdwdm],
+		   #[djdwmc],
+		   #[djrxm],
+		   to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'),
+		   to_date(#[lzsj],'yyyy-mm-dd'),
+		   to_date(#[rzsj],'yyyy-mm-dd'),
+		   #[cyryygh],
+		   #[xzdz],#[xm],#[xb],#[csrq],#[mz],#[bmch],#[sfabry],#[rkfwglid],#[djrjh],#[czrjh],
+		   #[xzdjwq],#[jzdsqdm],#[jzdsqmc],#[djrsfzh],#[czrsfzh],#[jzdpcsdm],#[jzdpcsmc],#[sfjwry],to_date(#[pfsj],'yyyy-mm-dd HH24:mi:ss')
+		   )
+				
+		]]>
+	</property>
+
+	<!-- 根据主键编号查询从业人员 -->
+	<property name="queryDwcyryByBh">
+		<![CDATA[
+			select cyry.cyrybh,
+			    cyry.rybh,
+			    cyry.jgbh,
+			    cyry.bmmc,
+			    cyry.gzly,
+			    cyry.pynx,
+			    cyry.zw as zwlb,
+			    cyry.sjhm,
+			    cyry.qtlxdh,
+			    cyry.zsqk,
+			    cyry.pxzh,
+			    cyry.pxzs,
+			    cyry.zdfwdxlb,
+			    cyry.bwcs,
+			    cyry.kzcs,
+			    cyry.zygx,
+			    cyry.zywt,
+			    cyry.jcqk,
+			    cyry.bz,
+			    cyry.zxyy,
+			    cyry.zxbs,
+			    to_char(cyry.zxrq,'yyyy-mm-dd') AS zxrq,
+			    cyry.czrxm,
+			    cyry.czdwdm,
+			    to_char(cyry.czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+			    cyry.czbs,
+			    cyry.djdwdm,
+			    cyry.djdwmc,
+			    cyry.djrxm,
+			    to_char(cyry.djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+			    cyry.czdwmc,
+			    to_char(cyry.lzsj,'yyyy-mm-dd') as lzsj,
+			    to_char(cyry.rzsj,'yyyy-mm-dd') as rzsj,
+			    cyry.cyryygh,
+			    cyry.xzdz,
+			    cyry.xm,
+			    cyry.xb,
+			    cyry.sfzh,
+			    cyry.csrq,
+			    cyry.mz,
+			    cyry.bmch,
+			    cyry.sfabry,
+			    cyry.rkfwglid,
+			    cyry.pfsj,
+			    (select DWMC from t_za_jg_jbxx jg where jg.jgbh=cyry.jgbh) as dwmc,
+			    (select hylb from t_za_jg_jbxx jg where jg.jgbh=cyry.jgbh) as hylb,
+			    cyry.djrjh,
+			    cyry.czrjh,
+			    cyry.XZDJWQ,
+			    (select orgname from v_common_organization where orgcode=cyry.XZDJWQ and rownum=1) as xzdjwqmc,
+			    cyry.FKRXM,
+			    cyry.FKDWDM,
+			    cyry.FKDWMC,
+			    cyry.FKSJ,
+			    cyry.FKNR,
+			    cyry.jzdpcsdm,
+			    cyry.jzdpcsmc,
+			    cyry.sfjwry,
+			    cyry.jzdsqdm,
+			    cyry.jzdsqmc,
+			    nvl(cyry.zjzl,'111') as zjzl,
+			    nvl(cyry.sfzh,cyry.zjhm) as zjhm,
+			    cyry.gj,
+			    cyry.ywx,
+			    cyry.ywm
+			from t_za_ry_cyry cyry
+			where cyrybh = ?
+		]]>
+	</property>
+
+	<!-- 根据机构编号分页查询单位从业人员 -->
+	<property name="queryDwcyryByJgbh">
+		<![CDATA[
+			select *
+			  from v_za_ry_cyry
+			  where jgbh = ?
+			  and (zxbs !='1' and czbs !='3')
+		]]>
+	</property>
+	
+	<!-- 分页查询从业人员 -->
+	<property name="queryDwCyryPageResultInfo">
+		<![CDATA[
+			select
+			    cyry.cyrybh,
+			    cyry.rybh,
+			    cyry.jgbh,
+			    cyry.bmmc,
+			    cyry.gzly,
+			    cyry.pynx,
+			    cyry.zw as zwlb,
+			    cyry.sjhm,
+			    cyry.qtlxdh,
+			    cyry.zsqk,
+			    cyry.pxzh,
+			    cyry.pxzs,
+			    cyry.zdfwdxlb,
+			    cyry.bwcs,
+			    cyry.kzcs,
+			    cyry.zygx,
+			    cyry.zywt,
+			    cyry.jcqk,
+			    cyry.bz,
+			    cyry.zxyy,
+			    cyry.zxbs,
+			    to_char(cyry.zxrq,'yyyy-mm-dd') AS zxrq,
+			    cyry.czrxm,
+			    cyry.czdwdm,
+			    to_char(cyry.czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+			    cyry.czbs,
+			    cyry.djdwdm,
+			    cyry.djdwmc,
+			    cyry.djrxm,
+			    to_char(cyry.djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+			    cyry.czdwmc,
+			    to_char(cyry.lzsj,'yyyy-mm-dd') as lzsj,
+			    to_char(cyry.rzsj,'yyyy-mm-dd') as rzsj,
+			    cyry.cyryygh,
+			    cyry.xzdz,
+			    cyry.xm,
+			    cyry.xb,
+			    cyry.sfzh,
+			    cyry.csrq,
+			    cyry.mz,
+			    cyry.bmch,
+			    cyry.sfabry,
+			    cyry.rkfwglid,
+			    cyry.pfsj,
+			    (select DWMC from t_za_jg_jbxx jg where jg.jgbh=cyry.jgbh) as dwmc,
+			    (select hylb from t_za_jg_jbxx jg where jg.jgbh=cyry.jgbh) as hylb,
+			    cyry.djrjh,
+			    cyry.czrjh,
+			    cyry.XZDJWQ,
+			    (select orgname from v_common_organization where orgcode=cyry.XZDJWQ and rownum=1) as xzdjwqmc,
+			    cyry.FKRXM,
+			    cyry.FKDWDM,
+			    cyry.FKDWMC,
+			    cyry.FKSJ,
+			    cyry.FKNR,
+			    cyry.jzdpcsdm,
+			    cyry.jzdpcsmc,
+			    cyry.sfjwry,
+			    cyry.jzdsqdm,
+			    cyry.jzdsqmc,
+			    nvl(cyry.zjzl,'111') as zjzl,
+			    nvl(cyry.sfzh,cyry.zjhm) as zjhm,
+			    cyry.gj,
+			    cyry.ywx,
+			    cyry.ywm,
+			    cyry.sfjwtdj,
+			    decode(cyry.sfjwtdj,
+		              '0',
+		              '内网PC登记',
+		              '1',
+		              '警务通登记',
+		              '2',
+		              '外网平台登记',
+		              '内网PC登记') as sfjwtdjms
+			from t_za_ry_cyry cyry
+			where 1=1 
+			#if ($cyrybh && !$cyrybh.equals(""))
+				and cyrybh = #[cyrybh]
+			#end
+			
+			#if ($jgbh && !$jgbh.equals(""))
+				and jgbh = #[jgbh]
+			#end
+			
+			#if ($sfjwry && $sfjwry.equals("1"))
+				and sfjwry = '1'
+				#if ($zjhm && !$zjhm.equals(""))
+					and zjzl = #[zjzl]
+					and zjhm = #[zjhm]
+				#end
+			#elseif ($sfjwry && $sfjwry.equals("0"))
+				and (sfjwry = '0' or sfjwry is null)
+				#if($zjzl && $zjzl.equals("111"))
+					#if($zjhm && !$zjhm.equals(""))
+						and sfzh = #[zjhm]
+					#end
+				#end
+			#else
+				#if($zjzl && $zjzl.equals("111"))
+					#if($zjhm && !$zjhm.equals(""))
+						and sfzh = #[zjhm]
+					#end
+				#else
+					#if ($zjhm && !$zjhm.equals(""))
+						and zjzl = #[zjzl]
+						and zjhm = #[zjhm]
+					#end
+				#end
+			#end
+			
+			#if($ywx && !$ywx.equals(""))
+				and ywx = #[ywx]
+			#end
+			#if($ywm && !$ywm.equals(""))
+				and ywm = #[ywm]
+			#end
+				
+			#if($rybh && !$rybh.equals(""))
+				and rybh = #[rybh]
+			#else
+				and czbs != '3'
+			#end
+			
+			#if($xm && !$xm.equals(""))
+				and xm like '%'||#[xm]||'%'
+			#end
+			#if($jgmc && !$jgmc.equals(""))
+				and jgbh in (select jgbh from t_za_jg_jbxx jbxx where dwmc like '%'||#[jgmc]||'%')
+			#end
+			#if($zxbs && !$zxbs.equals(""))
+				and zxbs = #[zxbs]
+			#end
+			#if($sfabry && !$sfabry.equals(""))
+				and sfabry = #[sfabry]
+			#end
+			#if($zwlb && !$zwlb.equals(""))
+				and zw = #[zwlb]
+			#end
+			#if($djsj_start && !$djsj_start.equals(""))
+				and djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-mm-dd HH24:mi:ss')  
+			#end
+			#if($djsj_end && !$djsj_end.equals(""))
+				and djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-mm-dd HH24:mi:ss')  
+			#end
+			#if($jgbh && !$jgbh.equals(""))
+				and jgbh = #[jgbh]
+			#end
+		   	#if($jwsqdm && !$jwsqdm.equals(""))
+				and  djdwdm = #[jwsqdm]
+			#elseif($pcsdm && !$pcsdm.equals(""))
+				and (djdwdm like substr(#[pcsdm],1,8)||'%')
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			#end
+			#if($sfjwtdj && !$sfjwtdj.equals(""))
+				and sfjwtdj = #[sfjwtdj]
+			#end
+		]]>
+	</property>
+	
+	<!-- 查询从业人员派发列表 -->
+	<property name="queryCyryPfList">
+		<![CDATA[
+			select cyry.cyrybh,
+			    cyry.rybh,
+			    cyry.jgbh,
+			    cyry.bmmc,
+			    cyry.gzly,
+			    cyry.pynx,
+			    cyry.zw as zwlb,
+			    cyry.sjhm,
+			    cyry.qtlxdh,
+			    cyry.zsqk,
+			    cyry.pxzh,
+			    cyry.pxzs,
+			    cyry.zdfwdxlb,
+			    cyry.bwcs,
+			    cyry.kzcs,
+			    cyry.zygx,
+			    cyry.zywt,
+			    cyry.jcqk,
+			    cyry.bz,
+			    cyry.zxyy,
+			    cyry.zxbs,
+			    to_char(cyry.zxrq,'yyyy-mm-dd') AS zxrq,
+			    cyry.czrxm,
+			    cyry.czdwdm,
+			    to_char(cyry.czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+			    cyry.czbs,
+			    cyry.djdwdm,
+			    cyry.djdwmc,
+			    cyry.djrxm,
+			    to_char(cyry.djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+			    cyry.czdwmc,
+			    to_char(cyry.lzsj,'yyyy-mm-dd') as lzsj,
+			    to_char(cyry.rzsj,'yyyy-mm-dd') as rzsj,
+			    cyry.cyryygh,
+			    cyry.xzdz,
+			    cyry.xm,
+			    cyry.xb,
+			    cyry.sfzh,
+			    cyry.csrq,
+			    cyry.mz,
+			    cyry.bmch,
+			    cyry.sfabry,
+			    cyry.rkfwglid,
+			    cyry.pfsj,
+			    (select DWMC from t_za_jg_jbxx jg where jg.jgbh=cyry.jgbh) as dwmc,
+			    (select hylb from t_za_jg_jbxx jg where jg.jgbh=cyry.jgbh) as hylb,
+			    cyry.djrjh,
+			    cyry.czrjh,
+			    cyry.XZDJWQ,
+			    (select orgname from v_common_organization where orgcode=cyry.XZDJWQ and rownum=1) as xzdjwqmc,
+			    cyry.FKRXM,
+			    cyry.FKDWDM,
+			    cyry.FKDWMC,
+			    cyry.FKSJ,
+			    cyry.FKNR,
+			    cyry.jzdpcsdm,
+			    cyry.jzdpcsmc,
+			    cyry.sfjwry,
+			    cyry.jzdsqdm,
+			    cyry.jzdsqmc,
+			    nvl(cyry.zjzl,'111') as zjzl,
+			    nvl(cyry.sfzh,cyry.zjhm) as zjhm,
+			    cyry.gj,
+			    cyry.ywx,
+			    cyry.ywm
+			from t_za_ry_cyry cyry
+			where czbs != '3' and (zxbs = '0' or zxbs is null)
+				and jzdpcsdm = #[pcsdm]
+				and jzdsqdm is null
+				and xzdjwq is null
+				and pfsj is null
+				and fksj is null
+				#if($zjzl && $zjzl.equals("111"))
+					#if($zjhm && !$zjhm.equals(""))
+						and sfzh = #[zjhm]
+					#end
+				#else
+					#if ($zjhm && !$zjhm.equals(""))
+						and zjzl = #[zjzl]
+						and zjhm = #[zjhm]
+					#end
+				#end
+				
+				#if($ywx && !$ywx.equals(""))
+					and ywx = #[ywx]
+				#end
+				#if($ywm && !$ywm.equals(""))
+					and ywm = #[ywm]
+				#end
+				
+				#if($xm && !$xm.equals(""))
+					and xm like '%'||#[xm]||'%'
+				#end
+				
+				#if($jgmc && !$jgmc.equals(""))
+					and jgbh in (select jgbh from t_za_jg_jbxx jbxx where dwmc like '%'||#[jgmc]||'%')
+				#end
+				#if($zxbs && !$zxbs.equals(""))
+					and zxbs = #[zxbs]
+				#end
+				 
+				#if($djsj_start && !$djsj_start.equals(""))
+					and djsj >= to_date(#[djsj_start]||' 00:00:00','yyyy-mm-dd HH24:mi:ss')  
+				#end
+				#if($djsj_end && !$djsj_end.equals(""))
+					and djsj <= to_date(#[djsj_end]||' 23:59:59','yyyy-mm-dd HH24:mi:ss')  
+				#end
+		]]>
+	</property>
+
+
+	<!-- 修改从业人员 -->
+	<property name="updateDwcyry">
+		<![CDATA[
+			update t_za_ry_cyry 
+			set
+				rybh = #[rybh],
+			       bmmc = #[bmmc],
+			       gzly = #[gzly],
+			       pynx = to_number(#[pynx]),
+			       zw = #[zwlb],
+			       sjhm = #[sjhm],
+			       qtlxdh = #[qtlxdh],
+			       zsqk = #[zsqk],
+			       pxzh = #[pxzh],
+			       pxzs = #[pxzs],
+			       zdfwdxlb = #[zdfwdxlb],
+			       bwcs = #[bwcs],
+			       kzcs = #[kzcs],
+			       zygx = #[zygx],
+			       zywt = #[zywt],
+			       jcqk = #[jcqk],
+			       bz = #[bz],
+			       zxyy = #[zxyy],
+			       zxbs = #[zxbs],
+			       zxrq = to_date(#[zxrq],'yyyy-mm-dd hh24:mi:ss'),
+			       czrxm = #[czrxm],
+			       czdwdm = #[czdwdm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+			       czbs = #[czbs],
+			       czdwmc = #[czdwmc],
+			       lzsj = to_date(#[lzsj],'yyyy-mm-dd'),
+			       rzsj = to_date(#[rzsj],'yyyy-mm-dd'),
+			       cyryygh = #[cyryygh],
+			       xzdz = #[xzdz],
+			       xm = #[xm],
+			       xb = #[xb],
+			       csrq = #[csrq],
+			       mz=#[mz],
+			       bmch = #[bmch],
+			       sfabry = #[sfabry],
+			       rkfwglid = #[rkfwglid],
+			       czrjh = #[czrjh],
+			       XZDJWQ = #[xzdjwq],
+			       jzdsqdm = #[jzdsqdm],
+			       jzdsqmc = #[jzdsqmc],
+			       czrsfzh = #[czrsfzh],
+			       jzdpcsdm = #[jzdpcsdm],
+			       jzdpcsmc = #[jzdpcsmc],
+			       pfsj = to_date(#[pfsj],'yyyy-mm-dd HH24:mi:ss')
+			 where cyrybh = #[cyrybh]
+		]]>
+	</property>
+
+	<!-- 注销从业人员 -->
+	<property name="deleteDwcyry">
+		<![CDATA[
+			update t_za_ry_cyry
+		   set 
+		   	   zxyy = #[zxyy],
+		       zxbs = #[zxbs],
+		       zxrq = to_date(#[zxrq],'yyyy-mm-dd'),
+		       czrxm = #[czrxm],
+		       czdwdm = #[czdwdm],
+		       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+		       czbs = #[czbs],
+		       czdwmc = #[czdwmc],
+		       lzsj = to_date(#[lzsj],'yyyy-mm-dd'),
+		       czrjh = #[czrjh],
+		       czrsfzh = #[czrsfzh]
+		 where cyrybh = #[cyrybh]
+			
+		]]>
+	</property>
+	
+	<!-- 删除从业人员 -->
+	<property name="deleteCyryByCyrybh">
+		<![CDATA[
+			update t_za_ry_cyry
+		   set 
+		       czrxm = #[czrxm],
+		       czdwdm = #[czdwdm],
+		       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+		       czbs = #[czbs],
+		       czdwmc = #[czdwmc],
+		       czrjh = #[czrjh],
+		       czrsfzh = #[czrsfzh]
+		 where cyrybh = #[cyrybh]
+		]]>
+	</property>
+	
+	<!-- 单位基本信息 -->
+	<!-- 新增单位基本信息 -->
+	<property name="insertDwjbxx">
+		<![CDATA[
+			insert into t_za_jg_jbxx
+				  (jgbh,
+				   dwmc,
+				   hylb,
+				   cyrs,
+				   dsz,
+				   dwcz,
+				   dwdh,
+				   dwdm,
+				   dwdzyx,
+				   fhdj,
+				   frdb,
+				   frsfzhm,
+				   frlxdh,
+				   frzz,
+				   fzjg,
+				   fzrq,
+				   glbm,
+				   gljb,
+				   dzid,
+				   fwbh,
+				   jyfw,
+				   kyrq,
+				   swdjh,
+				   yxqx,
+				   yyzzbh,
+				   yzbm,
+				   zafzr,
+				   zcdz,
+				   zcrq,
+				   zczb,
+				   zddwbs,
+				   gggdczqk,
+				   bmjb,
+				   bz,
+				   zxbs,
+				   zxrq,
+				   zxyy,
+				   djrxm,
+				   djsj,
+				   djdwdm,
+				   djdwmc,
+				   dwxz,
+				   czrxm,
+				   czsj,
+				   czdwdm,
+				   czdwmc,
+				   czbs,
+				   zrdwpcsdm,
+				   zrdwpcsmc,
+				   zrmjjh,
+				   zrmjxm,
+				   zrmjdh,
+				   dwlb,
+				   sssqdm,
+				   wwm,
+				   zgbm,djrjh,czrjh,dwdz,djrsfzh,czrsfzh)
+				values
+				  (#[jgbh],
+				   #[dwmc],
+				   #[hylb],
+				   to_number(#[cyrs]),
+				   #[dsz],
+				   #[dwcz],
+				   #[dwdh],
+				   #[dwdm],
+				   #[dwdzyx],
+				   #[fhdj],
+				   #[frdb],
+				   #[frsfzhm],
+				   #[frlxdh],
+				   #[frzz],
+				   #[fzjg],
+				   to_date(#[fzrq],'yyyy-mm-dd'),
+				   #[glbm],
+				   #[gljb],
+				   #[dzid],
+				   #[fwbh],
+				   #[jyfw],
+				   to_date(#[kyrq],'yyyy-mm-dd'),
+				   #[swdjh],
+				   to_date(#[yxqx],'yyyy-mm-dd'),
+				   #[yyzzbh],
+				   #[yzbm],
+				   #[zafzr],
+				   #[zcdz],
+				   to_date(#[zcrq],'yyyy-mm-dd'),
+				   to_number(#[zczb]),
+				   #[zddwbs],
+				   #[gggdczqk],
+				   #[bmjb],
+				   #[bz],
+				   #[zxbs],
+				   to_date(#[zxrq],'yyyy-mm-dd'),
+				   #[zxyy],
+				   #[djrxm],
+				   to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'),
+				   #[djdwdm],
+				   #[djdwmc],
+				   #[dwxz],
+				   #[czrxm],
+				   to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+				   #[czdwdm],
+				   #[czdwmc],
+				   #[czbs],
+				   #[zrdwpcsdm],
+				   #[zrdwpcsmc],
+				   #[zrmjjh],
+				   #[zrmjxm],
+				   #[zrmjdh],
+				   #[dwlb],
+				   #[sssqdm],
+				   #[wwm],
+				   #[zgbm],#[djrjh],#[czrjh],#[dwdz],#[djrsfzh],#[czrsfzh])
+		]]>
+	</property>
+
+	<!-- 根据主键编号查询单位基本信息 -->
+	<property name="queryDwjbxxByJgbh">
+		<![CDATA[
+			select jgbh,
+				dwmc,
+				hylb,
+				cyrs,
+				dsz,
+				dwcz,
+				dwdh,
+				dwdm,
+				dwdzyx,
+				fhdj,
+				frdb,
+				frsfzhm,
+				frlxdh,
+				frzz,
+				fzjg,
+				to_char(fzrq,'yyyy-mm-dd') as fzrq,
+				glbm,
+				gljb,
+				dzid,
+				fwbh,
+				jyfw,
+				to_char(kyrq,'yyyy-mm-dd') as kyrq,
+				swdjh,
+				to_char(yxqx,'yyyy-mm-dd') as yxqx,
+				yyzzbh,
+				yzbm,
+				zafzr,
+				zcdz,
+				to_char(zcrq,'yyyy-mm-dd') as zcrq,
+				zczb,
+				zddwbs,
+				gggdczqk,
+				bmjb,
+				bz,
+				zxbs,
+				to_char(zxrq,'yyyy-mm-dd') as zxrq,
+				zxyy,
+				djrxm,
+				to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+				djdwdm,
+				djdwmc,
+				dwxz,
+				czrxm,
+				to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+				czdwdm,
+				czdwmc,
+				czbs,
+				zrdwpcsdm,
+				zrdwpcsmc,
+				zrmjjh,
+				zrmjxm,
+				zrmjdh,
+				dwlb,
+				sssqdm,
+				wwm,
+				zgbm,djrjh,czrjh,dwdz,
+				sfnbgl,
+				sfzagl,
+				sfwjgl,
+				sfxfgl,yxtzj,ywxtlx,
+				(select dwfl from t_za_dwhc where jgbh=jbxx.jgbh and nbhc='1' and rownum=1) as dwfl
+			from t_za_jg_jbxx  jbxx
+			where jbxx.jgbh = ?
+		]]>
+	</property>
+	
+	<!-- 根据主键编号查询单位基本信息 -->
+	<property name="queryDwjbxxByJgbhs">
+		<![CDATA[
+			select jgbh,
+				dwmc,
+				hylb,
+				cyrs,
+				dsz,
+				dwcz,
+				dwdh,
+				dwdm,
+				dwdzyx,
+				fhdj,
+				frdb,
+				frsfzhm,
+				frlxdh,
+				frzz,
+				fzjg,
+				to_char(fzrq,'yyyy-mm-dd') as fzrq,
+				glbm,
+				gljb,
+				dzid,
+				fwbh,
+				jyfw,
+				to_char(kyrq,'yyyy-mm-dd') as kyrq,
+				swdjh,
+				to_char(yxqx,'yyyy-mm-dd') as yxqx,
+				yyzzbh,
+				yzbm,
+				zafzr,
+				zcdz,
+				to_char(zcrq,'yyyy-mm-dd') as zcrq,
+				zczb,
+				zddwbs,
+				gggdczqk,
+				bmjb,
+				bz,
+				zxbs,
+				to_char(zxrq,'yyyy-mm-dd') as zxrq,
+				zxyy,
+				djrxm,
+				to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+				djdwdm,
+				djdwmc,
+				dwxz,
+				czrxm,
+				to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+				czdwdm,
+				czdwmc,
+				czbs,
+				zrdwpcsdm,
+				zrdwpcsmc,
+				zrmjjh,
+				zrmjxm,
+				zrmjdh,
+				dwlb,
+				sssqdm,
+				wwm,
+				zgbm,djrjh,czrjh,dwdz,
+				sfnbgl,
+				sfzagl,
+				sfwjgl,
+				sfxfgl,yxtzj,ywxtlx,
+				(select dwfl from t_za_dwhc where jgbh=jbxx.jgbh and nbhc='1' and rownum=1) as dwfl
+			from t_za_jg_jbxx  jbxx
+			where jbxx.jgbh in (?)
+		]]>
+	</property>
+
+	<!-- 分页查询单位基本信息 -->
+	<property name="queryDwjbxxPageResInfo">
+		<![CDATA[
+			select jgbh,
+				dwmc,
+				hylb,
+				cyrs,
+				dsz,
+				dwcz,
+				dwdh,
+				dwdm,
+				dwdzyx,
+				dwlb,
+				fhdj,
+				frdb,
+				frsfzhm,
+				frlxdh,
+				frzz,
+				fzjg,
+				to_char(fzrq,'yyyy-mm-dd') as fzrq,
+				glbm,
+				gljb,
+				dzid,
+				fwbh,
+				jyfw,
+				to_char(kyrq,'yyyy-mm-dd') as kyrq,
+				swdjh,
+				to_char(yxqx,'yyyy-mm-dd') as yxqx,
+				yyzzbh,
+				yzbm,
+				zafzr,
+				zcdz,
+				to_char(zcrq,'yyyy-mm-dd') as zcrq,
+				zczb,
+				zddwbs,
+				gggdczqk,
+				bmjb,
+				bz,
+				zxbs,
+				to_char(zxrq,'yyyy-mm-dd') as zxrq,
+				zxyy,
+				djrxm,
+				to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+				djdwdm,
+				djdwmc,
+				dwxz,
+				czrxm,
+				to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+				czdwdm,
+				czdwmc,
+				czbs,
+				zrdwpcsdm,
+				zrdwpcsmc,
+				zrmjjh,
+				zrmjxm,
+				zrmjdh,
+				sssqdm,
+				wwm,
+				sfnbgl,
+				sfzagl,
+				sfxfgl,
+				sfwjgl,
+				zgbm,djrjh,czrjh,dwdz,yxtzj,ywxtlx,
+				(select dwfl from t_za_dwhc where jgbh=jbxx.jgbh and nbhc='1' and rownum=1) as dwfl,
+				f_get_dwyjys(jgbh,(select dwfl from t_za_dwhc where jgbh=jbxx.jgbh and nbhc='1' and rownum=1)) as yjys,
+				(select dwfl from t_za_dw_wxwpdw wxwp where wxwp.jgbh = jbxx.jgbh) as wbdwfl,
+				(select hwlb from t_za_dw_wxwpdw wxwp where wxwp.jgbh = jbxx.jgbh) as wbdwhwlb
+			from t_za_jg_jbxx jbxx
+			where 1 = 1
+			
+			--精确到社区
+			#if($sqdm && !$sqdm.equals(""))
+		   		and sssqdm = #[sqdm]
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+		   		--精确到警务区
+				and  ZRDWPCSDM = #[jwsqdm]
+			    --精确到派出所
+			#elseif($pcsdm and !$pcsdm.equals(""))
+			  	and (zrdwpcsdm like substr(#[pcsdm],1,8)||'%' or djdwdm like substr(#[pcsdm],1,8)||'%')
+			  	--精确到县区
+		    #elseif($countrygajgjgdm and !$countrygajgjgdm.equals(""))
+				and (zrdwpcsdm like substr(#[countrygajgjgdm],1,6) || '%' or djdwdm like substr(#[countrygajgjgdm],1,6) || '%')
+			    --精确到市州
+			#elseif($citygajgjgdm and !$citygajgjgdm.equals(""))
+				 and (zrdwpcsdm like substr(#[citygajgjgdm],1,4) ||'%' or czdwdm like substr(#[citygajgjgdm],1,4) ||'%')
+			#end 
+			
+			
+			#if($hylb && !$hylb.equals(""))
+				and instr(hylb,#[hylb]) >= 1
+				--查询技防单位
+				#if($hylb.equals("09"))
+					#if($sfns && !$sfns.equals(""))
+						#if($sfns.equals("0"))
+							and not exists(select 1 from t_za_dw_jfdw_nsxx jfdw where jbxx.jgbh = jfdw.jgbh)
+						#else
+							and exists(select 1 from t_za_dw_jfdw_nsxx jfdw where jbxx.jgbh = jfdw.jgbh)
+						#end
+					#end
+					
+					#if($nssj_strat && !$nssj_strat.equals(""))
+						and exists (select 1 from t_za_dw_jfdw_nsxx nsxx where jbxx.jgbh = nsxx.jgbh and nsxx.nsrj >= to_date(#[nssj_strat],'yyyy-mm-dd'))
+					#end
+					#if($nssj_end && !$nssj_end.equals(""))
+						and exists (select 1 from t_za_dw_jfdw_nsxx nsxx where jbxx.jgbh = nsxx.jgbh and nsxx.nsrj <= to_date(#[nssj_end],'yyyy-mm-dd'))
+					#end
+					#if($badj && !$badj.equals(""))
+						and exists(select 1  from t_za_dw_jfdw_nsxx nsxx where jbxx.jgbh = nsxx.jgbh and nsxx.badj = #[badj])
+					#end
+				#end
+			#end
+			#if($dwmc && !$dwmc.equals(""))
+				and dwmc like '%'||#[dwmc]||'%'
+			#end
+			#if($dwdm && !$dwdm.equals(""))
+				and dwdm = #[dwdm]
+			#end
+			#if($frdb && !$frdb.equals(""))
+				and frdb like '%'||#[frdb]||'%'
+			#end
+			#if($frsfzhm && !$frsfzhm.equals(""))
+				and frsfzhm = #[frsfzhm]
+			#end
+			#if($dwxz && !$dwxz.equals(""))
+				and dwxz = #[dwxz]
+			#end
+			
+			#if($djsjstart && !$djsjstart.equals(""))
+				and djsj >= to_date(#[djsjstart] || ' 00:00:00','yyyy-mm-dd HH24:mi:ss')
+			#end	
+			
+			#if($djsjend && !$djsjend.equals(""))
+				and djsj <= to_date(#[djsjend] || ' 23:59:59','yyyy-mm-dd HH24:mi:ss')
+			#end
+			#if($zxbs && !$zxbs.equals(""))
+				and zxbs = #[zxbs]
+			#end
+			#if($yyzzh && !$yyzzh.equals(""))
+				and yyzzbh = #[yyzzh]
+			#end
+			#if($dwlb && !$dwlb.equals(""))
+				and dwlb = #[dwlb]
+			#end	
+			
+			#if($stmc && !$stmc.equals(""))
+				and jgbh in
+						  ( 
+					           select jgbh from t_lsgl_dwfw_gl  where dzid in 
+					           (
+						             select dzid  from t_common_dzxx  where stid in
+						             (
+						                    select id from t_common_stxx where stmc  like  '%'||#[stmc]||'%'
+						             )
+						       )
+						   )
+			#end
+			
+			#if($glbm &&  !$glbm.equals(""))
+				#if($glbm.equals("1"))
+					and sfzagl is null
+				#end
+				#if($glbm.equals("2"))
+					and sfnbgl is null
+				#end
+				#if($glbm.equals("4"))
+					and sfwjgl is null
+				#end
+				#if($glbm.equals("5"))
+					and sfxfgl is null
+				#end
+			#end 
+			#if($sfzagl && !$sfzagl.equals(""))
+				and sfzagl = '1'
+			#end
+			#if($sfnbgl && !$sfnbgl.equals(""))
+				and sfnbgl = '1'
+			#end
+			#if($sfwjgl && !$sfwjgl.equals(""))
+				and sfwjgl = '1'
+			#end
+			#if($sfxfgl && !$sfxfgl.equals(""))
+				and sfxfgl = '1'
+			#end
+			order by sfnbgl nulls last,jgbh
+		]]>
+	</property>
+
+	<!-- 修改单位基本信息 -->
+	<property name="updateDwjbxx">
+		<![CDATA[
+			update t_za_jg_jbxx 
+			set 
+				dwmc = #[dwmc],
+				hylb = #[hylb],
+				cyrs = to_number(#[cyrs]),
+				dsz = #[dsz],
+				dwcz = #[dwcz],
+				dwdh = #[dwdh],
+				dwdm = #[dwdm],
+				dwdzyx = #[dwdzyx],
+				fhdj = #[fhdj],
+				frdb = #[frdb],
+				frsfzhm = #[frsfzhm],
+				frlxdh = #[frlxdh],
+				frzz = #[frzz],
+				fzjg = #[fzjg],
+				fzrq = to_date(#[fzrq],'yyyy-mm-dd'),
+				glbm = #[glbm],
+				gljb = #[gljb],
+				dzid = #[dzid],
+				fwbh = #[fwbh],
+				jyfw = #[jyfw],
+				kyrq = to_date(#[kyrq],'yyyy-mm-dd'),
+				swdjh = #[swdjh],
+				yxqx = to_date(#[yxqx],'yyyy-mm-dd'),
+				yyzzbh = #[yyzzbh],
+				yzbm = #[yzbm],
+				zafzr = #[zafzr],
+				zcdz = #[zcdz],
+				zcrq = to_date(#[zcrq],'yyyy-mm-dd'),
+				zczb = to_number(#[zczb]),
+				zddwbs = #[zddwbs],
+				gggdczqk = #[gggdczqk],
+				bmjb = #[bmjb],
+				bz = #[bz],
+				zxbs = #[zxbs],
+				zxrq = to_date(#[zxrq],'yyyy-mm-dd'),
+				zxyy = #[zxyy],
+				dwxz = #[dwxz],
+				czrxm = #[czrxm],
+				czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+				czdwdm = #[czdwdm],
+				czdwmc = #[czdwmc],
+				czbs = #[czbs],
+				zrdwpcsdm = #[zrdwpcsdm],
+				zrdwpcsmc = #[zrdwpcsmc],
+				zrmjjh = #[zrmjjh],
+				zrmjxm = #[zrmjxm],
+				zrmjdh = #[zrmjdh],
+				dwlb = #[dwlb],
+				sssqdm = #[sssqdm],
+				wwm = #[wwm],
+				zgbm = #[zgbm],
+				czrjh = #[czrjh],
+				dwdz = #[dwdz],
+				czrsfzh = #[czrsfzh]
+			where jgbh = #[jgbh]	
+		]]>
+	</property>
+
+	<!-- 注销单位 -->
+	<property name="deleteDwjbxx">
+		<![CDATA[
+			update t_za_jg_jbxx 
+			set 
+				zxbs = #[zxbs],
+				zxrq = to_date(#[zxrq],'yyyy-mm-dd hh24:mi:ss'),
+				zxyy = #[zxyy],
+				czrxm = #[czrxm],
+				czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+				czdwdm = #[czdwdm],
+				czdwmc = #[czdwmc],
+				czbs = #[czbs],
+				czrjh = #[czrjh],
+				czrsfzh = #[czrsfzh]
+			where jgbh = #[jgbh]
+		]]>
+	</property>
+	<!-- 单位奖惩信息 -->
+	<!-- 新增单位奖惩 -->
+	<property name="insertDwjc">
+		<![CDATA[
+			insert into t_za_dw_dwjcxx(
+				bh,
+				jgbh,
+				jclb,
+				jcssdw,
+				cfrq,
+				cfyy,
+				cfnr,
+				djsj,
+				djdwdm,
+				djdwmc,
+				djrxm,
+				czrxm,
+				czdwdm,
+				czdwmc,
+				czsj,
+				czbs,djrjh,czrjh,djrsfzh,czrsfzh
+			) values (
+				#[bh],
+				#[jgbh],
+				#[jclb],
+				#[jcssdw],
+				to_date(#[cfrq],'yyyy-mm-dd'),
+				#[cfyy],
+				#[cfnr],
+				to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'),
+				#[djdwdm],
+				#[djdwmc],
+				#[djrxm],
+				#[czrxm],
+				#[czdwdm],
+				#[czdwmc],
+				to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+				#[czbs],#[djrjh],#[czrjh],#[djrsfzh],#[czrsfzh]
+			)
+		]]>
+	</property>
+
+	<!-- 根据编号查询单位奖惩信息 -->
+	<property name="queryDwjcByBh">
+		<![CDATA[
+			select bh,
+				jgbh,
+				jclb,
+				jcssdw,
+				to_char(cfrq,'yyyy-mm-dd') as cfrq,
+				cfyy,
+				cfnr,
+				to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+				djdwdm,
+				djdwmc,
+				djrxm,
+				czrxm,
+				czdwdm,
+				czdwmc,
+				to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+				czbs,
+				czrjh,
+				djrjh
+			from t_za_dw_dwjcxx
+			where bh = ?
+		]]>
+	</property>
+	
+	<!-- 分页查询单位奖惩信息 -->
+	<property name="queryDwjcByJgbh">
+		<![CDATA[
+			select bh,
+				jgbh,
+				jclb,
+				jcssdw,
+				to_char(cfrq,'yyyy-mm-dd') as cfrq,
+				cfyy,
+				cfnr,
+				to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+				djdwdm,
+				djdwmc,
+				djrxm,
+				czrxm,
+				czdwdm,
+				czdwmc,
+				to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+				czbs,
+				czrjh,
+				djrjh
+			from t_za_dw_dwjcxx
+			where jgbh = ?
+		]]>
+	</property>
+
+	<!-- 修改单位奖惩信息 -->
+	<property name="updateDwjc">
+		<![CDATA[
+			update t_za_dw_dwjcxx set
+				jclb = #[jclb],
+				jcssdw = #[jcssdw],
+				cfrq = to_date(#[cfrq],'yyyy-mm-dd'),
+				cfyy = #[cfyy],
+				cfnr = #[cfnr],
+				czrxm = #[czrxm],
+				czdwdm = #[czdwdm],
+				czdwmc = #[czdwmc],
+				czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+				czbs = #[czbs],
+				czrjh =#[czrjh],
+				czrsfzh = #[czrsfzh]
+			where bh = #[bh]
+		]]>
+	</property>
+
+	<!-- 删除单位奖惩信息 -->
+
+	<property name="deleteDwjc">
+		<![CDATA[
+			update t_za_dw_dwjcxx set
+				czrxm = #[czrxm],
+				czdwdm = #[czdwdm],
+				czdwmc = #[czdwmc],
+				czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+				czbs = #[czbs],
+				czrjh = #[czrjh],
+				czrsfzh = #[czrsfzh]
+			where bh = #[bh]
+		]]>
+	</property>
+	<!-- 重点要害部位 -->
+	<!-- 新增要害部位 -->
+	<property name="insertZdyhbw">
+		insert into t_za_dw_zdyhbw (
+		yhbwbh,
+		jgbh,
+		bwmc,
+		zrr,
+		zrrlxfs,
+		fw,
+		jjjz,
+		zysb,
+		wjrs,
+		bars,
+		hwdrs,
+		gzrs,
+		bz,
+		djsj,
+		djdwdm,
+		djdwmc,
+		djrxm,
+		czrxm,
+		czdwdm,
+		czdwmc,
+		czbs,
+		czsj,
+		zrrsfzh,
+        lryhbwly,
+        aqffbz,
+        bwzdjlqk,
+        jfcs,
+        rfcs,
+        wfcs,
+        qfcs,djrjh,czrjh,djrsfzh,czrsfzh
+		) 
+		values
+		(
+		#[yhbwbh],
+		#[jgbh],
+		#[bwmc],
+		#[zrr],
+		#[zrrlxfs],
+		#[fw],
+		#[jjjz],
+		#[zysb],
+		#[wjrs],
+		#[bars],
+		#[hwdrs],
+		#[gzrs],
+		#[bz],
+		to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'),
+		#[djdwdm],
+		#[djdwmc],
+		#[djrxm],
+		#[czrxm],
+		#[czdwdm],
+		#[czdwmc],
+		#[czbs],
+		to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+		#[zrrsfzh],
+        #[lryhbwly],
+        #[aqffbz],
+        #[bwzdjlqk],
+        #[jfcs],
+        #[rfcs],
+        #[wfcs],
+        #[qfcs],#[djrjh],#[czrjh],#[djrsfzh],#[czrsfzh]
+		)
+	</property>
+
+	<!-- 根据主键编号查询要害部位 -->
+	<property name="queryZdyhbwByBh">
+		<![CDATA[
+			select yhbwbh,
+				jgbh,
+				bwmc,
+				zrr,
+				zrrlxfs,
+				fw,
+				jjjz,
+				zysb,
+				wjrs,
+				bars,
+				hwdrs,
+				gzrs,
+				bz,
+				to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+				djdwdm,
+				djdwmc,
+				djrxm,
+				czrxm,
+				czdwdm,
+				czdwmc,
+				czbs,
+				to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+				zrrsfzh,
+		       lryhbwly,
+		       aqffbz,
+		       bwzdjlqk,
+		       jfcs,
+		       rfcs,
+		       wfcs,
+		       qfcs,
+		       djrjh,
+		       czrjh
+			from t_za_dw_zdyhbw
+			where yhbwbh = ?
+		]]>
+	</property>
+
+	<!-- 分页查询要害部位 -->
+	<property name="queryZdyhbwByJgbh">
+		<![CDATA[
+			select yhbwbh,
+				jgbh,
+				bwmc,
+				zrr,
+				zrrlxfs,
+				fw,
+				jjjz,
+				zysb,
+				wjrs,
+				bars,
+				hwdrs,
+				gzrs,
+				bz,
+				to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+				djdwdm,
+				djdwmc,
+				djrxm,
+				czrxm,
+				czdwdm,
+				czdwmc,
+				czbs,
+				to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+				zrrsfzh,
+		        lryhbwly,
+		        aqffbz,
+		        bwzdjlqk,
+		        jfcs,
+		        rfcs,
+		        wfcs,
+		        qfcs,
+		        djrjh,
+		        czrjh
+			from t_za_dw_zdyhbw
+			where jgbh = ?
+		]]>
+	</property>
+
+	<!-- 修改要害部位 -->
+	<property name="updateZdyhbw">
+		<![CDATA[
+			update t_za_dw_zdyhbw set 
+				bwmc = #[bwmc],
+				zrr = #[zrr],
+				zrrlxfs = #[zrrlxfs],
+				fw = #[fw],
+				jjjz = #[jjjz],
+				zysb = #[zysb],
+				wjrs = #[wjrs],
+				bars = #[bars],
+				hwdrs = #[hwdrs],
+				gzrs = #[gzrs],
+				bz = #[bz],
+				czrxm = #[czrxm],
+				czdwdm = #[czdwdm],
+				czdwmc = #[czdwmc],
+				czbs = #[czbs],
+				czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+				ZRRSFZH = #[zrrsfzh],
+				LRYHBWLY = #[lryhbwly],
+				AQFFBZ = #[aqffbz],
+				BWZDJLQK = #[bwzdjlqk],
+				JFCS = #[jfcs],
+				RFCS = #[rfcs],
+				WFCS = #[wfcs],
+				QFCS = #[qfcs],
+				czrjh = #[czrjh],
+				czrsfzh = #[czrsfzh]
+			where yhbwbh = #[yhbwbh]
+		]]>
+	</property>
+
+	<!-- 删除要害部位 -->
+	<property name="deleteZdyhbw">
+		<![CDATA[
+			update t_za_dw_zdyhbw 
+			set 
+				czrxm = #[czrxm],
+				czdwdm = #[czdwdm],
+				czdwmc = #[czdwmc],
+				czbs = #[czbs],
+				czrjh = #[czrjh],
+				czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+				czrsfzh = #[czrsfzh]
+			where yhbwbh = #[yhbwbh]
+		]]>
+	</property>
+	<!-- 公共场所 -->
+	<!-- 新增公共场所 -->
+	<property name="insertGgcs">
+		<![CDATA[
+			insert into t_za_dw_ggcs(
+				jlbh,
+				ggcsbh,
+				jgbh,
+				badjhm,
+				csmc,
+				cslb,
+				csxl,
+				csdj,
+				csfzr,
+				cslxfs,
+				csdz,
+				jzwjg,
+				csnbjg,
+				csqtqk,
+				cstdk,
+				csdksl,
+				ywxjjcc,
+				cszmj,
+				yymj,
+				zwhj,
+				lqzzsj,
+			    hdrs,
+			    ggcsmj,
+			    ktvbjs,
+			    bz
+			) values (
+				#[jlbh],
+				#[ggcsbh],
+				#[jgbh],
+				#[badjhm],
+				#[csmc],
+				#[cslb],
+				#[csxl],
+				#[csdj],
+				#[csfzr],
+				#[cslxfs],
+				#[csdz],
+				#[jzwjg],
+				#[csnbjg],
+				#[csqtqk],
+				#[cstdk],
+				#[csdksl],
+				#[ywxjjcc],
+				#[cszmj],
+				#[yymj],
+				#[zwhj],
+				to_date(#[lqzzsj],'yyyy-mm-dd'),
+			    to_number(#[hdrs]),
+			    to_number(#[ggcsmj]),
+			    to_number(#[ktvbjs]),
+			    #[bz]
+			)
+		]]>
+	</property>
+
+	<!-- 根据机构编号查询公共场所 -->
+	<property name="queryGgcsByJgbh">
+		<![CDATA[
+			select 
+			    jlbh,
+			    ggcsbh,
+				jgbh,
+				badjhm,
+				csmc,
+				cslb,
+				csxl,
+				csdj,
+				csfzr,
+				cslxfs,
+				csdz,
+				jzwjg,
+				csnbjg,
+				csqtqk,
+				cstdk,
+				csdksl,
+				ywxjjcc,
+				cszmj,
+				yymj,
+				zwhj,
+				to_char(lqzzsj,'yyyy-mm-dd') as lqzzsj,
+			    hdrs,
+			    ggcsmj,
+			    ktvbjs,
+			    bz
+			from t_za_dw_ggcs
+			where jgbh = ?
+		]]>
+	</property>
+
+	<!-- 修改公共场所 -->
+	<property name="updateGgcs">
+		<![CDATA[
+			update t_za_dw_ggcs 
+			set
+				ggcsbh = #[ggcsbh],
+				badjhm = #[badjhm],
+				csmc = #[csmc],
+				cslb = #[cslb],
+				csxl = #[csxl],
+				csdj = #[csdj],
+				csfzr = #[csfzr],
+				cslxfs = #[cslxfs],
+				csdz = #[csdz],
+				jzwjg = #[jzwjg],
+				csnbjg = #[csnbjg],
+				csqtqk = #[csqtqk],
+				cstdk = #[cstdk],
+				csdksl = #[csdksl],
+				ywxjjcc = #[ywxjjcc],
+				cszmj = to_number(#[cszmj]),
+				yymj = to_number(#[yymj]),
+				zwhj = #[zwhj],
+				LQZZSJ = to_date(#[lqzzsj],'yyyy-mm-dd'),
+				HDRS = to_number(#[hdrs]),
+				GGCSMJ = to_number(#[ggcsmj]),
+				KTVBJS = to_number(#[ktvbjs]),
+				BZ = #[bz]
+			where jlbh = #[jlbh]
+		]]>
+	</property>
+	<!-- 内保单位 -->
+	<!-- 新增内保单位 -->
+	<property name="insertNbdw">
+		<![CDATA[
+			insert into t_za_dw_nbdw (
+				nbdwbh,
+				jgbh,
+				dwfl,
+				dwxz,
+				jfqk,
+				glbm,
+				bwjgsz,
+				scjyzk,
+				zybws,
+				yhbws,
+				zddj,
+				pdyj,
+				nlr,
+				nxse,
+				zgzgs,
+				wpzjs,
+				lsgs,
+				wjssygs,
+				zgxsrs,
+				gatssygs,
+				ssmzssygs,
+				bwzzlb,
+				bwbmfzr,
+				bwfzrlxdh,
+				zzbwgbs,
+				jzbwgbs,
+				jjs,
+				bas,
+				hwrs,
+				hwqs,
+				qdzazrssj,
+				zbdts,
+				zbmtcs,
+				zbqk,
+				jgs,
+			    zbqcs,
+			    sfyjzb,
+			    sfnwwht,
+			    ytwzym,
+			    nbjywmc,
+			    bwzzmc,
+			    hlwckip,
+			    nbbbsmc,
+			    bz,
+			    dwllr,
+			    bwbmfzrsfzh,
+			    ltxrys,
+			    xgzgs,
+			    xjygs,
+			    dwxl
+			) 
+			values
+			(
+				#[nbdwbh],
+				#[jgbh],
+				#[dwfl],
+				#[dwxz],
+				#[jfqk],
+				#[glbm],
+				#[bwjgsz],
+				#[scjyzk],
+				#[zybws],
+				to_number(#[yhbws]),
+				#[zddj],
+				#[pdyj],
+				to_number(#[nlr]),
+				to_number(#[nxse]),
+				to_number(#[zgzgs]),
+				to_number(#[wpzjs]),
+				to_number(#[lsgs]),
+				to_number(#[wjssygs]),
+				to_number(#[zgxsrs]),
+				to_number(#[gatssygs]),
+				to_number(#[ssmzssygs]),
+				#[bwzzlb],
+				#[bwbmfzr],
+				#[bwfzrlxdh],
+				to_number(#[zzbwgbs]),
+				to_number(#[jzbwgbs]),
+				to_number(#[jjs]),
+				to_number(#[bas]),
+				to_number(#[hwrs]),
+				to_number(#[hwqs]),
+				to_date(#[qdzazrssj],'yyyy-mm-dd'),
+				to_number(#[zbdts]),
+				to_number(#[zbmtcs]),
+				#[zbqk],
+				to_number(#[jgs]),
+			    to_number(#[zbqcs]),
+				#[sfyjzb],
+				#[sfnwwht],
+				#[ytwzym],
+				#[nbjywmc],
+				#[bwzzmc],
+				#[hlwckip],
+				#[nbbbsmc],
+				#[bz],
+				#[dwllr],
+				#[bwbmfzrsfzh],
+				to_number(#[ltxrys]),
+				to_number(#[xgzgs]),
+				to_number(#[xjygs]),
+				#[dwxl]
+			)
+		]]>
+	</property>
+
+	<!-- 根据机构编号查询内保单位 -->
+	<property name="queryNbdwByJgbh">
+		<![CDATA[
+			select nbdwbh,
+				jgbh,
+				dwfl,
+				dwxz,
+				jfqk,
+				glbm,
+				bwjgsz,
+				scjyzk,
+				zybws,
+				yhbws,
+				zddj,
+				pdyj,
+				nlr,
+				nxse,
+				zgzgs,
+				wpzjs,
+				lsgs,
+				wjssygs,
+				zgxsrs,
+				gatssygs,
+				ssmzssygs,
+				bwzzlb,
+				bwbmfzr,
+				bwfzrlxdh,
+				zzbwgbs,
+				jzbwgbs,
+				jjs,
+				bas,
+				hwrs,
+				hwqs,
+				to_char(qdzazrssj,'yyyy-mm-dd') as qdzazrssj,
+				zbdts,
+				zbmtcs,
+				zbqk,
+				jgs,
+		        zbqcs,
+		        sfyjzb,
+		        sfnwwht,
+		        ytwzym,
+		        nbjywmc,
+		        bwzzmc,
+		        hlwckip,
+		        nbbbsmc,
+		        bz,
+		        dwllr,
+		        bwbmfzrsfzh,
+		        ltxrys,
+		        xgzgs,
+		        xjygs,
+		        dwxl
+			from t_za_dw_nbdw
+			where jgbh = ?
+		]]>
+	</property>
+
+	<!-- 修改内保单位 -->
+	<property name="updateNbdw">
+		<![CDATA[
+			update t_za_dw_nbdw set 
+				dwfl = #[dwfl],
+				dwxz = #[dwxz],
+				jfqk = #[jfqk],
+				glbm = #[glbm],
+				bwjgsz = #[bwjgsz],
+				scjyzk = #[scjyzk],
+				zybws = #[zybws],
+				yhbws = to_number(#[yhbws]),
+				zddj = #[zddj],
+				pdyj = #[pdyj],
+				nlr = to_number(#[nlr]),
+				nxse = to_number(#[nxse]),
+				zgzgs = to_number(#[zgzgs]),
+				wpzjs = to_number(#[wpzjs]),
+				lsgs = to_number(#[lsgs]),
+				wjssygs = to_number(#[wjssygs]),
+				zgxsrs = to_number(#[zgxsrs]),
+				gatssygs = to_number(#[gatssygs]),
+				ssmzssygs = to_number(#[ssmzssygs]),
+				bwzzlb = #[bwzzlb],
+				bwbmfzr = #[bwbmfzr],
+				bwfzrlxdh = #[bwfzrlxdh],
+				zzbwgbs = to_number(#[zzbwgbs]),
+				jzbwgbs = to_number(#[jzbwgbs]),
+				jjs = to_number(#[jjs]),
+				bas = to_number(#[bas]),
+				hwrs = to_number(#[hwrs]),
+				hwqs = to_number(#[hwqs]),
+				qdzazrssj = to_date(#[qdzazrssj],'yyyy-mm-dd'),
+				zbdts = to_number(#[zbdts]),
+				zbmtcs = to_number(#[zbmtcs]),
+				zbqk = #[zbqk],
+				jgs = #[jgs],
+		       zbqcs = #[zbqcs],
+		       sfyjzb = #[sfyjzb],
+		       sfnwwht = #[sfnwwht],
+		       ytwzym = #[ytwzym],
+		       nbjywmc = #[nbjywmc],
+		       bwzzmc = #[bwzzmc],
+		       hlwckip = #[hlwckip],
+		       nbbbsmc = #[nbbbsmc],
+		       bz = #[bz],
+		       dwllr = #[dwllr],
+		       bwbmfzrsfzh = #[bwbmfzrsfzh],
+		       ltxrys = to_number(#[ltxrys]),
+		       xgzgs = to_number(#[xgzgs]),
+		       xjygs = to_number(#[xjygs]),
+		       dwxl = #[dwxl]
+			where nbdwbh = #[nbdwbh]
+		]]>
+	</property>
+	<!-- 特种行业 -->
+	<!-- 新增特种行业 -->
+	<property name="insertTzhy">
+		<![CDATA[
+			insert into t_za_dw_tzhy (
+				thbh,
+				jgbh,
+				thmc,
+				thlb,
+				thxl,
+				jylb,
+				thsffz,
+				tzhyxkz,
+				thbm,
+				hfr,
+				xkzhfdw,
+				xkzyxrq,
+				thjdrq,
+				barq,
+				bgqk,
+				bz,
+				jyfzr,
+				jyfzrsfzh,
+				jyfzrlxdh,
+				abfzrxm,
+				abfzrsfzh,
+				abfzrlxdh,
+				lzr,
+				zrmj,
+				mjdh,
+				pcsdh,
+				zazrdwmc,
+				zazrdwdm
+			) values(
+				#[thbh],
+				#[jgbh],
+				#[thmc],
+				#[thlb],
+				#[thxl],
+				#[jylb],
+				#[thsffz],
+				#[tzhyxkz],
+				#[thbm],
+				#[hfr],
+				#[xkzhfdw],
+				to_date(#[xkzyxrq],'yyyy-mm-dd'),
+				to_date(#[thjdrq],'yyyy-mm-dd'),
+				to_date(#[barq],'yyyy-mm-dd'),
+				#[bgqk],
+				#[bz],
+				#[jyfzr],
+				#[jyfzrsfzh],
+				#[jyfzrlxdh],
+				#[abfzrxm],
+				#[abfzrsfzh],
+				#[abfzrlxdh],
+				#[lzr],
+				#[zrmj],
+				#[mjdh],
+				#[pcsdh],
+				#[zazrdwmc],
+				#[zazrdwdm]
+			)
+		]]>
+	</property>
+
+	<!-- 根据机构编号查询特种行业 -->
+	<property name="queryTzhyByJgbh">
+		<![CDATA[
+			select thbh,
+				jgbh,
+				thmc,
+				thlb,
+				thxl,
+				jylb,
+				thsffz,
+				tzhyxkz,
+				thbm,
+				hfr,
+				xkzhfdw,
+				to_char(xkzyxrq,'yyyy-mm-dd') as xkzyxrq,
+				to_char(thjdrq,'yyyy-mm-dd') as thjdrq,
+				to_char(barq,'yyyy-mm-dd') as barq,
+				bgqk,
+				bz,
+				jyfzr,
+				jyfzrsfzh,
+				jyfzrlxdh,
+				abfzrxm,
+				abfzrsfzh,
+				abfzrlxdh,
+				lzr,
+				zrmj,
+				mjdh,
+				pcsdh,
+				zazrdwmc,
+				zazrdwdm
+			from t_za_dw_tzhy
+			where jgbh = ?
+		]]>
+	</property>
+
+	<!-- 修改特种行业 -->
+	<property name="updateTzhy">
+		<![CDATA[
+			update t_za_dw_tzhy set
+				thmc = #[thmc],
+				thlb = #[thlb],
+				thxl = #[thxl],
+				jylb = #[jylb],
+				thsffz = #[thsffz],
+				tzhyxkz = #[tzhyxkz],
+				thbm = #[thbm],
+				hfr = #[hfr],
+				xkzhfdw = #[xkzhfdw],
+				xkzyxrq = to_date(#[xkzyxrq],'yyyy-mm-dd'),
+				thjdrq = to_date(#[thjdrq],'yyyy-mm-dd'),
+				barq = to_date(#[barq],'yyyy-mm-dd'),
+				bgqk = #[bgqk],
+				bz = #[bz],
+				jyfzr = #[jyfzr],
+				jyfzrsfzh = #[jyfzrsfzh],
+				jyfzrlxdh = #[jyfzrlxdh],
+				abfzrxm = #[abfzrxm],
+				abfzrsfzh = #[abfzrsfzh],
+				abfzrlxdh = #[abfzrlxdh],
+				lzr = #[lzr],
+				zrmj = #[zrmj],
+				mjdh = #[mjdh],
+				pcsdh = #[pcsdh],
+				zazrdwmc = #[zazrdwmc],
+				zazrdwdm = #[zazrdwdm]
+			where thbh = #[thbh]
+		]]>
+	</property>
+
+	<!-- 新增特行旅馆业 -->
+	<property name="insertThlg">
+		<![CDATA[
+			insert into t_za_dw_thlgy(
+				lgbh,
+				jgbh,
+				thbh,
+				lgmc,
+				lglx,
+				sfjdlg,
+				lgjfsb,
+				lgxj,
+				lgdj,
+				lglcs,
+				lgkfs,
+				lgcws,
+				lgtcws,
+				lgzt,
+				lgsflw,
+				jyxm,
+				zjzt,
+				zjfs,
+				jzmj,
+				tdkd,
+				MTMJ,
+				HKSMJ,
+				JCSMJ,
+				TCSMJ,
+				KFMJ,
+				YLCSMJ
+			)
+			values
+			(
+				#[lgbh],
+				#[jgbh],
+				#[thbh],
+				#[lgmc],
+				#[lglx],
+				#[sfjdlg],
+				#[lgjfsb],
+				#[lgxj],
+				#[lgdj],
+				to_number(#[lglcs]),
+				to_number(#[lgkfs]),
+				to_number(#[lgcws]),
+				to_number(#[lgtcws]),
+				#[lgzt],
+				#[lgsflw],
+				#[jyxm],
+				#[zjzt],
+				#[zjfs],
+				to_number(#[jzmj]),
+				to_number(#[tdkd]),
+				to_number(#[mtmj]),
+				to_number(#[hksmj]),
+				to_number(#[jcsmj]),
+				to_number(#[tcsmj]),
+				to_number(#[kfmj]),
+				to_number(#[ylcsmj])
+			)
+		]]>
+	</property>
+
+	<!-- 根据特行编号查询特行旅馆业 -->
+	<property name="queryThlvgByThbh">
+		<![CDATA[
+			select lgbh,
+				jgbh,
+				thbh,
+				lgmc,
+				lglx,
+				sfjdlg,
+				lgjfsb,
+				lgxj,
+				lgdj,
+				lglcs,
+				lgkfs,
+				lgcws,
+				lgtcws,
+				lgzt,
+				lgsflw,
+				jyxm,
+				zjzt,
+				zjfs,
+				jzmj,
+				tdkd,
+				mtmj,
+		        hksmj,
+		        jcsmj,
+		        tcsmj,
+		        kfmj,
+		        ylcsmj
+			from t_za_dw_thlgy
+			where thbh = ?
+		]]>
+	</property>
+
+	<!-- 根据机构编号查询特行旅馆业 -->
+	<property name="queryThlgByThbh">
+		<![CDATA[
+			select lgbh,
+				jgbh,
+				thbh,
+				lgmc,
+				lglx,
+				sfjdlg,
+				lgjfsb,
+				lgxj,
+				lgdj,
+				lglcs,
+				lgkfs,
+				lgcws,
+				lgtcws,
+				lgzt,
+				lgsflw,
+				jyxm,
+				zjzt,
+				zjfs,
+				jzmj,
+				tdkd,
+				mtmj,
+		        hksmj,
+		        jcsmj,
+		        tcsmj,
+		        kfmj,
+		        ylcsmj
+			from t_za_dw_thlgy
+			where jgbh = ?
+		]]>
+	</property>
+
+	<!-- 修改特行旅馆业 -->
+	<property name="updateThlg">
+		<![CDATA[
+			update t_za_dw_thlgy  
+			set
+				lgmc = #[lgmc],
+				lglx = #[lglx],
+				sfjdlg = #[sfjdlg],
+				lgjfsb = #[lgjfsb],
+				lgxj = #[lgxj],
+				lgdj = #[lgdj],
+				lglcs = #[lglcs],
+				lgkfs = #[lgkfs],
+				lgcws = #[lgcws],
+				lgtcws = #[lgtcws],
+				lgzt = #[lgzt],
+				lgsflw = #[lgsflw],
+				jyxm = #[jyxm],
+				zjzt = #[zjzt],
+				zjfs = #[zjfs],
+				jzmj = #[jzmj],
+				tdkd = #[tdkd]
+			where lgbh = #[lgbh]
+		]]>
+	</property>
+	<!-- 上网服务场所 -->
+	<!-- 新增上网服务场所 -->
+	<property name="insertSwfwcs">
+		<![CDATA[
+			insert into t_za_jg_swfwcs
+				  (jlbh,
+				   jgbh,
+				   wbbh,
+				   wlwhxkzh,
+				   kdjrfws,
+				   dnts,
+				   yymj,
+				   wlaqshyjsh,
+				   lsswksl,
+				   jrfs,
+				   xfshyjsh,
+				   xsyip,
+				   bz)
+				values
+				  (#[jlbh],
+				   #[jgbh],
+				   #[wbbh],
+				   #[wlwhxkzh],
+				   #[kdjrfws],
+				   to_number(#[dnts]),
+				   to_number(#[yymj]),
+				   #[wlaqshyjsh],
+				   to_number(#[lsswksl]),
+				   #[jrfs],
+				   #[xfshyjsh],
+				   #[xsyip],
+				   #[bz])
+		]]>
+	</property>
+
+	<!-- 根据机构编号查询上网服务场所 -->
+	<property name="querySwfwcsByJgbh">
+		<![CDATA[
+			select jlbh,
+				jgbh,
+				wbbh,
+				wlwhxkzh,
+				kdjrfws,
+				dnts,
+				yymj,
+				wlaqshyjsh,
+				lsswksl,
+				jrfs,
+				xfshyjsh,
+				xsyip,
+				bz
+			from t_za_jg_swfwcs
+			where jgbh = ?
+		]]>
+	</property>
+
+	<!-- 修改上网服务场所 -->
+	<property name="updateSwfwcs">
+		<![CDATA[
+			update t_za_jg_swfwcs 
+			set
+				wbbh  = #[wbbh],
+				wlwhxkzh  = #[wlwhxkzh],
+				kdjrfws  = #[kdjrfws],
+				dnts  = to_number(#[dnts]),
+				yymj  = to_number(#[yymj]),
+				wlaqshyjsh  = #[wlaqshyjsh],
+				lsswksl  = to_number(#[lsswksl]),
+				jrfs  = #[jrfs],
+				xfshyjsh  = #[xfshyjsh],
+				xsyip  = #[xsyip],
+				bz  = #[bz]
+			where jlbh = #[jlbh]
+		]]>
+	</property>
+	
+	<!-- 根据机构编号查询单位照片 -->
+	<property name="queryDwzpByJgbh" >
+		<![CDATA[
+			select id,
+		       jgbh,
+		       zp,
+		       to_char(djsj, 'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       ms,
+		       djrxm,
+		       djdwmc,
+		       djdwdm
+ 			 from t_za_jg_zpxx
+			 where jgbh = ?
+		]]>
+	</property>
+	
+	<!-- 新增单位照片 -->
+	<property name="insertDwzp">
+		<![CDATA[
+			insert into t_za_jg_zpxx
+			  (id, jgbh, zp, djsj, ms, djrxm, djdwmc, djdwdm)
+			values
+			  (?, ?, ?, to_date(?,'yyyy-mm-dd HH24:mi:ss'), ?, ?, ?, ?)
+		]]>
+	</property>
+	
+	<!-- 删除单位照片 -->
+	<property name="deleteDwzpByZpid" >
+		<![CDATA[
+			delete t_za_jg_zpxx where id = ?
+		]]>
+	</property>
+	
+	<property name="getHylbZd">
+		<![CDATA[
+			select * from t_common_dictionary where zdlb='ZDY_HYLB' order by to_number(dm)
+		]]>
+	</property>
+	
+	<property name="insertDwFwglBean">
+		<![CDATA[
+			insert into t_lsgl_dwfw_gl
+			  (dwfwglid, jgbh, fwid, dzid, qrsj, qcsj, zxbs, zxsj, zxmjxm, zxdwdm, zxdwmc, zxyy, djsj)
+			values
+			  (#[dwfwglid], #[jgbh], #[fwid], #[dzid], #[qrsj], #[qcsj], #[zxbs], #[zxsj], 
+			  	#[zxmjxm], #[zxdwdm], #[zxdwmc], #[zxyy], sysdate)
+		]]>
+	</property>
+	
+	<property name="zxDwfwglBean">
+		<![CDATA[
+			update t_lsgl_dwfw_gl
+			set zxbs='1',
+				zxsj=sysdate,
+				zxyy='单位地址修改',
+		        zxmjxm=?,
+		        zxdwdm=?,
+		        zxdwmc=?
+		    where dwfwglid=?
+		]]>
+	</property>
+	
+	<property name="queryDwfwglBean">
+		<![CDATA[
+			select * 
+			from t_lsgl_dwfw_gl 
+			where jgbh=? and zxbs='0'
+			order by djsj desc
+		]]>
+	</property>
+	
+	<property name="insertThksyBean">
+		<![CDATA[
+			insert into t_za_dw_thksy
+			  (ksbh, jgbh, thbh, jgmc, kslx, fwqy, zggs, bdzgs, wdzgs, bz, kysj)
+			values
+			  (#[ksbh], #[jgbh], #[thbh], #[jgmc], #[kslx], #[fwqy], #[zggs], #[bdzgs], #[wdzgs], #[bz], to_date(#[kysj],'yyyy-mm-dd'))
+		]]>
+	</property>
+	
+	<property name="updateThksyBean">
+		<![CDATA[
+			 update t_za_dw_thksy
+			    set ksbh = #[ksbh],
+			        jgbh = #[jgbh],
+			        thbh = #[thbh],
+			        jgmc = #[jgmc],
+			        kslx = #[kslx],
+			        fwqy = #[fwqy],
+			        zggs = #[zggs],
+			        bdzgs = #[bdzgs],
+			        wdzgs = #[wdzgs],
+			        bz = #[bz],
+			        kysj = to_date(#[kysj],'yyyy-mm-dd')
+			  where ksbh = #[ksbh]
+			 
+		]]>
+	</property>
+	
+	<property name="queryThksyBean">
+		<![CDATA[
+			select ksbh, jgbh, thbh, jgmc, kslx, 
+				  fwqy, zggs, bdzgs, wdzgs, bz, to_char(kysj,'yyyy-mm-dd') as kysj
+		   from t_za_dw_thksy
+		   where jgbh=?
+		]]>
+	</property>
+	
+	<property name="querySwdwBeanByJgbh">
+		<![CDATA[
+			select jlbh,
+		       jgbh,
+		       wmmc,
+		       tzgjdq,
+		       zftzdw,
+		       wftzdw,
+		       dsz,
+		       fdsz,
+		       zjl,
+		       fzjl,
+		       lxr,
+		       swwfzb,
+		       swzfzb,
+		       sjbgdz,
+		       email,
+		       qyqkjz,
+		       bz
+		  from t_za_dw_swdw
+		  where jgbh=?
+
+		]]>
+	</property>
+	
+	<property name="insertSwdwBean">
+		<![CDATA[
+			insert into t_za_dw_swdw
+			  (jlbh,
+			   jgbh,
+			   wmmc,
+			   tzgjdq,
+			   zftzdw,
+			   wftzdw,
+			   dsz,
+			   fdsz,
+			   zjl,
+			   fzjl,
+			   lxr,
+			   swwfzb,
+			   swzfzb,
+			   sjbgdz,
+			   email,
+			   qyqkjz,
+			   bz)
+			values
+			  (#[jlbh],
+			   #[jgbh],
+			   #[wmmc],
+			   #[tzgjdq],
+			   #[zftzdw],
+			   #[wftzdw],
+			   #[dsz],
+			   #[fdsz],
+			   #[zjl],
+			   #[fzjl],
+			   #[lxr],
+			   to_number(#[swwfzb]),
+			   to_number(#[swzfzb]),
+			   #[sjbgdz],
+			   #[email],
+			   #[qyqkjz],
+			   #[bz])
+		]]>	
+	</property>
+	
+	<property name="updateSwdwBean">
+		<![CDATA[
+			update t_za_dw_swdw
+		   set 
+		       wmmc = #[wmmc],
+		       tzgjdq = #[tzgjdq],
+		       zftzdw = #[zftzdw],
+		       wftzdw = #[wftzdw],
+		       dsz = #[dsz],
+		       fdsz = #[fdsz],
+		       zjl = #[zjl],
+		       fzjl = #[fzjl],
+		       lxr = #[lxr],
+		       swwfzb = to_number(#[swwfzb]),
+		       swzfzb = to_number(#[swzfzb]),
+		       sjbgdz = #[sjbgdz],
+		       email = #[email],
+		       qyqkjz = #[qyqkjz],
+		       bz = #[bz]
+		 where jlbh = #[jlbh]
+			
+		]]>
+	</property>
+	
+	<property name="queryWxwpdwBean">
+		<![CDATA[
+			 select jlbh, jgbh, hwlb, dwfl, fbxkfw, scdz, cssb, bz 
+			 from t_za_dw_wxwpdw
+			 where jgbh=?
+		]]>
+	</property>
+	
+	<property name="insertWxwpdwBean">
+		<![CDATA[
+			  insert into t_za_dw_wxwpdw
+			   (jlbh, jgbh, hwlb, dwfl, fbxkfw, scdz, cssb, bz)
+			 values
+			   (#[jlbh], #[jgbh], #[hwlb], #[dwfl], #[fbxkfw], #[scdz], #[cssb], #[bz])
+		]]>
+	</property>
+	
+	<property name="updateWxwpdwBean">
+		<![CDATA[
+			 update t_za_dw_wxwpdw
+		    set jlbh = #[jlbh],
+		        jgbh = #[jgbh],
+		        hwlb = #[hwlb],
+		        dwfl = #[dwfl],
+		        fbxkfw = #[fbxkfw],
+		        scdz = #[scdz],
+		        cssb = #[cssb],
+		        bz = #[bz]
+		  where jlbh = #[jlbh]
+ 
+		]]>
+	</property>
+	
+	<!-- 单位安全设备 -->
+	<property name="insertDwAqsb">
+		<![CDATA[
+			insert into t_za_dw_aqsbxx
+				  (sbbh,
+				   jgbh,
+				   xcp,
+				   lzjy,
+				   ssdt,
+				   tst,
+				   jyplq,
+				   mhq,
+				   xhs,
+				   dxtg,
+				   tsck,
+				   hzbjxt,
+				   aqckzsp,
+				   gl,
+				   jkxt,
+				   spsxt,
+				   bz,
+				   djrxm,
+				   djdwmc,
+				   djdwdm,
+				   djsj,
+				   czrxm,
+				   czdwdm,
+				   czdwmc,
+				   czsj,djrjh,czrjh,djrsfzh,czrsfzh)
+				values
+				  (#[sbbh],
+				   #[jgbh],
+				   #[xcp],
+				   #[lzjy],
+				   #[ssdt],
+				   to_number(#[tst]),
+				   #[jyplq],
+				   to_number(#[mhq]),
+				   #[xhs],
+				   #[dxtg],
+				   #[tsck],
+				   #[hzbjxt],
+				   #[aqckzsp],
+				   #[gl],
+				   to_number(#[jkxt]),
+				   to_number(#[spsxt]),
+				   #[bz],
+				   #[djrxm],
+				   #[djdwmc],
+				   #[djdwdm],
+				   to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+				   #[czrxm],
+				   #[czdwdm],
+				   #[czdwmc],
+				   to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+				   #[djrjh],#[czrjh],#[djrsfzh],#[czrsfzh]
+				   )
+							
+		]]>
+	</property>
+	
+	<property name="updateDwAqsb">
+		<![CDATA[
+			update t_za_dw_aqsbxx
+			   set sbbh    = #[sbbh],
+			       jgbh    = #[jgbh],
+			       xcp     = #[xcp],
+			       lzjy    = #[lzjy],
+			       ssdt    = #[ssdt],
+			       tst     = to_number(#[tst]),
+			       jyplq   = #[jyplq],
+			       mhq     = to_number(#[mhq]),
+			       xhs     = #[xhs],
+			       dxtg    = #[dxtg],
+			       tsck    = #[tsck],
+			       hzbjxt  = #[hzbjxt],
+			       aqckzsp = #[aqckzsp],
+			       gl      = #[gl],
+			       jkxt    = to_number(#[jkxt]),
+			       spsxt   = to_number(#[spsxt]),
+			       bz      = #[bz],
+			       czrxm   = #[czrxm],
+			       czdwdm  = #[czdwdm],
+			       czdwmc  = #[czdwmc],
+			       czsj    = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh]
+			 where sbbh = #[sbbh]
+		]]>
+	</property>
+	
+	<property name="queryDwAqsbByJgbh">
+		<![CDATA[
+			select sbbh,
+		       jgbh,
+		       xcp,
+		       lzjy,
+		       ssdt,
+		       tst,
+		       jyplq,
+		       mhq,
+		       xhs,
+		       dxtg,
+		       tsck,
+		       hzbjxt,
+		       aqckzsp,
+		       gl,
+		       jkxt,
+		       spsxt,
+		       bz,
+		       djrxm,
+		       djdwmc,
+		       djdwdm,
+		       to_char(djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,
+		       czrxm,
+		       czdwdm,
+		       czdwmc,
+		       to_char(czsj,'yyyy-mm-d hh24:mi:ss') as czsj,
+		       djrjh,czrjh
+		  from t_za_dw_aqsbxx where jgbh = ?
+		]]>
+	</property>
+
+<!-- ****************************** 2013-12-06 ************************************* -->
+	
+	<!-- 新增保卫机构 -->
+	<property name="insertBwjg">
+		<![CDATA[
+			insert into t_za_dw_bwjg
+			  (bwjgbh, jgbh, jgmc, lsgx, fzr, fzrsfzh, fzrlxfs, djrxm, 
+			  	djsj, djdwmc, djdwdm, czrxm, czsj, czdwmc, czdwdm, czbs,djrjh,czrjh,djrsfzh,czrsfzh)
+			values
+			  (#[bwjgbh], #[jgbh], #[jgmc], #[lsgx], #[fzr], #[fzrsfzh], #[fzrlxfs], 
+			  	#[djrxm], to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'), #[djdwmc], #[djdwdm],
+			  	#[czrxm], to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'), #[czdwmc], #[czdwdm], #[czbs],#[djrjh],#[czrjh],#[djrsfzh],#[czrsfzh])
+		]]>
+	</property>
+	
+	<!-- 修改保卫机构 -->
+	<property name="updateBwjg">
+		<![CDATA[
+			update t_za_dw_bwjg
+			   set jgbh = #[jgbh],
+			       jgmc = #[jgmc],
+			       lsgx = #[lsgx],
+			       fzr = #[fzr],
+			       fzrsfzh = #[fzrsfzh],
+			       fzrlxfs = #[fzrlxfs],
+			       czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czdwmc = #[czdwmc],
+			       czdwdm = #[czdwdm],
+			       czbs = #[czbs],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh]
+			 where bwjgbh = #[bwjgbh]
+		]]>
+	</property>
+	
+	<!-- 删除保卫机构 -->
+	<property name="delBwjg">
+		<![CDATA[
+			update t_za_dw_bwjg set
+			       czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czdwmc = #[czdwmc],
+			       czdwdm = #[czdwdm],
+			       czbs = #[czbs],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh]
+			 where bwjgbh = #[bwjgbh]
+		]]>
+	</property>
+	
+	<!-- 根据机构编号查询保卫机构 -->
+	<property name="queryBwjgByJgbh">
+		<![CDATA[
+			select bwjgbh,
+		       jgbh,
+		       jgmc,
+		       lsgx,
+		       fzr,
+		       fzrsfzh,
+		       fzrlxfs,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       djdwmc,
+		       djdwdm,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czdwmc,
+		       czdwdm,
+		       czbs,
+		       djrjh,
+		       czrjh
+		  from t_za_dw_bwjg where jgbh = ? and czbs != '3'
+		]]>
+	</property>
+	
+	<!-- 根据保卫机构编号查询保卫机构 -->
+	<property name="queryBwjgByBwjgbh">
+		<![CDATA[
+			select bwjgbh,
+		       jgbh,
+		       jgmc,
+		       lsgx,
+		       fzr,
+		       fzrsfzh,
+		       fzrlxfs,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       djdwmc,
+		       djdwdm,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czdwmc,
+		       czdwdm,
+		       czbs,
+		       djrjh,
+		       czrjh
+		  from t_za_dw_bwjg where bwjgbh = ? 
+		]]>
+	</property>
+	
+	<!-- 新增保卫制度 -->
+	<property name="insertBwzd">
+		<![CDATA[
+			insert into t_za_dw_bwzd
+			  (zdbh,
+			   jgbh,
+			   bwzdmc,
+			   xdsj,
+			   nr,
+			   djrxm,
+			   djsj,
+			   djdwdm,
+			   djdwmc,
+			   czrxm,
+			   czsj,
+			   czdwmc,
+			   czdwdm,
+			   czbs,djrjh,czrjh,djrsfzh,czrsfzh)
+			values
+			  (#[zdbh],
+			   #[jgbh],
+			   #[bwzdmc],
+			   to_date(#[xdsj],'yyyy-mm-dd'),
+			   #[nr],
+			   #[djrxm],
+			   to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[djdwdm],
+			   #[djdwmc],
+			   #[czrxm],
+			   to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[czdwmc],
+			   #[czdwdm],
+			   #[czbs],
+			   #[djrjh],#[czrjh],#[djrsfzh],#[czrsfzh])
+		]]>
+	</property>
+	
+	<!-- 修改保卫制度 -->
+	<property name="updateBwzd">
+		<![CDATA[
+			update t_za_dw_bwzd 
+			   set jgbh = #[jgbh],
+			       bwzdmc = #[bwzdmc],
+			       xdsj = to_date(#[xdsj],'yyyy-mm-dd'),
+			       nr = #[nr],
+			       czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czdwmc = #[czdwmc],
+			       czdwdm = #[czdwdm],
+			       czbs = #[czbs],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh]
+			 where zdbh = #[zdbh]
+		]]>
+	</property>
+	
+	<!-- 删除保卫制度 -->
+	<property name="delBwzd">
+		<![CDATA[
+			update t_za_dw_bwzd 
+			   set czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czdwmc = #[czdwmc],
+			       czdwdm = #[czdwdm],
+			       czbs = #[czbs],
+			        czrjh = #[czrjh],
+			        czrsfzh = #[czrsfzh]
+			 where zdbh = #[zdbh]
+		]]>
+	</property>
+	
+	<!-- 根据机构编号查询查询保卫制度 -->
+	<property name="queryBwzdByJgbh">
+		<![CDATA[
+			select zdbh,
+		       jgbh,
+		       bwzdmc,
+		       to_char(xdsj,'yyyy-mm-dd') as xdsj,
+		       nr,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       djdwdm,
+		       djdwmc,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czdwmc,
+		       czdwdm,
+		       czbs,djrjh,czrjh
+		  from t_za_dw_bwzd where jgbh = ? and czbs != '3'
+		]]>
+	</property>
+	
+	<!-- 根据制度编号查询查询保卫制度 -->
+	<property name="queryBwzdByBwzdbh">
+		<![CDATA[
+			select zdbh,
+		       jgbh,
+		       bwzdmc,
+		       to_char(xdsj,'yyyy-mm-dd') as xdsj,
+		       nr,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       djdwdm,
+		       djdwmc,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czdwmc,
+		       czdwdm,
+		       czbs,
+		       djrjh,czrjh
+		  from t_za_dw_bwzd where zdbh = ?
+		]]>
+	</property>
+	
+	<!-- 新增保卫建议书 -->
+	<property name="insertBwjys">
+		<![CDATA[
+			insert into t_za_dw_bwjys
+			  (jysbh,
+			   jgbh,
+			   jysmc,
+			   xddwdm,
+			   xddwmc,
+			   nr,
+			   djrxm,
+			   djsj,
+			   djdwmc,
+			   djdwdm,
+			   czrxm,
+			   czsj,
+			   czdwdm,
+			   czdwmc,
+			   czbs,
+			   xdsj,djrjh,czrjh,djrsfzh,czrsfzh)
+			values
+			  (#[jysbh],
+			   #[jgbh],
+			   #[jysmc],
+			   #[xddwdm],
+			   #[xddwmc],
+			   #[nr],
+			   #[djrxm],
+			   to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[djdwmc],
+			   #[djdwdm],
+			   #[czrxm],
+			   to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[czdwdm],
+			   #[czdwmc],
+			   #[czbs],
+			   to_date(#[xdsj],'yyyy-mm-dd'),
+			   #[djrjh],#[czrjh],#[djrsfzh],#[czrsfzh]
+			   )
+		]]>
+	</property>
+	
+	<!-- 修改保卫建议书 -->
+	<property name="updateBwjys">
+		<![CDATA[
+			update t_za_dw_bwjys
+			   set jysbh = #[jysbh],
+			       jgbh = #[jgbh],
+			       jysmc = #[jysmc],
+			       xddwdm = #[xddwdm],
+			       xddwmc = #[xddwmc],
+			       nr = #[nr],
+			       djrxm = #[djrxm],
+			       djsj = to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'),
+			       djdwmc = #[djdwmc],
+			       djdwdm = #[djdwdm],
+			       czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czbs = #[czbs],
+			       xdsj = to_date(#[xdsj],'yyyy-mm-dd'),
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh]
+			 where jysbh = #[jysbh]
+		]]>
+	</property>
+	
+	<!-- 删除保卫建议书 -->
+	<property name="delBwjys">
+		<![CDATA[
+			update t_za_dw_bwjys
+			   set czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czbs = #[czbs],
+			       czrjh = #[czrjg],
+			       czrsfzh = #[czrsfzh]
+			 where jysbh = #[jysbh]
+		]]>
+	</property>
+	
+	<!-- 根据机构编号查询保卫建议书 -->
+	<property name="queryBwjysByJgbh">
+		<![CDATA[
+			select jysbh,
+		       jgbh,
+		       jysmc,
+		       xddwdm,
+		       xddwmc,
+		       nr,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       djdwmc,
+		       djdwdm,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czdwdm,
+		       czdwmc,
+		       czbs,
+		       to_char(xdsj,'yyyy-mm-dd') as xdsj,
+		       djrjh,
+		       czrjh
+		  from t_za_dw_bwjys where jgbh = ? and czbs != '3'
+		]]>
+	</property>
+	
+	<!-- 根据建议书编号查询保卫建议书 -->
+	<property name="queryBwjysByJysbh">
+		<![CDATA[
+			select jysbh,
+		       jgbh,
+		       jysmc,
+		       xddwdm,
+		       xddwmc,
+		       nr,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       djdwmc,
+		       djdwdm,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czdwdm,
+		       czdwmc,
+		       czbs,
+		       to_char(xdsj,'yyyy-mm-dd') as xdsj,
+		       djrjh,
+		       czrjh
+		  from t_za_dw_bwjys where jysbh = ?
+		]]>
+	</property>
+	
+	<!-- 新增突发事件预案 -->
+	<property name="insertTfsjya">
+		<![CDATA[
+			insert into t_za_dw_tfsjya
+			  (yabh,
+			   jgbh,
+			   yalx,
+			   xdsj,
+			   yqryqk,
+			   yqzbqk,
+			   yanr,
+			   djrxm,
+			   djsj,
+			   djdwmc,
+			   djdwdm,
+			   czrxm,
+			   czsj,
+			   czdwmc,
+			   czdwdm,
+			   czbs,djrjh,czrjh,djrsfzh,czrsfzh)
+			values
+			  (#[yabh],
+			   #[jgbh],
+			   #[yalx],
+			   to_date(#[xdsj],'yyyy-mm-dd'),
+			   #[yqryqk],
+			   #[yqzbqk],
+			   #[yanr],
+			   #[djrxm],
+			   to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[djdwmc],
+			   #[djdwdm],
+			   #[czrxm],
+			   to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[czdwmc],
+			   #[czdwdm],
+			   #[czbs],#[djrjh],#[czrjh],#[djrsfzh],#[czrsfzh])
+		]]>
+	</property>
+	
+	<!-- 修改突发事件预案 -->
+	<property name="updateTfsjya">
+		<![CDATA[
+			update t_za_dw_tfsjya
+			   set yabh = #[yabh],
+			       jgbh = #[jgbh],
+			       yalx = #[yalx],
+			       xdsj = to_date(#[xdsj],'yyyy-mm-dd'),
+			       yqryqk = #[yqryqk],
+			       yqzbqk = #[yqzbqk],
+			       yanr = #[yanr],
+			       czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czdwmc = #[czdwmc],
+			       czdwdm = #[czdwdm],
+			       czbs = #[czbs],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh]
+			 where yabh = #[yabh]
+		]]>
+	</property>
+	
+	<!-- 删除突发事件预案 -->
+	<property name="delTfsjya">
+		<![CDATA[
+			update t_za_dw_tfsjya
+			   set czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czdwmc = #[czdwmc],
+			       czdwdm = #[czdwdm],
+			       czbs = #[czbs],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh]
+			 where yabh = #[yabh]
+		]]>
+	</property>
+	
+	<!-- 根据机构编号查询突发事件预案 -->
+	<property name="queryTfsjyaByJgbh">
+		<![CDATA[
+			select yabh,
+		       jgbh,
+		       yalx,
+		       to_char(xdsj,'yyyy-mm-dd') as xdsj,
+		       yqryqk,
+		       yqzbqk,
+		       yanr,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       djdwmc,
+		       djdwdm,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czdwmc,
+		       czdwdm,
+		       czbs,
+		       djrjh,
+		       czrjh
+		  from t_za_dw_tfsjya where jgbh = ? and czbs !='3'
+		]]>
+	</property>
+	
+	<!-- 根据预案编号突发事件预案 -->
+	<property name="queryTfsjyaByYabh">
+		<![CDATA[
+			select yabh,
+		       jgbh,
+		       yalx,
+		       to_char(xdsj,'yyyy-mm-dd') as xdsj,
+		       yqryqk,
+		       yqzbqk,
+		       yanr,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       djdwmc,
+		       djdwdm,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czdwmc,
+		       czdwdm,
+		       czbs,
+		       djrjh,
+		       czrjh
+		  from t_za_dw_tfsjya where yabh = ?
+		]]>
+	</property>
+	
+	<!-- 新增预案演练 -->
+	<property name="insertYayl">
+		<![CDATA[
+			insert into t_za_dw_yayl
+			  (bh,
+			   yabh,
+			   ylmc,
+			   ylsj,
+			   cyrs,
+			   ms,
+			   djrxm,
+			   djsj,
+			   djdwmc,
+			   djdwdm,
+			   czrxm,
+			   czsj,
+			   czdwdm,
+			   czdwmc,
+			   czbs,djrjh,czrjh,djrsfzh,czrsfzh)
+			values
+			  (#[bh],
+			   #[yabh],
+			   #[ylmc],
+			   to_date(#[ylsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[cyrs],
+			   #[ms],
+			   #[djrxm],
+			   to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[djdwmc],
+			   #[djdwdm],
+			   #[czrxm],
+			   to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[czdwdm],
+			   #[czdwmc],
+			   #[czbs],#[djrjh],#[czrjh],#[djrsfzh],#[czrsfzh])
+		]]>
+	</property>
+	
+	<!-- 修改预案演练 -->
+	<property name="updateYayl">
+		<![CDATA[
+			update t_za_dw_yayl
+			   set bh = #[bh],
+			       yabh = #[yabh],
+			       ylmc = #[ylmc],
+			       ylsj = to_date(#[ylsj],'yyyy-mm-dd HH24:mi:ss'),
+			       cyrs = #[cyrs],
+			       ms = #[ms],
+			       czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czbs = #[czbs],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh]
+			 where bh = #[bh]
+		]]>
+	</property>
+	
+	<!-- 删除预案演练 -->
+	<property name="delYayl">
+		<![CDATA[
+			update t_za_dw_yayl
+			   set czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czbs = #[czbs],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh]
+			 where bh = #[bh]
+		]]>
+	</property>
+	
+	<!-- 根据预案编号查询预案演练 -->
+	<property name="queryYaylByYabh">
+		<![CDATA[
+			select bh,
+		       yabh,
+		       ylmc,
+		       to_char(ylsj,'yyyy-mm-dd HH24:mi:ss') as ylsj,
+		       cyrs,
+		       ms,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       djdwmc,
+		       djdwdm,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czdwdm,
+		       czdwmc,
+		       czbs,
+		       djrjh,czrjh
+		  from t_za_dw_yayl where yabh = ? and czbs != '3' 
+		]]>
+	</property>
+	
+	<!-- 根据编号查询查询预案演练 -->
+	<property name="queryYaylByBh">
+		<![CDATA[
+			select bh,
+		       yabh,
+		       ylmc,
+		       to_char(ylsj,'yyyy-mm-dd HH24:mi:ss') as ylsj,
+		       cyrs,
+		       ms,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       djdwmc,
+		       djdwdm,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czdwdm,
+		       czdwmc,
+		       czbs,
+		       djrjh,czrjh
+		  from t_za_dw_yayl where bh = ?
+		]]>
+	</property>
+	
+	<!-- 新增灾害事故 -->
+	<property name="insertZhsg">
+		<![CDATA[
+			insert into t_za_dw_zhsg
+			  (bh,
+			   jgbh,
+			   sglx,
+			   fssj,
+			   sscc,
+			   fsdd,
+			   sgzrr,
+			   cbr,
+			   sgyy,
+			   fsjg,
+			   czcs,
+			   djrxm,
+			   djsj,
+			   djdwdm,
+			   djdwmc,
+			   czrxm,
+			   czsj,
+			   czdwdm,
+			   czdwmc,
+			   czbs,
+			   sgajzt,djrjh,czrjh,djrsfzh,czrsfzh)
+			values
+			  (#[bh],
+			   #[jgbh],
+			   #[sglx],
+			   to_date(#[fssj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[sscc],
+			   #[fsdd],
+			   #[sgzrr],
+			   #[cbr],
+			   #[sgyy],
+			   #[fsjg],
+			   #[czcs],
+			   #[djrxm],
+			   to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[djdwdm],
+			   #[djdwmc],
+			   #[czrxm],
+			   to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[czdwdm],
+			   #[czdwmc],
+			   #[czbs],
+			   #[sgajzt],#[djrjh],#[czrjh],#[djrsfzh],#[czrsfzh])
+		]]>
+	</property>
+	
+	<!-- 修改灾害事故 -->
+	<property name="updateZhsg">
+		<![CDATA[
+			update t_za_dw_zhsg
+			   set bh = #[bh],
+			       jgbh = #[jgbh],
+			       sglx = #[sglx],
+			       fssj = to_date(#[fssj],'yyyy-mm-dd HH24:mi:ss'),
+			       sscc = #[sscc],
+			       fsdd = #[fsdd],
+			       sgzrr = #[sgzrr],
+			       cbr = #[cbr],
+			       sgyy = #[sgyy],
+			       fsjg = #[fsjg],
+			       czcs = #[czcs],
+			       czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czbs = #[czbs],
+			       sgajzt = #[sgajzt],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh]
+			 where bh = #[bh]
+		]]>
+	</property>
+	
+	<!-- 删除灾害事故 -->
+	<property name="delZhsg">
+		<![CDATA[
+			update t_za_dw_zhsg
+			   set czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czbs = #[czbs],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh]
+			 where bh = #[bh]
+		]]>
+	</property>
+	
+	<!-- 根据机构编号查询灾害事故 -->
+	<property name="queryZhsgByJgbh">
+		<![CDATA[
+			select bh,
+		       jgbh,
+		       sglx,
+		       to_char(fssj,'yyyy-mm-dd HH24:mi:ss') as fssj,
+		       sscc,
+		       fsdd,
+		       sgzrr,
+		       cbr,
+		       sgyy,
+		       fsjg,
+		       czcs,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       djdwdm,
+		       djdwmc,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi::ss') as czsj,
+		       czdwdm,
+		       czdwmc,
+		       czbs,
+		       sgajzt,
+		       djrjh,
+		       czrjh
+		  from t_za_dw_zhsg where jgbh = ? and czbs != '3'
+		]]>
+	</property>
+	
+	<!-- 根据编号查询灾害事故 -->
+	<property name="queryZhsgByBh">
+		<![CDATA[
+			select bh,
+		       jgbh,
+		       sglx,
+		       to_char(fssj,'yyyy-mm-dd HH24:mi:ss') as fssj,
+		       sscc,
+		       fsdd,
+		       sgzrr,
+		       cbr,
+		       sgyy,
+		       fsjg,
+		       czcs,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       djdwdm,
+		       djdwmc,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi::ss') as czsj,
+		       czdwdm,
+		       czdwmc,
+		       czbs,
+		       sgajzt,
+		       djrjh,
+		       czrjh
+		  from t_za_dw_zhsg where bh = ?
+		]]>
+	</property>
+	
+	<!-- 新增安全隐患 -->
+	<property name="insertAqyh">
+		<![CDATA[
+			insert into t_za_dw_aqyh
+			  (bh,
+			   jgbh,
+			   yhmc,
+			   yhlx,
+			   fxry,
+			   yhdj,
+			   fxsj,
+			   jtwz,
+			   djrxm,
+			   djsj,
+			   djdwdm,
+			   djdwmc,
+			   czrxm,
+			   czsj,
+			   czdwdm,
+			   czdwmc,
+			   czbs,
+			   czcs,djrjh,czrjh,djrsfzh,czrsfzh)
+			values
+			  (#[bh],
+			   #[jgbh],
+			   #[yhmc],
+			   #[yhlx],
+			   #[fxry],
+			   #[yhdj],
+			   to_date(#[fxsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[jtwz],
+			   #[djrxm],
+			   to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[djdwdm],
+			   #[djdwmc],
+			   #[czrxm],
+			   to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[czdwdm],
+			   #[czdwmc],
+			   #[czbs],
+			   #[czcs],#[djrjh],#[czrjh],#[djrsfzh],#[czrsfzh])
+		]]>
+	</property>
+	
+	<!-- 修改安全隐患 -->
+	<property name="updateAqyh">
+		<![CDATA[
+			update t_za_dw_aqyh
+			   set bh = #[bh],
+			       jgbh = #[jgbh],
+			       yhmc = #[yhmc],
+			       yhlx = #[yhlx],
+			       fxry = #[fxry],
+			       yhdj = #[yhdj],
+			       fxsj = to_date(#[fxsj],'yyyy-mm-dd HH24:mi:ss'),
+			       jtwz = #[jtwz],
+			       czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czbs = #[czbs],
+			       czcs = #[czcs],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh]
+			 where bh = #[bh]
+		]]>
+	</property>
+	
+	<!-- 删除安全隐患 -->
+	<property name="delAqyh">
+		<![CDATA[
+			update t_za_dw_aqyh
+			   set czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czbs = #[czbs],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh]
+			 where bh = #[bh]
+		]]>
+	</property>
+	
+	<!-- 根据机构编号查询安全隐患 -->
+	<property name="queryAqyhByJgbh">
+		<![CDATA[
+			select bh,
+		       jgbh,
+		       yhmc,
+		       yhlx,
+		       fxry,
+		       yhdj,
+		       to_char(fxsj,'yyyy-mm-dd HH24:mi:ss') as fxsj,
+		       jtwz,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       djdwdm,
+		       djdwmc,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czdwdm,
+		       czdwmc,
+		       czbs,
+		       czcs,
+		       djrjh,
+		       czrjh
+		  from t_za_dw_aqyh where jgbh = ?  and czbs != '3'
+		]]>
+	</property>
+	
+	<!-- 根据编号查询安全隐患 -->
+	<property name="queryAqyhByBh">
+		<![CDATA[
+			select bh,
+		       jgbh,
+		       yhmc,
+		       yhlx,
+		       fxry,
+		       yhdj,
+		       to_char(fxsj,'yyyy-mm-dd HH24:mi:ss') as fxsj,
+		       jtwz,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24mi:ss') as djsj,
+		       djdwdm,
+		       djdwmc,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czdwdm,
+		       czdwmc,
+		       czbs,
+		       czcs,
+		       djrjh,czrjh
+		  from t_za_dw_aqyh where bh = ? 
+		]]>
+	</property>
+	
+	<!-- 新增不安定因素 -->
+	<property name="insertBadys">
+		<![CDATA[
+			insert into t_za_dw_badys
+			  (bh,
+			   jgbh,
+			   lx,
+			   yfyy,
+			   fssj,
+			   cbr,
+			   fsdd,
+			   bxxs,
+			   sdgm,
+			   qkms,
+			   czcs,
+			   djrxm,
+			   djsj,
+			   djdwmc,
+			   djdwdm,
+			   czrxm,
+			   czsj,
+			   czdwmc,
+			   czdwdm,
+			   czbs,djrjh,czrjh,djrsfzh,czrsfzh)
+			values
+			  (#[bh],
+			   #[jgbh],
+			   #[lx],
+			   #[yfyy],
+			   to_date(#[fssj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[cbr],
+			   #[fsdd],
+			   #[bxxs],
+			   #[sdgm],
+			   #[qkms],
+			   #[czcs],
+			   #[djrxm],
+			   to_date(#[djsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[djdwmc],
+			   #[djdwdm],
+			   #[czrxm],
+			   to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[czdwmc],
+			   #[czdwdm],
+			   #[czbs],#[djrjh],#[czrjh],#[djrsfzh],#[czrsfzh])
+		]]>
+	</property>
+	
+	<!-- 修改不安定因素 -->
+	<property name="updateBadys">
+		<![CDATA[
+			update t_za_dw_badys
+			   set bh = #[bh],
+			       jgbh = #[jgbh],
+			       lx = #[lx],
+			       yfyy = #[yfyy],
+			       fssj = to_date(#[fssj],'yyyy-mm-dd HH24:mi:ss'),
+			       cbr = #[cbr],
+			       fsdd = #[fsdd],
+			       bxxs = #[bxxs],
+			       sdgm = #[sdgm],
+			       qkms = #[qkms],
+			       czcs = #[czcs],
+			       czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czdwmc = #[czdwmc],
+			       czdwdm = #[czdwdm],
+			       czbs = #[czbs],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh]
+			 where bh = #[bh]
+		]]>
+	</property>
+	
+	<!-- 删除不安定因素 -->
+	<property name="delBadys">
+		<![CDATA[
+			update t_za_dw_badys
+			   set czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			       czdwmc = #[czdwmc],
+			       czdwdm = #[czdwdm],
+			       czbs = #[czbs],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh]
+			 where bh = #[bh]
+		]]>
+	</property>
+	
+	<!-- 根据机构编号查询不安定因素 -->
+	<property name="queryBadysByJgbh">
+		<![CDATA[
+			select bh,
+		       jgbh,
+		       lx,
+		       yfyy,
+		       to_char(fssj,'yyyy-mm-dd HH24:mi:ss') as fssj,
+		       cbr,
+		       fsdd,
+		       bxxs,
+		       sdgm,
+		       qkms,
+		       czcs,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       djdwmc,
+		       djdwdm,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czdwmc,
+		       czdwdm,
+		       czbs,djrjh,czrjh
+		  from t_za_dw_badys where jgbh = ? and czbs != '3'
+		]]>
+	</property>
+	
+	<!-- 根据编号查询不安定因素 -->
+	<property name="queryBadysByBh">
+		<![CDATA[
+			select bh,
+		       jgbh,
+		       lx,
+		       yfyy,
+		       to_char(fssj,'yyyy-mm-dd HH24:mi:ss') as fssj,
+		       cbr,
+		       fsdd,
+		       bxxs,
+		       sdgm,
+		       qkms,
+		       czcs,
+		       djrxm,
+		       to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		       djdwmc,
+		       djdwdm,
+		       czrxm,
+		       to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		       czdwmc,
+		       czdwdm,
+		       czbs,djrjh,czrjh
+		  from t_za_dw_badys where bh = ?
+		]]>
+	</property>
+	
+	<!-- 2013-12-24 -->
+	<property name="deleteTzhy">
+		<![CDATA[
+			delete t_za_dw_tzhy where jgbh = ?
+		]]>
+	</property>
+	
+	<property name="deleteGgcs">
+		<![CDATA[
+			delete t_za_dw_ggcs where jgbh = ?
+		]]>
+	</property>
+	
+	<property name="deleteNbdw">
+		<![CDATA[
+			delete t_za_dw_nbdw where jgbh = ?
+		]]>
+	</property>
+	
+	<property name="deleteWxwpdw">
+		<![CDATA[
+			delete t_za_dw_wxwpdw where jgbh = ?
+		]]>
+	</property>
+	
+	<property name="deleteSwfwcs">
+		<![CDATA[
+			delete t_za_jg_swfwcs where jgbh = ?
+		]]>
+	</property>
+	
+	<property name="deleteSwdw">
+		<![CDATA[
+			delete t_za_dw_swdw where jgbh = ?
+		]]>
+	</property>
+	
+	<property name="deleteThlg">
+		<![CDATA[
+			delete t_za_dw_thlgy where jgbh = ?
+		]]>
+	</property>
+	
+	<property name="deleteThKs">
+		<![CDATA[
+			delete t_za_dw_thksy where jgbh = ?
+		]]>
+	</property>
+	
+	<property name="deleteQtth">
+		<![CDATA[
+			delete t_za_dw_thqtlxx where thqt_jgbh = ?
+		]]>
+	</property>
+	
+	<property name="queryTzhy">
+		<![CDATA[
+			select jbxx.jgbh,
+				dwmc,dwdz,
+				hylb,
+				dwlb,
+				cyrs,
+				dsz,
+				dwcz,
+				dwdh,
+				dwdm,
+				dwdzyx,
+				fhdj,
+				frdb,
+				frsfzhm,
+				frlxdh,
+				frzz,
+				fzjg,
+				to_char(fzrq,'yyyy-mm-dd') as fzrq,
+				glbm,
+				gljb,
+				dzid,
+				fwbh,
+				jyfw,
+				to_char(kyrq,'yyyy-mm-dd') as kyrq,
+				swdjh,
+				to_char(yxqx,'yyyy-mm-dd') as yxqx,
+				yyzzbh,
+				yzbm,
+				zafzr,
+				zcdz,
+				to_char(zcrq,'yyyy-mm-dd') as zcrq,
+				zczb,
+				zddwbs,
+				gggdczqk,
+				bmjb,
+				jbxx.bz,
+				zxbs,
+				to_char(zxrq,'yyyy-mm-dd') as zxrq,
+				zxyy,
+				djrxm,
+				to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+				djdwdm,
+				djdwmc,
+				dwxz,
+				czrxm,
+				to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+				czdwdm,
+				czdwmc,
+				czbs,
+				zrdwpcsdm,
+				zrdwpcsmc,
+				zrmjjh,
+				zrmjxm,
+				zrmjdh,
+				sssqdm,
+				wwm,
+				zgbm,djrjh,czrjh
+			from t_za_jg_jbxx jbxx,t_za_dw_tzhy tzhy
+			where jbxx.jgbh = tzhy.jgbh
+			 --单位选择查询
+			#if($sqdm && !$sqdm.equals(""))
+		   		and sssqdm = #[sqdm]
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+		   		--精确到警务区
+				and   ZRDWPCSDM = #[jwsqdm]
+			    --精确到派出所
+			#elseif($pcsdm and !$pcsdm.equals(""))
+			  	and (zrdwpcsdm like substr(#[pcsdm],1,8)||'%' or djdwdm like substr(#[pcsdm],1,8)||'%')
+			  	--精确到县区
+		    #elseif($countrygajgjgdm and !$countrygajgjgdm.equals(""))
+				and (zrdwpcsdm like substr(#[countrygajgjgdm],1,6) || '%' or djdwdm like substr(#[countrygajgjgdm],1,6) || '%')
+			    --精确到市州
+			#elseif($citygajgjgdm and !$citygajgjgdm.equals(""))
+				 and (zrdwpcsdm like substr(#[citygajgjgdm],1,4) ||'%' or czdwdm like substr(#[citygajgjgdm],1,4) ||'%')
+			#end 
+			#if($djsjstart && !$djsjstart.equals(""))
+				and jbxx.djsj >= to_date(#[djsjstart] || ' 00:00:00','yyyy-mm-dd HH24:mi:ss')
+			#end	
+			
+			#if($djsjend && !$djsjend.equals(""))
+				and jbxx.djsj <= to_date(#[djsjend] || ' 23:59:59','yyyy-mm-dd HH24:mi:ss')
+			#end
+			
+			#if($dwmc && !$dwmc.equals(""))
+				and dwmc like '%'||#[dwmc]||'%'
+			#end
+			#if($dwdm && !$dwdm.equals(""))
+				and dwdm = #[dwdm]
+			#end
+			#if($frdb && !$frdb.equals(""))
+				and frdb like '%'||#[frdb]||'%'
+			#end
+			#if($frsfzhm && !$frsfzhm.equals(""))
+				and frsfzhm = #[frsfzhm]
+			#end
+			#if($zxbs && !$zxbs.equals(""))
+				and zxbs = #[zxbs]
+			#end
+		]]>
+	</property>
+	
+	<property name="queryGgcs">
+		<![CDATA[
+			select jbxx.jgbh,dwdz,
+				dwmc,
+				hylb,
+				cyrs,
+				dwlb,
+				dsz,
+				dwcz,
+				dwdh,
+				dwdm,
+				dwdzyx,
+				fhdj,
+				frdb,
+				frsfzhm,
+				frlxdh,
+				frzz,
+				fzjg,
+				to_char(fzrq,'yyyy-mm-dd') as fzrq,
+				glbm,
+				gljb,
+				dzid,
+				fwbh,
+				jyfw,
+				to_char(kyrq,'yyyy-mm-dd') as kyrq,
+				swdjh,
+				to_char(yxqx,'yyyy-mm-dd') as yxqx,
+				yyzzbh,
+				yzbm,
+				zafzr,
+				zcdz,
+				to_char(zcrq,'yyyy-mm-dd') as zcrq,
+				zczb,
+				zddwbs,
+				gggdczqk,
+				bmjb,
+				jbxx.bz,
+				zxbs,
+				to_char(zxrq,'yyyy-mm-dd') as zxrq,
+				zxyy,
+				djrxm,
+				to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+				djdwdm,
+				djdwmc,
+				dwxz,
+				czrxm,
+				to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+				czdwdm,
+				czdwmc,
+				czbs,
+				zrdwpcsdm,
+				zrdwpcsmc,
+				zrmjjh,
+				zrmjxm,
+				zrmjdh,
+				sssqdm,
+				wwm,
+				zgbm,djrjh,czrjh
+			from t_za_jg_jbxx jbxx,t_za_dw_ggcs ggcs
+			where jbxx.jgbh = ggcs.jgbh
+			 --单位选择查询
+			 
+			
+			#if($sqdm && !$sqdm.equals(""))
+		   		and sssqdm = #[sqdm]
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+		   		--精确到警务区
+				and  ZRDWPCSDM = #[jwsqdm]
+			    --精确到派出所
+			#elseif($pcsdm and !$pcsdm.equals(""))
+			  	and (zrdwpcsdm like substr(#[pcsdm],1,8)||'%' or djdwdm like substr(#[pcsdm],1,8)||'%')
+			  	--精确到县区
+		    #elseif($countrygajgjgdm and !$countrygajgjgdm.equals(""))
+				and (zrdwpcsdm like substr(#[countrygajgjgdm],1,6) || '%' or djdwdm like substr(#[countrygajgjgdm],1,6) || '%')
+			    --精确到市州
+			#elseif($citygajgjgdm and !$citygajgjgdm.equals(""))
+				 and (zrdwpcsdm like substr(#[citygajgjgdm],1,4) ||'%' or czdwdm like substr(#[citygajgjgdm],1,4) ||'%')
+			#end 
+			#if($djsjstart && !$djsjstart.equals(""))
+				and jbxx.djsj >= to_date(#[djsjstart] || ' 00:00:00','yyyy-mm-dd HH24:mi:ss')
+			#end	
+			
+			#if($djsjend && !$djsjend.equals(""))
+				and jbxx.djsj <= to_date(#[djsjend] || ' 23:59:59','yyyy-mm-dd HH24:mi:ss')
+			#end
+			
+			#if($dwmc && !$dwmc.equals(""))
+				and dwmc like '%'||#[dwmc]||'%'
+			#end
+			#if($dwdm && !$dwdm.equals(""))
+				and dwdm = #[dwdm]
+			#end
+			#if($frdb && !$frdb.equals(""))
+				and frdb like '%'||#[frdb]||'%'
+			#end
+			#if($frsfzhm && !$frsfzhm.equals(""))
+				and frsfzhm = #[frsfzhm]
+			#end
+			#if($zxbs && !$zxbs.equals(""))
+				and zxbs = #[zxbs]
+			#end
+		]]>
+	</property>
+	
+	<property name="queryNbdw">
+		<![CDATA[
+			select jbxx.jgbh,dwdz,
+		        dwmc,
+		        hylb,
+		        cyrs,
+		        dwlb,
+		        dsz,
+		        dwcz,
+		        dwdh,
+		        dwdm,
+		        dwdzyx,
+		        fhdj,
+		        frdb,
+		        frsfzhm,
+		        frlxdh,
+		        frzz,
+		        fzjg,
+		        to_char(fzrq,'yyyy-mm-dd') as fzrq,
+		        jbxx.glbm,
+		        gljb,
+		        dzid,
+		        fwbh,
+		        jyfw,
+		        to_char(kyrq,'yyyy-mm-dd') as kyrq,
+		        swdjh,
+		        to_char(yxqx,'yyyy-mm-dd') as yxqx,
+		        yyzzbh,
+		        yzbm,
+		        zafzr,
+		        zcdz,
+		        to_char(zcrq,'yyyy-mm-dd') as zcrq,
+		        zczb,
+		        gggdczqk,
+		        bmjb,
+		        jbxx.bz,
+		        zxbs,
+		        to_char(zxrq,'yyyy-mm-dd') as zxrq,
+		        zxyy,
+		        djrxm,
+		        to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		        djdwdm,
+		        djdwmc,
+		        jbxx.dwxz,
+		        czrxm,
+		        to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		        czdwdm,
+		        czdwmc,
+		        czbs,
+		        zrdwpcsdm,
+		        zrdwpcsmc,
+		        zrmjjh,
+		        zrmjxm,
+		        zrmjdh,
+		        sssqdm,
+		        (select dwfl from t_za_dwhc where jgbh=jbxx.jgbh and nbhc='1' and rownum=1) as dwfl,
+		        wwm,
+		        zgbm,djrjh,czrjh,
+		        jbxx.sfnbgl
+		      from t_za_jg_jbxx jbxx
+		      where instr(jbxx.hylb,'03')>0 
+		      and jbxx.zxbs = '0'
+			 --单位选择查询
+			#if($sqdm && !$sqdm.equals(""))
+		   		and sssqdm = #[sqdm]
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+		   		--精确到警务区
+				and  ZRDWPCSDM = #[jwsqdm]
+			    --精确到派出所
+			#elseif($pcsdm and !$pcsdm.equals(""))
+			  	and (zrdwpcsdm like substr(#[pcsdm],1,8)||'%' or djdwdm like substr(#[pcsdm],1,8)||'%')
+			  	--精确到县区
+		    #elseif($countrygajgjgdm and !$countrygajgjgdm.equals(""))
+				and (zrdwpcsdm like substr(#[countrygajgjgdm],1,6) || '%' or djdwdm like substr(#[countrygajgjgdm],1,6) || '%')
+			    --精确到市州
+			#elseif($citygajgjgdm and !$citygajgjgdm.equals(""))
+				 and (zrdwpcsdm like substr(#[citygajgjgdm],1,4) ||'%' or czdwdm like substr(#[citygajgjgdm],1,4) ||'%')
+			#end
+			 
+			#if($dwmc && !$dwmc.equals(""))
+				and dwmc like '%'||#[dwmc]||'%'
+			#end
+			#if($dwdm && !$dwdm.equals(""))
+				and dwdm = #[dwdm]
+			#end
+			#if($frdb && !$frdb.equals(""))
+				and frdb like '%'||#[frdb]||'%'
+			#end
+			#if($frsfzhm && !$frsfzhm.equals(""))
+				and frsfzhm = #[frsfzhm]
+			#end
+			#if($zxbs && !$zxbs.equals(""))
+				and zxbs = #[zxbs]
+			#end
+			#if($sfnbgl && !$sfnbgl.equals(""))
+				and sfnbgl = '1'
+			#end
+			#if($glbm &&  !$glbm.equals(""))
+				#if($glbm.equals("1"))
+					and sfzagl is null
+				#end
+				#if($glbm.equals("2"))
+					and sfnbgl is null
+				#end
+				#if($glbm.equals("4"))
+					and sfwjgl is null
+				#end
+				#if($glbm.equals("5"))
+					and sfxfgl is null
+				#end
+			#end 
+			#if($djsjstart && !$djsjstart.equals(""))
+				and jbxx.djsj >= to_date(#[djsjstart] || ' 00:00:00','yyyy-mm-dd HH24:mi:ss')
+			#end	
+			
+			#if($djsjend && !$djsjend.equals(""))
+				and jbxx.djsj <= to_date(#[djsjend] || ' 23:59:59','yyyy-mm-dd HH24:mi:ss')
+			#end
+			order by sfnbgl nulls last
+		]]>
+	</property>
+	
+	<property name="queryNbdwPageResultInfo">
+		<![CDATA[
+			select jbxx.jgbh,dwdz,
+		        dwmc,
+		        hylb,
+		        cyrs,
+		        dwlb,
+		        dsz,
+		        dwcz,
+		        dwdh,
+		        dwdm,
+		        dwdzyx,
+		        fhdj,
+		        frdb,
+		        frsfzhm,
+		        frlxdh,
+		        frzz,
+		        fzjg,
+		        to_char(fzrq,'yyyy-mm-dd') as fzrq,
+		        jbxx.glbm,
+		        gljb,
+		        dzid,
+		        fwbh,
+		        jyfw,
+		        to_char(kyrq,'yyyy-mm-dd') as kyrq,
+		        swdjh,
+		        to_char(yxqx,'yyyy-mm-dd') as yxqx,
+		        yyzzbh,
+		        yzbm,
+		        zafzr,
+		        zcdz,
+		        to_char(zcrq,'yyyy-mm-dd') as zcrq,
+		        zczb,
+		        gggdczqk,
+		        bmjb,
+		        jbxx.bz,
+		        zxbs,
+		        to_char(zxrq,'yyyy-mm-dd') as zxrq,
+		        zxyy,
+		        djrxm,
+		        to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		        djdwdm,
+		        djdwmc,
+		        jbxx.dwxz,
+		        czrxm,
+		        to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		        czdwdm,
+		        czdwmc,
+		        czbs,
+		        zrdwpcsdm,
+		        zrdwpcsmc,
+		        zrmjjh,
+		        zrmjxm,
+		        zrmjdh,
+		        sssqdm,
+		        wwm,
+		        zgbm,djrjh,czrjh,
+		         hc.dwfl,
+		         hc.zddwbz as zddwbs,
+		         f_get_dwyjys(jbxx.jgbh,hc.dwfl) as yjys,
+		         jbxx.sfnbgl
+		      from t_za_jg_jbxx jbxx,
+		      (
+		      	SELECT *
+				  FROM (SELECT hc.*,
+							   row_number() over(PARTITION BY jgbh ORDER BY hcsj DESC) AS sn
+						  FROM t_za_dwhc hc
+						 WHERE nbhc = '1')
+				 WHERE sn = 1
+		      ) hc
+		      where jbxx.jgbh = hc.jgbh
+		      and jbxx.sfnbgl = '1'
+		      and jbxx.zxbs = '0'
+			 --单位选择查询
+			#if($sqdm && !$sqdm.equals(""))
+		   		and sssqdm = #[sqdm]
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+		   		--精确到警务区
+				and  ZRDWPCSDM = #[jwsqdm]
+			    --精确到派出所
+			#elseif($pcsdm and !$pcsdm.equals(""))
+			  	and (zrdwpcsdm like substr(#[pcsdm],1,8)||'%' or djdwdm like substr(#[pcsdm],1,8)||'%')
+			  	--精确到县区
+		    #elseif($countrygajgjgdm and !$countrygajgjgdm.equals(""))
+				and (zrdwpcsdm like substr(#[countrygajgjgdm],1,6) || '%' or djdwdm like substr(#[countrygajgjgdm],1,6) || '%')
+			    --精确到市州
+			#elseif($citygajgjgdm and !$citygajgjgdm.equals(""))
+				 and (zrdwpcsdm like substr(#[citygajgjgdm],1,4) ||'%' or czdwdm like substr(#[citygajgjgdm],1,4) ||'%')
+			#end
+			 
+			#if($dwmc && !$dwmc.equals(""))
+				and dwmc like '%'||#[dwmc]||'%'
+			#end
+			#if($dwdm && !$dwdm.equals(""))
+				and dwdm = #[dwdm]
+			#end
+			#if($frdb && !$frdb.equals(""))
+				and frdb like '%'||#[frdb]||'%'
+			#end
+			#if($frsfzhm && !$frsfzhm.equals(""))
+				and frsfzhm = #[frsfzhm]
+			#end
+			#if($zxbs && !$zxbs.equals(""))
+				and zxbs = #[zxbs]
+			#end
+			#if($sfnbgl && !$sfnbgl.equals(""))
+				and sfnbgl = '1'
+			#end
+			#if($glbm &&  !$glbm.equals(""))
+				#if($glbm.equals("1"))
+					and sfzagl is null
+				#end
+				#if($glbm.equals("2"))
+					and sfnbgl is null
+				#end
+				#if($glbm.equals("4"))
+					and sfwjgl is null
+				#end
+				#if($glbm.equals("5"))
+					and sfxfgl is null
+				#end
+			#end 
+			#if($djsjstart && !$djsjstart.equals(""))
+				and jbxx.djsj >= to_date(#[djsjstart] || ' 00:00:00','yyyy-mm-dd HH24:mi:ss')
+			#end	
+			
+			#if($djsjend && !$djsjend.equals(""))
+				and jbxx.djsj <= to_date(#[djsjend] || ' 23:59:59','yyyy-mm-dd HH24:mi:ss')
+			#end
+			order by sfnbgl nulls last
+		]]>
+	</property>
+	
+	<property name="queryWxwpdw">
+		<![CDATA[
+			select jbxx.jgbh,dwdz,
+		        dwmc,
+		        hylb,
+		        cyrs,
+		        dwlb,
+		        dsz,
+		        dwcz,
+		        dwdh,
+		        dwdm,
+		        dwdzyx,
+		        fhdj,
+		        frdb,
+		        frsfzhm,
+		        frlxdh,
+		        frzz,
+		        fzjg,
+		        to_char(fzrq,'yyyy-mm-dd') as fzrq,
+		        jbxx.glbm,
+		        gljb,
+		        dzid,
+		        fwbh,
+		        jyfw,
+		        to_char(kyrq,'yyyy-mm-dd') as kyrq,
+		        swdjh,
+		        to_char(yxqx,'yyyy-mm-dd') as yxqx,
+		        yyzzbh,
+		        yzbm,
+		        zafzr,
+		        zcdz,
+		        to_char(zcrq,'yyyy-mm-dd') as zcrq,
+		        zczb,
+		        zddwbs,
+		        gggdczqk,
+		        bmjb,
+		        jbxx.bz,
+		        zxbs,
+		        to_char(zxrq,'yyyy-mm-dd') as zxrq,
+		        zxyy,
+		        djrxm,
+		        to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		        djdwdm,
+		        djdwmc,
+		        jbxx.dwxz,
+		        czrxm,
+		        to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		        czdwdm,
+		        czdwmc,
+		        czbs,
+		        zrdwpcsdm,
+		        zrdwpcsmc,
+		        zrmjjh,
+		        zrmjxm,
+		        zrmjdh,
+		        sssqdm,
+		        wwm,
+		        zgbm,djrjh,czrjh,
+		        wxwp.dwfl as wbdwfl,
+				wxwp.hwlb as wbdwhwlb
+		      from t_za_jg_jbxx jbxx,t_za_dw_wxwpdw wxwp
+		      where jbxx.jgbh = wxwp.jgbh
+			 --单位选择查询
+			#if($sqdm && !$sqdm.equals(""))
+		   		and sssqdm = #[sqdm]
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+		   		--精确到警务区
+				and   ZRDWPCSDM = #[jwsqdm]
+			    --精确到派出所
+			#elseif($pcsdm and !$pcsdm.equals(""))
+			  	and (zrdwpcsdm like substr(#[pcsdm],1,8)||'%' or djdwdm like substr(#[pcsdm],1,8)||'%')
+			  	--精确到县区
+		    #elseif($countrygajgjgdm and !$countrygajgjgdm.equals(""))
+				and (zrdwpcsdm like substr(#[countrygajgjgdm],1,6) || '%' or djdwdm like substr(#[countrygajgjgdm],1,6) || '%')
+			    --精确到市州
+			#elseif($citygajgjgdm and !$citygajgjgdm.equals(""))
+				 and (zrdwpcsdm like substr(#[citygajgjgdm],1,4) ||'%' or czdwdm like substr(#[citygajgjgdm],1,4) ||'%')
+			#end 
+			  
+			#if($dwmc && !$dwmc.equals(""))
+				and dwmc like '%'||#[dwmc]||'%'
+			#end
+			#if($dwdm && !$dwdm.equals(""))
+				and dwdm = #[dwdm]
+			#end
+			#if($frdb && !$frdb.equals(""))
+				and frdb like '%'||#[frdb]||'%'
+			#end
+			#if($frsfzhm && !$frsfzhm.equals(""))
+				and frsfzhm = #[frsfzhm]
+			#end
+			#if($zxbs && !$zxbs.equals(""))
+				and zxbs = #[zxbs]
+			#end
+			#if($djsjstart && !$djsjstart.equals(""))
+				and jbxx.djsj >= to_date(#[djsjstart] || ' 00:00:00','yyyy-mm-dd HH24:mi:ss')
+			#end	
+			
+			#if($djsjend && !$djsjend.equals(""))
+				and jbxx.djsj <= to_date(#[djsjend] || ' 23:59:59','yyyy-mm-dd HH24:mi:ss')
+			#end
+		]]>
+	</property>
+	
+	<property name="queryWb">
+		<![CDATA[
+			select jbxx.jgbh,dwdz,
+		        dwmc,
+		        hylb,
+		        cyrs,
+		        dwlb,
+		        dsz,
+		        dwcz,
+		        dwdh,
+		        dwdm,
+		        dwdzyx,
+		        fhdj,
+		        frdb,
+		        frsfzhm,
+		        frlxdh,
+		        frzz,
+		        fzjg,
+		        to_char(fzrq,'yyyy-mm-dd') as fzrq,
+		        jbxx.glbm,
+		        gljb,
+		        dzid,
+		        fwbh,
+		        jyfw,
+		        to_char(kyrq,'yyyy-mm-dd') as kyrq,
+		        swdjh,
+		        to_char(yxqx,'yyyy-mm-dd') as yxqx,
+		        yyzzbh,
+		        yzbm,
+		        zafzr,
+		        zcdz,
+		        to_char(zcrq,'yyyy-mm-dd') as zcrq,
+		        zczb,
+		        zddwbs,
+		        gggdczqk,
+		        bmjb,
+		        jbxx.bz,
+		        zxbs,
+		        to_char(zxrq,'yyyy-mm-dd') as zxrq,
+		        zxyy,
+		        djrxm,
+		        to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+		        djdwdm,
+		        djdwmc,
+		        jbxx.dwxz,
+		        czrxm,
+		        to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+		        czdwdm,
+		        czdwmc,
+		        czbs,
+		        zrdwpcsdm,
+		        zrdwpcsmc,
+		        zrmjjh,
+		        zrmjxm,
+		        zrmjdh,
+		        sssqdm,
+		        wwm,
+		        zgbm,djrjh,czrjh
+		      from t_za_jg_jbxx jbxx,t_za_jg_swfwcs wb
+		      where jbxx.jgbh = wb.jgbh
+			 --单位选择查询
+			 #if($sqdm && !$sqdm.equals(""))
+		   		and sssqdm = #[sqdm]
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+		   		--精确到警务区
+				and   ZRDWPCSDM = #[jwsqdm]
+			    --精确到派出所
+			#elseif($pcsdm and !$pcsdm.equals(""))
+			  	and (zrdwpcsdm like substr(#[pcsdm],1,8)||'%' or djdwdm like substr(#[pcsdm],1,8)||'%')
+			  	--精确到县区
+		    #elseif($countrygajgjgdm and !$countrygajgjgdm.equals(""))
+				and (zrdwpcsdm like substr(#[countrygajgjgdm],1,6) || '%' or djdwdm like substr(#[countrygajgjgdm],1,6) || '%')
+			    --精确到市州
+			#elseif($citygajgjgdm and !$citygajgjgdm.equals(""))
+				 and (zrdwpcsdm like substr(#[citygajgjgdm],1,4) ||'%' or czdwdm like substr(#[citygajgjgdm],1,4) ||'%')
+			#end 
+			#if($dwmc && !$dwmc.equals(""))
+				and dwmc like '%'||#[dwmc]||'%'
+			#end
+			#if($dwdm && !$dwdm.equals(""))
+				and dwdm = #[dwdm]
+			#end
+			#if($frdb && !$frdb.equals(""))
+				and frdb like '%'||#[frdb]||'%'
+			#end
+			#if($frsfzhm && !$frsfzhm.equals(""))
+				and frsfzhm = #[frsfzhm]
+			#end
+			#if($zxbs && !$zxbs.equals(""))
+				and zxbs = #[zxbs]
+			#end
+			#if($djsjstart && !$djsjstart.equals(""))
+				and jbxx.djsj >= to_date(#[djsjstart] || ' 00:00:00','yyyy-mm-dd HH24:mi:ss')
+			#end	
+			
+			#if($djsjend && !$djsjend.equals(""))
+				and jbxx.djsj <= to_date(#[djsjend] || ' 23:59:59','yyyy-mm-dd HH24:mi:ss')
+			#end
+		]]>
+	</property>
+	
+	<property name="querySwdw">
+		<![CDATA[
+			select jbxx.jgbh,dwdz,
+	            dwmc,
+	            hylb,
+	            cyrs,
+	            jbxx.dsz,
+	            jbxx.dwlb,
+	            dwcz,
+	            dwdh,
+	            dwdm,
+	            dwdzyx,
+	            fhdj,
+	            frdb,
+	            frsfzhm,
+	            frlxdh,
+	            frzz,
+	            fzjg,
+	            to_char(fzrq,'yyyy-mm-dd') as fzrq,
+	            jbxx.glbm,
+	            gljb,
+	            dzid,
+	            fwbh,
+	            jyfw,
+	            to_char(kyrq,'yyyy-mm-dd') as kyrq,
+	            swdjh,
+	            to_char(yxqx,'yyyy-mm-dd') as yxqx,
+	            yyzzbh,
+	            yzbm,
+	            zafzr,
+	            zcdz,
+	            to_char(zcrq,'yyyy-mm-dd') as zcrq,
+	            zczb,
+	            zddwbs,
+	            gggdczqk,
+	            bmjb,
+	            jbxx.bz,
+	            zxbs,
+	            to_char(zxrq,'yyyy-mm-dd') as zxrq,
+	            zxyy,
+	            djrxm,
+	            to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+	            djdwdm,
+	            djdwmc,
+	            jbxx.dwxz,
+	            czrxm,
+	            to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+	            czdwdm,
+	            czdwmc,
+	            czbs,
+	            zrdwpcsdm,
+	            zrdwpcsmc,
+	            zrmjjh,
+	            zrmjxm,
+	            zrmjdh,
+	            sssqdm,
+	            wwm,
+	            zgbm,djrjh,czrjh
+	         from t_za_jg_jbxx jbxx,t_za_dw_swdw swdw
+	         where jbxx.jgbh = swdw.jgbh
+			 --单位选择查询
+			#if($sqdm && !$sqdm.equals(""))
+		   		and sssqdm = #[sqdm]
+		   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+		   		--精确到警务区
+				and   ZRDWPCSDM = #[jwsqdm]
+			    --精确到派出所
+			#elseif($pcsdm and !$pcsdm.equals(""))
+			  	and (zrdwpcsdm like substr(#[pcsdm],1,8)||'%' or djdwdm like substr(#[pcsdm],1,8)||'%')
+			  	--精确到县区
+		    #elseif($countrygajgjgdm and !$countrygajgjgdm.equals(""))
+				and (zrdwpcsdm like substr(#[countrygajgjgdm],1,6) || '%' or djdwdm like substr(#[countrygajgjgdm],1,6) || '%')
+			    --精确到市州
+			#elseif($citygajgjgdm and !$citygajgjgdm.equals(""))
+				 and (zrdwpcsdm like substr(#[citygajgjgdm],1,4) ||'%' or czdwdm like substr(#[citygajgjgdm],1,4) ||'%')
+			#end 
+			
+			
+			#if($dwmc && !$dwmc.equals(""))
+				and dwmc like '%'||#[dwmc]||'%'
+			#end
+			#if($dwdm && !$dwdm.equals(""))
+				and dwdm = #[dwdm]
+			#end
+			#if($frdb && !$frdb.equals(""))
+				and frdb like '%'||#[frdb]||'%'
+			#end
+			#if($frsfzhm && !$frsfzhm.equals(""))
+				and frsfzhm = #[frsfzhm]
+			#end
+			#if($zxbs && !$zxbs.equals(""))
+				and zxbs = #[zxbs]
+			#end
+			#if($djsjstart && !$djsjstart.equals(""))
+				and jbxx.djsj >= to_date(#[djsjstart] || ' 00:00:00','yyyy-mm-dd HH24:mi:ss')
+			#end	
+			
+			#if($djsjend && !$djsjend.equals(""))
+				and jbxx.djsj <= to_date(#[djsjend] || ' 23:59:59','yyyy-mm-dd HH24:mi:ss')
+			#end
+		]]>
+	</property>
+	
+	<!-- 技防单位 -->
+	<property name="insertJfdw">
+		<![CDATA[
+			insert into t_za_dw_jfdw
+			  (id, jgbh, balx, swdsjktt, sntt, zjbjjmjxt, lwbj, yhbwfdmc, bz,scslsj,badj)
+			values
+			  (#[id],#[jgbh],#[balx],#[swdsjktt],#[sntt],#[zjbjjmjxt],#[lwbj],#[yhbwfdmc],
+			   #[bz],to_date(#[scslsj],'yyyy-mm'),#[badj])
+		]]>
+	</property>
+	
+	<property name="updateJfdw">
+		<![CDATA[
+			update t_za_dw_jfdw
+			   set 
+			       jgbh = #[jgbh],
+			       balx = #[balx],
+			       swdsjktt = #[swdsjktt],
+			       sntt = #[sntt],
+			       zjbjjmjxt = #[zjbjjmjxt],
+			       lwbj = #[lwbj],
+			       yhbwfdmc = #[yhbwfdmc],
+			       bz = #[bz],
+			       scslsj = to_date(#[scslsj],'yyyy-mm'),
+			       badj = #[badj]
+			 where jgbh = #[jgbh]
+		]]>
+	</property>
+	
+	<property name="delJfwdw">
+		<![CDATA[
+			delete t_za_dw_jfdw where jgbh = ?
+		]]>
+	</property>
+	
+	<property name="queryJfdwByJgbh">
+		<![CDATA[
+			select id, jgbh, balx, swdsjktt, sntt, zjbjjmjxt, lwbj, yhbwfdmc, bz,to_char(scslsj,'yyyy-mm') as scslsj,badj from t_za_dw_jfdw where jgbh = ?
+		]]>
+	</property>
+	
+	<!-- 删除开锁业 -->
+	<property name="delKsyByJgbh">
+		<![CDATA[
+			delete t_za_dw_thksy where jgbh = ?
+		]]>
+	</property>
+	
+	<!-- 删除旅馆业 -->
+	<property name="delLgByJgbh">
+		<![CDATA[
+			delete t_za_dw_thlgy where jgbh = ?
+		]]>
+	</property>
+	
+	<property name="updateCyryfkxx">
+		<![CDATA[
+			update t_za_ry_cyry
+			set fkrxm=#[fkrxm],
+				fkrjh=#[fkrjh],
+				fkdwdm=#[fkdwdm],
+				fkdwmc=#[fkdwmc],
+				fksj=sysdate,
+				fknr=#[fknr]
+			where cyrybh=#[cyrybh]
+		]]>
+	</property>
+	
+	<property name="queryCyryByJgbhAndSfzh">
+		<![CDATA[
+			select count(1) from t_za_ry_cyry where jgbh=? and sfzh=? and czbs != '3' and zxbs ='0'
+		]]>
+	</property>
+	
+	<property name="zxDwCyryxx">
+		<![CDATA[
+			update t_za_ry_cyry
+			set ZXBS='1',ZXRQ=sysdate
+			where sfzh=? and zxbs='0'
+		]]>
+	</property>
+	
+	<property name="insertYhbwzpxxBean">
+		<![CDATA[
+			insert into t_za_yhbw_zpxx
+			  (bh, yhbwbh, zpmc, zpms, zp,djdwdm, djdwmc, djrxm,djrq)
+			values
+			  (?, ?, ?, ?, ?, ?, ?,?, sysdate)
+						
+		]]>
+	</property>
+	
+	<property name="deleteZdyhbwzpBean">
+		<![CDATA[
+			delete from t_za_yhbw_zpxx where bh=?
+		]]>
+	</property>
+	
+	<property name="queryZdyhbwZpBeans">
+		<![CDATA[
+			select bh, yhbwbh, zpmc, zpms,djrq, djdwdm, djdwmc, djrxm from t_za_yhbw_zpxx where yhbwbh=#[yhbwbh]
+		]]>
+	</property>
+	
+	<property name="queryDwCyryListByCyrybhs">
+		<![CDATA[
+			select *
+			from v_za_ry_cyry
+			where czbs != '3' 
+     		and cyrybh in (#[cyrybhs])
+		]]>
+	</property>
+	<property name="queryDwCyryListByQueryBean">
+		<![CDATA[
+			select *
+				from v_za_ry_cyry
+				where czbs != '3' 
+				#if($jgbh && !$jgbh.equals(""))
+					and jgbh = #[jgbh]
+				#end	
+				#if($xm && !$xm.equals(""))
+					and xm like '%'||#[xm]||'%'
+				#end
+				#if($sfzh && !$sfzh.equals(""))
+					and sfzh = #[sfzh]
+				#end
+				#if($rybh && !$rybh.equals(""))
+					and rybh = #[rybh]
+				#end
+				#if($jgmc && !$jgmc.equals(""))
+					and dwmc like '%'||#[jgmc]||'%'
+				#end
+				#if($zxbs && !$zxbs.equals(""))
+					and zxbs = #[zxbs]
+				#end
+				#if($sfabry && !$sfabry.equals(""))
+					and sfabry = #[sfabry]
+				#end
+				#if($zwlb && !$zwlb.equals(""))
+					and zwlb = #[zwlb]
+				#end
+				#if($djsj_start && !$djsj_start.equals(""))
+					and to_date(djsj,'yyyy-mm-dd HH24:mi:ss') >= to_date(#[djsj_start]||' 00:00:00','yyyy-mm-dd HH24:mi:ss')  
+				#end
+				#if($djsj_end && !$djsj_end.equals(""))
+					and to_date(djsj,'yyyy-mm-dd HH24:mi:ss') <= to_date(#[djsj_end]||' 23:59:59','yyyy-mm-dd HH24:mi:ss')  
+				#end
+				#if($jwsqdm && !$jwsqdm.equals(""))
+					and djdwdm = #[jwsqdm]
+				#elseif($pcsdm && !$pcsdm.equals(""))
+					and djdwdm like substr(#[pcsdm],1,8)||'%'
+				#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+					and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+					and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+				#end
+				#if($sfjwtdj && !$sfjwtdj.equals(""))
+					and sfjwtdj = #[sfjwtdj]
+				#end
+		]]>
+	</property>
+	<property name="queryDwListByDwQueryBean">
+		<![CDATA[
+			select jgbh,
+					dwmc,
+					hylb,
+					cyrs,
+					dsz,
+					dwcz,
+					dwdh,
+					dwdm,
+					dwdzyx,
+					fhdj,
+					frdb,
+					frsfzhm,
+					frlxdh,
+					frzz,
+					fzjg,
+					to_char(fzrq,'yyyy-mm-dd') as fzrq,
+					glbm,
+					gljb,
+					dzid,
+					fwbh,
+					jyfw,
+					to_char(kyrq,'yyyy-mm-dd') as kyrq,
+					swdjh,
+					to_char(yxqx,'yyyy-mm-dd') as yxqx,
+					yyzzbh,
+					yzbm,
+					zafzr,
+					zcdz,
+					to_char(zcrq,'yyyy-mm-dd') as zcrq,
+					zczb,
+					zddwbs,
+					gggdczqk,
+					bmjb,
+					bz,
+					zxbs,
+					to_char(zxrq,'yyyy-mm-dd') as zxrq,
+					zxyy,
+					djrxm,
+					to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+					djdwdm,
+					djdwmc,
+					dwxz,
+					czrxm,
+					to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+					czdwdm,
+					czdwmc,
+					czbs,
+					zrdwpcsdm,
+					zrdwpcsmc,
+					zrmjjh,
+					zrmjxm,
+					zrmjdh,
+					sssqdm,
+					wwm,
+					zgbm,djrjh,czrjh,dwdz
+				from t_za_jg_jbxx
+				where 1 = 1
+				
+				    --精确到社区
+				#if($sqdm && !$sqdm.equals(""))
+			   		and sssqdm = #[sqdm]
+			   	#elseif($jwsqdm && !$jwsqdm.equals(""))
+			   		--精确到警务区
+					and  ZRDWPCSDM = #[jwsqdm]
+				    --精确到派出所
+				#elseif($pcsdm and !$pcsdm.equals(""))
+				  	and (zrdwpcsdm like substr(#[pcsdm],1,8)||'%' or djdwdm like substr(#[pcsdm],1,8)||'%')
+				  	--精确到县区
+			    #elseif($countrygajgjgdm and !$countrygajgjgdm.equals(""))
+					and (zrdwpcsdm like substr(#[countrygajgjgdm],1,6) || '%' or djdwdm like substr(#[countrygajgjgdm],1,6) || '%')
+				    --精确到市州
+				#elseif($citygajgjgdm and !$citygajgjgdm.equals(""))
+					 and (zrdwpcsdm like substr(#[citygajgjgdm],1,4) ||'%' or czdwdm like substr(#[citygajgjgdm],1,4) ||'%')
+				#end 
+				
+				
+				#if($hylb && !$hylb.equals(""))
+					and instr(hylb,#[hylb]) >= 1
+				#end
+				#if($dwmc && !$dwmc.equals(""))
+					and dwmc like '%'||#[dwmc]||'%'
+				#end
+				#if($dwdm && !$dwdm.equals(""))
+					and dwdm = #[dwdm]
+				#end
+				#if($frdb && !$frdb.equals(""))
+					and frdb like '%'||#[frdb]||'%'
+				#end
+				#if($frsfzhm && !$frsfzhm.equals(""))
+					and frsfzhm = #[frsfzhm]
+				#end
+				#if($dwxz && !$dwxz.equals(""))
+					and dwxz = #[dwxz]
+				#end
+				
+				#if($djsjstart && !$djsjstart.equals(""))
+					and djsj >= to_date(#[djsjstart] || ' 00:00:00','yyyy-mm-dd HH24:mi:ss')
+				#end	
+				
+				#if($djsjend && !$djsjend.equals(""))
+					and djsj <= to_date(#[djsjend] || ' 23:59:59','yyyy-mm-dd HH24:mi:ss')
+				#end
+				#if($zxbs && !$zxbs.equals(""))
+					and zxbs = #[zxbs]
+				#end
+				#if($yyzzh && !$yyzzh.equals(""))
+					and yyzzbh = #[yyzzh]
+				#end
+				#if($dwlb && !$dwlb.equals(""))
+					and dwlb = #[dwlb]
+				#end	
+				
+				#if($stmc && !$stmc.equals(""))
+					and jgbh in
+							  ( 
+						           select jgbh from t_lsgl_dwfw_gl  where dzid in 
+						           (
+							             select dzid  from t_common_dzxx  where stid in
+							             (
+							                    select id from t_common_stxx where stmc  like  '%'||#[stmc]||'%'
+							             )
+							       )
+							   )
+				#end
+				#if($sfnbgl && !$sfnbgl.equals(""))
+					and sfnbgl = #[sfnbgl]
+				#end
+		]]>
+	</property>
+	<property name="queryDwListByJgbhs">
+		<![CDATA[
+		
+		select jgbh,
+				dwmc,
+				hylb,
+				cyrs,
+				dsz,
+				dwcz,
+				dwdh,
+				dwdm,
+				dwdzyx,
+				fhdj,
+				frdb,
+				frsfzhm,
+				frlxdh,
+				frzz,
+				fzjg,
+				to_char(fzrq,'yyyy-mm-dd') as fzrq,
+				glbm,
+				gljb,
+				dzid,
+				fwbh,
+				jyfw,
+				to_char(kyrq,'yyyy-mm-dd') as kyrq,
+				swdjh,
+				to_char(yxqx,'yyyy-mm-dd') as yxqx,
+				yyzzbh,
+				yzbm,
+				zafzr,
+				zcdz,
+				to_char(zcrq,'yyyy-mm-dd') as zcrq,
+				zczb,
+				zddwbs,
+				gggdczqk,
+				bmjb,
+				bz,
+				zxbs,
+				to_char(zxrq,'yyyy-mm-dd') as zxrq,
+				zxyy,
+				djrxm,
+				to_char(djsj,'yyyy-mm-dd HH24:mi:ss') as djsj,
+				djdwdm,
+				djdwmc,
+				dwxz,
+				czrxm,
+				to_char(czsj,'yyyy-mm-dd HH24:mi:ss') as czsj,
+				czdwdm,
+				czdwmc,
+				czbs,
+				zrdwpcsdm,
+				zrdwpcsmc,
+				zrmjjh,
+				zrmjxm,
+				zrmjdh,
+				sssqdm,
+				wwm,
+				zgbm,djrjh,czrjh,dwdz
+			from t_za_jg_jbxx
+			where 1 = 1
+			and jgbh  in (#[jgbhs])
+		]]>
+	</property>
+	
+	<!-- 新增从业人员派发信息 -->
+	<property name="insertCyryPfxx">
+		<![CDATA[
+			insert into t_za_ry_cyrypfxx
+			  (id, rybh, cyrybh, jzdsqdm, jzdsqmc, pfrxm, pfrjh, pfrsfzh, pfsj, pfdwmc, pfdwdm)
+			values
+			  (#[id], #[rybh], #[cyrybh], #[jzdsqdm], #[jzdsqmc], #[pfrxm], #[pfrjh], #[pfrsfzh], to_date(#[pfsj],'yyyy-mm-dd hh24:mi:ss'), #[pfdwmc], #[pfdwdm])
+		]]>
+	</property>
+	
+	<!-- 派发从业人员 -->
+	<property name="updateCyryJzdsq">
+		<![CDATA[
+			update t_za_ry_cyry 
+			set jzdsqdm = #[jzdsqdm] ,jzdsqmc = #[jzdsqmc], xzdjwq = #[xzdjwq],pfsj = to_date(#[pfsj],'yyyy-mm-dd HH24:mi:ss') 
+			where cyrybh = #[cyrybh]
+		]]>
+	</property>
+	
+	<!-- 新增年审信息 -->
+	<property name="insertJfdwNsxx">
+		<![CDATA[
+		    insert into t_za_dw_jfdw_nsxx
+		        (id, jgbh, nsrj, badj, bz, djrxm, djrjh, djdwdm, djdwmc, djrsfzh, 
+		         czrxm, czrjh, czdwdm, czdwmc, czrsfzh, czbs, nr, djsj, czsj,sfjc)
+		    values
+		        (#[id], #[jgbh], to_date(#[nsrj],'yyyy-mm-dd'), #[badj], #[bz], #[djrxm], #[djrjh], 
+		         #[djdwdm], #[djdwmc], #[djrsfzh], #[czrxm], #[czrjh], #[czdwdm], 
+		         #[czdwmc], #[czrsfzh], #[czbs], #[nr], to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'), 
+		         to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss') , #[sfjc])
+					
+		]]>
+	</property>
+	
+	<!-- 修改年审信息 -->
+	<property name="updateJfdwNsxx">
+		<![CDATA[
+			update t_za_dw_jfdw_nsxx
+			   set nsrj = to_date(#[nsrj],'yyyy-mm-dd'),
+			       badj = #[badj],
+			       bz = #[bz],
+			       czrxm = #[czrxm],
+			       czrjh = #[czrjh],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czrsfzh = #[czrsfzh],
+			       czbs = #[czbs],
+			       nr = #[nr],
+			       czsj = to_date(#[czsj],'yyyy-mm-dd hh24:mi:ss'),
+			       sfjc = #[sfjc]
+			 where id = #[id]
+		]]>
+	</property>
+	
+	<!-- 查询年审信息 -->
+	<property name="queryJfdwNsxxList">
+		<![CDATA[
+			select s.id, s.jgbh, to_char(s.nsrj,'yyyy-mm-dd') as nsrj, s.badj, s.bz, s.djrxm, s.djrjh, s.djdwdm, s.djdwmc,
+				s.djrsfzh, s.czrxm, s.czrjh, s.czdwdm, s.czdwmc, s.czrsfzh, s.czbs, s.nr, 
+				to_char(s.djsj,'yyyy-mm-dd hh24:mi:ss') as djsj, to_char(s.czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,
+				dw.dwmc,dw.frdb ,s.sfjc
+			from t_za_dw_jfdw_nsxx s,t_za_jg_jbxx dw
+			where s.jgbh = dw.jgbh
+			and s.jgbh = ?
+			order by djsj desc
+		]]>
+	</property>
+	
+	<!-- 查询年审信息 -->
+	<property name="queryJfdwNsxx">
+		<![CDATA[
+			select jbxx.dwmc,jbxx.dwdz,jbxx.dwdh,jbxx.frdb,jbxx.frlxdh,jbxx.cyrs,to_char(nsxx.nsrj,'yyyy-mm-dd') as nsrj,nsxx.badj,nsxx.bz,sfjc 
+			from t_za_jg_jbxx jbxx 
+			left join t_za_dw_jfdw_nsxx nsxx
+			on nsxx.jgbh = jbxx.jgbh
+			where jbxx.hylb = '09'
+			#if($sfns && !$sfns.equals(""))
+				#if($sfns.equals("0"))
+					and not exists(select 1 from t_za_dw_jfdw_nsxx jfdw where jbxx.jgbh = jfdw.jgbh)
+				#else
+					and exists(select 1 from t_za_dw_jfdw_nsxx jfdw where jbxx.jgbh = jfdw.jgbh)
+				#end
+			#end
+			
+			#if($nssj_strat && !$nssj_strat.equals(""))
+				and exists (select 1 from t_za_dw_jfdw_nsxx nsxx where jbxx.jgbh = nsxx.jgbh and nsxx.nsrj >= to_date(#[nssj_strat],'yyyy-mm-dd'))
+			#end
+			
+			#if($nssj_end && !$nssj_end.equals(""))
+				and exists (select 1 from t_za_dw_jfdw_nsxx nsxx where jbxx.jgbh = nsxx.jgbh and nsxx.nsrj <= to_date(#[nssj_end],'yyyy-mm-dd'))
+			#end
+			
+			#if($dwmc && !$dwmc.equals(""))
+				and dwmc like '%'||#[dwmc]||'%'
+			#end
+			
+			#if($dwdm && !$dwdm.equals(""))
+				and dwdm = #[dwdm]
+			#end
+			
+			#if($frdb && !$frdb.equals(""))
+				and frdb like '%'||#[frdb]||'%'
+			#end
+			#if($frsfzhm && !$frsfzhm.equals(""))
+				and frsfzhm = #[frsfzhm]
+			#end
+			
+			#if($dwxz && !$dwxz.equals(""))
+				and dwxz = #[dwxz]
+			#end
+			
+			#if($djsjstart && !$djsjstart.equals(""))
+				and jbxx.djsj >= to_date(#[djsjstart] || ' 00:00:00','yyyy-mm-dd HH24:mi:ss')
+			#end	
+			
+			#if($djsjend && !$djsjend.equals(""))
+				and jbxx.djsj <= to_date(#[djsjend] || ' 23:59:59','yyyy-mm-dd HH24:mi:ss')
+			#end
+			
+			#if($zxbs && !$zxbs.equals(""))
+				and zxbs = #[zxbs]
+			#end
+			
+			#if($yyzzh && !$yyzzh.equals(""))
+				and yyzzbh = #[yyzzh]
+			#end
+			
+			#if($dwlb && !$dwlb.equals(""))
+				and dwlb = #[dwlb]
+			#end
+		]]>
+	</property>
+	<!-- queryNbdwlbtjPageResultInfoA  内保单位统计，按分县局统计-->
+	<property name="queryNbdwlbtjPageResultInfoA">
+		<![CDATA[
+		select * from (
+			SELECT org.orgcode,
+      			   org.orgname,
+			       nvl(sum(dzjg),0) AS dzjg,
+				   nvl(sum(gx),0) AS gx,
+				   nvl(sum(zxxx),0) AS zxxx,
+				   nvl(sum(yy),0) AS yy,
+				   nvl(sum(sc),0) AS sc,
+				   nvl(sum(qy),0) AS qy,
+				   nvl(sum(yh),0) AS yh,
+				   nvl(sum(sdyq),0) AS sdyq,
+				   nvl(sum(zdgc),0) AS zdgc,
+				   nvl(sum(wyxq),0) AS wyxq,
+				   nvl(sum(qt),0) AS qt,
+				   nvl(sum(hj),0) AS hj
+			  FROM t_common_organization_sjjs org
+			  LEFT JOIN (
+		  				SELECT substr(dw.djdwdm,1,6)||'000000' djdwdm,
+		                    NVL(SUM(DECODE(dm, '001', total)), 0) AS dzjg,
+							NVL(SUM(DECODE(dm, '002', total)), 0) AS gx,
+							NVL(SUM(DECODE(dm, '003', total)), 0) AS zxxx,
+							NVL(SUM(DECODE(dm, '004', total)), 0) AS yy,
+							NVL(SUM(DECODE(dm, '005', total)), 0) AS sc,
+							NVL(SUM(DECODE(dm, '006', total)), 0) AS qy,
+							NVL(SUM(DECODE(dm, '007', total)), 0) AS yh,
+							NVL(SUM(DECODE(dm, '008', total)), 0) AS sdyq,
+							NVL(SUM(DECODE(dm, '009', total)), 0) AS zdgc,
+							NVL(SUM(DECODE(dm, '098', total)), 0) AS wyxq,
+							NVL(SUM(DECODE(dm, '099', total)), 0) AS qt,
+							(NVL(SUM(DECODE(dm, '001', total)), 0) +
+							NVL(SUM(DECODE(dm, '002', total)), 0) +
+							NVL(SUM(DECODE(dm, '003', total)), 0) +
+							NVL(SUM(DECODE(dm, '004', total)), 0) +
+							NVL(SUM(DECODE(dm, '005', total)), 0) +
+							NVL(SUM(DECODE(dm, '006', total)), 0) +
+							NVL(SUM(DECODE(dm, '007', total)), 0) +
+							NVL(SUM(DECODE(dm, '008', total)), 0) +
+							NVL(SUM(DECODE(dm, '009', total)), 0) +
+							NVL(SUM(DECODE(dm, '098', total)), 0) +
+							NVL(SUM(DECODE(dm, '099', total)), 0)) AS hj
+			               FROM (SELECT dic.dm, COUNT(1) AS total, dw.djdwdm
+			                       FROM t_common_dictionary dic
+			                       LEFT JOIN (SELECT jbxx.jgbh, hc.dwfl, substr(jbxx.djdwdm,1,6)||'000000' djdwdm
+			                                   FROM t_za_jg_jbxx jbxx
+			                                   LEFT JOIN t_za_dwhc hc
+			                                     ON jbxx.jgbh = hc.jgbh
+			                                    AND hc.nbhc = '1'
+			                                  WHERE jbxx.zxbs = '0'
+			                                    AND jbxx.sfnbgl = '1'
+			                                    #if($djsjstart && !$djsjstart.equals(""))
+													and jbxx.djsj >= to_date(#[djsjstart]||' 00:00:00','yyyy-mm-dd hh24:mi:ss') 
+											    #end
+								 			    #if($djsjend && !$djsjend.equals(""))
+													and jbxx.djsj <= to_date(#[djsjend]||' 23:59:59','yyyy-mm-dd hh24:mi:ss')  
+								                #end
+			                                    AND jbxx.djdwdm IS NOT NULL) dw
+			                         ON dw.dwfl = dic.dm
+			                      WHERE dic.zdlb = 'ZDY_NBDWLB'
+			                      GROUP BY dm, djdwdm
+			                     UNION
+			                     SELECT '098' AS dm, COUNT(1) AS total, substr(wyxq.djdwdm,1,6)||'000000' djdwdm
+			                       FROM t_za_wyxq wyxq
+			                      WHERE wyxq.zxbs = '0' and wyxq.ywwygs = '1'
+			                      #if($djsjstart && !$djsjstart.equals(""))
+										and wyxq.djsj >= to_date(#[djsjstart]||' 00:00:00','yyyy-mm-dd hh24:mi:ss')  
+								  #end
+								  #if($djsjend && !$djsjend.equals(""))
+										and wyxq.djsj <= to_date(#[djsjend]||' 23:59:59','yyyy-mm-dd hh24:mi:ss')  
+								  #end
+			                      GROUP BY substr(wyxq.djdwdm,1,6)) dw
+			              GROUP BY djdwdm) dw
+			    ON dw.djdwdm = org.orgcode
+			 WHERE org.leve = '3'
+			   #if($xzjb && !$xzjb.equals("") && $xzjb.equals("2"))
+			  		and substr(org.orgcode,1,4)=substr(#[dwdm],1,4)
+			   #end
+		  	 	#if($xzjb && !$xzjb.equals("") && $xzjb.equals("3"))
+		  			and substr(org.orgcode,1,6)=substr(#[dwdm],1,6)
+			  	#end
+		 	 	 #if($xzjb && !$xzjb.equals("") && $xzjb.equals("4"))
+		  			and substr(org.orgcode,1,8)=substr(#[dwdm],1,8)
+		 		 #end
+		  		 #if($xzjb && !$xzjb.equals("") && $xzjb.equals("5"))
+		  			and org.orgcode=#[dwdm]
+			 	 #end
+			 	 group by rollup(org.orgcode,org.orgname))
+			where (orgcode is not null and orgname is not null) or (orgcode is null and orgname is null) 
+			 ORDER BY orgcode nulls first
+		]]>
+	</property>
+	
+	<!-- queryNbdwlbtjPageResultInfoB  内保单位统计，按派出所统计-->
+	<property name="queryNbdwlbtjPageResultInfoB">
+		<![CDATA[
+		select * from (
+			SELECT org.orgcode,
+      			   org.orgname,
+			       nvl(sum(dzjg),0) AS dzjg,
+				   nvl(sum(gx),0) AS gx,
+				   nvl(sum(zxxx),0) AS zxxx,
+				   nvl(sum(yy),0) AS yy,
+				   nvl(sum(sc),0) AS sc,
+				   nvl(sum(qy),0) AS qy,
+				   nvl(sum(yh),0) AS yh,
+				   nvl(sum(sdyq),0) AS sdyq,
+				   nvl(sum(zdgc),0) AS zdgc,
+				   nvl(sum(wyxq),0) AS wyxq,
+				   nvl(sum(qt),0) AS qt,
+				   nvl(sum(hj),0) AS hj
+			  FROM t_common_organization_sjjs org
+			  LEFT JOIN (SELECT substr(dw.djdwdm,1,8)||'0000' djdwdm,
+		                    NVL(SUM(DECODE(dm, '001', total)), 0) AS dzjg,
+							NVL(SUM(DECODE(dm, '002', total)), 0) AS gx,
+							NVL(SUM(DECODE(dm, '003', total)), 0) AS zxxx,
+							NVL(SUM(DECODE(dm, '004', total)), 0) AS yy,
+							NVL(SUM(DECODE(dm, '005', total)), 0) AS sc,
+							NVL(SUM(DECODE(dm, '006', total)), 0) AS qy,
+							NVL(SUM(DECODE(dm, '007', total)), 0) AS yh,
+							NVL(SUM(DECODE(dm, '008', total)), 0) AS sdyq,
+							NVL(SUM(DECODE(dm, '009', total)), 0) AS zdgc,
+							NVL(SUM(DECODE(dm, '098', total)), 0) AS wyxq,
+							NVL(SUM(DECODE(dm, '099', total)), 0) AS qt,
+							(NVL(SUM(DECODE(dm, '001', total)), 0) +
+							NVL(SUM(DECODE(dm, '002', total)), 0) +
+							NVL(SUM(DECODE(dm, '003', total)), 0) +
+							NVL(SUM(DECODE(dm, '004', total)), 0) +
+							NVL(SUM(DECODE(dm, '005', total)), 0) +
+							NVL(SUM(DECODE(dm, '006', total)), 0) +
+							NVL(SUM(DECODE(dm, '007', total)), 0) +
+							NVL(SUM(DECODE(dm, '008', total)), 0) +
+							NVL(SUM(DECODE(dm, '009', total)), 0) +
+							NVL(SUM(DECODE(dm, '098', total)), 0) +
+							NVL(SUM(DECODE(dm, '099', total)), 0)) AS hj
+			               FROM (SELECT dic.dm, COUNT(1) AS total, dw.djdwdm
+			                       FROM t_common_dictionary dic
+			                       LEFT JOIN (SELECT jbxx.jgbh, hc.dwfl, substr(jbxx.djdwdm,1,8)||'0000' djdwdm
+			                                   FROM t_za_jg_jbxx jbxx
+			                                   LEFT JOIN t_za_dwhc hc
+			                                     ON jbxx.jgbh = hc.jgbh
+			                                    AND hc.nbhc = '1'
+			                                  WHERE jbxx.zxbs = '0'
+			                                    AND jbxx.sfnbgl = '1'
+			                                    #if($djsjstart && !$djsjstart.equals(""))
+													and jbxx.djsj >= to_date(#[djsjstart]||' 00:00:00','yyyy-mm-dd HH24:mi:ss')  
+											    #end
+								 			    #if($djsjend && !$djsjend.equals(""))
+													and jbxx.djsj <= to_date(#[djsjend]||' 23:59:59','yyyy-mm-dd HH24:mi:ss')  
+								                #end
+			                                    AND jbxx.djdwdm IS NOT NULL) dw
+			                         ON dw.dwfl = dic.dm
+			                      WHERE dic.zdlb = 'ZDY_NBDWLB'
+			                      GROUP BY dm, djdwdm
+			                     UNION
+			                     SELECT '098' AS dm, COUNT(1) AS total, substr(wyxq.djdwdm,1,8)||'0000' djdwdm
+			                       FROM t_za_wyxq wyxq
+			                      WHERE wyxq.zxbs = '0' and wyxq.ywwygs = '1'
+			                      #if($djsjstart && !$djsjstart.equals(""))
+										and wyxq.djsj >= to_date(#[djsjstart]||' 00:00:00','yyyy-mm-dd hh24:mi:ss')  
+								  #end
+								  #if($djsjend && !$djsjend.equals(""))
+										and wyxq.djsj <= to_date(#[djsjend]||' 23:59:59','yyyy-mm-dd hh24:mi:ss')  
+								  #end
+			                      GROUP BY substr(wyxq.djdwdm,1,8)) dw
+			              GROUP BY djdwdm) dw
+			    ON dw.djdwdm = org.orgcode
+			 WHERE org.leve = '4'
+			  
+			   #if($xzjb && !$xzjb.equals("") && $xzjb.equals("2"))
+			  		and substr(org.orgcode,1,4)=substr(#[dwdm],1,4)
+			   #end
+		  	 	#if($xzjb && !$xzjb.equals("") && $xzjb.equals("3"))
+		  			and substr(org.orgcode,1,6)=substr(#[dwdm],1,6)
+			  	#end
+		 	 	 #if($xzjb && !$xzjb.equals("") && $xzjb.equals("4"))
+		  			and substr(org.orgcode,1,8)=substr(#[dwdm],1,8)
+		 		 #end
+		  		 #if($xzjb && !$xzjb.equals("") && $xzjb.equals("5"))
+		  			and org.orgcode=#[dwdm]
+			 	 #end
+			group by rollup(org.orgcode,org.orgname))
+			where (orgcode is not null and orgname is not null) or (orgcode is null and orgname is null) 
+			ORDER BY orgcode nulls first
+		]]>
+	</property>
+	
+	<!-- queryNbdwlbtjPageResultInfoC  内保单位统计，按警务区统计-->
+	<property name="queryNbdwlbtjPageResultInfoC">
+		<![CDATA[
+			select * from (
+			SELECT 
+				  org.orgcode,
+      			  org.orgname,
+			       nvl(sum(dzjg),0) AS dzjg,
+				   nvl(sum(gx),0) AS gx,
+				   nvl(sum(zxxx),0) AS zxxx,
+				   nvl(sum(yy),0) AS yy,
+				   nvl(sum(sc),0) AS sc,
+				   nvl(sum(qy),0) AS qy,
+				   nvl(sum(yh),0) AS yh,
+				   nvl(sum(sdyq),0) AS sdyq,
+				   nvl(sum(zdgc),0) AS zdgc,
+				   nvl(sum(wyxq),0) AS wyxq,
+				   nvl(sum(qt),0) AS qt,
+				   nvl(sum(hj),0) AS hj
+			  FROM t_common_organization_sjjs org
+			  LEFT JOIN (SELECT dw.djdwdm ,
+			                NVL(SUM(DECODE(dm, '001', total)), 0) AS dzjg,
+							NVL(SUM(DECODE(dm, '002', total)), 0) AS gx,
+							NVL(SUM(DECODE(dm, '003', total)), 0) AS zxxx,
+							NVL(SUM(DECODE(dm, '004', total)), 0) AS yy,
+							NVL(SUM(DECODE(dm, '005', total)), 0) AS sc,
+							NVL(SUM(DECODE(dm, '006', total)), 0) AS qy,
+							NVL(SUM(DECODE(dm, '007', total)), 0) AS yh,
+							NVL(SUM(DECODE(dm, '008', total)), 0) AS sdyq,
+							NVL(SUM(DECODE(dm, '009', total)), 0) AS zdgc,
+							NVL(SUM(DECODE(dm, '098', total)), 0) AS wyxq,
+							NVL(SUM(DECODE(dm, '099', total)), 0) AS qt,
+							(NVL(SUM(DECODE(dm, '001', total)), 0) +
+							NVL(SUM(DECODE(dm, '002', total)), 0) +
+							NVL(SUM(DECODE(dm, '003', total)), 0) +
+							NVL(SUM(DECODE(dm, '004', total)), 0) +
+							NVL(SUM(DECODE(dm, '005', total)), 0) +
+							NVL(SUM(DECODE(dm, '006', total)), 0) +
+							NVL(SUM(DECODE(dm, '007', total)), 0) +
+							NVL(SUM(DECODE(dm, '008', total)), 0) +
+							NVL(SUM(DECODE(dm, '009', total)), 0) +
+							NVL(SUM(DECODE(dm, '098', total)), 0) +
+							NVL(SUM(DECODE(dm, '099', total)), 0)) AS hj
+			               FROM (SELECT dic.dm, COUNT(1) AS total, dw.djdwdm
+			                       FROM t_common_dictionary dic
+			                       LEFT JOIN (SELECT jbxx.jgbh, hc.dwfl, jbxx.djdwdm
+			                                   FROM t_za_jg_jbxx jbxx
+			                                   LEFT JOIN t_za_dwhc hc
+			                                     ON jbxx.jgbh = hc.jgbh
+			                                    AND hc.nbhc = '1'
+			                                  WHERE jbxx.zxbs = '0'
+			                                    AND jbxx.sfnbgl = '1'
+			                                    #if($djsjstart && !$djsjstart.equals(""))
+													and jbxx.djsj >= to_date(#[djsjstart]||' 00:00:00','yyyy-mm-dd hh24:mi:ss')
+											    #end
+								 			    #if($djsjend && !$djsjend.equals(""))
+													and jbxx.djsj <= to_date(#[djsjend]||' 23:59:59','yyyy-mm-dd hh24:mi:ss')  
+								                #end
+			                                    AND jbxx.djdwdm IS NOT NULL) dw
+			                         ON dw.dwfl = dic.dm
+			                      WHERE dic.zdlb = 'ZDY_NBDWLB'
+			                      GROUP BY dm, djdwdm
+			                     UNION
+			                     SELECT '098' AS dm, COUNT(1) AS total, wyxq.djdwdm
+			                       FROM t_za_wyxq wyxq
+			                      WHERE wyxq.zxbs = '0' and wyxq.ywwygs = '1'
+			                       #if($djsjstart && !$djsjstart.equals(""))
+			                       		and wyxq.djsj >= to_date(#[djsjstart]||' 00:00:00','yyyy-mm-dd hh24:mi:ss')
+								  #end
+								  #if($djsjend && !$djsjend.equals(""))
+								  	 and wyxq.djsj <= to_date(#[djsjend]||' 23:59:59','yyyy-mm-dd hh24:mi:ss') 
+								  #end
+			                      GROUP BY wyxq.djdwdm) dw
+			              GROUP BY djdwdm) dw
+			    ON dw.djdwdm = org.orgcode
+			 WHERE org.leve = '5'
+				 #if($xzjb && !$xzjb.equals("") && $xzjb.equals("2"))
+			  		and substr(org.orgcode,1,4)=substr(#[dwdm],1,4)
+			 	 #end
+			  	 #if($xzjb && !$xzjb.equals("") && $xzjb.equals("3"))
+			  		and substr(org.orgcode,1,6)=substr(#[dwdm],1,6)
+				  #end
+			 	  #if($xzjb && !$xzjb.equals("") && $xzjb.equals("4"))
+			  		and substr(org.orgcode,1,8)=substr(#[dwdm],1,8)
+			 	 #end
+			  	 #if($xzjb && !$xzjb.equals("") && $xzjb.equals("5"))
+			  		and org.orgcode=#[dwdm]
+				  #end
+			group by rollup(org.orgcode,org.orgname))
+			where (orgcode is not null and orgname is not null) or (orgcode is null and orgname is null) 
+			ORDER BY orgcode nulls first
+		]]>
+	</property>
+	
+	<!-- 根据机构编号修改单位基本信息表的操作时间 -->
+	<property name="updateDwjbxxCzsj">
+		<![CDATA[
+			update t_za_jg_jbxx  set  czsj = sysdate,czbs = '2' where jgbh = ?
+		]]>
+	</property>
+	
+	
+	<property name="queryAqjcList">
+		<![CDATA[
+			SELECT jc.*
+			  FROM V_ZA_DWJC jc, t_za_jg_jbxx dw
+			  where jc.jgbh = dw.jgbh
+			  #if($jwsqdm && !$jwsqdm.equals(""))
+					and  dw.djdwdm = #[jwsqdm]
+				#elseif($pcsdm && !$pcsdm.equals(""))
+					and (dw.djdwdm like substr(#[pcsdm],1,8)||'%')
+				#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+					and dw.djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+					and dw.djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+				#end
+				#if($dwmc && !$dwmc.equals(""))
+					and dw.dwmc like #[dwmc]||'%'
+				#end 
+				#if($starttime && !$starttime.equals(""))
+					and to_date(jc.jcsj,'yyyy-mm-dd') >= to_date(#[starttime],'yyyy-mm-dd')
+				#end
+				#if($endtime && !$endtime.equals(""))
+					and to_date(jc.jcsj,'yyyy-mm-dd')<= to_date(#[endtime],'yyyy-mm-dd')
+				#end
+				#if($jgbh && !$jgbh.equals(""))
+					and jc.jgbh = #[jgbh]
+				#end
+				#if($hylb && !$hylb.equals(""))
+					and instr(dw.hylb,#[hylb]) > 0
+				#end
+		]]>
+	</property>
+</properties>

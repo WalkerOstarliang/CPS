@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="lssjtj" namespace="/khkp/lssjtj" extends="default"> 
+	  		<action name="*" class="com.chinacreator.khkp.action.LssjTjAction" method="{1}">
+	  			<result name="toLssjTjPage">/jsp/xtgl/pages/khkp/lssjtj.jsp</result>
+	  		</action>
+	  </package>
+	  
+	   <package name="rsdfx" namespace="/khkp/rsdfx" extends="default"> 
+	  		<action name="*" class="com.chinacreator.khkp.action.SjlrhcAction" method="{1}">
+	  			<result name="toRsdydfxPage">/jsp/khkp/pages/rsdydfxlist.jsp</result>
+	  			<result name="loadRsdydfxList">/jsp/khkp/pages/rsdydfxtable.jsp</result>
+	  			<result name="exportRsdydfxxls">/jsp/khkp/pages/rsdydfxxls.jsp</result>
+	  		</action>
+	  </package>
+</struts>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="cyry" extends="default" namespace="/zagl/cyry">
+		<action name="*" class="com.chinacreator.zagl.action.CyryManageAction" method="{1}">
+			<result name="toCyryDjPage">/jsp/sydw/pages/cyry/cyrydjpage.jsp</result>
+			<result name="toJnCyryDjPage">/jsp/sydw/pages/cyry/jncyrydjpage.jsp</result>
+			<result name="toJwCyryDjPage">/jsp/sydw/pages/cyry/jwcyrydjpage.jsp</result>
+			<result name="toCyryHsPage">/jsp/sydw/pages/cyry/cyryhspage.jsp</result>
+			
+			<result name="toCyryImportPage">/jsp/sydw/pages/cyry/cyryimportpage.jsp</result>
+			<result name="importCyryInfo">/jsp/sydw/pages/cyry/cyryimportlistpage.jsp</result>
+			<result name="exportCyryZdryList">/jsp/sydw/pages/cyry/cyryimportexportpage.jsp</result>
+			
+			<result name="toImportCyryHcPage">/jsp/sydw/pages/cyry/cyrydrhcpage.jsp</result>
+			<result name="exportHcCyryListPage">/jsp/sydw/pages/cyry/cyrydrhcexportpage.jsp</result>
+		</action>
+	</package>
+</struts>

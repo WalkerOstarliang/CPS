@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryTzmbxx">
+	<![CDATA[
+		select id, tzmc, tzmb, to_char(scsj,'yyyy-MM-dd HH24:mi:ss') scsj from t_gzgl_tzmb WHERE 1=1
+		#if($tzmc && !$tzmc.equals(""))
+			and tzmc like '%'||#[tzmc]||'%'
+		#end
+		#if($scsj_from && !$scsj_from.equals(""))
+			and scsj >= to_date(#[scsj_from],'yyyy-MM-dd HH24:mi:ss')
+		#end
+		#if($scsj_to && !$scsj_to.equals(""))
+			and scsj <= to_date(#[scsj_to],'yyyy-MM-dd HH24:mi:ss')
+		#end
+		order by scsj desc
+	]]>
+	</property>
+	<property name="saveTzmbxx">
+	<![CDATA[
+		insert into t_gzgl_tzmb
+  (id, tzmc, tzmb, scsj)
+values
+  (?, ?, ?, sysdate)
+	]]>
+	</property>
+	<property name="getTzmbxxBeanbyId">
+	<![CDATA[	
+ 	select id, tzmc, tzmb, to_char(scsj,'yyyy-MM-dd HH24:mi:ss') scsj from t_gzgl_tzmb
+ 	where id =?
+ 	]]>
+	</property>
+	<property name="deleteTzmbxxbyId">
+	<![CDATA[
+		delete t_gzgl_tzmb
+ 			where id=?
+	]]>
+	</property>
+</properties>

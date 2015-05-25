@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<!-- 查询重点人员SQL -->
+	<property name="queryZdryObj">
+		<![CDATA[
+			SELECT RYBH,
+               RYLX,
+               SFZH,
+               XM,
+               BM,
+               XB,
+               MZ,
+               ZDRYLBBJ,
+               ZDRYXL,
+               WHCD,
+               TO_CHAR(CSRQ,'YYYY-MM-DD') AS CSRQ,
+               ZYLB,
+               FWCS,
+               ZW,
+               QTZJLX,
+               QTZJHM,
+               JG,
+               GJ,
+               HJDXZQH,
+               HJDXZ,
+               XZDQH,
+               XZDXZ,
+               ZJXY,
+               ZZMH,
+               HYZK,
+               JKZK,
+               BYZK,
+               XX,
+               LXFS,
+               SG,
+               TBTZ,
+               LX,
+               TX,
+               YWSB,
+               SBWZ,
+               KY,
+               XH,
+               ZC,
+               GLLB,
+               GLFS,
+               LGLY,
+               XXCJXY,
+               AJLX,
+               TC,
+               ZRDWDM,
+               ZRDWMC,
+               ZRRXM,
+               ZRRLXDH,
+               DJSJ,
+               DJRXM,
+               DJDWDM,
+               DJDWMC,
+               SSPCSDM,
+               SSPCSMC,
+               SQJWSDM,
+               SQJWSMC,
+               GXSJ,
+               RKSJ,
+               ISGK
+          FROM T_ZDRY_JBXX
+          WHERE 1=1 
+          --精确到派出所
+		  #if($pcsdm and !$pcsdm.equals(""))
+		  	and SSPCSDM=#[pcsdm]
+		  #else
+		  	  --精确到县区
+			  #if($countrydm and !$countrydm.equals(""))
+			  	and substr(SSPCSDM,1,6)=#[countrydm]
+			  #else
+			     --精确到市州
+			  	 #if($citydm and !$citydm.equals(""))
+			  		and substr(SSPCSDM,1,4)=substr(#[citydm],1,4)
+			  	 #end
+			  #end
+		  #end
+          #if($sfzh and !$sfzh.equals(""))
+          	AND SFZH LIKE '%'||#[sfzh]||'%'
+          #end
+          #if($xm and !$xm.equals(""))
+          	AND XM LIKE '%'||#[xm]||'%'
+          #end
+          #if($rylx and !$rylx.equals(""))
+          	AND RYLX = #[rylx]
+          #end
+          #if($xb and !$xb.equals(""))
+          	AND XB = #[xb]
+          #end
+          #if($isgk and !$isgk.equals(""))
+          	AND ISGK = #[isgk]
+          #end
+          #if($startDjsj and !$startDjsj.equals(""))
+          	AND DJSJ >= TO_DATE(#[startDjsj],'YYYY-MM-DD')
+          #end
+          #if($endDjsj and !$endDjsj.equals(""))
+          	AND DJSJ <= TO_DATE(#[endDjsj],'YYYY-MM-DD')
+          #end
+		]]>
+	</property>
+	
+	<!-- 根据身份证号码查询重点人员SQL -->
+	<property name="queryBySfzhPersonnelSQL">
+		<![CDATA[
+			SELECT RYBH,
+               RYLX,
+               SFZH,
+               XM,
+               BM,
+               XB,
+               MZ,
+               ZDRYLBBJ,
+               ZDRYXL,
+               WHCD,
+               CSRQ,
+               ZYLB,
+               FWCS,
+               ZW,
+               QTZJLX,
+               QTZJHM,
+               JG,
+               GJ,
+               HJDXZQH,
+               HJDXZ,
+               XZDQH,
+               XZDXZ,
+               ZJXY,
+               ZZMH,
+               HYZK,
+               JKZK,
+               BYZK,
+               XX,
+               LXFS,
+               SG,
+               TBTZ,
+               LX,
+               TX,
+               YWSB,
+               SBWZ,
+               KY,
+               XH,
+               ZC,
+               GLLB,
+               GLFS,
+               LGLY,
+               XXCJXY,
+               AJLX,
+               TC,
+               ZRDWDM,
+               ZRDWMC,
+               ZRRXM,
+               ZRRLXDH,
+               DJSJ,
+               DJRXM,
+               DJDWDM,
+               DJDWMC,
+               SSPCSDM,
+               SSPCSMC,
+               SQJWSDM,
+               SQJWSMC,
+               GXSJ,
+               RKSJ,
+               ISGK,
+               MS
+          FROM T_ZDRY_JBXX
+          WHERE SFZH = ?
+          AND ISGK = ?
+		]]>
+	</property>
+		
+	<!-- 查询列管申请SQL -->
+	<property name="queryLcsqxxListSQL">
+		<![CDATA[
+			select id,
+		       sqxxbh,
+		       ysqxxbh,
+		       rybh,
+		       lgsqlx,
+		       zdrklx,
+		       sfzh,
+		       xm,
+		       xb,
+		       jtzz,
+		       lxdh,
+		       ajms,
+		       grjj,
+		       zywtjyj,
+		       lcgly,
+		       lcgrq,
+		       sqzt,
+		       lgczt,
+		       jbshdwdm,
+		       jbshdwmc,
+		       jbsj,
+		       sqrxm,
+		       sqdwdm,
+		       sqdwmc,
+		       sqsqjwsmc,
+		       sqsqjwsdm,
+		       sqsj
+		  from t_zdry_lcsqxx
+          WHERE 1=1 
+          --精确到派出所
+          #if($jwsqdm and !$jwsqdm.equals(""))
+          	and sqdwdm=#[jwsqdm]
+          #else
+          	#if($pcsdm and !$pcsdm.equals(""))
+			  	and substr(sqdwdm,1,8)=substr(#[pcsdm],1,8)
+			  #else
+			  	  --精确到县区
+				  #if($countrydm and !$countrydm.equals(""))
+				  	and substr(sqdwdm,1,6)=#[countrydm]
+				  #else
+				     --精确到市州
+				  	 #if($citydm and !$citydm.equals(""))
+				  		and substr(sqdwdm,1,4)=substr(#[citydm],1,4)
+				  	 #end
+				  #end
+			  #end
+          #end
+          #if($sfzh and !$sfzh.equals(""))
+          	AND SFZH LIKE '%'||#[sfzh]||'%'
+          #end
+          #if($xm and !$xm.equals(""))
+          	AND XM LIKE '%'||#[xm]||'%'
+          #end
+          #if($lgsqlx and !$lgsqlx.equals(""))
+          	AND lgsqlx = #[lgsqlx]
+          #end
+          #if($xb and !$xb.equals(""))
+          	AND XB = #[xb]
+          #end
+          #if($zdrklx and !$zdrklx.equals(""))
+          	AND zdrklx = #[zdrklx]
+          #end
+          #if($startDjsj and !$startDjsj.equals(""))
+          	AND sqsj >= TO_DATE(#[startDjsj],'YYYY-MM-DD')
+          #end
+          #if($endDjsj and !$endDjsj.equals(""))
+          	AND sqsj <= TO_DATE(#[endDjsj],'YYYY-MM-DD')
+          #end
+          #if($jbshdwdm and !$jbshdwdm.equals(""))
+          	AND jbshdwdm = #[jbshdwdm]
+          #end
+          #if($sqzt and !$sqzt.equals(""))
+          	AND sqzt <> #[sqzt]
+          #end
+           #if($lgczt and !$lgczt.equals(""))
+          	AND lgczt = #[lgczt]
+          #end
+		]]>
+	</property>
+	
+	<!-- 根据申请信息编号查询列管申请SQL -->
+	<property name="queryLcsqxxSQL">
+		<![CDATA[
+			select id,
+		       sqxxbh,
+		       ysqxxbh,
+		       rybh,
+		       lgsqlx,
+		       zdrklx,
+		       sfzh,
+		       xm,
+		       xb,
+		       jtzz,
+		       lxdh,
+		       ajms,
+		       grjj,
+		       zywtjyj,
+		       lcgly,
+		       lcgrq,
+		       sqzt,
+		       lgczt,
+		       jbshdwdm,
+		       jbshdwmc,
+		       jbsj,
+		       sqrxm,
+		       sqdwdm,
+		       sqdwmc,
+		       sqsqjwsmc,
+		       sqsqjwsdm,
+		       sqsj
+		  from t_zdry_lcsqxx
+          WHERE sqxxbh=?
+		]]>
+	</property>
+	
+	<!-- 查询列管流程SQL -->
+	<property name="queryLksqlzxxSQL">
+		<![CDATA[
+			select id,
+		       sqxxbh,
+		       clrxm,
+		       cldwdm,
+		       cldwmc,
+		       cldwlx,
+		       cljg,
+		       cljgyj,
+		       clsj
+		  from t_zdry_lksqlzxx
+		  where sqxxbh=#[sqxxbh]
+		  #if($lcgsqlx and !$lcgsqlx.equals(""))
+          	AND lcgsqlx = #[lcgsqlx]
+          #end
+		  order by id asc
+		]]>
+	</property>
+	
+	<!-- 插入申请列管流程数据SQL -->
+	<property name="insertLksqlzxxSql">
+		<![CDATA[
+			insert into t_zdry_lksqlzxx
+			  (id, sqxxbh, clrxm, cldwdm, cldwmc, cldwlx, cljg, cljgyj, clsj,lcgsqlx)
+			values
+			  (SEQ_ZDRY_LKSQLZXX.Nextval,
+			   #[sqxxbh],
+			   #[clrxm],
+			   #[cldwdm],
+			   #[cldwmc],
+			   #[cldwlx],
+			   #[cljg],
+			   #[cljgyj],
+			   #[clsj],
+			   #[lcgsqlx])
+		]]>
+	</property>
+	<!-- 插入列管申请数据SQL -->
+	<property name="insertLcsqxxSql">
+		<![CDATA[
+			 insert into t_zdry_lcsqxx
+		          (id,
+		           sqxxbh,
+		           ysqxxbh,
+		           rybh,
+		           lgsqlx,
+		           zdrklx,
+		           sfzh,
+		           xm,
+		           xb,
+		           jtzz,
+		           lxdh,
+		           ajms,
+		           grjj,
+		           zywtjyj,
+		           lcgly,
+		           lcgrq,
+		           sqzt,
+		           lgczt,
+		           jbshdwdm,
+		           jbshdwmc,
+		           jbsj,
+		           sqrxm,
+		           sqdwdm,
+		           sqdwmc,
+		           sqsqjwsmc,
+		           sqsqjwsdm,
+		           sqsj)
+		        values
+		          (SEQ_ZDRY_LCSQXX.Nextval,
+		           #[sqxxbh],
+		           #[ysqxxbh],
+		           #[rybh],
+		           #[lgsqlx],
+		           #[zdrklx],
+		           #[sfzh],
+		           #[xm],
+		           #[xb],
+		           #[jtzz],
+		           #[lxdh],
+		           #[ajms],
+		           #[grjj],
+		           #[zywtjyj],
+		           #[lcgly],
+		           #[lcgrq],
+		           #[sqzt],
+		           #[lgczt],
+		           #[jbshdwdm],
+		           #[jbshdwmc],
+		           sysdate,
+		           #[sqrxm],
+		           #[sqdwdm],
+		           #[sqdwmc],
+		           #[sqsqjwsmc],
+		           #[sqsqjwsdm],
+		           sysdate)
+		]]>
+	</property>
+	
+	<!-- 插入重点人员基本信息SQL -->
+	<property name="insertZdryjbxxSql">
+		<![CDATA[
+			insert into t_zdry_jbxx(rybh,
+                   rylx,
+                   sfzh,
+                   xm,
+                   bm,
+                   xb,
+                   mz,
+                   zdrylbbj,
+                   zdryxl,
+                   whcd,
+                   csrq,
+                   zylb,
+                   fwcs,
+                   zw,
+                   qtzjlx,
+                   qtzjhm,
+                   jg,
+                   gj,
+                   hjdxzqh,
+                   hjdxz,
+                   xzdqh,
+                   xzdxz,
+                   zjxy,
+                   zzmh,
+                   hyzk,
+                   jkzk,
+                   byzk,
+                   xx,
+                   lxfs,
+                   sg,
+                   tbtz,
+                   lx,
+                   tx,
+                   ywsb,
+                   sbwz,
+                   ky,
+                   xh,
+                   zc,
+                   gllb,
+                   glfs,
+                   lgly,
+                   xxcjxy,
+                   ajlx,
+                   tc,
+                   zrdwdm,
+                   zrdwmc,
+                   zrrxm,
+                   zrrlxdh,
+                   djsj,
+                   djrxm,
+                   djdwdm,
+                   djdwmc,
+                   sspcsdm,
+                   sspcsmc,
+                   sqjwsdm,
+                   sqjwsmc,
+                   gxsj,
+                   rksj,
+                   isgk,
+                   sckcsj) 
+             values(SEQ_ZDRY_JBXX.Nextval,
+             	#[rylx], 
+             	#[sfzh], 
+             	#[xm], 
+             	#[bm], 
+             	#[xb], 
+             	#[mz], 
+             	#[zdrylbbj], 
+             	#[zdryxl], 
+             	#[whcd], 
+             	#[csrq], 
+             	#[zylb], 
+             	#[fwcs], 
+             	#[zw], 
+             	#[qtzjlx], 
+             	#[qtzjhm], 
+             	#[jg], 
+             	#[gj], 
+             	#[hjdxzqh], 
+             	#[hjdxz], 
+             	#[xzdqh], 
+             	#[xzdxz], 
+             	#[zjxy], 
+             	#[zzmh], 
+             	#[hyzk], 
+             	#[jkzk], 
+             	#[byzk], 
+             	#[xx], 
+             	#[lxfs], 
+             	#[sg], 
+             	#[tbtz], 
+             	#[lx], 
+             	#[tx], 
+             	#[ywsb], 
+             	#[sbwz], 
+             	#[ky], 
+             	#[xh], 
+             	#[zc], 
+             	#[gllb], 
+             	#[glfs], 
+             	#[lgly], 
+             	#[xxcjxy], 
+             	#[ajlx], 
+             	#[tc], 
+             	#[zrdwdm], 
+             	#[zrdwmc], 
+             	#[zrrxm], 
+             	#[zrrlxdh], 
+             	sysdate, 
+             	#[djrxm], 
+             	#[djdwdm], 
+             	#[djdwmc], 
+             	#[sspcsdm], 
+             	#[sspcsmc], 
+             	#[sqjwsdm], 
+             	#[sqjwsmc], 
+             	sysdate, 
+             	sysdate, 
+             	#[isgk],
+             	sysdate)
+		]]>
+	</property>
+	
+	<property name="querySfzhLgInfoSQL">
+		<![CDATA[
+			select id,
+               sqxxbh,
+               ysqxxbh,
+               rybh,
+               lgsqlx,
+               zdrklx,
+               sfzh,
+               xm,
+               xb,
+               jtzz,
+               lxdh,
+               ajms,
+               grjj,
+               zywtjyj,
+               lcgly,
+               lcgrq,
+               sqzt,
+               lgczt,
+               jbshdwdm,
+               jbshdwmc,
+               jbsj,
+               sqrxm,
+               sqdwdm,
+               sqdwmc,
+               sqsqjwsmc,
+               sqsqjwsdm,
+               sqsj
+          from t_zdry_lcsqxx
+          where  sfzh=?
+          and SQZT<>? 
+		]]>
+	</property>
+	
+	<property name="updateLcsqxxSQL">
+		<![CDATA[
+			update t_zdry_lcsqxx
+			   set   
+				   #if($ysqxxbh and !$ysqxxbh.equals(""))
+		          	 ysqxxbh = #[ysqxxbh],
+		           #end
+				   #if($lgsqlx && !$lgsqlx.equals(""))
+				   		lgsqlx    = #[lgsqlx],
+				   #end
+			       #if($sqzt && !$sqzt.equals(""))
+				   		sqzt      = #[sqzt],
+				   #end
+			       #if($lgczt && !$lgczt.equals(""))
+				   		lgczt     = #[lgczt],
+				   #end
+				   #if($jbshdwdm && !$jbshdwdm.equals(""))
+				   		jbshdwdm  = #[jbshdwdm],
+				   #end
+			       #if($jbshdwmc && !$jbshdwmc.equals(""))
+				   		jbshdwmc  = #[jbshdwmc],
+				   #end
+			       #if($jbsj && !$jbsj.equals(""))
+				   		jbsj      = #[jbsj],
+				   #end
+			       sqxxbh = #[sqxxbh]
+			 where sqxxbh = #[sqxxbh]
+		]]>
+	</property>
+	
+	<property name="queryByCodeSpdwzdpcSQL">
+		<![CDATA[
+			select * from T_ZDRY_SPDWZDPZ where code=?
+		]]>
+	</property>
+</properties>

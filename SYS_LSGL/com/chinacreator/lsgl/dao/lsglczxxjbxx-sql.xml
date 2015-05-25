@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+ 	<property name="insertCzxxBean">
+ 		<![CDATA[
+ 			insert into t_lsgl_czfw_czxx
+				  (czxxbh,
+				   ryjgbh,
+				   czfwbh,
+				   fjbh,
+				   yfzgx,
+				   zlrq,
+				   tzrq,
+				   tzyy,
+				   djsj,
+				   djdwdm,
+				   djr,
+				   djrxm,
+				   djdwmc,
+				   xgdw,
+				   xgr,
+				   xgsj,
+				   xgrxm,
+				   xgdwmc,
+				   ras,
+				   hzrxm,
+				   hzrsfzh,
+				   hzrxb,
+				   jgdwmc,
+				   czrlx,
+				   czzt)
+				values
+				  (#[czxxbh],
+				   #[ryjgbh],
+				   #[czfwbh],
+				   #[fjbh],
+				   #[yfzgx],
+				   to_date(#[zlrq],'yyyy-mm-dd'),
+				   to_date(#[tzrq],'yyyy-mm-dd'),
+				   #[tzyy],
+				   to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+				   #[djdwdm],
+				   #[djr],
+				   #[djrxm],
+				   #[djdwmc],
+				   #[xgdw],
+				   #[xgr],
+				   to_date(#[xgsj],'yyyy-mm-dd hh24:mi:ss'),
+				   #[xgrxm],
+				   #[xgdwmc],
+				   #[ras],
+				   #[hzrxm],
+				   #[hzrsfzh],
+				   #[hzrxb],
+				   #[jgdwmc],
+				   #[czrlx],
+				   #[czzt])
+ 		]]>
+ 	</property> 
+ 	
+ 	<property name="queryCzxxPageInfo">
+ 		<![CDATA[
+		select czxxbh,
+			       ryjgbh,
+			       czfwbh,
+			       fjbh,
+			       yfzgx,
+			       to_char(zlrq,'yyyy-mm-dd') zlrq,
+			       to_char(tzrq,'yyyy-mm-dd') tzrq,
+			       tzyy,
+			       djsj,
+			       djdwdm,
+			       djr,
+			       djrxm,
+			       djdwmc,
+			       xgdw,
+			       xgr,
+			       xgsj,
+			       xgrxm,
+			       xgdwmc,
+			       ras,
+			       hzrxm,
+			       hzrsfzh,
+			       hzrxb,
+			       jgdwmc,
+			       czrlx,
+		           czzt
+			  from t_lsgl_czfw_czxx
+			  where czfwbh=?
+			  order by djsj desc
+ 		]]>
+ 	</property> 
+ 	
+ 	<property name="queryCzxxPageInfobyCzxxbh">
+ 		<![CDATA[
+ 			select czxxbh,
+			       ryjgbh,
+			       czfwbh,
+			       fjbh,
+			       yfzgx,
+			       to_char(zlrq,'yyyy-mm-dd') zlrq,
+			       to_char(tzrq,'yyyy-mm-dd') tzrq,
+			       tzyy,
+			       djsj,
+			       djdwdm,
+			       djr,
+			       djrxm,
+			       djdwmc,
+			       xgdw,
+			       xgr,
+			       xgsj,
+			       xgrxm,
+			       xgdwmc,
+			       ras,
+			       hzrxm,
+			       hzrsfzh,
+			       hzrxb,
+			       jgdwmc,
+			       czrlx,
+		           czzt
+			  from t_lsgl_czfw_czxx
+			  where czxxbh=?
+ 		]]>
+ 	</property> 
+ 	
+ 	<property name="updateCzxxBean">
+ 		<![CDATA[
+ 			
+		update t_lsgl_czfw_czxx
+		   set czxxbh = #[czxxbh],
+		       ryjgbh = #[ryjgbh],
+		       czfwbh = #[czfwbh],
+		       fjbh = #[fjbh],
+		       yfzgx = #[yfzgx],
+		       zlrq = to_date(#[zlrq],'yyyy-mm-dd'),
+		       tzrq = to_date(#[tzrq],'yyyy-mm-dd'),
+		       tzyy = #[tzyy],
+		       djsj = to_date(#[djsj],'yyyy-mm-dd hh24:mi:ss'),
+		       djdwdm = #[djdwdm],
+		       djr = #[djr],
+		       djrxm = #[djrxm],
+		       djdwmc = #[djdwmc],
+		       xgdw = #[xgdw],
+		       xgr = #[xgr],
+		       xgsj = to_date(#[xgsj],'yyyy-mm-dd hh24;mi:ss'),
+		       xgrxm = #[xgrxm],
+		       xgdwmc = #[xgdwmc],
+		       ras = #[ras],
+		       hzrxm = #[hzrxm],
+		       hzrsfzh = #[hzrsfzh],
+		       hzrxb = #[hzrxb],
+		       jgdwmc = #[jgdwmc],
+		        czrlx = #[czrlx],
+		       czzt = #[czzt]
+		 where  czxxbh = #[czxxbh]
+ 		]]>
+ 	</property> 	 
+ 	
+ 	<property name="queryCzfwCzxxBeanBySfzh">
+ 		<![CDATA[
+ 			select czxxbh,
+			       ryjgbh,
+			       czfwbh,
+			       fjbh,
+			       yfzgx,
+			       to_char(zlrq,'yyyy-mm-dd') zlrq,
+			       to_char(tzrq,'yyyy-mm-dd') tzrq,
+			       tzyy,
+			       djsj,
+			       djdwdm,
+			       djr,
+			       djrxm,
+			       djdwmc,
+			       xgdw,
+			       xgr,
+			       xgsj,
+			       xgrxm,
+			       xgdwmc,
+			       ras,
+			       hzrxm,
+			       hzrsfzh,
+			       hzrxb,
+			       jgdwmc
+			        czrlx,
+		       		czzt
+			  from t_lsgl_czfw_czxx
+			  where hzrsfzh=?
+			  and czfwbh=?
+ 		]]>
+ 	</property> 	
+ 	
+ 	<!-- new -->
+ 	<property name="insertCzrBean">
+ 		<![CDATA[
+ 			insert into t_lsgl_czfw_czrxx
+			  (id,
+			   czfwbh,
+			   fwid,
+			   czrbh,
+			   czrzjzl,
+			   czrzjhm,
+			   xm,
+			   xb,
+			   csrq,
+			   lxfs,
+			   czrq,
+			   czyt,
+			   zxrq,
+			   czrzt,
+			   zxyy,
+			   zxbs,
+			   ssxq,
+			   slrq,
+			   bz,
+			   sssqdm,
+			   djrxm,
+			   djdwdm,
+			   djdwmc,
+			   djrsfzh,
+			   czrxm,
+			   czdwdm,
+			   czdwmc,
+			   czrsfzh,
+			   zxrxm,
+			   zxdwdm,
+			   zxdwmc,
+			   zxrsfzh,
+			   djsj,
+			   czsj)
+			values
+			  (#[id],
+			   #[czfwbh],
+			   #[fwid],
+			   #[czrbh],
+			   #[czrzjzl],
+			   #[czrzjhm],
+			   #[xm],
+			   #[xb],
+			   to_date(#[csrq],'yyyy-mm-dd'),
+			   #[lxfs],
+			   to_date(#[czrq],'yyyy-mm-dd'),
+			   #[czyt],
+			   #[zxrq],
+			   #[czrzt],
+			   #[zxyy],
+			   '0',
+			   #[ssxq],
+			   #[slrq],
+			   #[bz],
+			   #[sssqdm],
+			   #[djrxm],
+			   #[djdwdm],
+			   #[djdwmc],
+			   #[djrsfzh],
+			   #[czrxm],
+			   #[czdwdm],
+			   #[czdwmc],
+			   #[czrsfzh],
+			   #[zxrxm],
+			   #[zxdwdm],
+			   #[zxdwmc],
+			   #[zxrsfzh],
+			   sysdate,
+			   sysdate
+			   )
+ 			
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	<property name="logoutCzrxxBean">
+ 		<![CDATA[
+ 			update t_lsgl_czfw_czrxx
+				  set 
+				      zxrq = sysdate,
+				      zxyy = #[zxyy],
+				      zxbs = '1',
+				      czrxm = #[czrxm],
+				      czdwdm = #[czdwdm],
+				      czdwmc = #[czdwmc],
+				      czrsfzh = #[czrsfzh],
+				      zxrxm = #[zxrxm],
+				      zxdwdm = #[zxdwdm],
+				      zxdwmc = #[zxdwmc],
+				      zxrsfzh = #[zxrsfzh],
+				      czsj = sysdate
+				where id = #[id]
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryCzrPageInfoByCzfwbh">
+ 		<![CDATA[
+ 			select id,
+			       czfwbh,
+			       fwid,
+			       czrbh,
+			       czrzjzl,
+			       czrzjhm,
+			       xm,
+			       xb,
+			       to_char(csrq,'yyyy-mm-dd') csrq,
+			       lxfs,
+			       to_char(czrq,'yyyy-mm-dd') czrq,
+			       czyt,
+			       zxrq,
+			       czrzt,
+			       zxyy,
+			       zxbs,
+			       ssxq,
+			       slrq,
+			       bz,
+			       sssqdm,
+			       djrxm,
+			       djdwdm,
+			       djdwmc,
+			       djrsfzh,
+			       czrxm,
+			       czdwdm,
+			       czdwmc,
+			       czrsfzh,
+			       zxrxm,
+			       zxdwdm,
+			       zxdwmc,
+			       zxrsfzh,
+			       djsj
+			  from t_lsgl_czfw_czrxx
+			  where fwid = ?
+			  and zxbs = '0' 
+			  order by djsj desc
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="queryCzrxxBeanBySfzh">
+ 		<![CDATA[
+ 			select id,
+			       czfwbh,
+			       fwid,
+			       czrbh,
+			       czrzjzl,
+			       czrzjhm,
+			       xm,
+			       xb,
+			       csrq,
+			       lxfs,
+			       czrq,
+			       czyt,
+			       zxrq,
+			       czrzt,
+			       zxyy,
+			       zxbs,
+			       ssxq,
+			       slrq,
+			       bz,
+			       sssqdm,
+			       djrxm,
+			       djdwdm,
+			       djdwmc,
+			       djrsfzh,
+			       czrxm,
+			       czdwdm,
+			       czdwmc,
+			       czrsfzh,
+			       zxrxm,
+			       zxdwdm,
+			       zxdwmc,
+			       zxrsfzh,
+			       djsj,
+			       czsj
+			  from t_lsgl_czfw_czrxx
+			  where czrzjhm = ?
+			  and fwid =?
+			  and zxbs = '0'
+ 		]]>
+ 	</property>
+ 	
+ 	<property name="updateCzrxxBean">
+ 		<![CDATA[
+ 			update t_lsgl_czfw_czrxx
+			      set   id = #[id],
+				        czfwbh = #[czfwbh],
+				        fwid = #[fwid],
+				        czrbh = #[czrbh],
+				        czrzjzl = #[czrzjzl],
+				        czrzjhm = #[czrzjhm],
+				        xm = #[xm],
+				        xb = #[xb],
+				        csrq = to_date(#[csrq],'yyyy-mm-dd'),
+				        lxfs = #[lxfs],
+				        czrq = to_date(#[czrq],'yyyy-mm-dd'),
+				        czyt = #[czyt],
+				        czrzt = #[czrzt],
+				        ssxq = #[ssxq],
+				        slrq = #[slrq],
+				        bz = #[bz],
+				        sssqdm = #[sssqdm],
+				        czrxm = #[czrxm],
+				        czdwdm = #[czdwdm],
+				        czdwmc = #[czdwmc],
+				        czrsfzh = #[czrsfzh],
+				        czsj = sysdate
+			  where id = #[id]
+ 		]]>
+ 	</property>
+ 	
+ 	
+ 	<property name="queryCzrxxBeanById">
+ 		<![CDATA[
+ 			select id,
+			       czfwbh,
+			       fwid,
+			       czrbh,
+			       czrzjzl,
+			       czrzjhm,
+			       xm,
+			       xb,
+			       to_char(csrq,'yyyy-mm-dd') csrq,
+			       lxfs,
+			       to_char(czrq,'yyyy-mm-dd') czrq,
+			       czyt,
+			       to_char(zxrq,'yyyy-mm-dd') zxrq,
+			       czrzt,
+			       zxyy,
+			       zxbs,
+			       ssxq,
+			       slrq,
+			       bz,
+			       sssqdm,
+			       djrxm,
+			       djdwdm,
+			       djdwmc,
+			       djrsfzh,
+			       czrxm,
+			       czdwdm,
+			       czdwmc,
+			       czrsfzh,
+			       zxrxm,
+			       zxdwdm,
+			       zxdwmc,
+			       zxrsfzh,
+			       djsj,
+			       czsj
+			  from t_lsgl_czfw_czrxx
+			  where id = ?
+ 		]]>
+ 	</property>
+ 	
+</properties>

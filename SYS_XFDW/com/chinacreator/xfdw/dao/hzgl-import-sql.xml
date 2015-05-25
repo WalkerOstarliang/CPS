@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+
+	<!-- 导入火灾信息 -->
+	<property name="importHzxx">
+		<![CDATA[
+			INSERT INTO t_xfdw_hzldxx(
+				xzqybm,
+				hzxh,
+				qhsj,
+				qhdd,
+				qhcs,
+				hzyy,
+				hzmc,
+				szhs,
+				zjccss,
+				ssrs,
+				swrs,
+				ssdwdm,
+				hzdj,
+				rksj
+			)VALUES(
+				#[xzqybm],
+				#[hzxh],
+				#[qhsj],
+				#[qhdd],
+				#[qhcs],
+				#[hzyy],
+				#[hzmc],
+				#[szhs],
+				#[zjccss],
+				#[ssrs],
+				#[swrs],
+				#[ssdwdm],
+				#[hzdj],
+				sysdate
+			) 
+		]]>
+	</property>
+	<!-- 查询火灾序号查询火灾信息 -->
+		<property name="queryXFxxExportBeanByhzxh">
+		<![CDATA[
+			select xzqybm,
+				hzxh,
+				qhsj,
+				qhdd,
+				qhcs,
+				hzyy,
+				hzmc,
+				szhs,
+				zjccss,
+				ssrs,
+				swrs,
+				ssdwdm,
+				hzdj,
+				rksj
+			 from t_xfdw_hzldxx
+			 where hzxh=#[hzxh]
+		]]>
+	</property>
+	<property name="UpdateXFxxByHZXH">
+		<![CDATA[
+			update t_xfdw_hzldxx
+			set
+			#if($xzqybm and !$xzqybm.equals(""))
+		      	 xzqybm  = #[xzqybm], 
+		   	#end
+		  	#if($qhsj and !$qhsj.equals(""))
+		      	 qhsj  = #[qhsj], 
+		   	#end
+		   	#if($qhdd and !$qhdd.equals(""))
+		      	 qhdd  = #[qhdd], 
+		   	#end
+		   	#if($qhcs and !$qhcs.equals(""))
+		      	 qhcs  = #[qhcs], 
+		   	#end
+		   	#if($hzyy and !$hzyy.equals(""))
+		      	 hzyy  = #[hzyy], 
+		   	#end
+		   	#if($hzmc and !$hzmc.equals(""))
+		      	 hzmc  = #[hzmc], 
+		   	#end
+		   	#if($szhs and !$szhs.equals(""))
+		      	 szhs  = #[szhs], 
+		   	#end
+		   	#if($zjccss and !$zjccss.equals(""))
+		      	 zjccss  = #[zjccss], 
+		   	#end
+		   	#if($ssrs and !$ssrs.equals(""))
+		      	 ssrs  = #[ssrs], 
+		   	#end
+		   	#if($swrs and !$swrs.equals(""))
+		      	 swrs  = #[swrs],
+		   	#end
+		   	#if($ssdwdm and !$ssdwdm.equals(""))
+		      	 ssdwdm  = #[ssdwdm],
+		   	#end
+		   	#if($hzdj and !$hzdj.equals(""))
+		      	 hzdj  = #[hzdj],
+		   	#end
+		   	hzxh=#[hzxh]
+		   	where hzxh=#[hzxh]
+		]]>
+	</property>
+</properties>

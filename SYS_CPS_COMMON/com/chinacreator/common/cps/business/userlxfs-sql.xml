@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="insertUserLxfsBean">
+		<![CDATA[
+	insert into t_common_user_lxfs
+			  (id,
+			   userid,
+			   username,
+			   sfzh,
+			   mobile,
+			   telephone,
+			   xm,
+			   orgdwdm,
+			   orgdwmc,
+			   mz,
+			   whcd,
+			   gzgw,
+			   zw,
+			   xzjb,
+			   gzsj,
+			   cjsj,
+			   pcsgzsj,
+			   sfzzsqmj,
+			   sqmjsfcwhjz,
+			   cssqjwsj,
+			   dnjlcs,
+			   dncccs,
+			   dnjzywpxcs)
+			values
+			  (#[id],
+			   #[userid],
+			   #[username],
+			   #[sfzh],
+			   #[mobile],
+			   #[telephone],
+			   #[xm],
+			   #[orgdwdm],
+			   #[orgdwmc],
+			   #[mz],
+			   #[whcd],
+			   #[gzgw],
+			   #[zw],
+			   #[xzjb],
+			   to_date(#[gzsj],'yyyy-mm-dd'),  --工作时间
+			   to_date(#[cjsj],'yyyy-mm-dd'),   --从警时间
+			   to_date(#[pcsgzsj],'yyyy-mm-dd'),  --派出所工作时间
+			   #[sfzzsqmj], 
+			   #[sqmjsfcwhjz],
+			   to_date(#[cssqjwsj],'yyyy-mm-dd'),  --从事社区警务时间
+			   #[dnjlcs],
+			   #[dncccs],
+			   #[dnjzywpxcs])	
+   ]]>
+	</property>
+	
+	
+	<property name="updateUserLxfsBean">
+		<![CDATA[
+		update t_common_user_lxfs
+   set id = #[id],
+       userid = #[userid],
+       username = #[username],
+       sfzh = #[sfzh],
+       mobile = #[mobile],
+       telephone = #[telephone],
+       xm = #[xm],
+       orgdwdm = #[orgdwdm],
+       orgdwmc = #[orgdwmc],
+       mz = #[mz],
+       whcd = #[whcd],
+       gzgw = #[gzgw],
+       zw = #[zw],
+       xzjb = #[xzjb],
+       gzsj = to_date(#[gzsj],'yyyy-mm-dd'),
+       cjsj = to_date(#[cjsj],'yyyy-mm-dd'),
+       pcsgzsj = to_date(#[pcsgzsj],'yyyy-mm-dd'),
+       sfzzsqmj = #[sfzzsqmj],
+       sqmjsfcwhjz = #[sqmjsfcwhjz],
+       cssqjwsj = to_date(#[cssqjwsj],'yyyy-mm-dd'),
+       dnjlcs = #[dnjlcs],
+       dncccs = #[dncccs],
+       dnjzywpxcs = #[dnjzywpxcs]
+ where id = #[id]
+
+		]]>
+	</property>
+	<property name="queryUserLxfsByJh">
+		<![CDATA[
+				select id,
+		       userid,
+		       username,
+		       sfzh,
+		       mobile,
+		       telephone,
+		       xm,
+		       orgdwdm,
+		       orgdwmc,
+		       mz,
+		       whcd,
+		       gzgw,
+		       zw,
+		       xzjb,
+		       to_char(gzsj,'yyyy-mm-dd') gzsj,
+		       to_char(cjsj,'yyyy-mm-dd') cjsj,
+		       to_char(pcsgzsj,'yyyy-mm-dd') pcsgzsj,
+		       sfzzsqmj,
+		       sqmjsfcwhjz,
+		       to_char(cssqjwsj,'yyyy-mm-dd') cssqjwsj,
+		       dnjlcs,
+		       dncccs,
+		       dnjzywpxcs
+		  from t_common_user_lxfs
+		  where username=?
+		]]>
+	</property>
+	<property name="insertOrgJwsBean">
+		<![CDATA[
+		insert into t_common_organization_other
+  		(id, bgddlx, wljrfs, orgcode, orgname, orgid, 
+  		 ispcs, pcsszxm, pcsszsfzh, pcsszjh, pcsfszxm, 
+  		 pcsfszsfzh, pcsfszjh, czrxm, czrdwdm, czrdwmc, czsj,djsj)
+		values
+  		(#[id], #[bgddlx], #[wljrfs], #[orgcode], #[orgname], 
+  		#[orgid], #[ispcs], #[pcsszxm], #[pcsszsfzh], #[pcsszjh], 
+  		#[pcsfszxm], #[pcsfszsfzh], #[pcsfszjh], #[czrxm], 
+  		#[czrdwdm], #[czrdwmc], sysdate,sysdate)
+		]]>
+	</property>
+	<property name="queryOrgJwsByOrgCode">
+		<![CDATA[
+	    	select id, bgddlx, wljrfs, orgcode, orgname
+		  from t_common_organization_other
+		  where orgcode=?
+		]]>
+	</property>
+	
+	<property name="updateOrgJwsBean">
+		<![CDATA[
+		update t_common_organization_other
+  	 set id = #[id],
+       bgddlx = #[bgddlx],
+       wljrfs = #[wljrfs],
+       orgcode = #[orgcode],
+       orgname = #[orgname],
+       orgid = #[orgid],
+       ispcs = #[ispcs],
+       pcsszxm = #[pcsszxm],
+       pcsszsfzh = #[pcsszsfzh],
+       pcsszjh = #[pcsszjh],
+       pcsfszxm = #[pcsfszxm],
+       pcsfszsfzh = #[pcsfszsfzh],
+       pcsfszjh = #[pcsfszjh],
+       czrxm = #[czrxm],
+       czrdwdm = #[czrdwdm],
+       czrdwmc = #[czrdwmc],
+       czsj = #[czsj]
+ 		where id = #[id]
+		]]>
+	</property>
+</properties>

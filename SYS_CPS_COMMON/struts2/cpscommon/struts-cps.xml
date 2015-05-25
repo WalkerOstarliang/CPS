@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="cps" namespace="/cps" extends="default"> 
+	  		<action name="*" class="com.chinacreator.common.cps.action.OrgUserSelectedTreeAction" method="{1}">
+	  			<result name="toDwrySelectPage">/jsp/common/pages/dwryselect.jsp</result>
+	  			<result name="toDwSelectPage">/jsp/common/pages/dwselect.jsp</result>
+	  			<result name="toDwSelectPage2">/jsp/common/pages/dwselect2.jsp</result>
+	  			<result name="toDwSelectPage3">/jsp/common/pages/dwselect3.jsp</result>
+	  			<result name="toXzqhTreePage">/jsp/common/pages/xzqhselect.jsp</result>
+	  			<result name="toOrgUserPageList">/jsp/gzgl/pages/gzuserlxfs/userLxfsList.jsp</result>
+	  		</action>
+	  </package>
+	  <package name="cms" namespace="/cms" extends="default">
+	  	<action name="*" class="com.chinacreator.common.cps.action.CmsDocumentAction" method="{1}">
+	  			<result name="toCmsDocmentListPage">/main/cms/cmsChnList.jsp</result>
+	  		</action>
+	  </package>
+	  <package name="czrkcommon" namespace="/czrkcommon" extends="default"> 
+	  		<action name="*" class="com.chinacreator.common.cps.action.CzrkCommonAction" method="{1}">
+	  		</action>
+	  </package>
+	  <package name="cpscommon" namespace="/cps/common" extends="default"> 
+	  		<action name="*" class="com.chinacreator.common.cps.action.CommonLoadDataAction" method="{1}">
+	  			<result name="toHnxzqhSelectPage">/jsp/common/pages/xzsqselect.jsp</result>
+	  			<result name="toJwqSelectPage">/jsp/common/pages/jwsqselect.jsp</result>
+	  		</action>
+	  </package>
+	  <package name="fileUploadCommon" namespace="/fileUploadCommon" extends="default">
+	  	    <action name="*" class="com.chinacreator.common.cps.action.fileUploadAction" method="{1}">
+	  	    </action>
+	  </package>
+	  
+	  <package name="dictionaryCommon" namespace="/dic/selectdic" extends="default">
+	  	    <action name="*" class="com.chinacreator.common.cps.action.DictionaryDmAction" method="{1}">
+	  	   		<result name="toSelectDicPage">/jsp/common/pages/dictionaryselect.jsp</result>
+	  	   		<result name="toZdyInsertPage">/jsp/common/pages/zdyinsert.jsp</result>
+	  	    </action>
+	  </package>
+	  
+	  <package name="CommonDzjlxAction" namespace="/cps/dzjlx" extends="default">
+	  		<action name="*" class="com.chinacreator.common.cps.action.CommonDzjlxAction" method ="{1}">
+	  			<result name="toDzJlxPageInfo">/jsp/common/pages/jlxselect.jsp</result>
+	  			<result name="toJlxSelectPage">/jsp/common/pages/jlxselectwin.jsp</result>
+	  			<result name="openJlxWin">/jsp/common/pages/addjlxInfo.jsp</result>
+	  			<result name="toXqzSelectPage">/jsp/common/pages/xqzselect.jsp</result>
+	  		</action>
+	  </package>
+</struts>

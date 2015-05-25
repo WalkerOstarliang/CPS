@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="wlsq" extends="default" namespace="/zagl/wlsq">
+		<action name="*"  class="com.chinacreator.zagl.action.WlsqAction" method="{1}" >
+			<result name="toWlsqList">/jsp/zagl/pages/wlsqgl/wlsqList.jsp</result>
+			<result name="toWlsq">/jsp/zagl/pages/wlsqgl/wlsqDetail.jsp</result>
+		</action>
+	</package>
+</struts>

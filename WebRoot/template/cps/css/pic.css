@@ -1,0 +1,42 @@
+.list{
+	height:93px; 
+	float:left;
+	overflow: hidden;
+	margin: 0px;
+	padding: 0px;
+}
+ 
+.up,.down{
+	height:95px; 
+	width:20px; 
+	float:left; 
+	cursor:hand;
+}
+.up{
+	background:#eee url("/CPS/template/default/images/left.png") no-repeat center;
+}
+.down{
+	background:#eee url("/CPS//template/default/images/right.png") no-repeat center;
+}
+			
+.list ul{
+	border:1px solid #ccc; 
+	background-color:#ddd; 
+	margin:5px 5px; 
+	height:83px; 
+	text-align:center;
+}
+.list ul li{
+	border:1px solid #bbb; 
+	margin:2px 2px;
+	list-style:none; 
+	width:75px;
+	height:75px; 
+	display:inline; 
+	float:left; 
+	clear:right;
+}
+.img_main{
+	display:none;
+	position : absolute;
+}

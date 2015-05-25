@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" 
+     "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="xqjfwfssxx" namespace="/xqjfwfssxx" extends="default"> 
+	  		<action name="*" class="com.chinacreator.afgl.action.XqjfwfssxxAction" method="{1}">
+	  			<result name="toXqjfwfssxxList">/jsp/afgl/pages/xqjfwfssxx/xqjfwfssxxList.jsp</result>
+	  			<result name="toAddXqjfwfssxx">/jsp/afgl/pages/xqjfwfssxx/addXqjfwfssxx.jsp</result>
+	  			<result name="toUpdateXqjfwfssxxBySsbh">/jsp/afgl/pages/xqjfwfssxx/addXqjfwfssxx.jsp</result>
+	  			<result name="toDeleteXqjfwfssxxBySsbh">/jsp/afgl/pages/xqjfwfssxx/deleteXqjfwfssxx.jsp</result>
+	  			<result name="viewXqjfwfssxxBySsbh">/jsp/afgl/pages/xqjfwfssxx/viewXqjfwfssxx.jsp</result>
+	  			<result name="toBatchDeleteXqjfwfssxxBySsbhs">/jsp/afgl/pages/xqjfwfssxx/batchDeleteXqjfwfssxx.jsp</result>
+	  			<result name="toGjQueryXqjfwfssxx">/jsp/afgl/pages/xqjfwfssxx/xqjfwfssxxGjQuery.jsp</result>
+	  		</action>
+	  		
+	  		<action name="downloadFjxx" class="com.chinacreator.afgl.action.XqjfwfssxxAction" method="downloadFjxx">  
+        	</action>  
+	  </package>
+</struts>

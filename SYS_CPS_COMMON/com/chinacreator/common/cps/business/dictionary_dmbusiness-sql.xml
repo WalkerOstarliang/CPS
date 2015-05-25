@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<property name="queryDictionaryBeanByZdlb">
+		<![CDATA[
+			select id, zdlb, zdmc, dm, mc, parent_dm, jc, isyx, sn, rn from t_common_dm_dictionary 
+		    where zdlb = #[zdlb]
+			 #if($mc && !$mc.equals(""))
+			 	and mc like '%'||#[mc]||'%'
+			 #end
+			 order by id desc
+		]]>
+	</property>
+	
+	<property name="insertDictionaryBean">
+		<![CDATA[
+			 insert into t_common_dm_dictionary
+			   (id, zdlb, zdmc, dm, mc, parent_dm, jc, isyx, sn, rn)
+			 values
+			   (#[id],
+			    #[zdlb],
+			    #[zdmc],
+			    #[dm],
+			    #[mc],
+			    #[parent_dm],
+			    #[jc],
+			    '1',
+			    '',
+			    ''
+			    )
+		]]>
+	</property>
+	
+	
+	<property name="isExistMC">
+		<![CDATA[
+			select id, zdlb, zdmc, dm, mc, parent_dm, jc, isyx, sn, rn from t_common_dm_dictionary 
+		    where mc=?
+		]]>
+	</property>
+	
+	<property name="queryXzjdDicBeanByPcsdm">
+		<![CDATA[
+			select dm as id, 'HN_XZQH' as zdlb,'湖南行政区划' AS zdmc, dm as dm, mc as mc, parent_dm as parent_dm, leve as leve, jc as jc, isvalid as isyx,'' as sn  
+			from t_common_hnxzqh b
+			where 1=1
+				and isvalid='1'
+				and leve='4'
+				and b.dm in (
+					select parent_dm from t_common_hnxzqh a where a.sspcsdm=? and isvalid='1'
+				)
+		]]>
+	</property>
+	
+	<property name="queryXzjdDicBeanByPcsdmAndXzqhdm">
+		<![CDATA[
+			select dm as id, 'HN_XZQH' as zdlb,'湖南行政区划' AS zdmc, dm as dm, mc as mc, parent_dm as parent_dm, leve as leve, jc as jc, isvalid as isyx,'' as sn  
+			from t_common_hnxzqh b
+			where 1=1
+				and isvalid='1'
+				and leve='4'
+				and parent_dm=?
+				and b.dm in (
+					select parent_dm from t_common_hnxzqh a where a.sspcsdm=? and isvalid='1'
+				)
+		]]>
+	</property>
+	
+	<!-- 根据配置读取行政区划 -->
+	<property name="getXzqhByPz">
+		<![CDATA[
+			select * from t_common_xzqh_pz where xzqh = ?
+		]]>
+	</property>
+	
+</properties>

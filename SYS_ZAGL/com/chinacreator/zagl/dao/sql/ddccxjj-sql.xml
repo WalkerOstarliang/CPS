@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryDdcxjjList">
+		<![CDATA[
+				select car_id,
+				       car_holder,
+				       car_addr,
+				       car_telephone,
+				       car_num,
+				       car_record,
+				       car_brand,
+				       car_motor,
+				       car_agent,
+				       car_audit,
+				       car_agentdate,
+				       car_isomux,
+				       car_opername,
+				       car_operdate,
+				       car_update,
+				       car_level,
+				       car_brandcount,
+				       car_cardcount,
+				       car_state,
+				       car_checker,
+				       car_checkdate,
+				       car_carisomux,
+				       car_certnum,
+				       car_color1,
+				       car_color2,
+				       car_color3,
+				       car_cert
+				  from t_af_jdcxx
+					 where 1 = 1
+					 #if($car_holder && !$car_holder.equals(""))
+						and car_holder like '%' || #[car_holder] || '%'
+					 #end
+					 #if($car_addr && !$car_addr.equals(""))
+						and car_addr like '%' || #[car_addr] || '%'
+					 #end
+					 #if($car_telephone && !$car_telephone.equals(""))
+						and car_telephone like '%' || #[car_telephone] || '%'
+					 #end
+					 #if($car_num && !$car_num.equals(""))
+						and car_num like '%' || #[car_num] || '%'
+					 #end
+					 #if($car_record && !$car_record.equals(""))
+						and car_record like '%' || #[car_record] || '%'
+					 #end
+					 #if($car_brand && !$car_brand.equals(""))
+						and car_brand like '%' || #[car_brand] || '%'
+					 #end
+					 #if($car_motor && !$car_motor.equals(""))
+						and car_motor like '%' || #[car_motor] || '%'
+					 #end
+					 #if($car_agent && !$car_agent.equals(""))
+						and car_agent like '%' || #[car_agent] || '%'
+					 #end
+					 #if($car_audit && !$car_audit.equals(""))
+						and car_audit like '%' || #[car_audit] || '%'
+					 #end
+					 #if($car_agentdate && !$car_agentdate.equals(""))
+						and car_agentdate like '%' || #[car_agentdate] || '%'
+					 #end
+					 #if($car_isomux && !$car_isomux.equals(""))
+						and car_isomux =#[car_isomux]
+					 #end
+					 #if($car_opername && !$car_opername.equals(""))
+						and car_opername like '%' || #[car_opername] || '%'
+					 #end
+					 #if($car_operdate && !$car_operdate.equals(""))
+						and car_operdate like '%' || #[car_operdate] || '%'
+					 #end
+					 #if($xssj_start && !$xssj_start.equals(""))
+						and to_date(car_agentdate,'yyyy-mm-dd') >= to_date(#[xssj_start],'yyyy-mm-dd')
+					 #end
+					 #if($xssj_end && !$xssj_end.equals(""))
+						and to_date(car_agentdate,'yyyy-mm-dd') <= to_date(#[xssj_end],'yyyy-mm-dd')
+					 #end
+			]]>
+	</property>
+		
+		<property name="queryDdcjjById">
+		<![CDATA[
+				select car_id,
+				       car_holder,
+				       car_addr,
+				       car_telephone,
+				       car_num,
+				       car_record,
+				       car_brand,
+				       car_motor,
+				       car_agent,
+				       car_audit,
+				       car_agentdate,
+				       car_isomux,
+				       car_opername,
+				       car_operdate,
+				       car_update,
+				       car_level,
+				       car_brandcount,
+				       car_cardcount,
+				       car_state,
+				       car_checker,
+				       car_checkdate,
+				       car_carisomux,
+				       car_certnum,
+				       car_color1,
+				       car_color2,
+				       car_color3,
+				       car_cert
+				  from t_af_jdcxx
+					 where 1 = 1
+					  and car_id = ?
+			]]>
+	</property>
+		<property name="dowloadExcel">
+		<![CDATA[
+				select car_id,
+				       car_holder,
+				       car_addr,
+				       car_telephone,
+				       car_num,
+				       car_record,
+				       car_brand,
+				       car_motor,
+				       car_agent,
+				       car_audit,
+				       car_agentdate,
+				       car_isomux,
+				       car_opername,
+				       car_operdate,
+				       car_update,
+				       car_level,
+				       car_brandcount,
+				       car_cardcount,
+				       car_state,
+				       car_checker,
+				       car_checkdate,
+				       car_carisomux,
+				       car_certnum,
+				       car_color1,
+				       car_color2,
+				       car_color3,
+				       car_cert
+				  from t_af_jdcxx
+					 where 1 = 1
+					 #if($car_holder && !$car_holder.equals(""))
+						and car_holder like '%' || #[car_holder] || '%'
+					 #end
+					 #if($car_addr && !$car_addr.equals(""))
+						and car_addr like '%' || #[car_addr] || '%'
+					 #end
+					 #if($car_telephone && !$car_telephone.equals(""))
+						and car_telephone like '%' || #[car_telephone] || '%'
+					 #end
+					 #if($car_num && !$car_num.equals(""))
+						and car_num like '%' || #[car_num] || '%'
+					 #end
+					 #if($car_record && !$car_record.equals(""))
+						and car_record like '%' || #[car_record] || '%'
+					 #end
+					 #if($car_brand && !$car_brand.equals(""))
+						and car_brand like '%' || #[car_brand] || '%'
+					 #end
+					 #if($car_motor && !$car_motor.equals(""))
+						and car_motor like '%' || #[car_motor] || '%'
+					 #end
+					 #if($car_agent && !$car_agent.equals(""))
+						and car_agent like '%' || #[car_agent] || '%'
+					 #end
+					 #if($car_audit && !$car_audit.equals(""))
+						and car_audit like '%' || #[car_audit] || '%'
+					 #end
+					 #if($car_agentdate && !$car_agentdate.equals(""))
+						and car_agentdate like '%' || #[car_agentdate] || '%'
+					 #end
+					 #if($car_isomux && !$car_isomux.equals(""))
+						and car_isomux =#[car_isomux]
+					 #end
+					 #if($car_opername && !$car_opername.equals(""))
+						and car_opername like '%' || #[car_opername] || '%'
+					 #end
+					 #if($car_operdate && !$car_operdate.equals(""))
+						and car_operdate like '%' || #[car_operdate] || '%'
+					 #end
+					 #if($xssj_start && !$xssj_start.equals(""))
+						and to_date(car_agentdate,'yyyy-mm-dd') >= to_date(#[xssj_start],'yyyy-mm-dd')
+					 #end
+					 #if($xssj_end && !$xssj_end.equals(""))
+						and to_date(car_agentdate,'yyyy-mm-dd') <= to_date(#[xssj_end],'yyyy-mm-dd')
+					 #end
+			]]>
+	</property>
+	<!-- queryDdcjjListByCar_id -->
+		<property name="queryDdcjjListByCar_id">
+		<![CDATA[
+				select car_id,
+				       car_holder,
+				       car_addr,
+				       car_telephone,
+				       car_num,
+				       car_record,
+				       car_brand,
+				       car_motor,
+				       car_agent,
+				       car_audit,
+				       car_agentdate,
+				       car_isomux,
+				       car_opername,
+				       car_operdate,
+				       car_update,
+				       car_level,
+				       car_brandcount,
+				       car_cardcount,
+				       car_state,
+				       car_checker,
+				       car_checkdate,
+				       car_carisomux,
+				       car_certnum,
+				       car_color1,
+				       car_color2,
+				       car_color3,
+				       car_cert
+				  from t_af_jdcxx
+					 where 1 = 1
+					 and car_id in (#[v_car_id])
+				]]>	 
+		</property>		 
+</properties>

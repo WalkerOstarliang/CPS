@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	
+	<!-- 工作日志sql文件 sequence:SEQ_GZGL_GZRZ -->
+	<property name="updateRizhi">
+		<![CDATA[
+			UPDATE T_GZGL_GZRZ t 
+			SET 
+				t.GZNRMS=#[gznrms], 
+				t.CLJGMS=#[cljgms],
+				t.DJMJJH=#[djmjjh],
+				t.czbz = #[czbz],
+				t.gxsj = to_date(#[gxsj],'yyyy-mm-dd HH24:mi:ss')
+			WHERE 
+				t.rzbh=#[rzbh]
+		]]>
+	</property>
+	
+	<property name="delRizhi">
+		<![CDATA[
+				UPDATE T_GZGL_GZRZ t 
+			SET 
+				t.czbz = #[czbz],
+				t.gxsj = to_date(#[gxsj],'yyyy-mm-dd HH24:mi:ss')
+			WHERE 
+				t.rzbh=#[rzbh]
+		]]>
+	</property>
+	
+	<property name="queryRizhiBean">
+		<![CDATA[
+				select * from T_GZGL_GZRZ where rzbh =?
+		]]>
+	</property>
+	
+	<property name="queryRizhi">
+		<![CDATA[
+			SELECT 
+				RZBH,
+				RZBT,
+				GZMJXM,
+				GZMJSFZH,
+				GZMJJH,
+				GZMJDWDM,
+				GZMJDWMC,
+				to_char(GZRQ,'yyyy-mm-dd') as gzrq,
+				GZNRMS,
+				CLJGMS,
+				DJRXM,
+				DJSJ,
+				DJDWDM,
+				DJDWMC,
+				DJMJJH,
+				sfxtcs
+			FROM
+				T_GZGL_GZRZ t
+			WHERE
+				t.czbz !='0' and t.DJMJJH IS NOT NULL
+				#if ($rzbh && !$rzbh.equals(""))
+					and t.RZBH=#[rzbh]
+				#end
+				#if ($title && !$title.equals(""))
+					and (GZMJJH like '%'||#[title]||'%' or GZMJXM like '%'||#[title]||'%')
+				#end
+				#if ($beginDate && !$beginDate.equals(""))
+					and t.gzrq >= to_date(#[beginDate],'yyyy-MM-dd')
+				#end
+				#if ($endDate && !$endDate.equals(""))
+					and t.gzrq <= to_date(#[endDate],'yyyy-MM-dd')
+				#end
+				#if($mjjh && !$mjjh.equals(""))
+					and gzmjjh = #[mjjh]
+				#end
+				#if($jwsqdm && !$jwsqdm.equals(""))
+	    		and (t.djdwdm = #[jwsqdm])
+	    		#elseif ($pcsdm && !$pcsdm.equals(""))
+				 	and t.djdwdm like substr(#[pcsdm],1,8)||'%'
+				#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				 	and t.djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+				#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				 	and t.djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			   	#end
+				order by gzrq desc
+		]]>
+	</property>
+	
+	<property name="insertRizhi">
+		<![CDATA[
+			INSERT INTO T_GZGL_GZRZ 
+			(
+				RZBH,
+				RZBT,
+				GZMJXM,
+				GZMJSFZH,
+				GZMJJH,
+				GZMJDWDM,
+				GZMJDWMC,
+				GZRQ,
+				GZNRMS,
+				CLJGMS,
+				DJRXM,
+				DJSJ,
+				DJDWDM,
+				DJDWMC,
+				DJMJJH,
+				czbz,
+				gxsj,
+				djrsfzh
+			)
+			VALUES
+			(
+				#[rzbh],
+				#[rzbt],
+				#[gzmjxm],
+				#[gzmjsfzh],
+				#[gzmjjh],
+				#[gzmjdwdm],
+				#[gzmjdwmc],
+				to_date(#[gzrq],'yyyy-MM-dd'),
+				#[gznrms],
+				#[cljgms],
+				#[djrxm],
+				to_date(#[djsj],'yyyy-MM-dd hh24:mi:ss'),
+				#[djdwdm],
+				#[djdwmc],
+				#[djmjjh],
+				#[czbz],
+				to_date(#[gxsj],'yyyy-mm-dd HH24:mi:ss'),
+				#[djrsfzh]
+			)
+		]]>
+	</property>
+	<property name="getRizhiBeanByRzbh">
+	<![CDATA[
+		SELECT 
+				RZBH,
+				RZBT,
+				GZMJXM,
+				GZMJSFZH,
+				GZMJJH,
+				GZMJDWDM,
+				GZMJDWMC,
+				GZRQ,
+				GZNRMS,
+				CLJGMS,
+				DJRXM,
+				to_char(DJSJ,'yyyy-MM-dd') djsj,
+				DJDWDM,
+				DJDWMC,
+				DJMJJH,
+				sfxtcs
+			FROM
+				T_GZGL_GZRZ t
+				where RZBH=?
+	]]>
+	</property>
+	<property name="queryRiZhiListByRzbh">
+		<![CDATA[
+			SELECT 
+					RZBH,
+					RZBT,
+					GZMJXM,
+					GZMJSFZH,
+					GZMJJH,
+					GZMJDWDM,
+					GZMJDWMC,
+					GZRQ,
+					GZNRMS,
+					CLJGMS,
+					DJRXM,
+					to_char(DJSJ,'yyyy-MM-dd') djsj,
+					DJDWDM,
+					DJDWMC,
+					DJMJJH,
+					sfxtcs
+				FROM
+					T_GZGL_GZRZ t
+					where RZBH in (#[rzbhs])
+		]]>
+	</property>
+	
+	<property name="queryGzRzBeanByMjjhAndGzrq">
+		<![CDATA[
+			select rzbh, rzbt, gzmjxm, gzmjsfzh, gzmjjh, 
+			       gzmjdwdm, gzmjdwmc, to_char(gzrq,'yyyy-MM-dd') as gzrq, gznrms, 
+			       cljgms, djrxm, to_char(djsj,'yyyy-MM-dd hh24:mi:ss') as djsj, djdwdm, djdwmc, 
+			       djmjjh, czbz, to_char(gxsj,'yyyy-MM-dd hh24:mi:ss') as gxsj, djrsfzh, sfxtcs 
+			from t_gzgl_gzrz
+			where gzmjjh=? and gzrq=to_date(?,'yyyy-mm-dd')
+		]]>
+	</property>
+	
+</properties>

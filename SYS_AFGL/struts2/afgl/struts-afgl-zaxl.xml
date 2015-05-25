@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"  "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	  <package name="zaxl" namespace="/afgl/zaxl" extends="default">
+	  	<action name="*" class="com.chinacreator.afgl.zaxl.action.ZaxlAction" method="{1}">
+	  		<result name="toZaxlInfoPage">/jsp/afgl/pages/zaxl/page/zaxlInfo.jsp</result>
+	  		<result name="toZaxlListPage">/jsp/afgl/pages/zaxl/page/zaxlList.jsp</result>
+	  		<result name="toOpenXlMjSelectPage">/jsp/afgl/pages/zaxl/page/zaxlXlMjSelectList.jsp</result>
+	  		<result name="toOpenSqgbSelectPage">/jsp/afgl/pages/zaxl/page/zaxlXsqgbSelectList.jsp</result>
+	  		<result name="toOpenZaxlryInfo">/jsp/afgl/pages/zaxl/page/zaxlxlryinforPage.jsp</result>
+	  		<result name="toOpenZaxlpcryInfo">/jsp/afgl/pages/zaxl/page/zaxlxlpcryinforPage.jsp</result>
+	  	</action>
+	  </package>
+</struts>

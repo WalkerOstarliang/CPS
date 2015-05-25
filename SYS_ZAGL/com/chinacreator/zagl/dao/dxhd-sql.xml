@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 大型活动 -->
+<properties>
+	
+	<property name="dxhdList">
+		<![CDATA[
+			select hdbh, hdmc, hdxz, hdgm, cgmc, jbqssj, 
+					jbjzsj, mcxy, mpxsl, aqtds, bars, mjrs, fbcs, 
+					jqs, xfcs, cls, qtqcs, xccx, ajcs, qksfzc, 
+					zaajs, xsajs, cjsjld, cjstld, qtdw, cydw, jbjg, 
+					clqk, xfyj, jgyj, zbdw, zbdwfrdb, zbdwlxr, 
+					zbdwlxrdh, cbdw, cbdwfrdb, cbdwlxr, cbdwlxrdh, 
+					slr, scr, to_char(shrq,'yyyy-MM-dd') as shrq, shdwdm, shdwmc, shjg, shyj, 
+					djdwdm, djdwmc, djrxm, djrq, czdwdm, czdwmc, czrxm, czsj, czbs, cgdz, hdqy, xl,djrjh,czrjh
+			from t_za_dxhdxx
+
+			where 1=1 and czbs <> '3'
+			#if($hdmc && !$hdmc.equals(""))
+				and hdmc like '%'||#[hdmc]||'%'
+			#end
+			#if($zbdw && !$zbdw.equals(""))
+				and zbdw like '%'||#[zbdw]||'%'
+			#end
+			#if($cbdw && !$cbdw.equals(""))
+				and cbdw like '%'||#[cbdw]||'%'
+			#end
+			#if($hdxz && !$hdxz.equals(""))
+				and hdxz = #[hdxz]
+			#end
+			#if($hdbh && !$hdbh.equals(""))
+				and hdbh = #[hdbh]
+			#end
+			#if($djrxm && !$djrxm.equals(""))
+				and djrxm like '%'||#[djrxm]||'%'
+			#end
+			#if($jbqssj && !$jbqssj.equals(""))
+				and jbqssj >= to_date(#[jbqssj],'yyyy-MM-dd hh24:mi:ss')
+			#end
+			#if($jbjzsj && !$jbjzsj.equals(""))
+				and jbjzsj <= to_date(#[jbjzsj],'yyyy-MM-dd hh24:mi:ss')
+			#end
+			--单位选择查询
+		  --精确到派出所
+		  #if($pcsdm and !$pcsdm.equals(""))
+		  	and djdwdm like substr(#[pcsdm],1,8)||'%'
+		  #else
+		  	  --精确到县区
+			  #if($countrygajgjgdm and !$countrygajgjgdm.equals(""))
+			  	and djdwdm like substr(#[countrygajgjgdm],1,6)||'%'
+			  #else
+			     --精确到市州
+			  	 #if($citygajgjgdm and !$citygajgjgdm.equals(""))
+			  		and djdwdm like substr(#[citygajgjgdm],1,4)||'%'
+			  	 #end
+			  #end
+		  #end
+			order by djrq desc
+ 		]]>
+	</property>
+	
+	<!-- 新增大型活动 -->
+	<property name="addDxhd">
+		<![CDATA[
+			insert into t_za_dxhdxx
+			  (hdbh,
+			   hdmc,
+			   hdxz,
+			   hdgm,
+			   cgmc,
+			   jbqssj,
+			   jbjzsj,
+			   mcxy,
+			   mpxsl,
+			   aqtds,
+			   bars,
+			   mjrs,
+			   fbcs,
+			   jqs,
+			   xfcs,
+			   cls,
+			   qtqcs,
+			   xccx,
+			   ajcs,
+			   qksfzc,
+			   zaajs,
+			   xsajs,
+			   cjsjld,
+			   cjstld,
+			   qtdw,
+			   cydw,
+			   jbjg,
+			   clqk,
+			   xfyj,
+			   jgyj,
+			   zbdw,
+			   zbdwfrdb,
+			   zbdwlxr,
+			   zbdwlxrdh,
+			   cbdw,
+			   cbdwfrdb,
+			   cbdwlxr,
+			   cbdwlxrdh,
+			   slr,
+			   scr,
+			   shrq,
+			   shdwdm,
+			   shdwmc,
+			   shjg,
+			   shyj,
+			   djdwdm,
+			   djdwmc,
+			   djrxm,
+			   djrq,
+			   czdwdm,
+			   czdwmc,
+			   czrxm,
+			   czsj,
+			   czbs,
+			   cgdz,
+			   hdqy,
+			   xl,djrjh,czrjh,djrsfzh,czrsfzh)
+			values
+			  (#[hdbh],
+			   #[hdmc],
+			   #[hdxz],
+			   #[hdgm],
+			   #[cgmc],
+			   to_date(#[jbqssj],'yyyy-mm-dd HH24:mi:ss'),
+			   to_date(#[jbjzsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[mcxy],
+			   #[mpxsl],
+			   #[aqtds],
+			   #[bars],
+			   #[mjrs],
+			   #[fbcs],
+			   #[jqs],
+			   #[xfcs],
+			   #[cls],
+			   #[qtqcs],
+			   #[xccx],
+			   #[ajcs],
+			   #[qksfzc],
+			   #[zaajs],
+			   #[xsajs],
+			   #[cjsjld],
+			   #[cjstld],
+			   #[qtdw],
+			   #[cydw],
+			   #[jbjg],
+			   #[clqk],
+			   #[xfyj],
+			   #[jgyj],
+			   #[zbdw],
+			   #[zbdwfrdb],
+			   #[zbdwlxr],
+			   #[zbdwlxrdh],
+			   #[cbdw],
+			   #[cbdwfrdb],
+			   #[cbdwlxr],
+			   #[cbdwlxrdh],
+			   #[slr],
+			   #[scr],
+			   to_date(#[shrq],'yyyy-mm-dd'),
+			   #[shdwdm],
+			   #[shdwmc],
+			   #[shjg],
+			   #[shyj],
+			   #[djdwdm],
+			   #[djdwmc],
+			   #[djrxm],
+			   to_date(#[djrq],'yyyy-mm-dd HH24:mi:ss'),
+			   #[czdwdm],
+			   #[czdwmc],
+			   #[czrxm],
+			   to_date(#[czsj],'yyyy-mm-dd HH24:mi:ss'),
+			   #[czbs],
+			   #[cgdz],
+			   #[hdqy],
+			   #[xl],#[djrjh],#[czrjh],#[djrsfzh],#[czrsfzh])
+			
+		]]>
+	</property>
+	
+	<!-- 修改大型活动 -->
+	<property name="updateDxhdByHdbh">
+		<![CDATA[
+			update t_za_dxhdxx
+			   set hdbh = #[hdbh],
+			       hdmc = #[hdmc],
+			       hdxz = #[hdxz],
+			       hdgm = #[hdgm],
+			       cgmc = #[cgmc],
+			       jbqssj = to_date(#[jbqssj],'yyyy-MM-dd hh24:mi:ss'),
+			       jbjzsj = to_date(#[jbjzsj],'yyyy-MM-dd hh24:mi:ss'),
+			       mcxy = #[mcxy],
+			       mpxsl = #[mpxsl],
+			       aqtds = #[aqtds],
+			       bars = #[bars],
+			       mjrs = #[mjrs],
+			       fbcs = #[fbcs],
+			       jqs = #[jqs],
+			       xfcs = #[xfcs],
+			       cls = #[cls],
+			       qtqcs = #[qtqcs],
+			       xccx = #[xccx],
+			       ajcs = #[ajcs],
+			       qksfzc = #[qksfzc],
+			       zaajs = #[zaajs],
+			       xsajs = #[xsajs],
+			       cjsjld = #[cjsjld],
+			       cjstld = #[cjstld],
+			       qtdw = #[qtdw],
+			       cydw = #[cydw],
+			       jbjg = #[jbjg],
+			       clqk = #[clqk],
+			       xfyj = #[xfyj],
+			       jgyj = #[jgyj],
+			       zbdw = #[zbdw],
+			       zbdwfrdb = #[zbdwfrdb],
+			       zbdwlxr = #[zbdwlxr],
+			       zbdwlxrdh = #[zbdwlxrdh],
+			       cbdw = #[cbdw],
+			       cbdwfrdb = #[cbdwfrdb],
+			       cbdwlxr = #[cbdwlxr],
+			       cbdwlxrdh = #[cbdwlxrdh],
+			       slr = #[slr],
+			       scr = #[scr],
+			       shrq = to_date(#[shrq],'yyyy-MM-dd'),
+			       shdwdm = #[shdwdm],
+			       shdwmc = #[shdwmc],
+			       shjg = #[shjg],
+			       shyj = #[shyj],
+			       czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czrxm = #[czrxm],
+			       czsj = sysdate,
+			       czbs = #[czbs],
+			       cgdz = #[cgdz],
+			       hdqy = #[hdqy],
+			       xl = #[xl],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh]
+			 where hdbh = #[hdbh]
+			
+		]]>
+	</property>
+	
+	<!-- 删除大型活动 -->
+	<property name="deleteDxhdByHdbh">
+		<![CDATA[
+			update t_za_dxhdxx
+			   set czdwdm = #[czdwdm],
+			       czdwmc = #[czdwmc],
+			       czrxm = #[czrxm],
+			       czsj = to_date(#[czsj],'yyyy-MM-dd hh24:mi:ss'),
+			       czbs = #[czbs],
+			       czrjh = #[czrjh],
+			       czrsfzh = #[czrsfzh]
+			 where hdbh = #[hdbh]
+		]]>
+	</property>
+	
+	<property name="getDxhdByHdbh">
+		<![CDATA[
+			select hdbh, hdmc, hdxz, hdgm, cgmc, jbqssj, 
+					jbjzsj, mcxy, mpxsl, aqtds, bars, mjrs, fbcs, 
+					jqs, xfcs, cls, qtqcs, xccx, ajcs, qksfzc, 
+					zaajs, xsajs, cjsjld, cjstld, qtdw, cydw, jbjg, 
+					clqk, xfyj, jgyj, zbdw, zbdwfrdb, zbdwlxr, 
+					zbdwlxrdh, cbdw, cbdwfrdb, cbdwlxr, cbdwlxrdh, 
+					slr, scr, to_char(shrq,'yyyy-MM-dd') as shrq, shdwdm, shdwmc, shjg, shyj, 
+					djdwdm, djdwmc, djrxm, djrq, czdwdm, czdwmc, czrxm, czsj, czbs ,cgdz, hdqy, xl,djrjh,czrjh
+			from t_za_dxhdxx
+			where hdbh = ?
+		]]>
+	</property>
+</properties>

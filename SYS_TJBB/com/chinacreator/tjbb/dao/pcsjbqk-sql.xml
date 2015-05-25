@@ -1,0 +1,1564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+	<property name="queryPcsJwqJbqkListPageResult">
+		<![CDATA[
+			select  
+		    t.orgid,
+		    t.orgname,
+            t.orgcode,
+            t.leve dwleve,
+            other.id,
+	        other.bgddlx,              
+			other.wljrfs,     
+			other.pcsszxm,    
+			other.pcsszsfzh,  
+			other.pcsszjh,    
+			other.pcsfszxm,   
+			other.pcsfszsfzh, 
+			other.pcsfszjh,   
+			other.czrxm,      
+			other.czrdwdm,    
+			other.czrdwmc,    
+			to_char(other.czsj,'yyyy-mm-dd hh24:mi:ss') as czsj,       
+			other.szjxcjl,    
+			other.jjjl,       
+			other.jgjl,       
+			other.xjjl,       
+			other.tjjl,       
+			other.xjjxcjl,    
+			other.jdxldys,    
+			other.pcsfjs,     
+			other.jwspbfjs,   
+			other.jb,         
+			other.lb,         
+			other.dj,         
+			other.szjb,       
+			other.bzs,        
+			other.jwmsd,      
+			other.jwmss,      
+			other.dsmc1,      
+			other.dsmc2,      
+			other.dsmc3,      
+			other.dsmc4,      
+			other.zbmsb,      
+			other.zbmsl,      
+			other.zbjc,       
+			other.zbrsjl,     
+			other.zbrslds,    
+			other.zbrsfjs,    
+			other.xzjd,       
+			other.szsfjrxzbz, 
+			other.zzsqmjs,    
+			other.sqmjzjlb,   
+			other.sqmjrjpbfjs,
+			other.xqmj,       
+			other.zdcss,      
+			to_char(other.djsj,'yyyy-mm-dd hh24:mi:ss') as djsj,       
+			other.pcsjwqdj,   
+			other.szzj,       
+			other.drsznx,     
+			other.rjgyjfbz,   
+			other.sjbfdw,     
+			other.fhzb,       
+			other.hjsj,       
+			other.hjry,       
+			other.qtry,       
+			other.jwqs,       
+			other.ywjws,      
+			other.dnts,       
+			other.jtgj,       
+			other.bgdd,       
+			other.jrganw,     
+			other.jrww,       
+			other.qtfhzb,     
+			other.dzid,       
+			other.dzmc,       
+			other.sfncjws,    
+			other.dsmc5,      
+			other.qcs,        
+			other.djzbs,      
+			other.fdtks,      
+			other.fdbxs,      
+			other.fcbxs,      
+			other.syjls, 
+			other.sfstpz, 
+			other.sfjljws,    
+			tj.zjls jls,       -- 警力数 
+			tj.pcszfjs fjs,    -- 辅警数
+			tj.JSQJWSS sqjwss,     -- 社区警务室数
+			tj.sqmjs ,      -- 社区民警数
+			tj.ncjwss,      -- 农村警务室数
+			tj.zcmjs,       -- 驻村民警数
+			tj.sqjwsfjs sqmjpbfjs,    -- 社区警务室辅警数 
+			F_GET_GXXZSQCCOUNT(t.orgcode) sqs,      --社区数
+            F_GET_XZCSCOUNT(t.orgcode) xzcs,     --行政村数
+			(select czrks from t_common_xqtjqk where orgcode = t.orgcode) hjrks,  --户籍人口数    
+			(select ldrks from t_common_xqtjqk where orgcode = t.orgcode) zzrks,  --暂住人口数
+			(select zddxs from t_common_xqtjqk where orgcode = t.orgcode) zddxs,  --重点对象数
+			(select dwzs from t_common_xqtjqk where orgcode = t.orgcode) zddws  --重点单位数
+      	from t_common_organization_sjjs t
+     		left  join t_common_organization_other other on other.orgcode = t.orgcode
+     		left  join t_common_pcsjbqktjb tj on tj.orgcode =  t.orgcode
+      	where t.leve=4
+      		#if($sfwsxx && $sfwsxx.equals("1"))
+      			and (dj is not null and lb is not null and jb is not null)
+      		#elseif($sfwsxx && $sfwsxx.equals("0"))
+      			and (dj is null or lb is  null or jb is null)
+      		#end
+      		#if($pcsdm && !$pcsdm.equals(""))
+				and t.orgcode like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				and t.orgcode like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				and t.orgcode like substr(#[citygajgjgdm],1,4)||'%'
+			#end
+		order by jb
+		]]>
+	</property>
+
+	<property name="queryPcsJbqkListByParentCode">
+		<![CDATA[
+      	 select nvl(a.orgcode,'999999999999') as orgcode ,
+      	 	 replace(replace(replace(nvl(a.orgname,'合计'),'公安局',''),'市局','市'),'自治州','州') as orgname,
+             a.leve,a.parent_code as parentcode,
+             zjls, pcszs, pcsjls, pcszfjs, 
+             sqjwsfjs, sqjwss, sqmjs, ncjwss, 
+             zcmjs, jwslganws, stpzs, 
+             pcszfbzfjs, pcsldrkxgys, pcsxfdys, 
+             sqjwspbzfbzfjs, sqjwspblkxgys, 
+             sqjwspbxfdys, jsqjwss, sqjwslws, 
+             ncjwslws,sqzcmjzs,jwszs
+        from (
+	        select orgcode,
+	               sum(zjls) as zjls, sum(pcszs) as pcszs, sum(pcsjls) as pcsjls, sum(pcszfjs) as pcszfjs, 
+	               sum(sqjwsfjs) as sqjwsfjs, sum(sqjwss) as sqjwss, 
+	               sum(sqmjs) as sqmjs, sum(ncjwss) as ncjwss, sum(zcmjs) as zcmjs, sum(jwslganws) as jwslganws,  
+	               sum(stpzs) as stpzs, sum(pcszfbzfjs) as pcszfbzfjs, 
+	               sum(pcsldrkxgys) as pcsldrkxgys, sum(pcsxfdys) as pcsxfdys, sum(sqjwspbzfbzfjs) as sqjwspbzfbzfjs, 
+	               sum(sqjwspblkxgys) as sqjwspblkxgys, sum(sqjwspbxfdys) as sqjwspbxfdys, 
+	               sum(jsqjwss) as jsqjwss, sum(sqjwslws) as sqjwslws, sum(ncjwslws) as ncjwslws,
+	               sum(sqzcmjzs) as sqzcmjzs,sum(jwszs) as jwszs
+	        from t_common_pcsjbqktjb s  
+	        WHERE s.parentcode = #[parentcode]
+	         group by rollup(orgcode)
+         ) s LEFT JOIN t_common_organization_sjjs a ON s.orgcode = a.orgcode 
+         ORDER BY sn,a.orgcode
+		]]>
+	</property>
+	
+	<property name="queryPcsJwqJbqkListByQueryBean">
+		<![CDATA[
+			select substr(orgcode,1,4)||'00000000' as sjdm,
+		        (select orgjc from v_common_organization where orgcode=substr(t.orgcode,1,4)||'00000000' and isyx='1') as sjmc,
+		       substr(orgcode,1,6)||'000000' as fxjdm,
+		       (select orgjc from v_common_organization where orgcode=substr(t.orgcode,1,6)||'000000' and isyx='1') as fxjmc,
+		       substr(orgcode,1,8)||'0000' as pcsdm,
+		       (select orgjc from v_common_organization where orgcode=substr(t.orgcode,1,8)||'0000' and isyx='1') as pcsmc,
+		       orgcode as jwqdm,
+		       (select orgjc from v_common_organization where orgcode=t.orgcode and isyx='1') as jwqmc,
+		       realname,
+		       username,
+		       sfzh,
+		       floor((sysdate - to_date(substr(f_sys_tran_id15to18(sfzh),7,8),'yyyymmdd'))/365) as age,
+		       (select nvl(MOBILE,TELEPHONE) from t_common_user_lxfs l where l.USERID=t.userid and rownum<2) lxdh,
+		       mobile,
+		       (select listagg(JC,',') within group (order by ssjwsdm) from t_common_hnxzqh where ssjwsdm=t.orgcode) as gxsq,
+		       (select PCSJWQDJ from t_common_organization_other ot where ot.orgcode=t.orgcode and rownum=1) as jwqdj,
+		       (select count(1) from t_common_organization_fj fj where fj.SSDWDM=t.orgcode and zxbs = '0') as pbfjs
+		from (
+		select u.userid, o.orgcode,u.username,u.realname,u.sfzh,u.mobile
+		from v_common_user u
+		     inner join v_common_orguser ou on u.userid=ou.userid
+		     inner join v_common_organization o on o.orgid=ou.orgid
+		where  o.leve='5' and u.isvalid='1'
+		) t
+		where 1=1
+			#if($pcsdm && !$pcsdm.equals(""))
+				and t.orgcode like substr(#[pcsdm],1,8)||'%'
+			#elseif($countrygajgjgdm && !$countrygajgjgdm.equals(""))
+				and t.orgcode like substr(#[countrygajgjgdm],1,6)||'%'
+			#elseif($citygajgjgdm && !$citygajgjgdm.equals(""))
+				and t.orgcode like substr(#[citygajgjgdm],1,4)||'%'
+			#end
+		order by orgcode
+		]]>
+	</property>
+	
+	<property name="queryPcsxxsl">
+		<![CDATA[
+			select (
+		          select count(1) from t_common_organization_sjjs where leve='4' and orgcode like #[suborgcode]||'%' 
+		       ) as pcssl,
+		       (
+		          select count(1) from t_common_organization_sjjs where leve='5' and orgcode like #[suborgcode]||'%' 
+		       ) as jwqsl,
+		       (
+		          select count(1)
+		          from v_common_user u 
+		               inner join v_common_orguser ou on ou.userid=u.userid
+		               inner join v_common_organization o on o.orgid=ou.orgid
+		           where o.leve='5' and o.orgcode like #[suborgcode]||'%' and o.isyx='1' and u.isvalid='1'
+		       ) as sqmjsl 
+		    from dual
+		]]>
+	</property>
+	
+	<property name="queryPcsjbqkhz">
+		<![CDATA[
+			SELECT
+				(select mc from t_common_hnxzqh where dm = #[orgcode]) as title, 
+				orgcode, 
+				orgname,
+				(
+				--实有人数
+				SELECT zjls  FROM t_common_pcsjbqktjb WHERE orgcode = #[orgcode]
+				) as syrs,
+				( 
+				--县级公安机关总警力数
+				SELECT sum(zjls) FROM t_common_pcsjbqktjb WHERE leve = '3' 
+				#if($orgLeve == 1)
+					AND orgcode LIKE substr(#[orgcode],1,2)||'%'
+				#elseif($orgLeve == 2)
+					AND orgcode LIKE substr(#[orgcode],1,4)||'%'
+				#elseif($orgLeve == 3)
+					AND orgcode LIKE substr(#[orgcode],1,6)||'%'
+				#end
+				) AS xjgajgzjls,
+				
+				(
+				--实有警力数占县级公安机关总警力小于40%
+				SELECT COUNT(1)
+				  FROM T_COMMON_PCSJBQKTJB S  LEFT JOIN 
+				  (SELECT NVL(SUM(ORG.SYJLS), 0) AS SYJLS,
+				               SUBSTR(ORG.ORGCODE, 1, 6) AS CODE
+				          FROM T_COMMON_ORGANIZATION_OTHER ORG
+				         WHERE ORG.ISPCS = '1'
+				           #if($orgLeve == 1)
+								AND org.orgcode LIKE substr(#[orgcode],1,2)||'%'
+							#elseif($orgLeve == 2)
+								AND org.orgcode LIKE substr(#[orgcode],1,4)||'%'
+							#elseif($orgLeve == 3)
+								AND org.orgcode LIKE substr(#[orgcode],1,6)||'%'
+							#end
+				         GROUP BY SUBSTR(ORG.ORGCODE, 1, 6)) PCSSYJL
+				ON PCSSYJL.CODE = SUBSTR(S.ORGCODE, 1, 6)
+				   WHERE  S.LEVE = 3
+				   #if($orgLeve == 1)
+						AND s.orgcode LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND s.orgcode LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND s.orgcode LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				   AND (PCSSYJL.SYJLS / S.ZJLS) < 0.4
+				) AS syjlzxjlbl,
+				
+				(
+				--当年（统计期）接受过集中业务培训的民警数
+				SELECT COUNT(1)
+				  FROM T_COMMON_USER_LXFS U
+				 WHERE 1=1
+				 #if($orgLeve == 1)
+					AND U.ORGDWDM LIKE substr(#[orgcode],1,2)||'%'
+				#elseif($orgLeve == 2)
+					AND U.ORGDWDM LIKE substr(#[orgcode],1,4)||'%'
+				#elseif($orgLeve == 3)
+					AND U.ORGDWDM LIKE substr(#[orgcode],1,6)||'%'
+				#end 
+				   AND NVL(DNJZYWPXCS, 0) > 0
+				) AS cjpxmjs,
+				(    
+				--派出所数（个）
+				SELECT PCSZS FROM T_COMMON_PCSJBQKTJB WHERE ORGCODE = #[orgcode]
+				) AS pcss,
+				(
+				--城区户籍所数（个）
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				 WHERE ORG.LB = '1'
+				   AND ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND orgcode LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND orgcode LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND orgcode LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS cqhjs,
+				(   
+				--20人及以上的城区派出所数（个）
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG, T_COMMON_PCSJBQKTJB TJ
+				 WHERE ORG.LB = '1'
+				   AND ORG.ISPCS = '1'
+				   AND TJ.ORGCODE = ORG.ORGCODE
+				   AND tj.zjls >= 20
+				   #if($orgLeve == 1)
+						AND TJ.ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND TJ.ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND TJ.ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS cqs,
+				(   
+				-- 建制镇派出所数（个）  
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				 WHERE ORG.LB = '3'
+				   AND ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS zpcs1,
+				(   
+				--10人及以上的建制镇派出所数（个）
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG, T_COMMON_PCSJBQKTJB TJ
+				 WHERE ORG.LB = '3'
+				   AND ORG.ISPCS = '1'
+				   AND TJ.ORGCODE = ORG.ORGCODE
+				   AND tj.zjls >= 10
+				   #if($orgLeve == 1)
+						AND TJ.ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND TJ.ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND TJ.ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS zpcs2,
+				(   
+				--建制乡派出所数(个)
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				 WHERE ORG.LB = '4'
+				   AND ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS xpcs,
+				(    
+				--5人及以上的建制乡派出所数（个）
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG, T_COMMON_PCSJBQKTJB TJ
+				 WHERE ORG.LB = '4'
+				   AND ORG.ISPCS = '1'
+				   AND TJ.ORGCODE = ORG.ORGCODE
+				   AND tj.zjls >= 5
+				   #if($orgLeve == 1)
+						AND TJ.ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND TJ.ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND TJ.ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS xpcs2,
+				(
+				--治安派出所数
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				 WHERE ORG.LB = '6'
+				   AND ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS zas,
+				(
+				--水上派出所数       
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				 WHERE ORG.LB = '5'
+				   AND ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS sss,
+				(
+				--一级派出所数（个）
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				 WHERE ORG.DJ = '1'
+				   AND ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				 ) AS yijs,
+				 (  
+				--二级派出所数（个）
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				 WHERE ORG.DJ = '2'
+				   AND ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS erjs,
+				(    
+				--三级派出所数（个）
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				 WHERE ORG.DJ = '3'
+				   AND ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS sanjs,
+				( 
+				--四级派出所数（个）  
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				 WHERE ORG.DJ = '4'
+				   AND ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS sijs,
+				(   
+				--五级派出所数（个）
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				 WHERE ORG.DJ = '5'
+				   AND ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS wujs,
+				(   
+				--汽车（辆）
+				SELECT nvl(SUM(qcs),0)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				WHERE ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS qcs,
+				(     
+				--无车派出所数
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				WHERE ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				   AND (qcs = 0 OR qcs IS NULL)
+				) AS wcpcs,
+				(   
+				--计算机（台）
+				SELECT nvl(SUM(dnts),0)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				WHERE ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS jsjs,
+				(   
+				--无电脑派出所数   
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				WHERE ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				   AND (dnts = 0 OR dnts IS NULL)
+				) AS wjsjs,
+				(    
+				--副科级以下
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				 WHERE ORG.JB = '1'
+				   AND ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS fkjyx,
+				(   
+				--副科级                 
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				 WHERE ORG.JB = '2'
+				   AND ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS fkj,
+				( 
+				--正科级 
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				 WHERE ORG.JB = '3'
+				   AND ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS zkj,
+				(    
+				--副处级
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				 WHERE ORG.JB = '4'
+				   AND ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS fcj,   
+				       
+				--副处级以上
+				0 AS fcjys,
+				(
+				--防弹头盔（顶）
+				SELECT nvl(SUM(FDTKS),0)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				WHERE ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS fdtks,
+				(   
+				--未装备防弹头盔的派出所数
+				SELECT count(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				WHERE ORG.ISPCS = '1'
+				   AND (FDTKS = 0 OR FDTKS IS NULL) 
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS wfdtkpcss,
+				(   
+				--防弹背心（件）
+				SELECT nvl(SUM(FDBXS),0)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				WHERE ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS fdbxs,
+				(     
+				--未装备防弹背心的派出所数 
+				SELECT count(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				WHERE ORG.ISPCS = '1'
+				   AND (FDBXS = 0 OR FDBXS IS NULL) 
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS wfdbxpcss,
+				(
+				--防刺背心（件）
+				SELECT nvl(SUM(FCBXS),0)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				WHERE ORG.ISPCS = '1'
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS fcbxs,
+				( 
+				--未装备防刺背心的派出所数 
+				SELECT count(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				WHERE ORG.ISPCS = '1'
+				   AND (FCBXS = 0 OR FCBXS IS NULL) 
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS wfcbxpcss,
+				(
+				--所长数
+				SELECT COUNT(1)
+				  FROM T_COMMON_ORGANIZATION_OTHER ORG
+				WHERE ORG.ISPCS = '1'
+				   AND PCSSZJH IS NOT NULL
+				   #if($orgLeve == 1)
+						AND ORGCODE LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND ORGCODE LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND ORGCODE LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				) AS szs, 
+				(  
+				--已建农村警务室数（个）
+				SELECT NCJWSS FROM t_common_pcsjbqktjb WHERE orgcode = #[orgcode]
+				) AS ncjwss,
+				(
+				--驻村民警
+				SELECT ZCMJS FROM t_common_pcsjbqktjb WHERE orgcode = #[orgcode] 
+				) AS zcmjs,
+				(
+				--驻村民警中专职驻村民警数
+				SELECT COUNT(1)
+				  FROM T_COMMON_USER_LXFS U
+				 WHERE u.sfzcmj = '1' 
+				 #if($orgLeve == 1)
+						AND U.ORGDWDM LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND U.ORGDWDM LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND U.ORGDWDM LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				   AND u.sfzzsqmj = '1'
+				) AS zczzmjs,
+				(     
+				--已建社区警务室数（个）  
+				SELECT JSQJWSS FROM t_common_pcsjbqktjb WHERE orgcode = #[orgcode]  
+				) AS jljwqs,
+				(
+				--社区民警（人）  
+				SELECT SQMJS FROM t_common_pcsjbqktjb WHERE orgcode = #[orgcode]  
+				) AS sqmjs,
+				(
+				--社区民警中专职社区民警数  
+				SELECT COUNT(1)
+				  FROM T_COMMON_USER_LXFS U
+				 WHERE u.sfzcmj = '0'
+				    #if($orgLeve == 1)
+						AND U.ORGDWDM LIKE substr(#[orgcode],1,2)||'%'
+					#elseif($orgLeve == 2)
+						AND U.ORGDWDM LIKE substr(#[orgcode],1,4)||'%'
+					#elseif($orgLeve == 3)
+						AND U.ORGDWDM LIKE substr(#[orgcode],1,6)||'%'
+					#end
+				   AND u.sfzzsqmj = '1'
+				) AS zzmjs,
+				(   
+				--社区数（个）  
+				SELECT F_GET_GXXZSQCCOUNT(#[orgcode]) FROM dual
+				) AS sqs,
+				(
+				--行政村数（个）
+				SELECT F_GET_XZCSCOUNT(#[orgcode]) FROM dual
+				) AS xzcs,
+				(
+				--警务区数（个）
+				SELECT SQJWSS FROM t_common_pcsjbqktjb WHERE orgcode = #[orgcode]  
+				) AS jwqs
+			FROM t_common_pcsjbqktjb where orgcode = #[orgcode] 
+		]]>
+	</property>
+	
+	<property name="queryFaqktjPageResult">
+		<![CDATA[
+			select  orgcode,orgname,leve,parent_code,xsajs as xsaj, zaajs as zaaj, 
+					qjajs as qjajs,qdajs as qdajs,rsdqajs as rsdqaj, dqjdcajs as dqjdclaj,qtajs as qtaj,
+					jftjs,znsgs 
+			from t_tjfx_faqktj t 
+			where parent_code=#[orgcode]
+				#if($tjyf && !$tjyf.equals(""))
+					and tjyf=#[tjyf]
+				#end
+			order by orgcode
+		]]>
+	</property>
+	
+	<property name="queryFaqktjYearHzPageResult">
+		<![CDATA[
+			select  orgcode,orgname,leve,parent_code,tjyf,xsajs as xsaj, zaajs as zaaj, 
+					qjajs as qjajs,qdajs as qdajs,rsdqajs as rsdqaj, dqjdcajs as dqjdclaj,qtajs as qtaj,
+					jftjs,znsgs 
+			from t_tjfx_faqktj t 
+			where orgcode=#[orgcode]
+			      and tjyf<=#[tjyf]
+			      and tjyf>=to_char(add_months(to_date(#[tjyf]||'01','yyyymmdd'),-12),'yyyymm')
+			order by tjyf  
+		]]>
+	</property>
+	
+	<property name="queryOrgBeansListByParentCode">
+		<![CDATA[
+			select orgid as orgId,orgcode as orgCode,orgname as orgName,
+					parent_orgid as parent_orgid,
+					parent_code as parent_code,orgjc as orgJc,leve as leve
+			from t_common_organization_sjjs 
+			where parent_code=#[orgcode]
+			order by orgcode
+		]]>
+	</property>
+	
+	<property name="queryCzfwTjbbBeans">
+		<![CDATA[
+			#if($leve && $leve.equals("4"))
+				select nvl(orgcode,'999999999999') as orgcode,f_get_dwleve(a.orgcode) as leve,
+				       nvl((select orgname from t_common_organization_sjjs s where s.ORGCODE=a.orgcode),'合计') as orgname,
+				       czfzs, czwgfs, czwsfs,yczfs, qdzazrzs, ybazs,ycqzs
+				from (
+				    select orgcode,
+				           sum(czfzs) as czfzs, sum(czwgfs) as czwgfs, sum(czwsfs) as czwsfs, 
+				           sum(yczfs) as yczfs, sum(qdzazrzs) as qdzazrzs, sum(ybazs) as ybazs, 
+				           sum(ycqzs) as ycqzs 
+				    from t_tjfx_czfwtjbb 
+				    where tjrq>=#[tjqsrq] and tjrq<#[tjjzrq]
+				          and parent_code=substr(#[orgcode],1,8)||'3100'
+				    group by rollup(orgcode)
+				) a
+			#else
+				select nvl(orgcode,'999999999999') as orgcode,f_get_dwleve(a.orgcode) as leve,
+				       nvl((select orgname from t_common_organization_sjjs s where s.ORGCODE=a.orgcode),'合计') as orgname,
+				       czfzs, czwgfs, czwsfs,yczfs, qdzazrzs, ybazs,ycqzs
+				from (
+				    select orgcode,
+				           sum(czfzs) as czfzs, sum(czwgfs) as czwgfs, sum(czwsfs) as czwsfs, 
+				           sum(yczfs) as yczfs, sum(qdzazrzs) as qdzazrzs, sum(ybazs) as ybazs, 
+				           sum(ycqzs) as ycqzs 
+				    from t_tjfx_czfwtjbb 
+				    where tjrq>=#[tjqsrq] and tjrq<#[tjjzrq]
+				          and parent_code=#[orgcode]
+				    group by rollup(orgcode)
+				) a
+			#end
+		]]>
+	</property>
+	
+	<property name="queryLdrkTjbbBeans">
+		<![CDATA[
+			#if($leve && $leve.equals("4"))
+				select nvl(orgcode,'999999999999') as orgcode,f_get_dwleve(a.orgcode) as leve,
+				       nvl((select orgname from t_common_organization_sjjs s where s.orgcode=a.orgcode),'合计') as orgname,
+				       ldrkzs, ldrknans, ldrknvs,ybjzzs, ylfns
+				from (
+				    select orgcode,
+				           sum(ldrkzs) as ldrkzs, sum(ldrknans) as ldrknans, sum(ldrknvs) as ldrknvs, 
+				           sum(ybjzzs) as ybjzzs, sum(ylfns) as ylfns
+				    from t_tjfx_lrdktjbb 
+				    where tjrq>=#[tjqsrq] and tjrq<#[tjjzrq]
+				           and parent_code=substr(#[orgcode],1,8)||'3100'
+				    group by rollup(orgcode)
+				) a
+				order by a.orgcode
+			#else
+				select nvl(orgcode,'999999999999') as orgcode,f_get_dwleve(a.orgcode) as leve,
+				       nvl((select orgname from t_common_organization_sjjs s where s.orgcode=a.orgcode),'合计') as orgname,
+				       ldrkzs, ldrknans, ldrknvs,ybjzzs, ylfns
+				from (
+				    select orgcode,
+				           sum(ldrkzs) as ldrkzs, sum(ldrknans) as ldrknans, sum(ldrknvs) as ldrknvs, 
+				           sum(ybjzzs) as ybjzzs, sum(ylfns) as ylfns
+				    from t_tjfx_lrdktjbb 
+				    where tjrq>=#[tjqsrq] and tjrq<#[tjjzrq]
+				          and parent_code=#[orgcode]
+				    group by rollup(orgcode)
+				) a
+				order by a.orgcode
+			#end
+		]]>
+	</property>
+	
+	<property name="queryGabzzrkTjbbBeans">
+		<![CDATA[
+			select nvl(jzsydm,'00') as jzsydm, nvl(jzsymc,'合计') as jzsymc, 
+			       xbmnum, xbwnum, njzqxbnyxnum, njzqxbnzwnnum, 
+			       njzqxwnys, hjdlxsns, hjdlxsnx, hjdlxsws, hjdlxswx, 
+			       hjdlxgat, hjdlxgw, hjdlxqt, zzcslj, zzcsjmjz, 
+			       zzcsdwnb, zzcsgdxc, zzcszlfw, zzcsqt 
+			from (
+			select neworgcode as orgcode,
+			      tjyf,jzsydm, jzsymc, 
+			      nvl(sum(xbmnum),0) as xbmnum, nvl(sum(xbwnum),0) as xbwnum, nvl(sum(njzqxbnyxnum),0) as njzqxbnyxnum, 
+			      nvl(sum(njzqxbnzwnnum),0) as njzqxbnzwnnum, nvl(sum(njzqxwnys),0) as njzqxwnys, nvl(sum(hjdlxsns),0) as hjdlxsns, 
+			      nvl(sum(hjdlxsnx),0) as hjdlxsnx, nvl(sum(hjdlxsws),0) as hjdlxsws, nvl(sum(hjdlxswx),0) as hjdlxswx, 
+			      nvl(sum(hjdlxgat),0) as hjdlxgat, nvl(sum(hjdlxgw),0) as hjdlxgw, nvl(sum(hjdlxqt),0) as hjdlxqt, 
+			      nvl(sum(zzcslj),0) as zzcslj, nvl(sum(zzcsjmjz),0) as zzcsjmjz, nvl(sum(zzcsdwnb),0) as zzcsdwnb, 
+			      nvl(sum(zzcsgdxc),0) as zzcsgdxc, nvl(sum(zzcszlfw),0) as zzcszlfw, nvl(sum(zzcsqt),0) as zzcsqt,
+			      grouping(neworgcode)||grouping(tjyf)||grouping(jzsydm)||grouping(jzsymc) as gp
+			from (
+			    select rpad(substr(t.orgcode,1,2*f_get_dwleve(#[orgcode])),12,'0') as neworgcode,
+			           tjyf, jzsydm, jzsymc, 
+			           xbmnum, xbwnum, njzqxbnyxnum, njzqxbnzwnnum, 
+			           njzqxwnys, hjdlxsns, hjdlxsnx, hjdlxsws, hjdlxswx, 
+			           hjdlxgat, hjdlxgw, hjdlxqt, zzcslj, zzcsjmjz, 
+			           zzcsdwnb, zzcsgdxc, zzcszlfw, zzcsqt 
+			    from t_tjfx_zzrktjbb t
+			    where tjyf=#[tjyf] and orgcode like substr(#[orgcode],1,2*f_get_dwleve(#[orgcode]))||'%'
+			) a
+			group by rollup(neworgcode,tjyf,jzsydm,jzsymc)
+			) b where b.gp='0000' or b.gp='1111'
+		]]>
+	</property>
+	
+	<property name="queryJzztjbbBeans">
+		<![CDATA[
+			#if($leve && $leve.equals("4"))
+				select nvl(orgcode,'999999999999') as orgcode,
+				       f_get_dwleve(a.orgcode) as leve,
+				       nvl((select orgname from t_common_organization_sjjs s where s.orgcode=a.orgcode),'合计') as orgname,
+				       ldrkzs, zbzs, bsbzrs,wsbzrs, nanbzrs,nvbzrs,fzs,ysbls
+				from (
+				    select orgcode, 
+				           sum(ldrkzs) as ldrkzs, sum(zbzs) as zbzs, sum(bsbzrs) as bsbzrs, 
+				           sum(wsbzrs) as wsbzrs, sum(nanbzrs) as nanbzrs, sum(nvbzrs) as nvbzrs, 
+				           sum(fzs) as fzs, sum(ysbls) as  ysbls
+				    from t_tjfx_jzztjbb t
+				    where tjrq>=#[tjqsrq] 
+				          and tjrq<#[tjjzrq] 
+				          and parent_code=substr(#[orgcode],1,8)||'3100'
+				    group by rollup(orgcode)
+				) a
+				order by a.orgcode
+			#else
+				select nvl(orgcode,'999999999999') as orgcode,
+				       f_get_dwleve(a.orgcode) as leve,
+				       nvl((select orgname from t_common_organization_sjjs s where s.orgcode=a.orgcode),'合计') as orgname,
+				       ldrkzs, zbzs, bsbzrs,wsbzrs, nanbzrs,nvbzrs,fzs,ysbls
+				from(
+				    select orgcode, 
+				           nvl(sum(ldrkzs),0) as ldrkzs, nvl(sum(zbzs),0) as zbzs, nvl(sum(bsbzrs),0) as bsbzrs, 
+				           nvl(sum(wsbzrs),0) as wsbzrs, nvl(sum(nanbzrs),0) as nanbzrs, nvl(sum(nvbzrs),0) as nvbzrs, 
+				           nvl(sum(fzs),0) as fzs, nvl(sum(ysbls),0) as  ysbls
+				    from t_tjfx_jzztjbb t
+				    where tjrq>=#[tjqsrq] 
+				          and tjrq<#[tjjzrq] 
+				          and parent_code=#[orgcode]
+				    group by rollup(orgcode)
+				) a
+				order by a.orgcode
+			#end
+		]]>
+	</property>
+	
+	<property name="queryDataLrtjBeans">
+		<![CDATA[
+			select a.*,f_get_dwleve(a.orgcode) as leve,
+				   (select orgname from v_common_organization where orgcode=a.orgcode) as orgname,
+			       rank() over (order by zs desc) as sort
+			from (
+			    select orgcode,sum(zs) as zs,
+			    	   sum(czrks) as czrks,
+			    	   sum(ldrks) as ldrks,
+			    	   sum(jzrks) as jzrks,
+			           sum(wlhrks) as wlhrks,
+			           sum(cyrys) as cyrys,
+			           sum(sydws) as sydws,
+			           sum(stxxs) as stxxs,
+			           sum(fwxxs) as fwxxs
+			    from t_tjfx_dwdaysjltjbb 
+			    where tjrq>=#[tjqsrq] and tjrq<=#[tjjzrq]
+			          and leve=#[dwlx] and parent_code like substr(#[orgcode],1,2*#[leve])||'%'
+			    group by orgcode
+			) a
+		]]>
+	</property>
+	
+	<property name="queryDwaqjctjbbBeanPageResult">
+		<![CDATA[
+			#if($leve && $leve.equals("5"))
+				select orgcode,orgname,leve,
+						zs, thjcs, gcjcs, nbjcs, wxpjcs, 
+						wbjcs, swjcs, lgjcs, ksjcs, spjcs, 
+						wljcs, qtjcs, jclbzjcs, xfjcs, aqjcs, 
+						yzgqks, wzgqks, fxwts, jgs, fks, xfyhtzs, 
+						dxxkzs, qts
+				   from t_tjfx_dwaqjctjbb
+				   where orgcode=#[orgcode]
+			#elseif($leve && $leve.equals("4"))
+				select a.*,nvl((select orgname from v_common_organization where orgcode=a.orgcode),'合计') as orgname,f_get_dwleve(a.orgcode) as leve
+				from (
+				   select orgcode,
+				         sum(zs) as zs, sum(thjcs) as thjcs, sum(gcjcs) as gcjcs, sum(nbjcs) as nbjcs, 
+				         sum(wxpjcs) as wxpjcs, sum(wbjcs) as wbjcs, sum(swjcs) as swjcs, 
+				         sum(lgjcs) as lgjcs, sum(ksjcs) as ksjcs, sum(spjcs) as spjcs, 
+				         sum(wljcs) as wljcs, sum(qtjcs) as qtjcs, sum(jclbzjcs) as jclbzjcs, 
+				         sum(xfjcs) as xfjcs, sum(aqjcs) as aqjcs, sum(yzgqks) as yzgqks, 
+				         sum(wzgqks) as wzgqks, sum(fxwts) as fxwts, sum(jgs) as jgs, sum(fks) as fks, 
+				         sum(xfyhtzs) as xfyhtzs, sum(dxxkzs) as dxxkzs, sum(qts) as qts
+				   from t_tjfx_dwaqjctjbb
+				   where orgcode like substr(#[orgcode],1,8)||'%'
+				   group by rollup(orgcode)
+				 )  a
+			#elseif ($leve && $leve.equals("3"))
+				select a.*,
+					nvl((select orgname from v_common_organization where orgcode=a.orgcode),'合计') as orgname,
+					f_get_dwleve(a.orgcode) as leve
+				from (
+				   select rpad(substr(orgcode,1,8),12,'0') as orgcode,
+				         sum(zs) as zs, sum(thjcs) as thjcs, sum(gcjcs) as gcjcs, sum(nbjcs) as nbjcs, 
+				         sum(wxpjcs) as wxpjcs, sum(wbjcs) as wbjcs, sum(swjcs) as swjcs, 
+				         sum(lgjcs) as lgjcs, sum(ksjcs) as ksjcs, sum(spjcs) as spjcs, 
+				         sum(wljcs) as wljcs, sum(qtjcs) as qtjcs, sum(jclbzjcs) as jclbzjcs, 
+				         sum(xfjcs) as xfjcs, sum(aqjcs) as aqjcs, sum(yzgqks) as yzgqks, 
+				         sum(wzgqks) as wzgqks, sum(fxwts) as fxwts, sum(jgs) as jgs, sum(fks) as fks, 
+				         sum(xfyhtzs) as xfyhtzs, sum(dxxkzs) as dxxkzs, sum(qts) as qts
+				   from t_tjfx_dwaqjctjbb
+				   where orgcode like substr(#[orgcode],1,6)||'%'
+				   group by rollup(substr(orgcode,1,8))
+				 )  a
+			#elseif($leve && $leve.equals("2"))
+				select a.*,
+					nvl((select orgname from v_common_organization where orgcode=a.orgcode),'合计') as orgname,
+					f_get_dwleve(a.orgcode) as leve
+				from (
+				   select rpad(substr(orgcode,1,6),12,'0') as orgcode,
+				         sum(zs) as zs, sum(thjcs) as thjcs, sum(gcjcs) as gcjcs, sum(nbjcs) as nbjcs, 
+				         sum(wxpjcs) as wxpjcs, sum(wbjcs) as wbjcs, sum(swjcs) as swjcs, 
+				         sum(lgjcs) as lgjcs, sum(ksjcs) as ksjcs, sum(spjcs) as spjcs, 
+				         sum(wljcs) as wljcs, sum(qtjcs) as qtjcs, sum(jclbzjcs) as jclbzjcs, 
+				         sum(xfjcs) as xfjcs, sum(aqjcs) as aqjcs, sum(yzgqks) as yzgqks, 
+				         sum(wzgqks) as wzgqks, sum(fxwts) as fxwts, sum(jgs) as jgs, sum(fks) as fks, 
+				         sum(xfyhtzs) as xfyhtzs, sum(dxxkzs) as dxxkzs, sum(qts) as qts
+				   from t_tjfx_dwaqjctjbb
+				   where orgcode like substr(#[orgcode],1,4)||'%'
+				   group by rollup(substr(orgcode,1,6))
+				 )  a
+			#elseif($leve && $leve.equals("1"))
+				select a.*,
+					nvl((select orgname from v_common_organization where orgcode=a.orgcode),'合计') as orgname,
+					f_get_dwleve(a.orgcode) as leve
+				from (
+				   select rpad(substr(orgcode,1,4),12,'0') as orgcode,
+				         sum(zs) as zs, sum(thjcs) as thjcs, sum(gcjcs) as gcjcs, sum(nbjcs) as nbjcs, 
+				         sum(wxpjcs) as wxpjcs, sum(wbjcs) as wbjcs, sum(swjcs) as swjcs, 
+				         sum(lgjcs) as lgjcs, sum(ksjcs) as ksjcs, sum(spjcs) as spjcs, 
+				         sum(wljcs) as wljcs, sum(qtjcs) as qtjcs, sum(jclbzjcs) as jclbzjcs, 
+				         sum(xfjcs) as xfjcs, sum(aqjcs) as aqjcs, sum(yzgqks) as yzgqks, 
+				         sum(wzgqks) as wzgqks, sum(fxwts) as fxwts, sum(jgs) as jgs, sum(fks) as fks, 
+				         sum(xfyhtzs) as xfyhtzs, sum(dxxkzs) as dxxkzs, sum(qts) as qts
+				   from t_tjfx_dwaqjctjbb
+				   where orgcode like substr(#[orgcode],1,2)||'%'
+				   group by rollup(substr(orgcode,1,4))
+				 )  a
+			#end
+		]]>
+	</property>
+	
+	
+	<property name="queryDwtjList">
+		<![CDATA[
+			select orgcode as dwdm,
+		       sum(nvl(tzhy, 0)) as tzhy,
+		       sum(nvl(tzhy, 0)) as tzhy,
+		       sum(nvl(ggcs, 0)) as ggcs,
+		       sum(nvl(nbdw, 0)) as nbdw,
+		       sum(nvl(wbdw, 0)) as wbdw,
+		       sum(nvl(wb, 0)) as wb,
+		       sum(nvl(swdw, 0)) as swdw,
+		       sum(nvl(lg, 0)) as lg,
+		       sum(nvl(ksdw, 0)) as ksdw,
+		       sum(nvl(jfdw, 0)) as jfdw,
+		       sum(nvl(qtdw, 0)) as qtdw,
+		       sum(nvl(sp, 0)) as sp,
+		       sum(nvl(wldw, 0)) as wldw,
+		       sum(nvl(ddh, 0)) as ddh,
+		       sum(nvl(pmh, 0)) as pmh,
+		       sum(nvl(qtth, 0)) as qtth,
+		       sum(nvl(zs, 0)) as zs
+		  from v_common_organization org,
+		       (select 
+		       		   #if($leve == 1)
+		       		   		substr(dwdm, 1, 4) as dwdm,
+		       		   #elseif($leve == 2)
+		       		   		substr(dwdm, 1, 6) as dwdm,
+		       		   #elseif($leve == 3)
+		       		   		substr(dwdm, 1, 8) as dwdm,
+		       		   #elseif($leve == 4 || $leve == 5)
+		       		   		dwdm,		
+		       		   #end
+		               nvl(sum(a.tzhy), 0) as tzhy,
+		               nvl(sum(a.ggcs), 0) as ggcs,
+		               nvl(sum(a.nbdw), 0) as nbdw,
+		               nvl(sum(a.wbdw), 0) as wbdw,
+		               nvl(sum(a.wb), 0) as wb,
+		               nvl(sum(a.swdw), 0) as swdw,
+		               nvl(sum(a.lg), 0) as lg,
+		               nvl(sum(a.ksdw), 0) as ksdw,
+		               nvl(sum(a.jfdw), 0) as jfdw,
+		               nvl(sum(a.qtdw), 0) as qtdw,
+		               nvl(sum(a.sp), 0) as sp,
+		               nvl(sum(a.wldw), 0) as wldw,
+		               nvl(sum(a.ddh), 0) as ddh,
+		               nvl(sum(a.pmh), 0) as pmh,
+		               nvl(sum(a.qtth), 0) as qtth,
+		               nvl(sum(a.zs), 0) as zs
+		          from t_tjfx_dwtj a
+		          where 1 = 1
+		          #if($tjsj_start && !$tjsj_start.equals(""))
+		          	and trunc(tjsj_e,'dd') >= to_date(#[tjsj_start],'yyyy-mm-dd')
+		          #end
+		          #if($tjsj_end && !$tjsj_end.equals(""))
+		          	and trunc(tjsj_e,'dd') <= to_date(#[tjsj_end],'yyyy-mm-dd')
+		          #end
+		          #if($leve == 1)
+	       		   		group by substr(dwdm, 1, 4)
+	       		   #elseif($leve == 2)
+	       		   		group by substr(dwdm, 1, 6)
+	       		   #elseif($leve == 3)
+	       		   		group by substr(dwdm, 1, 8)
+	       		   #elseif($leve == 4 || $leve == 5)
+	       		   		group by dwdm
+	       		   #end
+		         ) dwtj
+		 where 1 = 1 
+		   #if($leve == 1)
+   		   		 and substr(org.orgcode, 1, 4) = dwtj.dwdm(+)
+   		   #elseif($leve == 2)
+   		   		 and substr(org.orgcode, 1, 6) = dwtj.dwdm(+)
+   		   #elseif($leve == 3)
+   		   		 and substr(org.orgcode, 1, 8) = dwtj.dwdm(+)
+   		   #elseif($leve == 4 || $leve == 5)
+   		   	     and org.orgcode = 	dwtj.dwdm(+)	 
+   		   #end
+		   and org.isyx = '1'
+		   #if($leve < 5)
+		   		and org.leve = (#[leve] + 1)
+		   #else
+		   		and org.leve = 5		
+		   #end		
+		   #if($leve == 1)
+		   		 and orgcode like substr(#[dwdm],1,2)||'__00000000%'
+		   #elseif($leve == 2)
+   		   		 and orgcode like substr(#[dwdm],1,4)||'__000000%'
+   		   #elseif($leve == 3)
+   		   		 and orgcode like substr(#[dwdm],1,6)||'__0000%'
+   		   		 and ispcs = '1'
+   		    #elseif($leve == 4 )
+  		   		 and orgcode like substr(#[dwdm],1,8)||'31__%'
+   		   #elseif($leve == 5)
+   		   		 and orgcode = #[dwdm]
+   		   #end
+		 group by rollup(org.orgcode)
+		 order by org.orgcode
+		]]>
+	</property>
+	
+	<property name="queryFaqktjBeans">
+		<![CDATA[
+			select b.*
+			from (
+			    select a.orgcode,a.orgname,a.tjyf,
+			    	xsajs as xsaj, zaajs as zaaj, 
+					qjajs as qjajs,qdajs as qdajs,rsdqajs as rsdqaj, 
+					dqjdcajs as dqjdclaj,qtajs as qtaj,jftjs,znsgs,rownum as num 
+			    from (
+			      select t.*
+			      from t_tjfx_faqktj t
+			      where orgcode=#[orgcode]
+			            and tjyf<=#[tjyf]
+			      order by tjyf desc 
+			    ) a
+			) b
+			where b.num < 12
+		]]>
+	</property>
+	
+	<property name="queryWeekTjbbBeanList">
+		<![CDATA[
+			select #if($tjlb && $tjlb.equals("2"))
+				   		rpad(substr(b.orgcode,1,4),12,'0') orgcode,
+				   		(select orgname from t_common_organization_sjjs where orgcode=rpad(substr(b.orgcode,1,4),12,'0')) as orgname,
+				   #elseif($tjlb && $tjlb.equals("3"))
+				   		rpad(substr(b.orgcode,1,6),12,'0') orgcode,
+				   		(select orgname from t_common_organization_sjjs where orgcode=rpad(substr(b.orgcode,1,6),12,'0')) as orgname,
+				   #elseif($tjlb && $tjlb.equals("4"))
+				   		rpad(substr(b.orgcode,1,8),12,'0') orgcode,
+				   		(select orgname from t_common_organization_sjjs where orgcode=rpad(substr(b.orgcode,1,8),12,'0')) as orgname,
+				   #elseif($tjlb && $tjlb.equals("5"))
+				   		b.orgcode,
+				   	   (select orgname from t_common_organization_sjjs where orgcode=b.orgcode) as orgname,
+				   #end
+				   sum(jwqzs) as jwqzs,
+			       sum(firstweek) as firstweek, 
+			       sum(secondweek) as secondweek,
+			       sum(thirdweek) as thirdweek,
+			       sum(fourthweek) as fourthweek,
+			       sum(fifthweek) as fifthweek,
+			       sum(sixthweek) as sixthweek,
+			       sum(wwczcjsjwqs) as wwczcjsjwqs
+			from (
+			    select a.orgcode,
+			           nvl((select SQJWSS
+                           from t_common_pcsjbqktjb
+                           where orgcode = rpad(a.orgcode, 12, '0')),
+		               1) as jwqzs,
+			    	   a.firstweek,a.secondweek,a.thirdweek,a.fourthweek,a.fifthweek,a.sixthweek,
+			            (case 
+			             when ((firstweekisvalid='1' and firstweek=0)
+			               or (secondweekisvalid='1' and secondweek=0) 
+			               or (thirdweekisvalid='1' and thirdweek=0)
+			               or (fourthweekisvalid='1' and fourthweek=0)
+			               or (fifthweekisvalid='1' and fifthweek=0) 
+			               or (sixthweekisvalid='1' and sixthweek=0)) 
+			              then 1 
+			              else 0 
+			              end) as wwczcjsjwqs
+			    from (
+			        select s.orgcode,
+			         (
+			            select nvl(sum(zs),0) 
+			            from t_tjfx_dwdaysjltjbb 
+			            where orgcode=s.orgcode
+			                  and tjrq>=#[onestart]
+			                  and tjrq<=#[oneend]
+			         )as firstweek,
+			         (
+			            select nvl(sum(zs),0) 
+			            from t_tjfx_dwdaysjltjbb 
+			            where orgcode=s.orgcode
+			                  and tjrq>=#[twostart] 
+			                  and tjrq<=#[twoend]
+			         ) as secondweek,
+			         (
+			            select nvl(sum(zs),0)
+			            from t_tjfx_dwdaysjltjbb 
+			            where orgcode=s.orgcode
+			                  and tjrq>=#[threestart]
+			                  and tjrq<=#[threeend]
+			         )  as thirdweek,
+			         (
+			            select nvl(sum(zs),0) 
+			            from t_tjfx_dwdaysjltjbb 
+			            where orgcode=s.orgcode
+			                  and tjrq>=#[fourstart]
+			                  and tjrq<=#[fourend]
+			         ) as fourthweek,
+			         #if($fivestart && !$fivestart.equals(""))
+			         	(
+				            select nvl(sum(zs),0) 
+				            from t_tjfx_dwdaysjltjbb 
+				            where orgcode=s.orgcode
+				                  and tjrq>=#[fivestart]
+				                  and tjrq<=#[fiveend]
+				         ) as fifthweek,
+			         #else
+			         	0 as fifthweek,
+			         #end
+			         
+			         #if($fivestart && !$fivestart.equals(""))
+			         	(
+				            select nvl(sum(zs),0) 
+				            from t_tjfx_dwdaysjltjbb 
+				            where orgcode=s.orgcode
+				                  and tjrq>=#[sixstart]
+				                  and tjrq<=#[sixend]
+				         ) as sixthweek,
+			         #else
+			         	0 as sixthweek,
+			         #end
+			         #if($firstweekisvalid && $firstweekisvalid.equals("1"))
+			         	'1' firstweekisvalid,
+			         #else
+			         	'0' firstweekisvalid,
+			         #end
+			         #if($secondweekisvalid && $secondweekisvalid.equals("1"))
+			         	'1' secondweekisvalid,
+			         #else
+			         	'0' secondweekisvalid,
+			         #end
+			         #if($thirdweekisvalid && $thirdweekisvalid.equals("1"))
+			         	'1' thirdweekisvalid,
+			         #else
+			         	'0' thirdweekisvalid,
+			         #end
+			         #if($fourthweekisvalid && $fourthweekisvalid.equals("1"))
+			         	'1' fourthweekisvalid,
+			         #else
+			         	'0' fourthweekisvalid,
+			         #end
+			         #if($fifthweekisvalid && $fifthweekisvalid.equals("1"))
+			         	'1' fifthweekisvalid,
+			         #else
+			         	'0' fifthweekisvalid,
+			         #end
+			         #if($sixthweekisvalid && $sixthweekisvalid.equals("1"))
+			         	'1' sixthweekisvalid
+			         #else
+			         	'0' sixthweekisvalid
+			         #end
+			        from t_common_organization_sjjs s
+			        where s.leve=5
+			    ) a
+			) b
+			where b.orgcode like substr(#[tjdwdm],1,2*f_get_dwleve(#[tjdwdm]))||'%' 
+			#if($tjlb && $tjlb.equals("2"))
+				group by rollup(substr(b.orgcode,1,4))
+				order by substr(b.orgcode,1,4)
+			#elseif($tjlb && $tjlb.equals("3"))
+				group by rollup(substr(b.orgcode,1,6))
+				order by substr(b.orgcode,1,6)
+			#elseif($tjlb && $tjlb.equals("4"))
+				group by rollup(substr(b.orgcode,1,8))
+				order by substr(b.orgcode,1,8)
+			#elseif($tjlb && $tjlb.equals("5"))
+				group by rollup(b.orgcode)
+				order by b.orgcode
+			#end
+		]]>
+	</property>
+	
+	<property name="queryWeekTjbbBeanPageResultInfo">
+		<![CDATA[
+			select #if($tjlb && $tjlb.equals("2"))
+				   		rpad(substr(b.orgcode,1,4),12,'0') orgcode,
+				   		(select orgname from t_common_organization_sjjs where orgcode=rpad(substr(b.orgcode,1,4),12,'0')) as orgname,
+				   		nvl((select SQJWSS from t_common_pcsjbqktjb  where orgcode=rpad(substr(b.orgcode,1,4),12,'0')),1) as jwqzs,
+				   #elseif($tjlb && $tjlb.equals("3"))
+				   		rpad(substr(b.orgcode,1,6),12,'0') orgcode,
+				   		(select orgname from t_common_organization_sjjs where orgcode=rpad(substr(b.orgcode,1,6),12,'0')) as orgname,
+				   		nvl((select SQJWSS from t_common_pcsjbqktjb  where orgcode=rpad(substr(b.orgcode,1,6),12,'0')),1) as jwqzs,
+				   #elseif($tjlb && $tjlb.equals("4"))
+				   		rpad(substr(b.orgcode,1,8),12,'0') orgcode,
+				   		(select orgname from t_common_organization_sjjs where orgcode=rpad(substr(b.orgcode,1,8),12,'0')) as orgname,
+				   		nvl((select SQJWSS from t_common_pcsjbqktjb  where orgcode=rpad(substr(b.orgcode,1,8),12,'0')),1) as jwqzs,
+				   #elseif($tjlb && $tjlb.equals("5"))
+				   		b.orgcode,
+				   	   (select orgname from t_common_organization_sjjs where orgcode=b.orgcode) as orgname,
+				   		nvl((select SQJWSS from t_common_pcsjbqktjb  where orgcode=b.orgcode),1) as jwqzs,
+				   #end
+			       sum(firstweek) as firstweek, 
+			       sum(secondweek) as secondweek,
+			       sum(thirdweek) as thirdweek,
+			       sum(fourthweek) as fourthweek,
+			       sum(fifthweek) as fifthweek,
+			       sum(sixthweek) as sixthweek,
+			       
+			       sum(wwczcjsjwqs) as wwczcjsjwqs
+			from (
+			    select a.orgcode,a.firstweek,a.secondweek,a.thirdweek,a.fourthweek,a.fifthweek,a.sixthweek,
+			            (case 
+			             when ((firstweekisvalid='1' and firstweek=0)
+			               or (secondweekisvalid='1' and secondweek=0) 
+			               or (thirdweekisvalid='1' and thirdweek=0)
+			               or (fourthweekisvalid='1' and fourthweek=0)
+			               or (fifthweekisvalid='1' and fifthweek=0) 
+			               or (sixthweekisvalid='1' and sixthweek=0)) 
+			              then 1 
+			              else 0 
+			              end) as wwczcjsjwqs
+			    from (
+			        select s.orgcode,
+			         (
+			            select nvl(sum(zs),0) 
+			            from t_tjfx_dwdaysjltjbb 
+			            where orgcode=s.orgcode
+			                  and tjrq>=#[onestart]
+			                  and tjrq<=#[oneend]
+			         )as firstweek,
+			         (
+			            select nvl(sum(zs),0) 
+			            from t_tjfx_dwdaysjltjbb 
+			            where orgcode=s.orgcode
+			                  and tjrq>=#[twostart] 
+			                  and tjrq<=#[twoend]
+			         ) as secondweek,
+			         (
+			            select nvl(sum(zs),0)
+			            from t_tjfx_dwdaysjltjbb 
+			            where orgcode=s.orgcode
+			                  and tjrq>=#[threestart]
+			                  and tjrq<=#[threeend]
+			         )  as thirdweek,
+			         (
+			            select nvl(sum(zs),0) 
+			            from t_tjfx_dwdaysjltjbb 
+			            where orgcode=s.orgcode
+			                  and tjrq>=#[fourstart]
+			                  and tjrq<=#[fourend]
+			         ) as fourthweek,
+			         #if($fivestart && !$fivestart.equals(""))
+			         	(
+				            select nvl(sum(zs),0) 
+				            from t_tjfx_dwdaysjltjbb 
+				            where orgcode=s.orgcode
+				                  and tjrq>=#[fivestart]
+				                  and tjrq<=#[fiveend]
+				         ) as fifthweek,
+			         #else
+			         	0 as fifthweek,
+			         #end
+			         
+			         #if($fivestart && !$fivestart.equals(""))
+			         	(
+				            select nvl(sum(zs),0) 
+				            from t_tjfx_dwdaysjltjbb 
+				            where orgcode=s.orgcode
+				                  and tjrq>=#[sixstart]
+				                  and tjrq<=#[sixend]
+				         ) as sixthweek,
+			         #else
+			         	0 as sixthweek,
+			         #end
+			         #if($firstweekisvalid && $firstweekisvalid.equals("1"))
+			         	'1' firstweekisvalid,
+			         #else
+			         	'0' firstweekisvalid,
+			         #end
+			         #if($secondweekisvalid && $secondweekisvalid.equals("1"))
+			         	'1' secondweekisvalid,
+			         #else
+			         	'0' secondweekisvalid,
+			         #end
+			         #if($thirdweekisvalid && $thirdweekisvalid.equals("1"))
+			         	'1' thirdweekisvalid,
+			         #else
+			         	'0' thirdweekisvalid,
+			         #end
+			         #if($fourthweekisvalid && $fourthweekisvalid.equals("1"))
+			         	'1' fourthweekisvalid,
+			         #else
+			         	'0' fourthweekisvalid,
+			         #end
+			         #if($fifthweekisvalid && $fifthweekisvalid.equals("1"))
+			         	'1' fifthweekisvalid,
+			         #else
+			         	'0' fifthweekisvalid,
+			         #end
+			         #if($sixthweekisvalid && $sixthweekisvalid.equals("1"))
+			         	'1' sixthweekisvalid
+			         #else
+			         	'0' sixthweekisvalid
+			         #end
+			        from t_common_organization_sjjs s
+			        where s.leve=5
+			    ) a
+			) b
+			where b.orgcode like substr(#[tjdwdm],1,2*f_get_dwleve(#[tjdwdm]))||'%' 
+			#if($tjlb && $tjlb.equals("2"))
+				group by substr(b.orgcode,1,4)
+				order by substr(b.orgcode,1,4)
+			#elseif($tjlb && $tjlb.equals("3"))
+				group by substr(b.orgcode,1,6)
+				order by substr(b.orgcode,1,6)
+			#elseif($tjlb && $tjlb.equals("4"))
+				group by substr(b.orgcode,1,8)
+				order by substr(b.orgcode,1,8)
+			#elseif($tjlb && $tjlb.equals("5"))
+				group by b.orgcode
+				order by b.orgcode
+			#end
+		]]>
+	</property>
+	
+	<property name="queryJdTbList">
+		<![CDATA[
+			select a.orgcode,
+				f_get_dwleve(a.orgcode) as dwleve,
+				nvl((select replace(replace(orgname,'公安局',''),'自治','') from t_common_organization_sjjs where orgcode=a.orgcode),'合计') as dwmc,
+				rk_zs,rks,dw_zs,dws,qsydw_zs,qsydws,
+				cyry_zs,cyrys,sq_zs,sqs,sqgb_zs,
+				sqgbs,zbhcy_zs,zbhcys,zdyhbw_zs,zdyhbws,hycsgwt_zs,hycsgwts,
+				hycsklok_zs,hycskloks,hycsdzyx_zs,hycsdzyxs
+			from (
+				select t.orgcode,
+					   sum(t.rk_zs) as rk_zs,sum(t.rks) as rks,sum(t.dw_zs) as dw_zs,
+					   sum(t.dws) as dws ,sum(t.qsydw_zs) as qsydw_zs,sum(t.qsydws) as qsydws,
+					   sum(t.cyry_zs) as cyry_zs,sum(t.cyrys) as cyrys,
+					   sum(t.sq_zs) as sq_zs,sum(t.sqs) as sqs,sum(t.sqgb_zs) as sqgb_zs,
+					   sum(t.sqgbs) as sqgbs,sum(t.zbhcy_zs) as zbhcy_zs,sum(t.zbhcys) as zbhcys,
+					   sum(t.zdyhbw_zs) as zdyhbw_zs,sum(t.zdyhbws) as zdyhbws,
+					   sum(t.hycsgwt_zs) as hycsgwt_zs,sum(t.hycsgwts) as hycsgwts,
+					   sum(t.hycsklok_zs) as hycsklok_zs,sum(t.hycskloks) as hycskloks,
+					   sum(t.hycsdzyx_zs) as hycsdzyx_zs,sum(t.hycsdzyxs) as hycsdzyxs
+				from (
+						#if ($dwleve && $dwleve.equals("5"))
+							select org.orgcode,
+							  (select czrks + ldrks + jwrks + jzrks + wlhrks  from t_common_xqtjqk where orgcode=org.orgcode)  as rk_zs,
+							  (select(sum(czrks) + sum(ldrks) + sum(jzrks) + sum(wlhrks)) from t_tjfx_dwdaysjltjbb s where s.orgcode = org.orgcode and to_date(s.tjrq,'yyyymmdd') >=to_date(#[tjsj_start],'yyyymmdd') and to_date(s.tjrq,'yyyymmdd') <= to_date(#[tjsj_end],'yyyymmdd')) as rks, 
+							  (select DWZS from t_common_xqtjqk where orgcode=org.orgcode) as dw_zs,
+							  (select(sum(sydws)) from t_tjfx_dwdaysjltjbb s where s.orgcode = org.orgcode and to_date(s.tjrq,'yyyymmdd') >=to_date(#[tjsj_start],'yyyymmdd') and to_date(s.tjrq,'yyyymmdd') <= to_date(#[tjsj_end],'yyyymmdd')) as dws,
+							  (select NBDWS from t_common_xqtjqk where orgcode=org.orgcode) as qsydw_zs,
+							  f_get_dwcountbydwfl(org.orgcode,'03',#[tjsj_start],#[tjsj_end]) as qsydws,
+							  (select CYRYS from t_common_xqtjqk where orgcode=org.orgcode ) as cyry_zs,
+							  (select(sum(cyrys)) from t_tjfx_dwdaysjltjbb s where s.orgcode = org.orgcode and to_date(s.tjrq,'yyyymmdd') >=to_date(#[tjsj_start],'yyyymmdd') and to_date(s.tjrq,'yyyymmdd') <= to_date(#[tjsj_end],'yyyymmdd')) as cyrys,
+							  (select count(1) from t_common_hnxzqh where leve='5' and isvalid='1' and dm like substr(org.orgcode,1,2*f_get_dwleve(org.orgcode))||'%') as sq_zs,
+							  (select count(1) from t_za_wyxq xq where xq.zxbs = '0' and xq.djdwdm like substr(org.orgcode,1,org.leve*2) ||'%' and djsj >= to_date(#[tjsj_start],'yyyymmdd') and djsj <= to_date(#[tjsj_end],'yyyymmdd')) as sqs,
+							  (select count(1) from t_af_sqgbxx gb where gb.zxbs = '1' and gb.lx = '1' and djdwdm like substr(org.orgcode,1,2*f_get_dwleve(org.orgcode)) ||'%') as sqgb_zs,
+							  (select count(1) from t_af_sqgbxx gb where gb.zxbs = '1' and gb.lx = '1' and djdwdm like substr(org.orgcode,1,org.leve*2) ||'%'  and djsj >= to_date(#[tjsj_start],'yyyymmdd') and djsj <= to_date(#[tjsj_end],'yyyymmdd')) as sqgbs,
+							  (select count(1) from t_af_zbhcyxx s where s.tcbs = '0' and s.djdwdm like substr(org.orgcode,1,org.leve*2) ||'%') as zbhcy_zs,
+							  (select count(1) from t_af_zbhcyxx s where s.tcbs = '0' and s.djdwdm like substr(org.orgcode,1,org.leve*2) ||'%' and s.djsj >= to_date(#[tjsj_start],'yyyymmdd') and s.djsj <= to_date(#[tjsj_end],'yyyymmdd') ) as zbhcys
+							  (select count(1) from t_za_dw_zdyhbw t where djdwdm like substr(org.orgcode,1,2*org.leve)||'%') as zdyhbw_zs,
+							  (select count(1) from t_za_dw_zdyhbw t where djdwdm like substr(org.orgcode,1,2*org.leve)||'%' and t.djsj >= to_date(#[tjsj_start],'yyyymmdd') and t.djsj <= to_date(#[tjsj_end],'yyyymmdd')) as zdyhbws,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1703' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%') as hycsgwt_zs,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1703' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%' and t.djsj >= to_date(#[tjsj_start],'yyyymmdd') and t.djsj <= to_date(#[tjsj_end],'yyyymmdd')) as hycsgwts,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1704' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%') as hycsklok_zs,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1704' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%' and t.djsj >= to_date(#[tjsj_start],'yyyymmdd') and t.djsj <= to_date(#[tjsj_end],'yyyymmdd')) as hycskloks,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1702' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%') as hycsdzyx_zs,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1702' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%' and t.djsj >= to_date(#[tjsj_start],'yyyymmdd') and t.djsj <= to_date(#[tjsj_end],'yyyymmdd')) as hycsdzyxs				
+							from t_common_organization_sjjs org
+							where org.orgcode=#[dwdm]
+							order by orgcode
+						#elseif($dwleve && $dwleve.equals("4"))
+							select org.orgcode, 
+							  (select czrks + ldrks + jwrks + jzrks + wlhrks  from t_common_xqtjqk where orgcode=org.orgcode)  as rk_zs,
+							  (select(sum(czrks) + sum(ldrks) + sum(jzrks) + sum(wlhrks)) from t_tjfx_dwdaysjltjbb s where s.orgcode = org.orgcode and to_date(s.tjrq,'yyyymmdd') >=to_date(#[tjsj_start],'yyyymmdd') and to_date(s.tjrq,'yyyymmdd') <= to_date(#[tjsj_end],'yyyymmdd')) as rks, 
+							  (select DWZS from t_common_xqtjqk where orgcode=org.orgcode) as dw_zs,
+							  (select(sum(sydws)) from t_tjfx_dwdaysjltjbb s where s.orgcode = org.orgcode and to_date(s.tjrq,'yyyymmdd') >=to_date(#[tjsj_start],'yyyymmdd') and to_date(s.tjrq,'yyyymmdd') <= to_date(#[tjsj_end],'yyyymmdd')) as dws,
+							  (select NBDWS from t_common_xqtjqk where orgcode=org.orgcode) as qsydw_zs,
+							  f_get_dwcountbydwfl(org.orgcode,'03',#[tjsj_start],#[tjsj_end]) as qsydws,
+							  (select CYRYS from t_common_xqtjqk where orgcode=org.orgcode ) as cyry_zs,
+							  (select(sum(cyrys)) from t_tjfx_dwdaysjltjbb s where s.orgcode = org.orgcode and to_date(s.tjrq,'yyyymmdd') >=to_date(#[tjsj_start],'yyyymmdd') and to_date(s.tjrq,'yyyymmdd') <= to_date(#[tjsj_end],'yyyymmdd')) as cyrys,
+							  (select count(1) from t_common_hnxzqh where leve='5' and isvalid='1' and dm like substr(org.orgcode,1,2*f_get_dwleve(org.orgcode))||'%') as sq_zs,
+							  (select count(1) from t_za_wyxq xq where xq.zxbs = '0' and xq.djdwdm like substr(org.orgcode,1,org.leve*2) ||'%' and djsj >= to_date(#[tjsj_start],'yyyymmdd') and djsj <= to_date(#[tjsj_end],'yyyymmdd')) as sqs,
+							  (select count(1) from t_af_sqgbxx gb where gb.zxbs = '1' and gb.lx = '1' and djdwdm like substr(org.orgcode,1,2*f_get_dwleve(org.orgcode)) ||'%') as sqgb_zs,
+							  (select count(1) from t_af_sqgbxx gb where gb.zxbs = '1' and gb.lx = '1' and djdwdm like substr(org.orgcode,1,org.leve*2) ||'%'  and djsj >= to_date(#[tjsj_start],'yyyymmdd') and djsj <= to_date(#[tjsj_end],'yyyymmdd')) as sqgbs,
+							  (select count(1) from t_af_zbhcyxx s where s.tcbs = '0' and s.djdwdm like substr(org.orgcode,1,org.leve*2) ||'%') as zbhcy_zs,
+							  (select count(1) from t_af_zbhcyxx s where s.tcbs = '0' and s.djdwdm like substr(org.orgcode,1,org.leve*2) ||'%' and s.djsj >= to_date(#[tjsj_start],'yyyymmdd') and s.djsj <= to_date(#[tjsj_end],'yyyymmdd') ) as zbhcys
+							  (select count(1) from t_za_dw_zdyhbw t where djdwdm like substr(org.orgcode,1,2*org.leve)||'%') as zdyhbw_zs,
+							  (select count(1) from t_za_dw_zdyhbw t where djdwdm like substr(org.orgcode,1,2*org.leve)||'%' and t.djsj >= to_date(#[tjsj_start],'yyyymmdd') and t.djsj <= to_date(#[tjsj_end],'yyyymmdd')) as zdyhbws,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1703' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%') as hycsgwt_zs,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1703' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%' and t.djsj >= to_date(#[tjsj_start],'yyyymmdd') and t.djsj <= to_date(#[tjsj_end],'yyyymmdd')) as hycsgwts,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1704' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%') as hycsklok_zs,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1704' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%' and t.djsj >= to_date(#[tjsj_start],'yyyymmdd') and t.djsj <= to_date(#[tjsj_end],'yyyymmdd')) as hycskloks,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1702' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%') as hycsdzyx_zs,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1702' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%' and t.djsj >= to_date(#[tjsj_start],'yyyymmdd') and t.djsj <= to_date(#[tjsj_end],'yyyymmdd')) as hycsdzyxs				
+							from t_common_organization_sjjs org
+							where parent_code=substr(#[dwdm],1,8)||'3100'
+							order by orgcode
+						#else
+							select org.orgcode,
+							  (select czrks + ldrks + jwrks + jzrks + wlhrks  from t_common_xqtjqk where orgcode=org.orgcode)  as rk_zs,
+							  (select(sum(czrks) + sum(ldrks) + sum(jzrks) + sum(wlhrks)) from t_tjfx_dwdaysjltjbb s where s.orgcode = org.orgcode and to_date(s.tjrq,'yyyymmdd') >=to_date(#[tjsj_start],'yyyymmdd') and to_date(s.tjrq,'yyyymmdd') <= to_date(#[tjsj_end],'yyyymmdd')) as rks, 
+							  (select DWZS from t_common_xqtjqk where orgcode=org.orgcode) as dw_zs,
+							  (select(sum(sydws)) from t_tjfx_dwdaysjltjbb s where s.orgcode = org.orgcode and to_date(s.tjrq,'yyyymmdd') >=to_date(#[tjsj_start],'yyyymmdd') and to_date(s.tjrq,'yyyymmdd') <= to_date(#[tjsj_end],'yyyymmdd')) as dws,
+							  (select NBDWS from t_common_xqtjqk where orgcode=org.orgcode) as qsydw_zs,
+							  f_get_dwcountbydwfl(org.orgcode,'03',#[tjsj_start],#[tjsj_end]) as qsydws,
+							  (select CYRYS from t_common_xqtjqk where orgcode=org.orgcode ) as cyry_zs,
+							  (select(sum(cyrys)) from t_tjfx_dwdaysjltjbb s where s.orgcode = org.orgcode and to_date(s.tjrq,'yyyymmdd') >=to_date(#[tjsj_start],'yyyymmdd') and to_date(s.tjrq,'yyyymmdd') <= to_date(#[tjsj_end],'yyyymmdd')) as cyrys,
+							  (select count(1) from t_common_hnxzqh where leve='5' and isvalid='1' and dm like substr(org.orgcode,1,2*f_get_dwleve(org.orgcode))||'%') as sq_zs,
+							  (select count(1) from t_za_wyxq xq where xq.zxbs = '0' and xq.djdwdm like substr(org.orgcode,1,org.leve*2) ||'%' and djsj >= to_date(#[tjsj_start],'yyyymmdd') and djsj <= to_date(#[tjsj_end],'yyyymmdd')) as sqs,
+							  (select count(1) from t_af_sqgbxx gb where gb.zxbs = '1' and gb.lx = '1' and djdwdm like substr(org.orgcode,1,2*f_get_dwleve(org.orgcode)) ||'%') as sqgb_zs,
+							  (select count(1) from t_af_sqgbxx gb where gb.zxbs = '1' and gb.lx = '1' and djdwdm like substr(org.orgcode,1,org.leve*2) ||'%'  and djsj >= to_date(#[tjsj_start],'yyyymmdd') and djsj <= to_date(#[tjsj_end],'yyyymmdd')) as sqgbs,
+							  (select count(1) from t_af_zbhcyxx s where s.tcbs = '0' and s.djdwdm like substr(org.orgcode,1,org.leve*2) ||'%') as zbhcy_zs,
+							  (select count(1) from t_af_zbhcyxx s where s.tcbs = '0' and s.djdwdm like substr(org.orgcode,1,org.leve*2) ||'%' and s.djsj >= to_date(#[tjsj_start],'yyyymmdd') and s.djsj <= to_date(#[tjsj_end],'yyyymmdd') ) as zbhcys,
+							  (select count(1) from t_za_dw_zdyhbw t where djdwdm like substr(org.orgcode,1,2*org.leve)||'%') as zdyhbw_zs,
+							  (select count(1) from t_za_dw_zdyhbw t where djdwdm like substr(org.orgcode,1,2*org.leve)||'%' and t.djsj >= to_date(#[tjsj_start],'yyyymmdd') and t.djsj <= to_date(#[tjsj_end],'yyyymmdd')) as zdyhbws,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1703' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%') as hycsgwt_zs,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1703' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%' and t.djsj >= to_date(#[tjsj_start],'yyyymmdd') and t.djsj <= to_date(#[tjsj_end],'yyyymmdd')) as hycsgwts,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1704' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%') as hycsklok_zs,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1704' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%' and t.djsj >= to_date(#[tjsj_start],'yyyymmdd') and t.djsj <= to_date(#[tjsj_end],'yyyymmdd')) as hycskloks,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1702' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%') as hycsdzyx_zs,
+							  (select count(1) from t_za_jg_jbxx t where dwlb='1702' and djdwdm like substr(org.orgcode,1,2*org.leve)||'%' and t.djsj >= to_date(#[tjsj_start],'yyyymmdd') and t.djsj <= to_date(#[tjsj_end],'yyyymmdd')) as hycsdzyxs
+							from t_common_organization_sjjs org
+							where parent_code=#[dwdm]
+						#end
+				) t
+				group by rollup(orgcode)
+			) a
+			order by orgcode
+		]]>
+	</property>
+	
+	<property name="queryWeekTableTjbbBeans">
+		<![CDATA[
+			select nvl(orgcode,'999999999999') as orgcode,
+			       nvl((select replace(replace(orgname,'公安局',''),'自治','') from t_common_organization_sjjs where orgcode=t.orgcode),'合计') as orgname,
+			       zcjs, 
+			       onezs, onesqs, onencs, onerhzfzs, onerhzfsqs, onerhzfncs, onezaxlzs, onezaxlsqs, onezaxlncs, 
+			       twozs, twosqs, twoncs, tworhzfzs, tworhzfsqs, tworhzfncs, twozaxlzs, twozaxlsqs, twozaxlncs, 
+			       threezs, threesqs, threencs, threerhzfzs, threerhzfsqs, threerhzfncs, threezaxlzs, threezaxlsqs, threezaxlncs, 
+			       fourzs, foursqs, fourncs, fourrhzfzs, fourrhzfsqs, fourrhzfncs, fourzaxlzs, fourzaxlsqs, fourzaxlncs, 
+			       fivezs, fivesqs, fivencs, fiverhzfzs, fiverhzfsqs, fiverhzfncs, fivezaxlzs, fivezaxlsqs, fivezaxlncs, 
+			       sixzs, sixsqs, sixncs, sixrhzfzs, sixrhzfsqs, sixrhzfncs, sixzaxlzs, sixzaxlsqs, sixzaxlncs, 
+			       jwqzs, wwcrwjwqs, wwczcjrwcs, onecjzs, twocjzs, threecjzs, fourcjzs, fivecjzs, sixcjzs 
+			from (      
+			  select orgcode,sum(zcjs) as zcjs,
+			         sum(onezs) as onezs,sum(onesqs) onesqs,sum(onencs) onencs,sum(onerhzfzs) onerhzfzs,sum(onerhzfsqs) onerhzfsqs,
+			         sum(onerhzfncs) onerhzfncs,sum(onezaxlzs) onezaxlzs,sum(onezaxlsqs) onezaxlsqs,sum(onezaxlncs) onezaxlncs,
+			         sum(twozs) twozs,sum(twosqs) twosqs,sum(twoncs) twoncs,sum(tworhzfzs) tworhzfzs,sum(tworhzfsqs) tworhzfsqs,
+			         sum(tworhzfncs) tworhzfncs,sum(twozaxlzs) twozaxlzs,sum(twozaxlsqs) twozaxlsqs,sum(twozaxlncs) twozaxlncs,
+			         sum(threezs) threezs,sum(threesqs) threesqs,sum(threencs) threencs,sum(threerhzfzs) threerhzfzs,
+			         sum(threerhzfsqs) threerhzfsqs,sum(threerhzfncs) threerhzfncs,sum(threezaxlzs) threezaxlzs,
+			         sum(threezaxlsqs) threezaxlsqs,sum(threezaxlncs) threezaxlncs,
+			         sum(fourzs) fourzs,sum(foursqs) foursqs,sum(fourncs) fourncs,sum(fourrhzfzs) fourrhzfzs,sum(fourrhzfsqs) fourrhzfsqs,
+			         sum(fourrhzfncs) fourrhzfncs,sum(fourzaxlzs) fourzaxlzs,sum(fourzaxlsqs) fourzaxlsqs,sum(fourzaxlncs) fourzaxlncs,
+			         sum(fivezs) fivezs,sum(fivesqs) fivesqs,sum(fivencs) fivencs,sum(fiverhzfzs) fiverhzfzs,sum(fiverhzfsqs) fiverhzfsqs,
+			         sum(fiverhzfncs) fiverhzfncs,sum(fivezaxlzs) fivezaxlzs,sum(fivezaxlsqs) fivezaxlsqs,sum(fivezaxlncs) fivezaxlncs,
+			         sum(sixzs) sixzs,sum(sixsqs) sixsqs,sum(sixncs) sixncs,sum(sixrhzfzs) sixrhzfzs ,sum(sixrhzfsqs) sixrhzfsqs,
+			         sum(sixrhzfncs) sixrhzfncs,sum(sixzaxlzs) sixzaxlzs,sum(sixzaxlsqs) sixzaxlsqs,sum(sixzaxlncs) sixzaxlncs,
+			         sum(jwqzs) jwqzs,sum(wwcrwjwqs) wwcrwjwqs,sum(wwczcjrwcs) wwczcjrwcs,sum(onecjzs) onecjzs,sum(twocjzs) twocjzs,
+			         sum(threecjzs) threecjzs,sum(fourcjzs) fourcjzs,sum(fivecjzs) fivecjzs,sum(sixcjzs) sixcjzs
+			  from t_tjfx_weekcjqk_yhzb
+			  where orgcode like substr(#[tjdwdm],1,2*f_get_dwleve(#[tjdwdm]))||'%' and leve=#[tjlb] and tjyf=#[tjrq]
+			  group by rollup(orgcode)
+			) t
+			order by orgcode
+		]]>
+	</property>
+	
+</properties>
